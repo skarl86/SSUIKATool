@@ -1,0 +1,151 @@
+package ssu.object.rule;
+
+import ssu.object.Tags;
+
+import java.util.ArrayList;
+
+/**
+ * Created by beggar3004 on 15. 11. 8..
+ */
+public class Rule {
+
+    private Long id;
+    private String author;
+    private Long madeDate;
+    private Long modifiedDate;
+    private ArrayList<Atom> antecedents;
+    private ArrayList<Atom> consequents;
+
+    public Rule(Long id, String author, Long madeDate, Long modifiedDate) {
+        this.id = id;
+        this.author = author;
+        this.madeDate = madeDate;
+        this.modifiedDate = modifiedDate;
+        this.antecedents = new ArrayList<Atom>();
+        this.consequents = new ArrayList<Atom>();
+    }
+
+    /**
+     * Exp: Rule의 formal한 형식을 출력.
+     * @return Rule string.
+     */
+    public String printFormalFormat() {
+        String ruleString = "";
+
+        for (int i=0; i<this.antecedents.size(); i++) {
+            Atom atom = this.antecedents.get(i);
+            ruleString += atom.getName();
+            if (i < this.antecedents.size() - 1) ruleString += ",";
+        }
+
+        ruleString += "->";
+
+        for (int i=0; i<this.consequents.size(); i++) {
+            Atom atom = this.consequents.get(i);
+            ruleString += atom.getName();
+            if (i < this.consequents.size() - 1) ruleString += ",";
+        }
+
+
+        return  ruleString;
+    }
+
+    /**
+     * Exp: Rule의 저장 format으로 출력.
+     * @return
+     */
+    public String printSavingFormat() {
+        String line = getId() + Tags.RULE_SPLITER;
+        line += getAuthor() + Tags.RULE_SPLITER;
+        line += getMadeDate() + Tags.RULE_SPLITER;
+        line += getModifiedDate() + Tags.RULE_SPLITER;
+
+        String semiRuleString = "";
+        for (int i=0; i<getAntecedents().size(); i++) {
+            Atom atom = getAntecedents().get(i);
+            semiRuleString += atom.getName();
+            if (i < getAntecedents().size() - 1) {
+                semiRuleString += Tags.RULE_ATOM_SPLITER;
+            }
+        }
+        semiRuleString += Tags.RULE_THEN_SPLITER;
+        for (int i=0; i<getConsequents().size(); i++) {
+            Atom atom = getConsequents().get(i);
+            semiRuleString += atom.getName();
+            if (i < getConsequents().size() - 1) {
+                semiRuleString += Tags.RULE_ATOM_SPLITER;
+            }
+        }
+        line += semiRuleString;
+
+        return line;
+    }
+
+    public boolean addAntecedent(Atom atom) {
+        return this.antecedents.add(atom);
+    }
+
+    public boolean removeAntecedent(Atom atom) {
+        return this.antecedents.remove(atom);
+    }
+
+    public boolean addConsequent(Atom atom) {
+        return this.consequents.add(atom);
+    }
+
+    public boolean removeConsequent(Atom atom) {
+        return this.consequents.remove(atom);
+    }
+
+    /*
+    Getter & Setter
+     */
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public Long getMadeDate() {
+        return madeDate;
+    }
+
+    public void setMadeDate(Long madeDate) {
+        this.madeDate = madeDate;
+    }
+
+    public Long getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(Long modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
+
+    public ArrayList<Atom> getAntecedents() {
+        return antecedents;
+    }
+
+    public void setAntecedents(ArrayList<Atom> antecedents) {
+        this.antecedents = antecedents;
+    }
+
+    public ArrayList<Atom> getConsequents() {
+        return consequents;
+    }
+
+    public void setConsequents(ArrayList<Atom> consequents) {
+        this.consequents = consequents;
+    }
+
+}
