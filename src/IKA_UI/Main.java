@@ -29,6 +29,7 @@ public class Main extends Application {
         primaryStage.setTitle("Interactive Knowledge Acquisition");
 
 //        new Scene()
+        // TEST
         primaryStage.setScene(new Scene(root));
 
         primaryStage.show();
