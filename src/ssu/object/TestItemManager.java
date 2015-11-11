@@ -11,7 +11,6 @@ import java.util.Map;
  */
 public class TestItemManager {
 
-    private String testItemFilePath = "input/test_items.txt";
     private HashMap<String, TestItem> allTestItems;
 
     // 혹시 추후 멀티스레딩을 위한.
@@ -39,7 +38,7 @@ public class TestItemManager {
      */
     public void loadTestItemList() {
         try {
-            BufferedReader br = new BufferedReader(new FileReader(this.testItemFilePath));
+            BufferedReader br = new BufferedReader(new FileReader(Tags.TESTITEM_FILE_PATH));
             String line = br.readLine();
 
             while (line != null) {
@@ -70,7 +69,7 @@ public class TestItemManager {
      */
     public void saveTestItemList() {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(this.testItemFilePath));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(Tags.TESTITEM_FILE_PATH));
             for (Map.Entry<String, TestItem> entry : this.allTestItems.entrySet()) {
                 TestItem testItem = entry.getValue();
                 bw.write(testItem.printSavingFormat() + "\n");

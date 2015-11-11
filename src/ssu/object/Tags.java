@@ -6,6 +6,15 @@ package ssu.object;
 public final class Tags {
 
     /**
+     * File Path
+     */
+    public static final String ATOM_FILE_PATH = "input/atoms.txt";
+    public static final String PATIENT_FILE_PATH = "input/patients.txt";
+    public static final String RULE_FILE_PATH = "input/rules.txt";
+    public static final String RULE_CONFIGURE_FILE_PATH = "input/rules_configure.txt";
+    public static final String TESTITEM_FILE_PATH = "input/test_items.txt";
+
+    /**
      * Atom의 타입.
      */
     public static final int ATOM_TYPE_CLASS = 0;

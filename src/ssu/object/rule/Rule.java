@@ -1,5 +1,6 @@
 package ssu.object.rule;
 
+import ssu.object.Savable;
 import ssu.object.Tags;
 
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Created by beggar3004 on 15. 11. 8..
  */
-public class Rule {
+public class Rule implements Savable {
 
     private Long id;
     private String author;
@@ -54,6 +55,7 @@ public class Rule {
      * Exp: Rule의 저장 format으로 출력.
      * @return
      */
+    @Override
     public String printSavingFormat() {
         String line = getId() + Tags.RULE_SPLITER;
         line += getAuthor() + Tags.RULE_SPLITER;

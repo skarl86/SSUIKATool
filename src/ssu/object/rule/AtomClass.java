@@ -7,6 +7,8 @@ import ssu.object.Tags;
  */
 public class AtomClass extends Atom {
 
+    private String param;
+
     public AtomClass(String name) {
         // name | type
         this.name = name;

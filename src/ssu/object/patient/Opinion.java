@@ -1,5 +1,6 @@
 package ssu.object.patient;
 
+import ssu.object.Savable;
 import ssu.object.Tags;
 
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Created by beggar3004 on 15. 11. 8..
  */
-public class Opinion {
+public class Opinion implements Savable {
 
     private String opinion;
     private ArrayList<Long> rules;
@@ -17,6 +18,7 @@ public class Opinion {
         this.rules = new ArrayList<Long>();
     }
 
+    @Override
     public String printSavingFormat() {
         String line = getOpinion();
         if (rules.size() > 0) {

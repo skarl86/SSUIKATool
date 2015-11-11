@@ -6,14 +6,12 @@ import ssu.object.rule.AtomClass;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 /**
  * Created by beggar3004 on 15. 11. 8..
  */
 public class AtomManager {
 
-    private String filePath = "input/atoms.txt";
     private HashMap<String, Atom> allAtoms;
 
     // 혹시 추후 멀티스레딩을 위한.
@@ -42,7 +40,7 @@ public class AtomManager {
     public void loadAtomList() {
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader(this.filePath));
+            BufferedReader br = new BufferedReader(new FileReader(Tags.ATOM_FILE_PATH));
             String line = br.readLine();
 
             while (line != null) {
@@ -81,7 +79,7 @@ public class AtomManager {
      */
     public void saveAtomList() {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(this.filePath));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(Tags.ATOM_FILE_PATH));
             for (Map.Entry<String, Atom> entry : this.allAtoms.entrySet()) {
                 Atom atom = entry.getValue();
                 bw.write(atom.printSavingFormat() + "\n");
@@ -92,6 +90,27 @@ public class AtomManager {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Exp : Atom을 추가.
+     * @param atom
+     */
+    public void addAtom(Atom atom) {
+        this.allAtoms.put(atom.getName(), atom);
+    }
+
+    /**
+     * Exp : Atom을 제거.
+     * @param atom
+     */
+    public void removeAtom(Atom atom) {
+        // 제거 체크.
+        this.allAtoms.remove(atom.getName(), atom);
+    }
+
+    /*
+    Getter & Setter
+     */
 
     public HashMap<String, Atom> getAllAtoms() {
         return allAtoms;

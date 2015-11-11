@@ -13,7 +13,6 @@ import java.util.HashMap;
  */
 public class PatientManager {
 
-    private String patientFilePath = "input/patients.txt";
     private ArrayList<Patient> allPatients;
 
     // 혹시 추후 멀티스레딩을 위한.
@@ -42,7 +41,7 @@ public class PatientManager {
      */
     public void loadPatients(HashMap<String, TestItem> allTestItems) {
         try {
-            BufferedReader br = new BufferedReader(new FileReader(this.patientFilePath));
+            BufferedReader br = new BufferedReader(new FileReader(Tags.PATIENT_FILE_PATH));
             String line = br.readLine();
 
             while (line != null) {
@@ -179,7 +178,7 @@ public class PatientManager {
      */
     public void savePatients() {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(this.patientFilePath));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(Tags.PATIENT_FILE_PATH));
             for (Patient patient : this.allPatients) {
                 bw.write(patient.printSavingFormat() + "\n");
             }

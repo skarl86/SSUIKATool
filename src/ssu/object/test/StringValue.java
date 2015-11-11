@@ -5,4 +5,6 @@ package ssu.object.test;
  */
 public abstract class StringValue extends TestValue {
 
+    protected String value;
+
 }

@@ -7,8 +7,6 @@ import ssu.object.Tags;
  */
 public class HighLow extends StringValue {
 
-    private String value;
-
     public HighLow(String value) {
         this.value = value;
     }

@@ -1,5 +1,6 @@
 package ssu.object.patient;
 
+import ssu.object.Savable;
 import ssu.object.Tags;
 import ssu.object.test.TestResult;
 
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Created by beggar3004 on 15. 11. 8..
  */
-public class Patient {
+public class Patient implements Savable {
 
     private String name;
     private int age;
@@ -48,6 +49,7 @@ public class Patient {
      *
      * @return
      */
+    @Override
     public String printSavingFormat() {
         String line = getRegDate() + Tags.PATIENT_SPLITER;
         line += getRegId() + Tags.PATIENT_SPLITER;

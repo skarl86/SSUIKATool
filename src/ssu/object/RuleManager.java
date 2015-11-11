@@ -11,9 +11,8 @@ import java.util.Map;
  * Created by beggar3004 on 15. 11. 8..
  */
 public class RuleManager {
-    private Long ruleCount;
-    private String ruleFilePath = "input/rules.txt";
-    private String ruleConfigureFilePath = "input/rules_configure.txt";
+
+    private Long ruleNumber;
     private HashMap<Long, Rule> allRules;
 
     // 혹시 추후 멀티스레딩을 위한.
@@ -42,11 +41,11 @@ public class RuleManager {
      */
     private void loadRuleConfigure() {
         try {
-            BufferedReader br = new BufferedReader(new FileReader(this.ruleConfigureFilePath));
+            BufferedReader br = new BufferedReader(new FileReader(Tags.RULE_CONFIGURE_FILE_PATH));
             String line = br.readLine();
 
             while (line != null) {
-                this.ruleCount = Long.parseLong(line);
+                this.ruleNumber = Long.parseLong(line);
                 line = br.readLine();
             }
 
@@ -64,8 +63,8 @@ public class RuleManager {
      */
     private void saveRuleConfigure() {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(this.ruleConfigureFilePath));
-            bw.write(this.ruleCount.toString());
+            BufferedWriter bw = new BufferedWriter(new FileWriter(Tags.RULE_CONFIGURE_FILE_PATH));
+            bw.write(this.ruleNumber.toString());
 
             bw.close();
         } catch (IOException e) {
@@ -82,7 +81,7 @@ public class RuleManager {
         loadRuleConfigure();
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader(this.ruleFilePath));
+            BufferedReader br = new BufferedReader(new FileReader(Tags.RULE_FILE_PATH));
             String line = br.readLine();
 
             while (line != null) {
@@ -144,7 +143,7 @@ public class RuleManager {
         saveRuleConfigure();
 
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(this.ruleFilePath));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(Tags.RULE_FILE_PATH));
             for (Map.Entry<Long, Rule> entry : this.allRules.entrySet()) {
                 Rule rule = entry.getValue();
                 bw.write(rule.printSavingFormat() + "\n");
@@ -162,11 +161,16 @@ public class RuleManager {
     }
 
     public void addRule(Rule rule) {
-        allRules.put(rule.getId(), rule);
-        this.ruleCount += 1;
+        this.allRules.put(rule.getId(), rule);
+        this.ruleNumber += 1;
     }
 
-    public Long getRuleCount() {
-        return ruleCount;
+    public void removeRule(Rule rule) {
+        this.allRules.remove(rule);
     }
+
+    public Long getRuleNumber() {
+        return ruleNumber;
+    }
+
 }

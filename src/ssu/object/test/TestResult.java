@@ -1,5 +1,6 @@
 package ssu.object.test;
 
+import ssu.object.Savable;
 import ssu.object.Tags;
 
 import java.util.ArrayList;
@@ -7,12 +8,14 @@ import java.util.ArrayList;
 /**
  * Created by beggar3004 on 15. 11. 8..
  */
-public class TestResult {
+public class TestResult implements Savable {
 
+    private boolean abnormal;
     private TestItem testItem;
     private ArrayList<TestValue> testValues;
 
     public TestResult(TestItem testItem) {
+        this.abnormal = false;
         this.testItem = testItem;
         this.testValues = new ArrayList<TestValue>();
     }
@@ -21,10 +24,11 @@ public class TestResult {
         return this.testValues.add(testValue);
     }
 
-    /**
-     *
-     * @return
-     */
+    public boolean isAbnormal() {
+        return this.abnormal;
+    }
+
+    @Override
     public String printSavingFormat() {
         String line = "";
         line += getTestItem().getName() + Tags.PATIENT_TEST_VALUE_SPLITER;

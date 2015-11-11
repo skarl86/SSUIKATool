@@ -7,8 +7,6 @@ import ssu.object.Tags;
  */
 public class PosNeg extends StringValue {
 
-    private String value;
-
     public PosNeg(String value) {
         this.value = value;
     }
