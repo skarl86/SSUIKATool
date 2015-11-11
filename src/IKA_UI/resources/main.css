@@ -1,6 +1,0 @@
-.addButton {
-	-fx-background-size: 16 16;
-	-fx-graphic: url("https://cdn3.iconfinder.com/data/icons/glyph/227/Button-Add-3-128.png");
-	-fx-background-color: transparent;
-	-fx-effect: dropshadow(three-pass-box, black, 20, 0.2, 0, 0);
-}
