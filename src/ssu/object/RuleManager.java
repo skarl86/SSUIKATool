@@ -4,6 +4,7 @@ import ssu.object.rule.Atom;
 import ssu.object.rule.Rule;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -160,6 +161,41 @@ public class RuleManager {
         return this.allRules;
     }
 
+
+    /**
+     * Antecedent, Consequent로 이미 존재하는 Rule인지 검색.
+     * @param antecedents Antecedent들의 이름 리스트.
+     * @param consequents Conseqeunt들의 이름 리스트.
+     * @return 이미 존재하는 Rule 경우 해당 Rule의 객체를 리턴, 아니면 null을 리턴.
+     */
+    public Rule getExistedRuleByCondition(ArrayList<String> antecedents, ArrayList<String> consequents) {
+
+        // 파라미터의 조건들을 Formal 형식의 Rule string을 생성.
+        String formalFormat = "";
+        for (int i=0; i<antecedents.size(); i++) {
+            formalFormat += antecedents.get(i);
+            if (i < antecedents.size() - 1) formalFormat += ",";
+        }
+        formalFormat += "->";
+        for (int i=0; i<consequents.size(); i++) {
+            formalFormat += consequents.get(i);
+            if (i < consequents.size() - 1) formalFormat += ",";
+        }
+
+        // Rule의 Formal 형식을 비교해서 동일한 형식인 경우 같은 Rule.
+        for (Map.Entry<Long, Rule> entry : this.allRules.entrySet()) {
+            if (formalFormat.equals(entry.getValue().printFormalFormat())) {
+                return entry.getValue();
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Exp : Rule을 추가.
+     * @param rule
+     */
     public void addRule(Rule rule) {
         this.allRules.put(rule.getId(), rule);
         this.ruleNumber += 1;

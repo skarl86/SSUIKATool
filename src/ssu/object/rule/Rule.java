@@ -26,6 +26,49 @@ public class Rule implements Savable {
         this.consequents = new ArrayList<Atom>();
     }
 
+    public Rule(Long id, String author) {
+        this.id = id;
+        this.author = author;
+        this.madeDate = 0L;
+        this.modifiedDate = 0L;
+        this.antecedents = new ArrayList<Atom>();
+        this.consequents = new ArrayList<Atom>();
+    }
+
+    /**
+     * 해당 Rule이 특정 Atom들을 포함하고 있는지 체크.
+     * @param checkAntecedents
+     * @param checkConsequents
+     * @return 해당 조건들이 이 Rule의 subpart일 경우 true, 아니면 false
+     */
+    public boolean containAtoms(ArrayList<String> checkAntecedents, ArrayList<String> checkConsequents) {
+
+        ArrayList<String> antecedentStringList = new ArrayList<String>();
+        ArrayList<String> consequentStringList = new ArrayList<String>();
+
+        for (Atom antecedent : getAntecedents()) {
+            antecedentStringList.add(antecedent.getName());
+        }
+        for (Atom consequent : getConsequents()) {
+            consequentStringList.add(consequent.getName());
+        }
+
+        for (String checkAntecedent : checkAntecedents)  {
+            if (!antecedentStringList.contains(checkAntecedent)) {
+                return false;
+            }
+        }
+
+        for (String checkConsequent : checkConsequents) {
+            if (!consequentStringList.contains(checkConsequent)) {
+                return false;
+            }
+        }
+
+        return true;
+
+    }
+
     /**
      * Exp: Rule의 formal한 형식을 출력.
      * @return Rule string.

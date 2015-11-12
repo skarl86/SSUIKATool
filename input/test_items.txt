@@ -1,3 +1,4 @@
-ALT,ALT에 관한 검사항목입니다.
 AST,AST에 관한 검사항목입니다.
 ALP,ALP에 관한 검사항목입니다.
+ALT,ALT에 관한 검사항목입니다.
+LiverDisease,LiverDisease에 관한 질병항목입니다.

@@ -2,6 +2,7 @@ package ssu.object;
 
 import ssu.object.rule.Atom;
 import ssu.object.rule.AtomClass;
+import ssu.object.rule.AtomPredicate;
 
 import java.io.*;
 import java.util.HashMap;
@@ -106,6 +107,29 @@ public class AtomManager {
     public void removeAtom(Atom atom) {
         // 제거 체크.
         this.allAtoms.remove(atom.getName(), atom);
+    }
+
+    public Atom getAtomOrCreate(String value, int type) {
+        Atom atom = null;
+
+        if (this.allAtoms.containsKey(value)) {
+            atom = this.allAtoms.get(value);
+        } else {
+            // 새로운 Atom을 생성.
+            switch (type) {
+                case Tags.ATOM_TYPE_CLASS:
+                    atom = new AtomClass(value);
+                    break;
+                case Tags.ATOM_TYPE_PREDICATE:
+                    atom = new AtomPredicate(value);
+                    break;
+            }
+
+            // 새로 생성한 Atom을 추가.
+            addAtom(atom);
+        }
+
+        return atom;
     }
 
     /*
