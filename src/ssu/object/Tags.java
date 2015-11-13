@@ -36,13 +36,19 @@ public final class Tags {
     public static final String PATIENT_OPINION_RULELIST_SPLITER = ":";
     public static final String PATIENT_OPINION_RULE_SPLITER = ",";
 
-    public static final String PATIENT_GENDER_MALE = "M";
-    public static final String PATIENT_GENDER_FEMALE = "F";
-
     public static final String TEST_ITEM_SPLITER = ",";
 
     public static final String TEST_VALUE_SPLITER = ":";
 
+    /**
+     * Patient Value
+     */
+    public static final String PATIENT_GENDER_MALE = "M";
+    public static final String PATIENT_GENDER_FEMALE = "F";
+
+    /**
+     * Test Value
+     */
     public static final String TEST_VALUE_TYPE_NUMERIC = "N";
     public static final String TEST_VALUE_TYPE_HIGHLOW = "HL";
     public static final String TEST_VALUE_TYPE_HIGH = "High";
@@ -50,6 +56,11 @@ public final class Tags {
     public static final String TEST_VALUE_TYPE_POSNEG = "PN";
     public static final String TEST_VALUE_TYPE_POS = "Positive";
     public static final String TEST_VALUE_TYPE_NEG = "Negative";
+
+    /**
+     * Test Item 이름.
+     */
+
 
     private Tags() {}
 }
