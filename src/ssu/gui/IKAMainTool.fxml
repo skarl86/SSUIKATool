@@ -138,13 +138,13 @@
                            <content>
                               <HBox alignment="CENTER" prefHeight="255.0" prefWidth="672.0">
                                  <children>
-                                    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="&lt;&lt;" GridPane.halignment="CENTER" GridPane.valignment="CENTER" HBox.hgrow="ALWAYS">
+                                    <Button fx:id="leftOpinionButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleLeftClickButtonAction" text="&lt;&lt;" GridPane.halignment="CENTER" GridPane.valignment="CENTER" HBox.hgrow="ALWAYS">
                                        <HBox.margin>
                                           <Insets left="15.0" right="15.0" />
                                        </HBox.margin>
                                     </Button>
                                     <TextArea fx:id="opinionTextArea" prefHeight="80.0" prefWidth="522.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" HBox.hgrow="ALWAYS" />
-                                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="&gt;&gt;" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                    <Button fx:id="rightOpinionButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#handleRightClickButtonAction" text="&gt;&gt;" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                        <HBox.margin>
                                           <Insets left="15.0" right="15.0" />
                                        </HBox.margin>
@@ -161,13 +161,13 @@
                            <content>
                               <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <TableView VBox.vgrow="ALWAYS">
+                                    <TableView fx:id="ruleReferenceTableView" VBox.vgrow="ALWAYS">
                                        <columns>
-                                          <TableColumn prefWidth="75.0" text="ID" />
-                                          <TableColumn prefWidth="75.0" text="Rule" />
-                                          <TableColumn prefWidth="75.0" text="작성자" />
-                                          <TableColumn prefWidth="75.0" text="생성일" />
-                                          <TableColumn prefWidth="75.0" text="수정일" />
+                                          <TableColumn fx:id="ruleIdColumn" prefWidth="75.0" text="ID" />
+                                          <TableColumn fx:id="ruleColumn" prefWidth="75.0" text="Rule" />
+                                          <TableColumn fx:id="authorColumn" prefWidth="75.0" text="작성자" />
+                                          <TableColumn fx:id="madeDateColumn" prefWidth="75.0" text="생성일" />
+                                          <TableColumn fx:id="modifiedDateColumn" prefWidth="75.0" text="수정일" />
                                        </columns>
                                        <VBox.margin>
                                           <Insets bottom="2.0" />

@@ -91,8 +91,7 @@ public class IKADataController extends IKAController implements IKADataRequestIn
                             op.modifiedDate = rule.getModifiedDate();
                             op.rule = rule.printFormalFormat();
                             op.ruleId = rId;
-
-                            break;
+                            pList.add(op);
                         }
                     }
                 }

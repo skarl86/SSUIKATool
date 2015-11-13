@@ -11,8 +11,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import ssu.object.AtomManager;
 import ssu.object.patient.Patient;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -66,6 +69,41 @@ public class IKAPaneController implements IKAPaneInterface {
         public String getTextValue(){ return textValue.get(); }
     }
 
+    public class PatientReferenceRow{
+        private final StringProperty ruleId;
+        private final StringProperty rule;
+        private final StringProperty author;
+        private final StringProperty madeDate;
+        private final StringProperty modifiedDate;
+
+        private PatientReferenceRow(String ruleId, String rule, String author, String madeData, String modifiedDate){
+            this.ruleId= new SimpleStringProperty(ruleId);
+            this.rule = new SimpleStringProperty(rule);
+            this.author= new SimpleStringProperty(author);
+            this.madeDate= new SimpleStringProperty(madeData);
+            this.modifiedDate = new SimpleStringProperty(modifiedDate);
+        }
+        public String getRuleId() { return ruleId.get(); }
+        public StringProperty ruleIdProperty() { return ruleId; }
+        public void setRuleId(String ruleId) { this.ruleId.set(ruleId); }
+
+        public String getRule() { return rule.get(); }
+        public StringProperty ruleProperty() { return rule; }
+        public void setRule(String rule) { this.rule.set(rule); }
+
+        public String getAuthor() { return author.get(); }
+        public StringProperty authorProperty() { return author; }
+        public void setAuthor(String author) { this.author.set(author); }
+
+        public String getMadeDate() { return madeDate.get(); }
+        public StringProperty madeDateProperty() { return madeDate; }
+        public void setMadeDate(String madeDate) { this.madeDate.set(madeDate); }
+
+        public String getModifiedDate() { return modifiedDate.get(); }
+        public StringProperty modifiedDateProperty() { return modifiedDate; }
+        public void setModifiedDate(String modifiedDate) { this.modifiedDate.set(modifiedDate); }
+    }
+
     private TreeView _patientTreeView;
 
     private TableView<PatientRow> _patientTableView;
@@ -79,6 +117,14 @@ public class IKAPaneController implements IKAPaneInterface {
 
     private TextArea _opinionTextArea;
 
+    private TableView<PatientReferenceRow> _ruleReferenceTableView;
+    private TableColumn<PatientReferenceRow, String> _ruleIdColumn;
+    private TableColumn<PatientReferenceRow, String> _ruleColumn;
+    private TableColumn<PatientReferenceRow, String> _authorColumn;
+    private TableColumn<PatientReferenceRow, String> _madeDateColumn;
+    private TableColumn<PatientReferenceRow, String> _modifiedDateColumn;
+
+    private int _opinionIndex = 0;
     /**
      * 싱글톤 및 멀티 쓰레드 대비.
      */
@@ -187,11 +233,81 @@ public class IKAPaneController implements IKAPaneInterface {
     public void refreshPatientOpinionList(IKADataController dataController, Long patientId){
         ArrayList<String> opinionList = (ArrayList) dataController.getPatientOpinion(patientId);
         System.out.println("환자 소견 갯수 : " + opinionList.size());
-        _opinionTextArea.setText(opinionList.get(0));
+        _opinionTextArea.setText(opinionList.get(_opinionIndex));
     }
 
     @Override
-    public void createPatientOpinionReferenceList(Long PatientId) {
+    public void createPatientOpinionReferenceList(TableView ruleReferenceTableView, TableColumn ruleIdColumn,
+                                                  TableColumn ruleColumn, TableColumn authorColumn,
+                                                  TableColumn madeDateColumn, TableColumn modifiedDateColumn) {
+        if(_ruleReferenceTableView == null)
+            _ruleReferenceTableView = ruleReferenceTableView;
+        if(_ruleIdColumn == null)
+            _ruleIdColumn = ruleIdColumn;
+        if(_ruleColumn == null)
+            _ruleColumn = ruleColumn;
+        if(_authorColumn == null)
+            _authorColumn = authorColumn;
+        if(_madeDateColumn == null)
+            _madeDateColumn = madeDateColumn;
+        if(_modifiedDateColumn == null)
+            _modifiedDateColumn = modifiedDateColumn;
+    }
 
+    @Override
+    public void refreshPatientOpinionReferenceList(IKADataController dataController, Long patientId){
+        ArrayList<IKADataController.OpinionReferenceList> elmList = (ArrayList)dataController.getOpinionReferenceList(patientId);
+
+        _ruleIdColumn.setCellValueFactory(
+                new PropertyValueFactory<PatientReferenceRow, String>("ruleId")
+        );
+        _ruleColumn.setCellValueFactory(
+                new PropertyValueFactory<PatientReferenceRow, String>("rule")
+        );
+        _authorColumn.setCellValueFactory(
+                new PropertyValueFactory<PatientReferenceRow, String>("author")
+        );
+        _madeDateColumn.setCellValueFactory(
+                new PropertyValueFactory<PatientReferenceRow, String>("madeDate")
+        );
+        _modifiedDateColumn.setCellValueFactory(
+                new PropertyValueFactory<PatientReferenceRow, String>("modifiedDate")
+        );
+
+        final ObservableList<PatientReferenceRow> data = FXCollections.observableArrayList();
+
+        Format format = new SimpleDateFormat("yyyy MM dd HH:mm:ss");
+
+        for(IKADataController.OpinionReferenceList opn : elmList){
+            data.add(new PatientReferenceRow(String.valueOf(opn.ruleId), opn.rule, opn.author, format.format(opn.madeDate), format.format(opn.modifiedDate)));
+        }
+
+        _ruleReferenceTableView.setItems(data);
+    }
+
+    public void nextOpinion(IKADataController dataController, Long patientId){
+        ArrayList<String> opinionList = (ArrayList) dataController.getPatientOpinion(patientId);
+
+        _opinionIndex += 1;
+
+        if(_opinionIndex > opinionList.size() - 1) {
+            _opinionIndex = 0;
+            _opinionTextArea.setText(opinionList.get(_opinionIndex));
+        }else{
+            _opinionTextArea.setText(opinionList.get(_opinionIndex));
+        }
+    }
+
+    public void previousOpinion(IKADataController dataController, Long patientId){
+        ArrayList<String> opinionList = (ArrayList) dataController.getPatientOpinion(patientId);
+
+        _opinionIndex -= 1;
+
+        if(_opinionIndex < 0) {
+            _opinionIndex = opinionList.size() - 1;
+            _opinionTextArea.setText(opinionList.get(_opinionIndex));
+        }else{
+            _opinionTextArea.setText(opinionList.get(_opinionIndex));
+        }
     }
 }

@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,25 +37,29 @@ public class IKATool extends Application implements Initializable {
     private IKADataController dataController = IKADataController.getInstance();
     private IKAPaneController paneController = IKAPaneController.getInstance();
 
-    @FXML
-    private TreeView patientTreeView;
-    @FXML
-    private TableView<IKAPaneController.PatientRow> patientTableView;
-    @FXML
-    private TableColumn<IKAPaneController.PatientRow, String> subjectColumn;
-    @FXML
-    private TableColumn<IKAPaneController.PatientRow, String> textValueColumn;
-    @FXML
-    private TableView<IKAPaneController.PatientDetailRow> patientDetailTable;
-    @FXML
-    private TableColumn<IKAPaneController.PatientDetailRow, String> testNameColumn;
-    @FXML
-    private TableColumn<IKAPaneController.PatientDetailRow, String> testNumValueColumn;
-    @FXML
-    private TableColumn<IKAPaneController.PatientDetailRow, String> testTextValueColumn;
-    @FXML
-    private TextArea opinionTextArea;
+    @FXML private TreeView patientTreeView;
 
+    @FXML private TableView<IKAPaneController.PatientRow> patientTableView;
+    @FXML private TableColumn<IKAPaneController.PatientRow, String> subjectColumn;
+    @FXML private TableColumn<IKAPaneController.PatientRow, String> textValueColumn;
+
+    @FXML private TableView<IKAPaneController.PatientDetailRow> patientDetailTable;
+    @FXML private TableColumn<IKAPaneController.PatientDetailRow, String> testNameColumn;
+    @FXML private TableColumn<IKAPaneController.PatientDetailRow, String> testNumValueColumn;
+    @FXML private TableColumn<IKAPaneController.PatientDetailRow, String> testTextValueColumn;
+
+    @FXML private TextArea opinionTextArea;
+    @FXML private Button leftOpinionButton;
+    @FXML private Button rightOpinionButton;
+
+    @FXML private TableView<IKAPaneController.PatientReferenceRow> ruleReferenceTableView;
+    @FXML private TableColumn<IKAPaneController.PatientReferenceRow, String> ruleIdColumn;
+    @FXML private TableColumn<IKAPaneController.PatientReferenceRow, String> ruleColumn;
+    @FXML private TableColumn<IKAPaneController.PatientReferenceRow, String> authorColumn;
+    @FXML private TableColumn<IKAPaneController.PatientReferenceRow, String> madeDateColumn;
+    @FXML private TableColumn<IKAPaneController.PatientReferenceRow, String> modifiedDateColumn;
+
+    private Long currentPatientId;
     @Override
     public void init() {
         /**
@@ -79,6 +84,15 @@ public class IKATool extends Application implements Initializable {
         System.out.println("Application sucessfully initiallized.");
     }
 
+    @FXML protected void handleLeftClickButtonAction(ActionEvent event){
+        System.out.println(event);
+        this.paneController.previousOpinion(this.dataController, currentPatientId);
+    }
+
+    @FXML protected void handleRightClickButtonAction(ActionEvent event){
+        System.out.println(event);
+        this.paneController.nextOpinion(this.dataController, currentPatientId);
+    }
     public void initView(){
         System.out.println("Init View.");
 
@@ -86,6 +100,8 @@ public class IKATool extends Application implements Initializable {
         this.paneController.createPatientDefaultList(patientTableView,subjectColumn,textValueColumn);
         this.paneController.createPatientDetailList(patientDetailTable, testNameColumn, testNumValueColumn, testTextValueColumn );
         this.paneController.createPatientOpinionList(opinionTextArea);
+        this.paneController.createPatientOpinionReferenceList(ruleReferenceTableView, ruleIdColumn,
+                ruleColumn, authorColumn, madeDateColumn, modifiedDateColumn);
 
         // Action 등록.
         patientTreeView.getSelectionModel().selectedItemProperty().addListener( new ChangeListener() {
@@ -96,10 +112,11 @@ public class IKATool extends Application implements Initializable {
 
                 TreeItem<String> selectedItem = (TreeItem<String>) newValue;
                 if(selectedItem.getValue().split(" ").length > 1){
-                    Long regId = Long.valueOf(selectedItem.getValue().split(" ")[0]);
-                    paneController.refreshPatientDefaultList(dataController, regId);
-                    paneController.refreshPatientDetailList(dataController, regId);
-                    paneController.refreshPatientOpinionList(dataController,regId);
+                    currentPatientId = Long.valueOf(selectedItem.getValue().split(" ")[0]);
+                    paneController.refreshPatientDefaultList(dataController, currentPatientId);
+                    paneController.refreshPatientDetailList(dataController, currentPatientId);
+                    paneController.refreshPatientOpinionList(dataController,currentPatientId);
+                    paneController.refreshPatientOpinionReferenceList(dataController, currentPatientId);
                 }
                 // do what ever you want
             }

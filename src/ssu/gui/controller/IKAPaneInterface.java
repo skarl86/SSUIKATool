@@ -19,5 +19,10 @@ public interface IKAPaneInterface {
     public void createPatientDetailList(TableView patientDetailTable, TableColumn testNameColumn, TableColumn numValueColumn, TableColumn textValueColumn);
     public void createPatientOpinionList(TextArea opinionTextArea);
     public void refreshPatientOpinionList(IKADataController dataController, Long patientId);
-    public void createPatientOpinionReferenceList(Long PatientId);
+    public void createPatientOpinionReferenceList(TableView ruleReferenceTableView, TableColumn ruleIdColumn,
+                                                  TableColumn ruleColumn, TableColumn authorColumn,
+                                                  TableColumn madeDateColumn, TableColumn modifiedDateColumn);
+    public void refreshPatientOpinionReferenceList(IKADataController dataController, Long patientId);
+    public void nextOpinion(IKADataController dataController, Long patientId);
+    public void previousOpinion(IKADataController dataController, Long patientId);
 }
