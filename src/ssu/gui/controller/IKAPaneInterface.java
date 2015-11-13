@@ -1,0 +1,23 @@
+package ssu.gui.controller;
+
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TreeView;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by NCri on 2015. 11. 13..
+ */
+public interface IKAPaneInterface {
+    public void createPatientTree(TreeView patientTreeView, Map<String, List<IKADataController.PatientListElement>> patientMap);
+    public void createPatientDefaultList(TableView patientTableView, TableColumn<IKAPaneController.PatientRow, String> subjectColumn, TableColumn<IKAPaneController.PatientRow, String> textValueColumn);
+    public void refreshPatientDefaultList(IKADataController dataController, Long patientId);
+    public void refreshPatientDetailList(IKADataController dataController, Long patientId);
+    public void createPatientDetailList(TableView patientDetailTable, TableColumn testNameColumn, TableColumn numValueColumn, TableColumn textValueColumn);
+    public void createPatientOpinionList(TextArea opinionTextArea);
+    public void refreshPatientOpinionList(IKADataController dataController, Long patientId);
+    public void createPatientOpinionReferenceList(Long PatientId);
+}
