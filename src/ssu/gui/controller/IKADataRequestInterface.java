@@ -1,5 +1,7 @@
 package ssu.gui.controller;
 
+import ssu.object.patient.Opinion;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +26,7 @@ public interface IKADataRequestInterface {
      * - To-do Lists
      * -- 추후 리턴받은 rule id가 해당 소견에 이미 있는 것인지 없는 것인지 체크할 필요 있음.
      */
-    public Long ruleEditDialogOK(ArrayList<String> antecedents, ArrayList<String> consequents, String author);
+    public Long ruleEditDialogOK(ArrayList<String> antecedents, ArrayList<String> consequents, String author, Long patientId, int indexOfOpinion);
 
     /**
      * 사용자가 Atom을 입력할 때마다 입력한 Atom들이 포함된 Rule들의 리스트를 리턴.

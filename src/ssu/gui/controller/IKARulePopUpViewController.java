@@ -188,7 +188,7 @@ public class IKARulePopUpViewController implements Initializable{
                 consqList.add(item.getAtom());
         }
 
-        IKADataController.getInstance().ruleEditDialogOK(antList, consqList, authorTextField.getText());
+        IKADataController.getInstance().ruleEditDialogOK(antList, consqList, authorTextField.getText(), patientID,indexOfOpinion);
         IKAPaneController.getInstance().refreshPatientOpinionReferenceList(
                 IKADataController.getInstance(),patientID, indexOfOpinion);
 

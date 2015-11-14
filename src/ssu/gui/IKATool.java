@@ -138,14 +138,14 @@ public class IKATool extends Application implements Initializable {
             IKAPaneController.PatientReferenceRow selectedItem = ruleReferenceTableView.getSelectionModel().getSelectedItem();
             if(selectedItem != null) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirmation Dialog");
-                alert.setHeaderText("Look, a Confirmation Dialog");
-                alert.setContentText("Are you ok with this?");
+                alert.setTitle("확인");
+                alert.setHeaderText(selectedItem.getRule());
+                alert.setContentText("정말 삭제 하시겠습니까?");
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
                     // 데이터 삭제.
-                    paneController.deleteRuleReferenceList(dataController, ruleReferenceTableView);
+                    paneController.deleteRuleReferenceList(dataController, ruleReferenceTableView, currentPatientId);
                 } else {
                     // 취소.
                 }
@@ -330,24 +330,5 @@ public class IKATool extends Application implements Initializable {
                 System.out.println("initJPanel");
             }
         });
-    }
-
-    /**
-     * 환자 소견과 관련 Rule을 지우는 메소드로써, 참조하는 Rule ID를 삭제하고 실질적인 Rule은 삭제하지 않는다.
-     * @param opinion 환자 소견 객체.
-     * @param ruleId 사용자가 선택한 Rule의 id
-     * @return 정상적으로 삭제되면 true, 해당 소견에 없는 rule id면 false를 리턴.
-     */
-    public boolean deleteRule(Opinion opinion, Long ruleId) {
-        ArrayList<Long> rules = opinion.getRules();
-
-        for (Long id : rules) {
-            if (id == ruleId) {
-                rules.remove(id);
-                return true;
-            }
-        }
-
-        return false;
     }
 }

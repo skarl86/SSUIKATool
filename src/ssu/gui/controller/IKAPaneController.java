@@ -334,8 +334,11 @@ public class IKAPaneController implements IKAPaneInterface {
         }
     }
 
-    public void deleteRuleReferenceList(IKADataController dataController, TableView tableView){
+    public void deleteRuleReferenceList(IKADataController dataController, TableView tableView, Long patientId){
+        PatientReferenceRow item = ((PatientReferenceRow)tableView.getSelectionModel().getSelectedItem());
+        Long ruleId = Long.valueOf(item.getRuleId());
         tableView.getItems().remove(tableView.getSelectionModel().getSelectedIndex());
         tableView.getSelectionModel().clearSelection();
+        dataController.deleteRule(_opinionIndex,patientId,ruleId);
     }
 }
