@@ -1,4 +1,4 @@
-.addButton{
+.testaddButton{
     -fx-border-radius: 5;
     -fx-background-image: url("img/add.png");
     -fx-background-repeat: no-repeat;
@@ -10,12 +10,35 @@
 
 }
 
-.testaddButton{
--fx-padding: 10px;
-    -fx-graphic: url("img/add.png");
-    -fx-graphic-size 18px;
+.addButton{
+-fx-padding: 5 5 5 5;
+    -fx-graphic: url("addBtnImg.png");
 }
 
+.editButton{
+-fx-padding: 5 5 5 5;
+    -fx-graphic: url("editBtnImg.png");
+}
+
+.deleteButton{
+-fx-padding: 5 5 5 5;
+    -fx-graphic: url("deleteBtnImg.png");
+}
+
+.addButton{
+-fx-padding: 5 5 5 5;
+    -fx-graphic: url("addBtnImg.png");
+}
+
+.okButton{
+-fx-padding: 5 5 5 5;
+    -fx-graphic: url("okBtnImg.png");
+}
+
+.cancelButton{
+-fx-padding: 5 5 5 5;
+    -fx-graphic: url("cancelBtnImg.png");
+}
 /*
     TitlePanel Tilte CSS
 */
