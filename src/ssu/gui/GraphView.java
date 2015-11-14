@@ -1,28 +1,13 @@
 package ssu.gui;
 
-import com.mxgraph.io.mxCodec;
-import com.mxgraph.model.mxCell;
-import com.mxgraph.model.mxGeometry;
-import com.mxgraph.model.mxICell;
-import com.mxgraph.model.mxIGraphModel;
+import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
 import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.swing.util.mxSwingConstants;
-import com.mxgraph.util.mxConstants;
-import com.mxgraph.util.mxPoint;
-import com.mxgraph.util.mxRectangle;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
 import com.mxgraph.view.mxGraph;
-import org.w3c.dom.Document;
+import ssu.object.Tags;
 import ssu.object.rule.Atom;
 import ssu.object.rule.Rule;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.net.URL;
-import java.text.NumberFormat;
 import java.util.*;
 
 /**
@@ -39,82 +24,82 @@ public class GraphView extends  JPanel {
         this.graphComponent.getConnectionHandler().setEnabled(false);
     }
 
-    public void drawGraph(ArrayList<Rule> rules) {
+    public void drawRules(ArrayList<Rule> rules) {
+        for (Rule rule : rules) {
+            drawRule(rule);
+        }
+        // Hierarchical layout 적용.
+        mxHierarchicalLayout hierarchicalLayout = new mxHierarchicalLayout(this.graph, JLabel.WEST);
+        hierarchicalLayout.execute(this.graph.getDefaultParent());
+    }
+
+    private void drawRule(Rule rule) {
         Object parent = this.graph.getDefaultParent();
 
         int startAntecedentsWidth = 10;
         int startAntecedentsHeight = 10;
         int startConsequentsWidth = 10;
         int startConsequentsHeight = 10;
-        int startJustificationWidth = 200;
-        int startJustificationHeight = 50;
 
         Object[] allVertices = this.graph.getChildVertices(parent);
-        this.graph.getModel().beginUpdate();
 
+        this.graph.getModel().beginUpdate();
         try {
-            ArrayList<Atom> antecedents = newRule.getAntecedents();
-            ArrayList<Rule.Concequent> concequents = newRule.getConcequents();
+            ArrayList<Atom> antecedents = rule.getAntecedents();
+            ArrayList<Atom> concequents = rule.getConsequents();
 
             // justification 그려줌.
-            Object justfication = graph.insertVertex(parent, null, "J" + newRule.getId(), startAntecedentsWidth, startAntecedentsHeight, 20, 20, styleJustficationShape +styleConsFont+ styleJustficationShape + styleJustficationColor);
-            // Added by NK.
-            justificationList.add(justfication);
+            Object justfication = this.graph.insertVertex(parent, null, "J" + rule.getId(), startAntecedentsWidth, startAntecedentsHeight, 20, 20, Tags.GRAPH_JUSTIFICATION_STYLE);
+
             // antecedents 그려줌.
-            for (Rule.Antecedent ant : antecedents) {
+            for (Atom ant : antecedents) {
                 Object obj = null;
 
                 for (int i=0; i<allVertices.length; i++) {
-                    if (graph.convertValueToString(allVertices[i]).equals(ant.getName())) {
+                    if (this.graph.convertValueToString(allVertices[i]).equals(ant.getName())) {
                         obj = allVertices[i];
                         break;
                     }
                 }
 
                 if (obj != null) { // 이미 존재하는 노드.
-                    graph.insertEdge(parent, null, "", obj, justfication);
+                    this.graph.insertEdge(parent, null, "", obj, justfication);
                 } else {
-                    obj = graph.insertVertex(parent, null, ant.getName(), startAntecedentsWidth, startAntecedentsHeight, 80, 30, styleShape + styleConsFont+styleAppendColor);
-                    graph.insertEdge(parent, null, "", obj, justfication);
+                    obj = this.graph.insertVertex(parent, null, ant.getName(), startAntecedentsWidth, startAntecedentsHeight, 80, 30, Tags.GRAPH_NODE_STYLE);
+                    this.graph.insertEdge(parent, null, "", obj, justfication);
                     startAntecedentsHeight += 1;
                 }
 
-                ant.setGraphObj(obj);
             }
-            ArrayList<Object> a = null;
-            //graph.foldCells(true, true,new Object[]{vAB, vCD});
+
             // consequent 그려줌.
-            for (Rule.Concequent con : concequents) {
+            for (Atom con : concequents) {
 
                 Object obj = null;
 
                 for (int i=0; i<allVertices.length; i++) {
-                    if (graph.convertValueToString(allVertices[i]).equals(con.getName())) {
+                    if (this.graph.convertValueToString(allVertices[i]).equals(con.getName())) {
                         obj = allVertices[i];
-                        // a.add(obj);
-                        // Added by NK.
-                        concequentList.add(obj);
                         break;
                     }
                 }
-                //graph.foldCells(true, true,a.toArray());
+
                 if (obj != null) { // 이미 존재하는 노드.
-                    graph.insertEdge(parent, null, "", justfication, obj);
+                    this.graph.insertEdge(parent, null, "", justfication, obj);
                 } else {
-                    obj = graph.insertVertex(parent, null, con.getName(), startConsequentsWidth, startConsequentsHeight, 80, 30, styleConsShape + styleConsFont + styleConsColor);
-                    graph.insertEdge(parent, null, "", justfication, obj);
+                    obj = this.graph.insertVertex(parent, null, con.getName(), startConsequentsWidth, startConsequentsHeight, 80, 30, Tags.GRAPH_NODE_STYLE);
+                    this.graph.insertEdge(parent, null, "", justfication, obj);
                     startConsequentsHeight += 1;
                 }
-
-                con.setGraphObj(obj);
             }
-
-            newRule.setjGraphObj(justfication);
 
         } finally{
             graph.getModel().endUpdate();
         }
+
     }
+
+
 
     protected void clearGraph() {
         this.graph.removeCells(this.graph.getChildVertices(this.graph.getDefaultParent()));

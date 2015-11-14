@@ -25,6 +25,7 @@ import ssu.gui.controller.IKADataController;
 import ssu.gui.controller.IKAPaneController;
 import ssu.gui.controller.IKARulePopUpViewController;
 import ssu.object.*;
+import ssu.object.patient.Opinion;
 import ssu.object.rule.Atom;
 import ssu.object.rule.Rule;
 
@@ -219,5 +220,24 @@ public class IKATool extends Application implements Initializable {
         stage.initOwner(
                 ((Node)event.getSource()).getScene().getWindow() );
         stage.show();
+    }
+
+    /**
+     * 환자 소견과 관련 Rule을 지우는 메소드로써, 참조하는 Rule ID를 삭제하고 실질적인 Rule은 삭제하지 않는다.
+     * @param opinion 환자 소견 객체.
+     * @param ruleId 사용자가 선택한 Rule의 id
+     * @return 정상적으로 삭제되면 true, 해당 소견에 없는 rule id면 false를 리턴.
+     */
+    public boolean deleteRule(Opinion opinion, Long ruleId) {
+        ArrayList<Long> rules = opinion.getRules();
+
+        for (Long id : rules) {
+            if (id == ruleId) {
+                rules.remove(id);
+                return true;
+            }
+        }
+
+        return false;
     }
 }
