@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.text.*?>
 
-<GridPane alignment="CENTER" hgap="10.0" prefHeight="386.000022070315" prefWidth="528.0" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ssu.gui.controller.IKARulePopUpViewController">
+<GridPane alignment="CENTER" hgap="10.0" prefHeight="386.000022070315" prefWidth="528.0" styleClass="okButton" stylesheets="@resources/main.css" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ssu.gui.controller.IKARulePopUpViewController">
   <children>
       <TitledPane>
          <content>
@@ -44,8 +44,8 @@
                   </ComboBox>
                   <Text layoutX="41.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author" />
                   <TextField layoutX="136.0" layoutY="52.0" prefWidth="102.0" />
-                  <Button layoutX="343.0" layoutY="56.0" mnemonicParsing="false" onAction="#handleClickOK" prefWidth="74.0" text="OK" />
-                  <Button cancelButton="true" layoutX="425.0" layoutY="56.0" mnemonicParsing="false" onAction="#handleclickCancel" prefWidth="74.0" text="Cancel" />
+                  <Button layoutX="343.0" layoutY="56.0" mnemonicParsing="false" onAction="#handleClickOK" prefWidth="74.0" styleClass="okButton" text="OK" />
+                  <Button cancelButton="true" layoutX="425.0" layoutY="56.0" mnemonicParsing="false" onAction="#handleclickCancel" prefWidth="74.0" styleClass="cancelButton" text="Cancel" />
                 </children>
               </AnchorPane>
             </items>
