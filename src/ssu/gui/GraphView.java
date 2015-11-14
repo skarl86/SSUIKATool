@@ -13,7 +13,7 @@ import java.util.*;
 /**
  * Created by JasonHong on 2015. 11. 14..
  */
-public class GraphView extends  JPanel {
+public class GraphView extends JPanel {
 
     private mxGraphComponent graphComponent;
     private mxGraph graph;
@@ -24,6 +24,10 @@ public class GraphView extends  JPanel {
         this.graphComponent.getConnectionHandler().setEnabled(false);
     }
 
+    /**
+     *
+     * @param rules
+     */
     public void drawRules(ArrayList<Rule> rules) {
         for (Rule rule : rules) {
             drawRule(rule);
@@ -33,6 +37,10 @@ public class GraphView extends  JPanel {
         hierarchicalLayout.execute(this.graph.getDefaultParent());
     }
 
+    /**
+     *
+     * @param rule
+     */
     private void drawRule(Rule rule) {
         Object parent = this.graph.getDefaultParent();
 
@@ -94,14 +102,13 @@ public class GraphView extends  JPanel {
             }
 
         } finally{
-            graph.getModel().endUpdate();
+            this.graph.getModel().endUpdate();
         }
 
     }
 
 
-
-    protected void clearGraph() {
+    public void clearGraph() {
         this.graph.removeCells(this.graph.getChildVertices(this.graph.getDefaultParent()));
     }
 
@@ -113,14 +120,7 @@ public class GraphView extends  JPanel {
         return graphComponent;
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Graph View");
-        frame.getContentPane().add(new GraphView().getGraphComponent());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 320);
-        frame.setResizable(false);
-
-        frame.setVisible(true);
+    public mxGraph getGraph() {
+        return graph;
     }
-
 }

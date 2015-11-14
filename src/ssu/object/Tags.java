@@ -84,11 +84,6 @@ public final class Tags {
     public static final String TEST_VALUE_TYPE_RH_MINUS = "-";
 
     /**
-     * Test Item 이름.
-     */
-
-
-    /**
      * jGraphX
      */
     public static final String GRAPH_NODE_STYLE = mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_ELLIPSE + ";" + mxConstants.STYLE_FILLCOLOR + "=" + mxUtils.getHexColorString(new Color(242,177,188));
