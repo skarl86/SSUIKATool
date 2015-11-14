@@ -272,8 +272,11 @@ public class IKATool extends Application implements Initializable {
         Parent root = fxmlLoader.load();
 
         IKARulePopUpViewController controller = fxmlLoader.getController();
-        controller.setRule(dataController, selectedItem.getRuleId());
 
+        if(selectedItem != null)
+            controller.setRule(dataController, selectedItem.getRuleId());
+        else
+            controller.setRule(dataController, null);
         stage.setScene(new Scene(root));
         stage.setTitle("Rule Editor");
         stage.initModality(Modality.WINDOW_MODAL);
