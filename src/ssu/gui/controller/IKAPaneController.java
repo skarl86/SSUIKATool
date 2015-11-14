@@ -268,9 +268,9 @@ public class IKAPaneController implements IKAPaneInterface {
     }
 
     @Override
-    public void refreshPatientOpinionReferenceList(IKADataController dataController, Long patientId, int indeOfOpinion){
+    public void refreshPatientOpinionReferenceList(IKADataController dataController, Long patientId, int indexOfOpinion){
         ArrayList<IKADataController.OpinionReferenceList> elmList =
-                (ArrayList<IKADataController.OpinionReferenceList>) dataController.getRuleReferenceListInOpinion(patientId, indeOfOpinion);
+                (ArrayList<IKADataController.OpinionReferenceList>) dataController.getRuleReferenceListInOpinion(patientId, indexOfOpinion);
 
         _ruleIdColumn.setCellValueFactory(
                 new PropertyValueFactory<PatientReferenceRow, String>("ruleId")

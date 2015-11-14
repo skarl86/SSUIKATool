@@ -196,6 +196,9 @@ public class IKATool extends Application implements Initializable {
         });
     }
 
+    public int getOpinionIndex(){
+        return Integer.valueOf(opinionPageLabel.getText().split("/")[0].trim()) - 1;
+    }
     @Override
     public void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("IKAMainTool.fxml"));
@@ -299,6 +302,8 @@ public class IKATool extends Application implements Initializable {
             controller.setRule(dataController, selectedItem.getRuleId());
         else
             controller.setRule(dataController, null);
+        controller.setOpinionIndex(getOpinionIndex());
+        controller.setPatientID(currentPatientId);
 
         stage.setScene(new Scene(root));
         stage.setTitle("Rule Editor");

@@ -57,6 +57,10 @@ public class IKARulePopUpViewController implements Initializable{
 
     @FXML GridPane mainView;
 
+    @FXML TextField authorTextField;
+
+    private Long patientID;
+    private int indexOfOpinion;
 
     class CellFactor implements Callback<TableColumn<AtomRow, String>, TableCell<AtomRow, String>>{
 
@@ -170,6 +174,24 @@ public class IKARulePopUpViewController implements Initializable{
 //            // 취소.
 //        }
 
+        ArrayList<String> antList = new ArrayList<String>();
+        ArrayList<String> consqList = new ArrayList<String>();
+
+        for(Object obj : antecedentTableView.getItems()){
+            AtomRow item = (AtomRow) obj;
+            if(!item.getAtom().equals(COMBOBOX))
+                antList.add(item.getAtom());
+        }
+        for(Object obj : conseqeuntTableView.getItems()){
+            AtomRow item = (AtomRow) obj;
+            if(!item.getAtom().equals(COMBOBOX))
+                consqList.add(item.getAtom());
+        }
+
+        IKADataController.getInstance().ruleEditDialogOK(antList, consqList, authorTextField.getText());
+        IKAPaneController.getInstance().refreshPatientOpinionReferenceList(
+                IKADataController.getInstance(),patientID, indexOfOpinion);
+
         Stage stage = (Stage) mainView.getScene().getWindow();
         stage.close();
     }
@@ -276,6 +298,12 @@ public class IKARulePopUpViewController implements Initializable{
 
     }
 
+    public void setPatientID(Long patientID){
+        this.patientID = patientID;
+    }
+    public void setOpinionIndex(int opinionIndex){
+        this.indexOfOpinion = opinionIndex;
+    }
     public void setRule(IKADataController dataController, String ruleId){
         if(ruleId != null)
             _selectedRule = dataController.getRule(Long.valueOf(ruleId));
