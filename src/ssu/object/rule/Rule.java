@@ -43,30 +43,34 @@ public class Rule implements Savable {
      */
     public boolean containAtoms(ArrayList<String> checkAntecedents, ArrayList<String> checkConsequents) {
 
-        ArrayList<String> antecedentStringList = new ArrayList<String>();
-        ArrayList<String> consequentStringList = new ArrayList<String>();
+        // 파라미터 모두 Atom이 없을 경우
+        if (checkAntecedents.size() == 0 && checkConsequents.size() == 0) {
+            return false;
+        } else {
+            ArrayList<String> antecedentStringList = new ArrayList<String>();
+            ArrayList<String> consequentStringList = new ArrayList<String>();
 
-        for (Atom antecedent : getAntecedents()) {
-            antecedentStringList.add(antecedent.getName());
-        }
-        for (Atom consequent : getConsequents()) {
-            consequentStringList.add(consequent.getName());
-        }
-
-        for (String checkAntecedent : checkAntecedents)  {
-            if (!antecedentStringList.contains(checkAntecedent)) {
-                return false;
+            for (Atom antecedent : getAntecedents()) {
+                antecedentStringList.add(antecedent.getName());
             }
-        }
-
-        for (String checkConsequent : checkConsequents) {
-            if (!consequentStringList.contains(checkConsequent)) {
-                return false;
+            for (Atom consequent : getConsequents()) {
+                consequentStringList.add(consequent.getName());
             }
+
+            for (String checkAntecedent : checkAntecedents)  {
+                if (!antecedentStringList.contains(checkAntecedent)) {
+                    return false;
+                }
+            }
+
+            for (String checkConsequent : checkConsequents) {
+                if (!consequentStringList.contains(checkConsequent)) {
+                    return false;
+                }
+            }
+
+            return true;
         }
-
-        return true;
-
     }
 
     /**
