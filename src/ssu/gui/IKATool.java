@@ -22,9 +22,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -225,11 +223,18 @@ public class IKATool extends Application implements Initializable {
 
         TitledPane tp = new TitledPane("My Titled Pane", new Button(""));
         tp.setText("Graph");
+        tp.setPrefSize(600, 500);
+        tp.setMaxSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+        tp.setMinSize(600, 500);
+        tp.minWidth(600);
+        tp.minHeight(500);
+
 
         VBox vbox = new VBox();
         vbox.setPadding(new Insets(1));
         vbox.setSpacing(2);
-
+        VBox.setVgrow(swingNode,Priority.ALWAYS);
+        vbox.setPrefSize(600,500);
 
         Text label = new Text("TEST : ");
 
@@ -237,7 +242,11 @@ public class IKATool extends Application implements Initializable {
 
         consequentComboBox.getItems().addAll("간질환","폐질환");
 
-        HBox hBox = new HBox();
+        HBox hBox = new HBox(2);
+
+        HBox.setHgrow(label, Priority.ALWAYS);
+        HBox.setHgrow(consequentComboBox, Priority.ALWAYS);
+
         hBox.getChildren().add(label);
         hBox.getChildren().add(consequentComboBox);
         hBox.setAlignment(Pos.CENTER_RIGHT);
@@ -249,7 +258,8 @@ public class IKATool extends Application implements Initializable {
         vbox.getChildren().add(swingNode);
         vbox.getChildren().add(hBox);
 
-        graphStage.setScene(new Scene(pane, 700, 600));
+        graphStage.setResizable(false);
+        graphStage.setScene(new Scene(pane, 600, 500));
         graphStage.show();
 
     }
@@ -296,10 +306,7 @@ public class IKATool extends Application implements Initializable {
             @Override
             public void run() {
                 GraphView panel = new GraphView();
-                panel.setPreferredSize(new Dimension(500,400));
-                //panel.setOpaque(true);
-                //panel.setBackground(Color.black);
-                //panel.add(new JButton("Click me!"));
+                panel.setPreferredSize(new Dimension(700,600));
                 swingNode.setContent(panel.getGraphComponent());
                 panel.repaint();
                 System.out.println("initJPanel");
