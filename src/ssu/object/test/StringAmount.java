@@ -17,7 +17,7 @@ public class StringAmount extends StringValue {
 
     @Override
     public String printSavingFormat() {
-        String line = Tags.TEST_VALUE_TYPE_REACTIVE_NONREACTIVE + Tags.TEST_VALUE_SPLITER + getTestValue();
+        String line = Tags.TEST_VALUE_TYPE_AMOUNT + Tags.TEST_VALUE_SPLITER + getTestValue();
 
         return line;
     }

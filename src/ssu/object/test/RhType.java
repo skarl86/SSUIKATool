@@ -17,7 +17,7 @@ public class RhType extends StringValue {
 
     @Override
     public String printSavingFormat() {
-        String line = Tags.TEST_VALUE_TYPE_BLOOD + Tags.TEST_VALUE_SPLITER + getTestValue();
+        String line = Tags.TEST_VALUE_TYPE_RH + Tags.TEST_VALUE_SPLITER + getTestValue();
 
         return line;
     }

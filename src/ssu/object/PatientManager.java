@@ -172,9 +172,9 @@ public class PatientManager {
             }
         } else if (testValueType.equals(Tags.TEST_VALUE_TYPE_RH)) {
             if (testValueTypeValue[1].equals(Tags.TEST_VALUE_TYPE_RH_PLUS)) {           // Blood Rh : +
-                newTestValue = new BloodType(Tags.TEST_VALUE_TYPE_RH_PLUS);
+                newTestValue = new RhType(Tags.TEST_VALUE_TYPE_RH_PLUS);
             } else {                                                                    // Blood Rh : -
-                newTestValue = new BloodType(Tags.TEST_VALUE_TYPE_RH_MINUS);
+                newTestValue = new RhType(Tags.TEST_VALUE_TYPE_RH_MINUS);
             }
         } else { // 현재 없는 타입
             System.out.println("Unknown TestValue");
