@@ -301,6 +301,25 @@ public class IKADataController extends IKAController implements IKADataRequestIn
     }
 
     /**
+     * Formal Rule String을 파라미터로 같은 Rule을 리턴하는 메소드.
+     * @param formalStr Formal Rule String
+     * @return 존재하면 Rule 객체, 없으면 null
+     */
+    public Rule getRuleByFormalFormat(String formalStr) {
+        HashMap<Long, Rule> allRules = RuleManager.getInstance().getAllRules();
+
+        for (Map.Entry<Long, Rule> entry : allRules.entrySet()) {
+            Rule rule = entry.getValue();
+
+            if (rule.printFormalFormat().equals(formalStr)) {
+                return rule;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Exp : App 종료시 설정되어 있는 Atom, Rule, TestItem, Patient의 정보를 모두 Save.
      */
     public void applicationQuit(){

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.text.*?>
 
-<GridPane alignment="CENTER" hgap="10.0" prefHeight="386.000022070315" prefWidth="528.0" styleClass="okButton" stylesheets="@resources/main.css" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ssu.gui.controller.IKARulePopUpViewController">
+<GridPane fx:id="mainView" alignment="CENTER" hgap="10.0" prefHeight="386.000022070315" prefWidth="528.0" styleClass="okButton" stylesheets="@resources/main.css" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ssu.gui.controller.IKARulePopUpViewController">
   <children>
       <TitledPane>
          <content>
@@ -33,7 +33,7 @@
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="43.2197265625" prefWidth="526.0">
                 <children>
                   <Text layoutX="41.0" layoutY="30.0" scaleX="1.0" scaleY="0.999991257518534" strokeType="OUTSIDE" strokeWidth="0.0" text="Complete Rule" />
-                  <ComboBox layoutX="136.0" layoutY="16.0" prefWidth="364.0">
+                  <ComboBox fx:id="completeRuleComboBox" layoutX="136.0" layoutY="16.0" prefWidth="364.0">
                     <items>
                       <FXCollections fx:factory="observableArrayList">
                         <String fx:value="Item 1" />
