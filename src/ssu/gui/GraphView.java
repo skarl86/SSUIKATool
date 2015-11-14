@@ -20,6 +20,19 @@ public class GraphView extends JPanel {
 
     public GraphView() {
         this.graph = new mxGraph();
+        Object parent = this.graph.getDefaultParent();
+        try
+        {
+            Object v1 = graph.insertVertex(parent, null, "Hello", 20, 20, 80,
+                    30);
+            Object v2 = graph.insertVertex(parent, null, "World!", 240, 150,
+                    80, 30);
+            graph.insertEdge(parent, null, "Edge", v1, v2);
+        }
+        finally
+        {
+            graph.getModel().endUpdate();
+        }
         this.graphComponent = new mxGraphComponent(this.graph);
         this.graphComponent.getConnectionHandler().setEnabled(false);
     }
