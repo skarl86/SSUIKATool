@@ -37,7 +37,24 @@
 
 .cancelButton{
 -fx-padding: 5 5 5 5;
-    -fx-graphic: url("cancelBtnImg.png");
+    -fx-graphic: url("cancelImg.png");
+}
+
+.nextButton{
+-fx-background-image: url("next24.png");
+-fx-background-position: right;
+-fx-background-repeat: no-repeat;
+/*
+
+    -fx-padding: 5 5 5 5;
+    -fx-graphic: url("next24.png");
+    */
+}
+
+.previous24Button{
+-fx-background-image: url("previous24.png");
+-fx-background-position: left;
+-fx-background-repeat: no-repeat;
 }
 /*
     TitlePanel Tilte CSS
