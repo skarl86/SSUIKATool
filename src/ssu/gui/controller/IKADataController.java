@@ -116,7 +116,6 @@ public class IKADataController extends IKAController implements IKADataRequestIn
                     pList.add(opn.getOpinion());
                 }
             }
-            break;
         }
         return pList;
     }

@@ -20,6 +20,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -67,6 +68,8 @@ public class IKATool extends Application implements Initializable {
     @FXML private TableColumn<IKAPaneController.PatientDetailRow, String> testNameColumn;
     @FXML private TableColumn<IKAPaneController.PatientDetailRow, String> testNumValueColumn;
     @FXML private TableColumn<IKAPaneController.PatientDetailRow, String> testTextValueColumn;
+
+    @FXML private Label opinionPageLabel;
 
     @FXML private TextArea opinionTextArea;
     @FXML private Button leftOpinionButton;
@@ -153,11 +156,13 @@ public class IKATool extends Application implements Initializable {
     @FXML protected void handleLeftClickButtonAction(ActionEvent event){
         System.out.println(event);
         this.paneController.previousOpinion(this.dataController, currentPatientId);
+        paneController.refreshOpinionPageLabel(dataController, opinionPageLabel, currentPatientId);
     }
 
     @FXML protected void handleRightClickButtonAction(ActionEvent event){
         System.out.println(event);
         this.paneController.nextOpinion(this.dataController, currentPatientId);
+        paneController.refreshOpinionPageLabel(dataController, opinionPageLabel, currentPatientId);
     }
 
     public void initView(){
@@ -167,6 +172,7 @@ public class IKATool extends Application implements Initializable {
         this.paneController.createPatientOpinionList(opinionTextArea);
         this.paneController.createPatientOpinionReferenceList(ruleReferenceTableView, ruleIdColumn,
                 ruleColumn, authorColumn, madeDateColumn, modifiedDateColumn);
+        paneController.refreshOpinionPageLabel(dataController, opinionPageLabel, currentPatientId);
 
         // Action 등록.
         patientTreeView.getSelectionModel().selectedItemProperty().addListener( new ChangeListener() {
@@ -182,6 +188,7 @@ public class IKATool extends Application implements Initializable {
                     paneController.refreshPatientDetailList(dataController, currentPatientId);
                     paneController.refreshPatientOpinionList(dataController,currentPatientId);
                     paneController.refreshPatientOpinionReferenceList(dataController, currentPatientId, 0);
+                    paneController.refreshOpinionPageLabel(dataController, opinionPageLabel, currentPatientId);
                 }
                 // do what ever you want
             }

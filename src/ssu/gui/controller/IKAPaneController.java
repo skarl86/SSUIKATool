@@ -241,6 +241,13 @@ public class IKAPaneController implements IKAPaneInterface {
             _opinionTextArea.setText("");
         }
     }
+    public void refreshOpinionPageLabel(IKADataController dataController, Label pageLabel, Long patientID){
+        ArrayList<String> opinionList = (ArrayList) dataController.getPatientOpinion(patientID);
+        if(opinionList.size() > 0)
+            pageLabel.setText(String.format("%s / %s", _opinionIndex+1, opinionList.size()));
+        else
+            pageLabel.setText(String.format("%s / %s", _opinionIndex, opinionList.size()));
+    }
 
     @Override
     public void createPatientOpinionReferenceList(TableView ruleReferenceTableView, TableColumn ruleIdColumn,

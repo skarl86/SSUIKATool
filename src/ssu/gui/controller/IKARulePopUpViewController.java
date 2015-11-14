@@ -154,21 +154,24 @@ public class IKARulePopUpViewController implements Initializable{
 
     @FXML
     protected void handleClickOK(ActionEvent event){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("확인");
-        alert.setHeaderText(completeRuleComboBox.getPromptText());
-        alert.setContentText("위 Rule을 정말 저장하시겠습니까?");
+//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//        alert.setTitle("확인");
+//        alert.setHeaderText(completeRuleComboBox.getPromptText());
+//        alert.setContentText("위 Rule을 정말 저장하시겠습니까?");
+//
+//        Optional<ButtonType> result = alert.showAndWait();
+//        if (result.get() == ButtonType.OK){
+//            // 데이터 삭제.
+//            Stage stage = (Stage) mainView.getScene().getWindow();
+//            stage.close();
+//
+////            IKADataController.getInstance().ruleEditDialogOK();
+//        } else {
+//            // 취소.
+//        }
 
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
-            // 데이터 삭제.
-            Stage stage = (Stage) mainView.getScene().getWindow();
-            stage.close();
-
-//            IKADataController.getInstance().ruleEditDialogOK();
-        } else {
-            // 취소.
-        }
+        Stage stage = (Stage) mainView.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
