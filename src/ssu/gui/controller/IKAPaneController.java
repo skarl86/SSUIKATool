@@ -255,8 +255,9 @@ public class IKAPaneController implements IKAPaneInterface {
     }
 
     @Override
-    public void refreshPatientOpinionReferenceList(IKADataController dataController, Long patientId){
-        ArrayList<IKADataController.OpinionReferenceList> elmList = (ArrayList)dataController.getOpinionReferenceList(patientId);
+    public void refreshPatientOpinionReferenceList(IKADataController dataController, Long patientId, int indeOfOpinion){
+        ArrayList<IKADataController.OpinionReferenceList> elmList =
+                (ArrayList<IKADataController.OpinionReferenceList>) dataController.getRuleReferenceListInOpinion(patientId, indeOfOpinion);
 
         _ruleIdColumn.setCellValueFactory(
                 new PropertyValueFactory<PatientReferenceRow, String>("ruleId")
@@ -296,6 +297,8 @@ public class IKAPaneController implements IKAPaneInterface {
         }else{
             _opinionTextArea.setText(opinionList.get(_opinionIndex));
         }
+
+        refreshPatientOpinionReferenceList(dataController, patientId, _opinionIndex);
     }
 
     public void previousOpinion(IKADataController dataController, Long patientId){
@@ -309,5 +312,7 @@ public class IKAPaneController implements IKAPaneInterface {
         }else{
             _opinionTextArea.setText(opinionList.get(_opinionIndex));
         }
+
+        refreshPatientOpinionReferenceList(dataController, patientId, _opinionIndex);
     }
 }

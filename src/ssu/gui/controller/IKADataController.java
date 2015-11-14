@@ -76,23 +76,21 @@ public class IKADataController extends IKAController implements IKADataRequestIn
      * @param patientRegId
      * @return 소견 정보 리스트 전달.
      */
-    public List<OpinionReferenceList> getOpinionReferenceList(Long patientRegId){
+    public List<IKADataController.OpinionReferenceList> getOpinionReferenceList(Long patientRegId, Long ruleId){
         List<OpinionReferenceList> pList = new ArrayList<OpinionReferenceList>();
 
         for (Patient pat : this.patientManager.getAllPatients()){
             if(patientRegId.equals(pat.getRegId())) {
                 for(Opinion opn : pat.getAllOpinions()){
-                    for(Long rId : opn.getRules()){
-                        if(this.ruleManager.getAllRules().containsKey(rId)){
-                            Rule rule = this.ruleManager.getAllRules().get(rId);
-                            OpinionReferenceList op = new OpinionReferenceList();
-                            op.author = rule.getAuthor();
-                            op.madeDate = rule.getMadeDate();
-                            op.modifiedDate = rule.getModifiedDate();
-                            op.rule = rule.printFormalFormat();
-                            op.ruleId = rId;
-                            pList.add(op);
-                        }
+                    if(this.ruleManager.getAllRules().containsKey(ruleId)){
+                        Rule rule = this.ruleManager.getAllRules().get(ruleId);
+                        OpinionReferenceList op = new OpinionReferenceList();
+                        op.author = rule.getAuthor();
+                        op.madeDate = rule.getMadeDate();
+                        op.modifiedDate = rule.getModifiedDate();
+                        op.rule = rule.printFormalFormat();
+                        op.ruleId = rule.getId();
+                        pList.add(op);
                     }
                 }
             }
@@ -118,6 +116,25 @@ public class IKADataController extends IKAController implements IKADataRequestIn
             break;
         }
         return pList;
+    }
+
+    public List<OpinionReferenceList> getRuleReferenceListInOpinion(Long patientRegId, int indexOfOpinion){
+        List<OpinionReferenceList> ruleListInOpinion = new ArrayList<OpinionReferenceList>();
+        for (Patient pat : this.patientManager.getAllPatients()){
+            if(patientRegId.equals(pat.getRegId())){
+                for(Long ruleId : pat.getAllOpinions().get(indexOfOpinion).getRules()){
+                    Rule rule = this.ruleManager.getAllRules().get(ruleId);
+                    OpinionReferenceList op = new OpinionReferenceList();
+                    op.author = rule.getAuthor();
+                    op.madeDate = rule.getMadeDate();
+                    op.modifiedDate = rule.getModifiedDate();
+                    op.rule = rule.printFormalFormat();
+                    op.ruleId = rule.getId();
+                    ruleListInOpinion.add(op);
+                }
+            }
+        }
+        return ruleListInOpinion;
     }
 
     /**

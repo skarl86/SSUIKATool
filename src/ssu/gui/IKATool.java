@@ -116,7 +116,7 @@ public class IKATool extends Application implements Initializable {
                     paneController.refreshPatientDefaultList(dataController, currentPatientId);
                     paneController.refreshPatientDetailList(dataController, currentPatientId);
                     paneController.refreshPatientOpinionList(dataController,currentPatientId);
-                    paneController.refreshPatientOpinionReferenceList(dataController, currentPatientId);
+                    paneController.refreshPatientOpinionReferenceList(dataController, currentPatientId, 0);
                 }
                 // do what ever you want
             }

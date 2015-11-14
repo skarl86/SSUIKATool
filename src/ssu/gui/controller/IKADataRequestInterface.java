@@ -33,10 +33,10 @@ public interface IKADataRequestInterface {
      * @return 사용자가 입력한 Atom들이 존재하는 Rule들의 리스트.
      */
     public ArrayList<String> getRuleCompletionList(ArrayList<String> antecedents, ArrayList<String> consequents);
-
     public Map<String, List<IKADataController.PatientListElement>> getPatientsList();
     public IKADataController.PatientDefaultListElement getPatientsDefaultList(Long patientRegId);
 
+    public List<IKADataController.OpinionReferenceList> getOpinionReferenceList(Long patientRegId, Long ruleId);
     /**
      * DataManager Wrapping 메소드.
      */
