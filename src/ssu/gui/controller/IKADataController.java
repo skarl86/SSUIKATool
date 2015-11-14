@@ -71,6 +71,9 @@ public class IKADataController extends IKAController implements IKADataRequestIn
         PATIENT_DIAGNOSIS
     }
 
+    public Rule getRule(Long ruleId){
+        return ruleManager.getAllRules().get(ruleId);
+    }
     /**
      * "소견관련 Rule List"의 출력 될 정보 리스트.
      * @param patientRegId

@@ -6,24 +6,30 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import ssu.gui.controller.IKAController;
 import ssu.gui.controller.IKADataController;
 import ssu.gui.controller.IKAPaneController;
+import ssu.gui.controller.IKARulePopUpViewController;
 import ssu.object.*;
 import ssu.object.rule.Atom;
 import ssu.object.rule.Rule;
 
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -33,6 +39,10 @@ public class IKATool extends Application implements Initializable {
     public static void main(String[] args) {
         launch(args);
     }
+
+    private String ACTION_DELETE ="deleteButton";
+    private String ACTION_EDIT ="editButton";
+    private String ACTION_ADD ="addButton";
 
     private IKADataController dataController = IKADataController.getInstance();
     private IKAPaneController paneController = IKAPaneController.getInstance();
@@ -52,6 +62,10 @@ public class IKATool extends Application implements Initializable {
     @FXML private Button leftOpinionButton;
     @FXML private Button rightOpinionButton;
 
+    @FXML private Button addButton;
+    @FXML private Button editButton;
+    @FXML private Button deleteButton;
+
     @FXML private TableView<IKAPaneController.PatientReferenceRow> ruleReferenceTableView;
     @FXML private TableColumn<IKAPaneController.PatientReferenceRow, String> ruleIdColumn;
     @FXML private TableColumn<IKAPaneController.PatientReferenceRow, String> ruleColumn;
@@ -60,6 +74,7 @@ public class IKATool extends Application implements Initializable {
     @FXML private TableColumn<IKAPaneController.PatientReferenceRow, String> modifiedDateColumn;
 
     private Long currentPatientId;
+
     @Override
     public void init() {
         /**
@@ -84,6 +99,37 @@ public class IKATool extends Application implements Initializable {
         System.out.println("Application sucessfully initiallized.");
     }
 
+    @FXML protected void actionReferenceRuleList(ActionEvent event) throws IOException {
+        System.out.println("[INTERACTION] Modal Rule Edit View : " + ((Button)event.getSource()).getId());
+
+        IKAPaneController.PatientReferenceRow selectedItem = ruleReferenceTableView.getSelectionModel().getSelectedItem();
+
+        if( ((Button)event.getSource()).getId().equals(ACTION_ADD)){
+            modalRuleEditView(event, selectedItem);
+        }
+
+        if(selectedItem != null){
+            if(((Button)event.getSource()).getId().equals(ACTION_EDIT)){
+                modalRuleEditView(event, selectedItem);
+            }else if(((Button)event.getSource()).getId().equals(ACTION_DELETE)){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Dialog");
+                alert.setHeaderText("Look, a Confirmation Dialog");
+                alert.setContentText("Are you ok with this?");
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK){
+                    // 데이터 삭제.
+                    paneController.deleteRuleReferenceList(dataController, ruleReferenceTableView);
+                } else {
+                    // 취소.
+                }
+            }
+        }
+
+
+    }
+
     @FXML protected void handleLeftClickButtonAction(ActionEvent event){
         System.out.println(event);
         this.paneController.previousOpinion(this.dataController, currentPatientId);
@@ -93,9 +139,8 @@ public class IKATool extends Application implements Initializable {
         System.out.println(event);
         this.paneController.nextOpinion(this.dataController, currentPatientId);
     }
-    public void initView(){
-        System.out.println("Init View.");
 
+    public void initView(){
         this.paneController.createPatientTree(patientTreeView, this.dataController.getPatientsList());
         this.paneController.createPatientDefaultList(patientTableView,subjectColumn,textValueColumn);
         this.paneController.createPatientDetailList(patientDetailTable, testNameColumn, testNumValueColumn, testTextValueColumn );
@@ -155,6 +200,24 @@ public class IKATool extends Application implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        System.out.println("[UI] Initialize View.");
         initView();
+    }
+
+    private void modalRuleEditView(ActionEvent event, IKAPaneController.PatientReferenceRow selectedItem) throws IOException {
+        Stage stage = new Stage();
+//        ResourceBundle resources = ResourceBundle.getBundle("ssu.gui");
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("RulePopUpView.fxml"));
+        Parent root = fxmlLoader.load();
+
+        IKARulePopUpViewController controller = fxmlLoader.getController();
+        controller.setRule(dataController, selectedItem.getRuleId());
+
+        stage.setScene(new Scene(root));
+        stage.setTitle("Rule Editor");
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(
+                ((Node)event.getSource()).getScene().getWindow() );
+        stage.show();
     }
 }

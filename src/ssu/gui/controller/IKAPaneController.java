@@ -315,4 +315,9 @@ public class IKAPaneController implements IKAPaneInterface {
 
         refreshPatientOpinionReferenceList(dataController, patientId, _opinionIndex);
     }
+
+    public void deleteRuleReferenceList(IKADataController dataController, TableView tableView){
+        tableView.getItems().remove(tableView.getSelectionModel().getSelectedIndex());
+        tableView.getSelectionModel().clearSelection();
+    }
 }
