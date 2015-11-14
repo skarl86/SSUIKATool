@@ -27,3 +27,103 @@ Factor V mutatio,Factor V mutatio에 관한 검사항목입니다.
 Prothrombin gene,Prothrombin gene에 관한 검사항목입니다.
 NK cell(CD16+56),NK cell(CD16+56)에 관한 검사항목입니다.
 MTHFR C677T,MTHFR C677T에 관한 검사항목입니다.
+T.Protein,T.Protein에 관한 검사항목입니다.
+Globulin,Globulin에 관한 검사항목입니다.
+A/G Ratio,A/G Ratio에 관한 검사항목입니다.
+BUN,BUN에 관한 검사항목입니다.
+Creatinine,Creatinine에 관한 검사항목입니다.
+B/C Ratio,B/C Ratio에 관한 검사항목입니다.
+U.A,U.A에 관한 검사항목입니다.
+Glu(FBS),Glu(FBS)에 관한 검사항목입니다.
+T.Bili.,T.Bili.에 관한 검사항목입니다.
+D.Bili,D.Bili에 관한 검사항목입니다.
+ID.Bili,ID.Bili에 관한 검사항목입니다.
+γ-GT,γ-GT에 관한 검사항목입니다.
+LAP,LAP에 관한 검사항목입니다.
+CHE,CHE에 관한 검사항목입니다.
+LDH,LDH에 관한 검사항목입니다.
+CK,CK에 관한 검사항목입니다.
+Amylase,Amylase에 관한 검사항목입니다.
+Lipase,Lipase에 관한 검사항목입니다.
+Chol,Chol에 관한 검사항목입니다.
+TG,TG에 관한 검사항목입니다.
+HDL-C,HDL-C에 관한 검사항목입니다.
+LDL-C,LDL-C에 관한 검사항목입니다.
+C.R.F,C.R.F에 관한 검사항목입니다.
+Ca,Ca에 관한 검사항목입니다.
+Phosphorus,Phosphorus에 관한 검사항목입니다.
+Na,Na에 관한 검사항목입니다.
+K,K에 관한 검사항목입니다.
+Cl,Cl에 관한 검사항목입니다.
+S-Osmo,S-Osmo에 관한 검사항목입니다.
+Iron,Iron에 관한 검사항목입니다.
+UIBC,UIBC에 관한 검사항목입니다.
+TIBC,TIBC에 관한 검사항목입니다.
+Mg,Mg에 관한 검사항목입니다.
+Urine(10),Urine(10)에 관한 검사항목입니다.
+PH,PH에 관한 검사항목입니다.
+Nitrite,Nitrite에 관한 검사항목입니다.
+S.G,S.G에 관한 검사항목입니다.
+Protein,Protein에 관한 검사항목입니다.
+Glucose,Glucose에 관한 검사항목입니다.
+Ketone,Ketone에 관한 검사항목입니다.
+Bilirubin,Bilirubin에 관한 검사항목입니다.
+Occult Blood,Occult Blood에 관한 검사항목입니다.
+Urobilinogen,Urobilinogen에 관한 검사항목입니다.
+Leukocyte,Leukocyte에 관한 검사항목입니다.
+Microscopy,Microscopy에 관한 검사항목입니다.
+R.B.C,R.B.C에 관한 검사항목입니다.
+W.B.C,W.B.C에 관한 검사항목입니다.
+E.P.CELLS,E.P.CELLS에 관한 검사항목입니다.
+Crystals,Crystals에 관한 검사항목입니다.
+Others,Others에 관한 검사항목입니다.
+WBC,WBC에 관한 검사항목입니다.
+Diff.count 2,Diff.count 2에 관한 검사항목입니다.
+Band,Band에 관한 검사항목입니다.
+Lymphocyte,Lymphocyte에 관한 검사항목입니다.
+Monocyte,Monocyte에 관한 검사항목입니다.
+Eosinophil,Eosinophil에 관한 검사항목입니다.
+Basophil,Basophil에 관한 검사항목입니다.
+Immature cell,Immature cell에 관한 검사항목입니다.
+Blast,Blast에 관한 검사항목입니다.
+Promyelocyte,Promyelocyte에 관한 검사항목입니다.
+Myelocyte,Myelocyte에 관한 검사항목입니다.
+Metamyelocyte,Metamyelocyte에 관한 검사항목입니다.
+RBC,RBC에 관한 검사항목입니다.
+Hb,Hb에 관한 검사항목입니다.
+HCT,HCT에 관한 검사항목입니다.
+MCV,MCV에 관한 검사항목입니다.
+MCH,MCH에 관한 검사항목입니다.
+MCHC,MCHC에 관한 검사항목입니다.에 관한 검사항목입니다.
+RDW,RDW에 관한 검사항목입니다.
+Platelet,Platelet에 관한 검사항목입니다.
+PCT,PCT에 관한 검사항목입니다.
+MPV,MPV에 관한 검사항목입니다.
+PDW,PDW에 관한 검사항목입니다.
+CRP(QL),CRP(QL)에 관한 검사항목입니다.
+ASO(QL),ASO(QL)에 관한 검사항목입니다.
+RF (QL),RF (QL)에 관한 검사항목입니다.
+HBs Ag(정밀),HBs Ag(정밀)에 관한 검사항목입니다.
+HBs Ab(정밀),HBs Ab(정밀)에 관한 검사항목입니다.
+HCV-Ab,HCV-Ab에 관한 검사항목입니다.
+HIV-Ab,HIV-Ab에 관한 검사항목입니다.
+AFP,AFP에 관한 검사항목입니다.
+CEA,CEA에 관한 검사항목입니다.
+CA19-9,CA19-9에 관한 검사항목입니다.
+CA125,CA125에 관한 검사항목입니다.
+β2-MG,β2-MG에 관한 검사항목입니다.
+Free T4,Free T4에 관한 검사항목입니다.
+CA15-3,CA15-3에 관한 검사항목입니다.
+Ferritin,Ferritin에 관한 검사항목입니다.
+ALB,ALB
+Creatinine(RU),Creatinine(RU)
+Microscopic,Microscopic
+E.P cells,E.P cells
+Casts,Casts
+Bacteria,Bacteria
+Diff.count,Diff.count
+Segment,Segment
+Deoxypyridinolin,Deoxypyridinolin
+DPD,DPD
+FSH,FSH
+Estradiol(E2),Estradiol(E2)
