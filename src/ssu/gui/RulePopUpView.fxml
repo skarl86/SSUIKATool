@@ -10,21 +10,25 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.text.*?>
 
-<GridPane alignment="CENTER" hgap="10.0" prefHeight="386.000022070315" prefWidth="528.0" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<GridPane alignment="CENTER" hgap="10.0" prefHeight="386.000022070315" prefWidth="528.0" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ssu.gui.controller.IKARulePopUpViewController">
   <children>
       <TitledPane>
          <content>
           <SplitPane dividerPositions="0.7506493506493507" focusTraversable="true" orientation="VERTICAL" prefHeight="446.0" prefWidth="528.0">
             <items>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="272.0" prefWidth="839.0">
-                <children>
-                  <TableView prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <columns>
-                      <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="235.0" text="조건" />
-                      <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="287.0" text="결과" />
-                    </columns>
-                  </TableView>
-                </children>
+                     <children>
+                        <TableView fx:id="antecedentTableView" layoutX="6.0" layoutY="6.0" prefHeight="265.0" prefWidth="263.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="265.0" AnchorPane.topAnchor="0.0">
+                          <columns>
+                            <TableColumn fx:id="antecedentColumn" prefWidth="258.0" text="조건" />
+                          </columns>
+                        </TableView>
+                        <TableView fx:id="conseqeuntTableView" layoutX="259.0" layoutY="6.0" prefHeight="265.0" prefWidth="269.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="259.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columns>
+                            <TableColumn fx:id="consequentColumn" prefWidth="265.0" text="결과" />
+                          </columns>
+                        </TableView>
+                     </children>
               </AnchorPane>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="43.2197265625" prefWidth="526.0">
                 <children>
@@ -40,8 +44,8 @@
                   </ComboBox>
                   <Text layoutX="41.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author" />
                   <TextField layoutX="136.0" layoutY="52.0" prefWidth="102.0" />
-                  <Button layoutX="343.0" layoutY="56.0" mnemonicParsing="false" prefWidth="74.0" text="OK" />
-                  <Button layoutX="425.0" layoutY="56.0" mnemonicParsing="false" prefWidth="74.0" text="Cancel" />
+                  <Button layoutX="343.0" layoutY="56.0" mnemonicParsing="false" onAction="#handleClickOK" prefWidth="74.0" text="OK" />
+                  <Button cancelButton="true" layoutX="425.0" layoutY="56.0" mnemonicParsing="false" onAction="#handleclickCancel" prefWidth="74.0" text="Cancel" />
                 </children>
               </AnchorPane>
             </items>
