@@ -1,4 +1,0 @@
-AST,0
-LiverDisease,0
-ALP,0
-ALT,0
