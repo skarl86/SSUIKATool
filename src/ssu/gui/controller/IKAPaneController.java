@@ -148,14 +148,16 @@ public class IKAPaneController implements IKAPaneInterface {
         if(_patientTreeView == null)
             _patientTreeView = patientTreeView;
 
+        TreeItem<String> root2 = new TreeItem<String>("Patient");
         for( Map.Entry<String, List<IKADataController.PatientListElement>> elem : patientMap.entrySet() ){
             TreeItem<String> root = new TreeItem(elem.getKey());
             for(IKADataController.PatientListElement pat : elem.getValue()){
                 TreeItem<String> itemChild = new TreeItem(pat.regId + " (" + pat.name + ")");
-                itemChild.setExpanded(false);
+                itemChild.setExpanded(true);
                 root.getChildren().add(itemChild);
             }
-            patientTreeView.setRoot(root);
+            root2.getChildren().add(root);
+            patientTreeView.setRoot(root2);
         }
     }
 
@@ -233,7 +235,11 @@ public class IKAPaneController implements IKAPaneInterface {
     public void refreshPatientOpinionList(IKADataController dataController, Long patientId){
         ArrayList<String> opinionList = (ArrayList) dataController.getPatientOpinion(patientId);
         System.out.println("환자 소견 갯수 : " + opinionList.size());
-        _opinionTextArea.setText(opinionList.get(_opinionIndex));
+        if(opinionList.size() != 0){
+            _opinionTextArea.setText(opinionList.get(_opinionIndex));
+        }else{
+            _opinionTextArea.setText("");
+        }
     }
 
     @Override
@@ -287,33 +293,38 @@ public class IKAPaneController implements IKAPaneInterface {
     }
 
     public void nextOpinion(IKADataController dataController, Long patientId){
+        System.out.println("[TEST LOG] Patient ID : " + patientId);
         ArrayList<String> opinionList = (ArrayList) dataController.getPatientOpinion(patientId);
 
-        _opinionIndex += 1;
+        if(opinionList.size() > 0){
+            _opinionIndex += 1;
 
-        if(_opinionIndex > opinionList.size() - 1) {
-            _opinionIndex = 0;
-            _opinionTextArea.setText(opinionList.get(_opinionIndex));
-        }else{
-            _opinionTextArea.setText(opinionList.get(_opinionIndex));
+            if(_opinionIndex > opinionList.size() - 1) {
+                _opinionIndex = 0;
+                _opinionTextArea.setText(opinionList.get(_opinionIndex));
+            }else{
+                _opinionTextArea.setText(opinionList.get(_opinionIndex));
+            }
+
+            refreshPatientOpinionReferenceList(dataController, patientId, _opinionIndex);
         }
-
-        refreshPatientOpinionReferenceList(dataController, patientId, _opinionIndex);
     }
 
     public void previousOpinion(IKADataController dataController, Long patientId){
         ArrayList<String> opinionList = (ArrayList) dataController.getPatientOpinion(patientId);
 
-        _opinionIndex -= 1;
+        if(opinionList.size() > 0){
+            _opinionIndex -= 1;
 
-        if(_opinionIndex < 0) {
-            _opinionIndex = opinionList.size() - 1;
-            _opinionTextArea.setText(opinionList.get(_opinionIndex));
-        }else{
-            _opinionTextArea.setText(opinionList.get(_opinionIndex));
+            if(_opinionIndex < 0) {
+                _opinionIndex = opinionList.size() - 1;
+                _opinionTextArea.setText(opinionList.get(_opinionIndex));
+            }else{
+                _opinionTextArea.setText(opinionList.get(_opinionIndex));
+            }
+
+            refreshPatientOpinionReferenceList(dataController, patientId, _opinionIndex);
         }
-
-        refreshPatientOpinionReferenceList(dataController, patientId, _opinionIndex);
     }
 
     public void deleteRuleReferenceList(IKADataController dataController, TableView tableView){

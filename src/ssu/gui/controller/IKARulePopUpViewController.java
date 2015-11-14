@@ -4,6 +4,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,6 +41,7 @@ public class IKARulePopUpViewController implements Initializable{
             TableCell<AtomRow,String> cell = new TableCell<AtomRow,String>(){
                 //                    ImageView imageview = new ImageView();
                 Button deleteButton = new Button("-");
+
                 @Override
                 public void updateItem(String item, boolean empty) {
                     super.updateItem(item, empty);
@@ -53,10 +55,22 @@ public class IKARulePopUpViewController implements Initializable{
                                             "Option 3"
                                     );
                             final ComboBox comboBox = new ComboBox(options);
-                            comboBox.setPrefSize(getTableRow().getLayoutBounds().getWidth(),getTableRow().getBoundsInLocal().getHeight());
-                            box.setPrefSize(getTableRow().getLayoutBounds().getWidth(),getTableRow().getBoundsInLocal().getHeight());
+                            comboBox.getEditor().textProperty().addListener(new ChangeListener<String>() {
+                                @Override
+                                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                                    System.out.println(FXCollections.observableArrayList(IKADataController.getInstance().getAtomCompletionList(newValue)));
+//                                    comboBox.setItems();
+                                    System.out.println(oldValue + " " + newValue);
+                                }
+                            });
+                            comboBox.setEditable(true);
+
+                            comboBox.setPrefSize(220,getTableRow().getBoundsInLocal().getHeight());
+
                             box.getChildren().add(comboBox);
+                            System.out.println("[TEST_LOG] LAST_ROW Bound : " + getTableRow().getLayoutBounds());
                             setGraphic(box);
+
                         }else{
                             HBox box= new HBox();
 //                            box.setSpacing(50) ;
@@ -68,6 +82,7 @@ public class IKARulePopUpViewController implements Initializable{
                             box.setSpacing(10);
 
                             //SETTING ALL THE GRAPHICS COMPONENT FOR CELL
+                            System.out.println("[TEST_LOG] NORMAL Bound : " + getTableRow().getLayoutBounds());
                             setGraphic(box);
                         }
 
@@ -175,27 +190,32 @@ public class IKARulePopUpViewController implements Initializable{
         final ObservableList<AtomRow> antecendentData = FXCollections.observableArrayList();
         final ObservableList<AtomRow> consequentData = FXCollections.observableArrayList();
 
-        for(Atom atm : _selectedRule.getAntecedents()){
-            antecendentData.add(new AtomRow(atm.getName()));
+        if(_selectedRule != null){
+            for(Atom atm : _selectedRule.getAntecedents()){
+                antecendentData.add(new AtomRow(atm.getName()));
+            }
+            for(Atom atm : _selectedRule.getConsequents()){
+                consequentData.add(new AtomRow(atm.getName()));
+            }
         }
-        for(Atom atm : _selectedRule.getConsequents()){
-            consequentData.add(new AtomRow(atm.getName()));
-        }
-        antecendentData.add(new AtomRow("LAST_ROW"));
-        consequentData.add(new AtomRow("LAST_ROW"));
-
         // SETTING THE CELL FACTORY FOR THE ALBUM ART
         antecedentColumn.setCellFactory(new CellFactor());
 
         // SETTING THE CELL FACTORY FOR THE ALBUM ART
         consequentColumn.setCellFactory(new CellFactor());
 
+        antecendentData.add(new AtomRow("LAST_ROW"));
+        consequentData.add(new AtomRow("LAST_ROW"));
+
         antecedentTableView.setItems(antecendentData);
         conseqeuntTableView.setItems(consequentData);
+
+
     }
 
     public void setRule(IKADataController dataController, String ruleId){
-        _selectedRule = dataController.getRule(Long.valueOf(ruleId));
+        if(ruleId != null)
+            _selectedRule = dataController.getRule(Long.valueOf(ruleId));
         initTable();
     }
 }
