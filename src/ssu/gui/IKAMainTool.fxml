@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -135,23 +136,35 @@
                <items>
                   <AnchorPane>
                      <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0" />
                         <TitledPane alignment="CENTER" animated="false" collapsible="false" minHeight="165.0" styleClass="common" text="환자 소견" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <content>
-                              <HBox alignment="CENTER" prefHeight="255.0" prefWidth="672.0">
+                              <VBox>
                                  <children>
-                                    <Button fx:id="leftOpinionButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleLeftClickButtonAction" text="&lt;&lt;" GridPane.halignment="CENTER" GridPane.valignment="CENTER" HBox.hgrow="ALWAYS">
-                                       <HBox.margin>
-                                          <Insets left="15.0" right="15.0" />
-                                       </HBox.margin>
-                                    </Button>
-                                    <TextArea fx:id="opinionTextArea" prefHeight="80.0" prefWidth="522.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" HBox.hgrow="ALWAYS" />
-                                    <Button fx:id="rightOpinionButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#handleRightClickButtonAction" text="&gt;&gt;" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                       <HBox.margin>
-                                          <Insets left="15.0" right="15.0" />
-                                       </HBox.margin>
-                                    </Button>
+                                    <HBox alignment="CENTER" prefHeight="255.0">
+                                       <children>
+                                          <Button fx:id="leftOpinionButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleLeftClickButtonAction" styleClass="previous24Button" text="   Prev" GridPane.halignment="CENTER" GridPane.valignment="CENTER" HBox.hgrow="ALWAYS">
+                                             <HBox.margin>
+                                                <Insets left="15.0" right="15.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <TextArea fx:id="opinionTextArea" prefHeight="80.0" prefWidth="522.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" HBox.hgrow="ALWAYS" />
+                                          <Button fx:id="rightOpinionButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#handleRightClickButtonAction" styleClass="nextButton" text="Next   " GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                             <HBox.margin>
+                                                <Insets left="15.0" right="15.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                    <HBox>
+                                       <children>
+                                          <Region HBox.hgrow="ALWAYS" />
+                                          <Label alignment="CENTER" contentDisplay="CENTER" text="Label" HBox.hgrow="ALWAYS" />
+                                          <Region HBox.hgrow="ALWAYS" />
+                                       </children>
+                                    </HBox>
                                  </children>
-                              </HBox>
+                              </VBox>
                            </content>
                         </TitledPane>
                      </children>
