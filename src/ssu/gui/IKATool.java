@@ -83,7 +83,7 @@ public class IKATool extends Application implements Initializable {
     @FXML private TableColumn<IKAPaneController.PatientReferenceRow, String> madeDateColumn;
     @FXML private TableColumn<IKAPaneController.PatientReferenceRow, String> modifiedDateColumn;
 
-    private Long currentPatientId;
+    private Long currentPatientId = -2L;
 
     /**
      * View
@@ -114,26 +114,33 @@ public class IKATool extends Application implements Initializable {
         System.out.println("Application sucessfully initiallized.");
     }
 
-    @FXML protected void actionReferenceRuleList(ActionEvent event) throws IOException {
-        System.out.println("[INTERACTION] Modal Rule Edit View : " + ((Button)event.getSource()).getId());
+    @FXML protected void clickAddButton(ActionEvent event) throws IOException {
+        if(currentPatientId > 0) {
+            if(dataController.getPatientOpinion(currentPatientId).size() > 0){
+                IKAPaneController.PatientReferenceRow selectedItem = ruleReferenceTableView.getSelectionModel().getSelectedItem();
+                modalRuleEditView(event, null);
+            }
+        }
+    }
 
+    @FXML protected void clickEditButton(ActionEvent event) throws IOException {
         IKAPaneController.PatientReferenceRow selectedItem = ruleReferenceTableView.getSelectionModel().getSelectedItem();
-
-        if( ((Button)event.getSource()).getId().equals(ACTION_ADD)){
+        if(selectedItem != null){
             modalRuleEditView(event, selectedItem);
         }
+    }
 
-        if(selectedItem != null){
-            if(((Button)event.getSource()).getId().equals(ACTION_EDIT)){
-                modalRuleEditView(event, selectedItem);
-            }else if(((Button)event.getSource()).getId().equals(ACTION_DELETE)){
+    @FXML protected void clickDeleteButton(ActionEvent event){
+        if(currentPatientId > 0) {
+            IKAPaneController.PatientReferenceRow selectedItem = ruleReferenceTableView.getSelectionModel().getSelectedItem();
+            if(selectedItem != null) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirmation Dialog");
                 alert.setHeaderText("Look, a Confirmation Dialog");
                 alert.setContentText("Are you ok with this?");
 
                 Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == ButtonType.OK){
+                if (result.get() == ButtonType.OK) {
                     // 데이터 삭제.
                     paneController.deleteRuleReferenceList(dataController, ruleReferenceTableView);
                 } else {
@@ -141,8 +148,6 @@ public class IKATool extends Application implements Initializable {
                 }
             }
         }
-
-
     }
 
     @FXML protected void handleLeftClickButtonAction(ActionEvent event){
@@ -287,6 +292,7 @@ public class IKATool extends Application implements Initializable {
             controller.setRule(dataController, selectedItem.getRuleId());
         else
             controller.setRule(dataController, null);
+
         stage.setScene(new Scene(root));
         stage.setTitle("Rule Editor");
         stage.initModality(Modality.WINDOW_MODAL);
@@ -331,24 +337,5 @@ public class IKATool extends Application implements Initializable {
         }
 
         return false;
-    }
-
-    /**
-     * Formal Rule String을 파라미터로 같은 Rule을 리턴하는 메소드.
-     * @param formalStr Formal Rule String
-     * @return 존재하면 Rule 객체, 없으면 null
-     */
-    public Rule getRuleByFormalFormat(String formalStr) {
-        HashMap<Long, Rule> allRules = RuleManager.getInstance().getAllRules();
-
-        for (Map.Entry<Long, Rule> entry : allRules.entrySet()) {
-            Rule rule = entry.getValue();
-
-            if (rule.printFormalFormat().equals(formalStr)) {
-                return rule;
-            }
-        }
-
-        return null;
     }
 }
