@@ -87,6 +87,11 @@ public class IKATool extends Application implements Initializable {
 
     private Long currentPatientId;
 
+    /**
+     * View
+     */
+    private GraphView graphView;
+
     @Override
     public void init() {
         /**
@@ -287,12 +292,12 @@ public class IKATool extends Application implements Initializable {
              */
             @Override
             public void run() {
-                JPanel panel = new JPanel();
+                GraphView panel = new GraphView();
                 panel.setPreferredSize(new Dimension(500,400));
-                panel.setOpaque(true);
-                panel.setBackground(Color.black);
-                panel.add(new JButton("Click me!"));
-                swingNode.setContent(panel);
+                //panel.setOpaque(true);
+                //panel.setBackground(Color.black);
+                //panel.add(new JButton("Click me!"));
+                swingNode.setContent(panel.getGraphComponent());
                 panel.repaint();
                 System.out.println("initJPanel");
             }
