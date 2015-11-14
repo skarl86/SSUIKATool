@@ -7,16 +7,25 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -29,8 +38,10 @@ import ssu.object.patient.Opinion;
 import ssu.object.rule.Atom;
 import ssu.object.rule.Rule;
 
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -194,6 +205,50 @@ public class IKATool extends Application implements Initializable {
         });
     }
 
+    /*
+    MenuBar에서 View -> Graph 클릭 시 새로운 창 띄움
+     */
+    @FXML protected void menuBarGraphClickEvent(ActionEvent event){
+        System.setProperty("javafx.embed.singleThread", "true");
+
+        Stage graphStage = new Stage();
+
+        final SwingNode swingNode = new SwingNode();
+        createAndSetSwingContent(swingNode);
+
+        StackPane pane = new StackPane();
+
+        TitledPane tp = new TitledPane("My Titled Pane", new Button(""));
+        tp.setText("Graph");
+
+        VBox vbox = new VBox();
+        vbox.setPadding(new Insets(1));
+        vbox.setSpacing(2);
+
+
+        Text label = new Text("TEST : ");
+
+        ComboBox consequentComboBox = new ComboBox();
+
+        consequentComboBox.getItems().addAll("간질환","폐질환");
+
+        HBox hBox = new HBox();
+        hBox.getChildren().add(label);
+        hBox.getChildren().add(consequentComboBox);
+        hBox.setAlignment(Pos.CENTER_RIGHT);
+
+        pane.getChildren().add(tp);
+
+        tp.setContent(vbox);
+
+        vbox.getChildren().add(swingNode);
+        vbox.getChildren().add(hBox);
+
+        graphStage.setScene(new Scene(pane, 700, 600));
+        graphStage.show();
+
+    }
+
     /**
      * Exp : App 종료시 설정되어 있는 Atom, Rule, TestItem, Patient의 정보를 모두 Save.
      */
@@ -220,6 +275,28 @@ public class IKATool extends Application implements Initializable {
         stage.initOwner(
                 ((Node)event.getSource()).getScene().getWindow() );
         stage.show();
+    }
+
+    /*
+    Java Swing 삽입 부분
+     */
+    private void createAndSetSwingContent(final SwingNode swingNode) {
+        SwingUtilities.invokeLater(new Runnable() {
+            /*
+            Java Swing Code 삽입 부분
+             */
+            @Override
+            public void run() {
+                JPanel panel = new JPanel();
+                panel.setPreferredSize(new Dimension(500,400));
+                panel.setOpaque(true);
+                panel.setBackground(Color.black);
+                panel.add(new JButton("Click me!"));
+                swingNode.setContent(panel);
+                panel.repaint();
+                System.out.println("initJPanel");
+            }
+        });
     }
 
     /**
