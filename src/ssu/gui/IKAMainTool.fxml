@@ -177,11 +177,11 @@
                                     <HBox>
                                        <children>
                                           <Region HBox.hgrow="ALWAYS" />
-                                          <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" styleClass="deleteButton" text="Delete" GridPane.columnIndex="2" />
+                                          <Button mnemonicParsing="false" onAction="#actionReferenceRuleList" prefHeight="25.0" prefWidth="100.0" styleClass="deleteButton" text="Delete" GridPane.columnIndex="2" />
                                           <Region HBox.hgrow="ALWAYS" />
-                                          <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" styleClass="editButton" text="Edit" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                          <Button mnemonicParsing="false" onAction="#actionReferenceRuleList" prefHeight="25.0" prefWidth="100.0" styleClass="editButton" text="Edit" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                                           <Region HBox.hgrow="ALWAYS" />
-                                          <Button mnemonicParsing="false" prefWidth="100.0" styleClass="addButton" text="Add" GridPane.halignment="RIGHT" />
+                                          <Button mnemonicParsing="false" onAction="#actionReferenceRuleList" prefWidth="100.0" styleClass="addButton" text="Add" GridPane.halignment="RIGHT" />
                                           <Region HBox.hgrow="ALWAYS" />
                                        </children>
                                     </HBox>
