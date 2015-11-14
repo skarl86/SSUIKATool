@@ -126,16 +126,28 @@ public class PatientManager {
         if (testValueType.equals(Tags.TEST_VALUE_TYPE_NUMERIC)) {
             newTestValue = new NumericalValue(Double.parseDouble(testValueTypeValue[1]));
         } else if (testValueType.equals(Tags.TEST_VALUE_TYPE_HIGHLOW)){
-            if (testValueTypeValue.equals(Tags.TEST_VALUE_TYPE_HIGH)) {     // High
+            if (testValueTypeValue[1].equals(Tags.TEST_VALUE_TYPE_HIGH)) {     // High
                 newTestValue = new HighLow(Tags.TEST_VALUE_TYPE_HIGH);
             } else {                                                        // Low
                 newTestValue = new HighLow(Tags.TEST_VALUE_TYPE_LOW);
             }
         } else if (testValueType.equals(Tags.TEST_VALUE_TYPE_POSNEG)) {
-            if (testValueTypeValue.equals(Tags.TEST_VALUE_TYPE_POS)) {      // Positive
+            if (testValueTypeValue[1].equals(Tags.TEST_VALUE_TYPE_POS)) {      // Positive
                 newTestValue = new PosNeg(Tags.TEST_VALUE_TYPE_POS);
             } else {                                                        // Negative
                 newTestValue = new PosNeg(Tags.TEST_VALUE_TYPE_NEG);
+            }
+        } else if (testValueType.equals(Tags.TEST_VALUE_TYPE_NORMAL)) {      // Normal
+            newTestValue = new Normal(Tags.TEST_VALUE_TYPE_NORMAL_VALUE);
+        } else if (testValueType.equals(Tags.TEST_VALUE_TYPE_REACTIVE_NONREACTIVE)) {
+            if (testValueTypeValue[1].equals(Tags.TEST_VALUE_TYPE_REACTEVE)) {
+                newTestValue = new ReactiveNonReative(Tags.TEST_VALUE_TYPE_REACTEVE);       // Reactive
+            } else {
+                newTestValue = new ReactiveNonReative(Tags.TEST_VALUE_TYPE_NONREATIVE);       // Non Reactive
+            }
+        } else if (testValueType.equals(Tags.TEST_VALUE_TYPE_MTHFR_C677T)) {
+            if (testValueTypeValue[1].equals(Tags.TEST_VALUE_TYPE_MTHFR_C677T_CT_HETEROZYGOTE)) {
+                newTestValue = new MTHFR_C677T(Tags.TEST_VALUE_TYPE_MTHFR_C677T_CT_HETEROZYGOTE);       // MTHFR C677T : CT Heterozygote
             }
         } else { // 현재 없는 타입
             System.out.println("Unknown TestValue");

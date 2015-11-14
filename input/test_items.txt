@@ -1,4 +1,29 @@
 AST,AST에 관한 검사항목입니다.
 ALP,ALP에 관한 검사항목입니다.
 ALT,ALT에 관한 검사항목입니다.
-LiverDisease,LiverDisease에 관한 질병항목입니다.
+HbA1c,HbA1c에 관한 검사항목입니다.
+Hb A1c,Hb A1c에 관한 검사항목입니다.
+MPG,MPG에 관한 검사항목입니다.
+IFCC환산결과,IFCC환산결과에 관한 검사항목입니다.
+Pro.C activity,Pro.C activity에 관한 검사항목입니다.
+Prothrombin,Prothrombin에 관한 검사항목입니다.
+P.T,P.T에 관한 검사항목입니다.
+%,%에 관한 검사항목입니다.
+INR,INR에 관한 검사항목입니다.
+APTT,APTT에 관한 검사항목입니다.
+Protein S Activi,Protein S Activi에 관한 검사항목입니다.
+Lupus(Screening),Lupus(Screening)에 관한 검사항목입니다.
+Cardio IgG,Cardio IgG에 관한 검사항목입니다.
+Cardio IgM,Cardio IgM에 관한 검사항목입니다.
+Anti ds-DNA IgG,Anti ds-DNA IgG에 관한 검사항목입니다.
+Anti beta 2-GPI,Anti beta 2-GPI에 관한 검사항목입니다.
+RPR정밀,RPR정밀에 관한 검사항목입니다.
+TG Ab,TG Ab에 관한 검사항목입니다.
+MS Ab,MS Ab에 관한 검사항목입니다.
+TSH,TSH에 관한 검사항목입니다.
+PRL,PRL에 관한 검사항목입니다.
+Chromosome(PB),Chromosome(PB)에 관한 검사항목입니다.
+Factor V mutatio,Factor V mutatio에 관한 검사항목입니다.
+Prothrombin gene,Prothrombin gene에 관한 검사항목입니다.
+NK cell(CD16+56),NK cell(CD16+56)에 관한 검사항목입니다.
+MTHFR C677T,MTHFR C677T에 관한 검사항목입니다.
