@@ -23,6 +23,7 @@ public interface IKAPaneInterface {
                                                   TableColumn ruleColumn, TableColumn authorColumn,
                                                   TableColumn madeDateColumn, TableColumn modifiedDateColumn);
     public void refreshPatientOpinionReferenceList(IKADataController dataController, Long patientId, int indeOfOpinion);
+    public void deleteRuleReferenceList(IKADataController dataController, TableView tableView);
     public void nextOpinion(IKADataController dataController, Long patientId);
     public void previousOpinion(IKADataController dataController, Long patientId);
 }

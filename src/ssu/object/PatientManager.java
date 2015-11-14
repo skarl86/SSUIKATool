@@ -149,6 +149,33 @@ public class PatientManager {
             if (testValueTypeValue[1].equals(Tags.TEST_VALUE_TYPE_MTHFR_C677T_CT_HETEROZYGOTE)) {
                 newTestValue = new MTHFR_C677T(Tags.TEST_VALUE_TYPE_MTHFR_C677T_CT_HETEROZYGOTE);       // MTHFR C677T : CT Heterozygote
             }
+        } else if (testValueType.equals(Tags.TEST_VALUE_TYPE_FOUNDNOTFOUND)) {
+            if (testValueTypeValue[1].equals(Tags.TEST_VALUE_TYPE_FOUND)) {
+                newTestValue = new Found_NotFound(Tags.TEST_VALUE_TYPE_FOUND);      // Found
+            } else {
+                newTestValue = new Found_NotFound(Tags.TEST_VALUE_TYPE_NOT_FOUND);  // Not found
+            }
+        } else if (testValueType.equals(Tags.TEST_VALUE_TYPE_AMOUNT)) {
+            if (testValueTypeValue[1].equals(Tags.TEST_VALUE_TYPE_A_FEW)) {
+                newTestValue = new StringAmount(Tags.TEST_VALUE_TYPE_A_FEW);        // A few
+            }
+            // WARN : 더 많은 수량 표현 필요.
+        } else if (testValueType.equals(Tags.TEST_VALUE_TYPE_BLOOD)) {
+            if (testValueTypeValue[1].equals(Tags.TEST_VALUE_TYPE_BLOOD_A)) {           // Blood : A
+                newTestValue = new BloodType(Tags.TEST_VALUE_TYPE_BLOOD_A);
+            } else if (testValueTypeValue[1].equals(Tags.TEST_VALUE_TYPE_BLOOD_B)) {    // Blood : B
+                newTestValue = new BloodType(Tags.TEST_VALUE_TYPE_BLOOD_B);
+            } else if (testValueTypeValue[1].equals(Tags.TEST_VALUE_TYPE_BLOOD_AB)) {   // Blood : AB
+                newTestValue = new BloodType(Tags.TEST_VALUE_TYPE_BLOOD_AB);
+            } else {
+                newTestValue = new BloodType(Tags.TEST_VALUE_TYPE_BLOOD_O);             // Blood : O
+            }
+        } else if (testValueType.equals(Tags.TEST_VALUE_TYPE_RH)) {
+            if (testValueTypeValue[1].equals(Tags.TEST_VALUE_TYPE_RH_PLUS)) {           // Blood Rh : +
+                newTestValue = new RhType(Tags.TEST_VALUE_TYPE_RH_PLUS);
+            } else {                                                                    // Blood Rh : -
+                newTestValue = new RhType(Tags.TEST_VALUE_TYPE_RH_MINUS);
+            }
         } else { // 현재 없는 타입
             System.out.println("Unknown TestValue");
         }
