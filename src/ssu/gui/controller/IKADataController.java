@@ -231,7 +231,7 @@ public class IKADataController extends IKAController implements IKADataRequestIn
      * - To-do Lists
      * -- 추후 리턴받은 rule id가 해당 소견에 이미 있는 것인지 없는 것인지 체크할 필요 있음.
      */
-    public Long ruleEditDialogOK(ArrayList<String> antecedents, ArrayList<String> consequents, String author) {
+    public Long ruleEditDialogOK(ArrayList<String> antecedents, ArrayList<String> consequents, String author, Opinion opinion) {
         // 1. Rule이 이미 존재하는 경우 -> 기존의 Rule을 사용하되 modifedtTime과 author를 변경.
         // 2. Rule이 존재하지 않는 경우
         // 2-1. Atom이 존재하는 경우 -> AtomManager에서 key값을 넘겨 해당 Atom을 받아와 처리.
@@ -256,8 +256,10 @@ public class IKADataController extends IKAController implements IKADataRequestIn
             }
 
             this.ruleManager.addRule(newRule);
+
         }
 
+        opinion.addRule(newRule.getId());
         return newRule.getId();
     }
 

@@ -40,10 +40,13 @@ public class Opinion implements Savable {
     /**
      * 소견과 관련된 rule의 id를 리스트에 추가.
      * @param ruleId 추가할 rule의 id.
-     * @return 성공여부(무조건 true).
+     * @return 성공여부.
      */
     public boolean addRule(Long ruleId) {
-        return this.rules.add(ruleId);
+        if (!this.rules.contains(ruleId))
+            return this.rules.add(ruleId);
+        else
+            return false;
     }
 
     /**
