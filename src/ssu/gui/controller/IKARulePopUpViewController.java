@@ -23,6 +23,8 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -61,6 +63,7 @@ public class IKARulePopUpViewController implements Initializable{
 
     private Long patientID;
     private int indexOfOpinion;
+    private String newInputValue;
 
     class CellFactor implements Callback<TableColumn<AtomRow, String>, TableCell<AtomRow, String>>{
 
@@ -84,26 +87,26 @@ public class IKARulePopUpViewController implements Initializable{
                             comboBox.getEditor().textProperty().addListener(new ChangeListener<String>() {
                                 @Override
                                 public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                                    newInputValue = newValue;
+                                    System.out.println(String.format("New : %s / Old : %s", newValue, oldValue));
                                     comboBox.show();
                                     comboBox.setItems(FXCollections.observableArrayList(IKADataController.getInstance().getAtomCompletionList(newValue)));
+                                }
+                            });
+
+                            comboBox.setOnKeyReleased(new EventHandler<KeyEvent>() {
+                                @Override
+                                public void handle(KeyEvent ke) {
+                                    if (ke.getCode() == KeyCode.ENTER) {
+                                        getTableView().getItems().add(new AtomRow(newInputValue));
+                                    }
                                 }
                             });
 
                             comboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
                                 @Override
                                 public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                                    boolean isContains = false;
-//                                    for(AtomRow item : getTableView().getItems()){
-//                                        if(item.getAtom().equals(newValue.toString())) {
-//                                            isContains = true;
-//                                            break;
-//                                        }
-//                                    }
-//                                    if(!isContains)
-                                    getTableView().getItems().add(new AtomRow(newValue.toString()));
-
-                                    setCompletionRule();
-
+                                    refreshCompletionRule();
                                 }
                             });
                             comboBox.setEditable(true);
@@ -133,7 +136,7 @@ public class IKARulePopUpViewController implements Initializable{
                             public void handle(ActionEvent event) {
                                 System.out.println("[INTERACTION] DATA DELETE!!!!!!");
                                 getTableView().getItems().remove(getTableRow().getIndex());
-                                setCompletionRule();
+                                refreshCompletionRule();
                             }
                         });
 
@@ -293,7 +296,7 @@ public class IKARulePopUpViewController implements Initializable{
         antecedentTableView.setItems(antecendentData);
         conseqeuntTableView.setItems(consequentData);
 
-        setCompletionRule();
+        refreshCompletionRule();
 
 
     }
@@ -310,7 +313,7 @@ public class IKARulePopUpViewController implements Initializable{
         initTable();
     }
 
-    private void setCompletionRule(){
+    private void refreshCompletionRule(){
         ArrayList antecedentList = new ArrayList();
         ArrayList consequentList = new ArrayList();
         for(Object row : antecedentTableView.getItems()){
