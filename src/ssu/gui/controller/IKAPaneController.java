@@ -290,7 +290,7 @@ public class IKAPaneController implements IKAPaneInterface {
 
         final ObservableList<PatientReferenceRow> data = FXCollections.observableArrayList();
 
-        Format format = new SimpleDateFormat("yyyy MM dd HH:mm:ss");
+        Format format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
         for(IKADataController.OpinionReferenceList opn : elmList){
             data.add(new PatientReferenceRow(String.valueOf(opn.ruleId), opn.rule, opn.author, format.format(opn.madeDate), format.format(opn.modifiedDate)));
