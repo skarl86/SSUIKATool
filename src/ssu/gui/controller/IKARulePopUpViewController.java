@@ -84,6 +84,7 @@ public class IKARulePopUpViewController implements Initializable{
 
                             final ComboBox comboBox = new ComboBox();
                             comboBox.setVisible(true);
+                            // 콤보박스의 텍스트를 입력할 때.
                             comboBox.getEditor().textProperty().addListener(new ChangeListener<String>() {
                                 @Override
                                 public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -93,12 +94,13 @@ public class IKARulePopUpViewController implements Initializable{
                                     comboBox.setItems(FXCollections.observableArrayList(IKADataController.getInstance().getAtomCompletionList(newValue)));
                                 }
                             });
-
+                            // 콤보박스의 룰을 선택 후 Enter를 눌렀을때.
                             comboBox.setOnKeyReleased(new EventHandler<KeyEvent>() {
                                 @Override
                                 public void handle(KeyEvent ke) {
                                     if (ke.getCode() == KeyCode.ENTER) {
                                         getTableView().getItems().add(new AtomRow(newInputValue));
+                                        refreshCompletionRule();
                                     }
                                 }
                             });
@@ -106,7 +108,7 @@ public class IKARulePopUpViewController implements Initializable{
                             comboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
                                 @Override
                                 public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                                    refreshCompletionRule();
+
                                 }
                             });
                             comboBox.setEditable(true);
