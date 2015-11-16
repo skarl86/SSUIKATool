@@ -10,7 +10,7 @@
 <?import javafx.scene.control.Label?>
 
 
-<TitledPane collapsible="false" prefHeight="86.0" prefWidth="348.0" text="Set Author" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<TitledPane collapsible="false" prefHeight="86.0" prefWidth="348.0" text="Set Author" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <content>
       <HBox prefHeight="53.0" prefWidth="346.0">
          <children>
