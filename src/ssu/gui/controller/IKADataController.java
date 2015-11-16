@@ -116,7 +116,6 @@ public class IKADataController extends IKAController implements IKADataRequestIn
                     pList.add(opn.getOpinion());
                 }
             }
-            break;
         }
         return pList;
     }
@@ -225,6 +224,35 @@ public class IKADataController extends IKAController implements IKADataRequestIn
     public void loadTestItemList(){ this.testItemManager.loadTestItemList(); }
     public void loadPatients() { this.patientManager.loadPatients(this.testItemManager.getAllTestItems()); }
 
+    /**
+     * 환자 소견과 관련 Rule을 지우는 메소드로써, 참조하는 Rule ID를 삭제하고 실질적인 Rule은 삭제하지 않는다.
+     * @param opinion 환자 소견 객체.
+     * @param ruleId 사용자가 선택한 Rule의 id
+     * @return 정상적으로 삭제되면 true, 해당 소견에 없는 rule id면 false를 리턴.
+     */
+    public boolean deleteRule(int indexOfOpinion, Long patientId, Long ruleId) {
+
+        Opinion opinion = null;
+
+        for(Patient pat : this.patientManager.getAllPatients()){
+            if(pat.getRegId().equals(patientId)){
+                opinion = pat.getAllOpinions().get(indexOfOpinion);
+                break;
+            }
+
+        }
+
+        ArrayList<Long> rules = opinion.getRules();
+
+        for (Long id : rules) {
+            if (id == ruleId) {
+                rules.remove(id);
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     /**
      * Edit Dialog 창에서 OK를 누를 때 호출.
@@ -232,7 +260,7 @@ public class IKADataController extends IKAController implements IKADataRequestIn
      * - To-do Lists
      * -- 추후 리턴받은 rule id가 해당 소견에 이미 있는 것인지 없는 것인지 체크할 필요 있음.
      */
-    public Long ruleEditDialogOK(ArrayList<String> antecedents, ArrayList<String> consequents, String author) {
+    public Long ruleEditDialogOK(ArrayList<String> antecedents, ArrayList<String> consequents, String author, Long patientId, int indexOfOpinion) {
         // 1. Rule이 이미 존재하는 경우 -> 기존의 Rule을 사용하되 modifedtTime과 author를 변경.
         // 2. Rule이 존재하지 않는 경우
         // 2-1. Atom이 존재하는 경우 -> AtomManager에서 key값을 넘겨 해당 Atom을 받아와 처리.
@@ -257,6 +285,15 @@ public class IKADataController extends IKAController implements IKADataRequestIn
             }
 
             this.ruleManager.addRule(newRule);
+
+        }
+        for(Patient pat : this.patientManager.getAllPatients()){
+            if(pat.getRegId().equals(patientId)){
+                Opinion opinion = pat.getAllOpinions().get(indexOfOpinion);
+                opinion.addRule(newRule.getId());
+                break;
+            }
+
         }
 
         return newRule.getId();

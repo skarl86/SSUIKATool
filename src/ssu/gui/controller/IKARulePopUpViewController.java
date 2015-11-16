@@ -23,6 +23,8 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -57,6 +59,11 @@ public class IKARulePopUpViewController implements Initializable{
 
     @FXML GridPane mainView;
 
+    @FXML TextField authorTextField;
+
+    private Long patientID;
+    private int indexOfOpinion;
+    private String newInputValue;
 
     class CellFactor implements Callback<TableColumn<AtomRow, String>, TableCell<AtomRow, String>>{
 
@@ -80,26 +87,26 @@ public class IKARulePopUpViewController implements Initializable{
                             comboBox.getEditor().textProperty().addListener(new ChangeListener<String>() {
                                 @Override
                                 public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                                    newInputValue = newValue;
+                                    System.out.println(String.format("New : %s / Old : %s", newValue, oldValue));
                                     comboBox.show();
                                     comboBox.setItems(FXCollections.observableArrayList(IKADataController.getInstance().getAtomCompletionList(newValue)));
+                                }
+                            });
+
+                            comboBox.setOnKeyReleased(new EventHandler<KeyEvent>() {
+                                @Override
+                                public void handle(KeyEvent ke) {
+                                    if (ke.getCode() == KeyCode.ENTER) {
+                                        getTableView().getItems().add(new AtomRow(newInputValue));
+                                    }
                                 }
                             });
 
                             comboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
                                 @Override
                                 public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                                    boolean isContains = false;
-//                                    for(AtomRow item : getTableView().getItems()){
-//                                        if(item.getAtom().equals(newValue.toString())) {
-//                                            isContains = true;
-//                                            break;
-//                                        }
-//                                    }
-//                                    if(!isContains)
-                                    getTableView().getItems().add(new AtomRow(newValue.toString()));
-
-                                    setCompletionRule();
-
+                                    refreshCompletionRule();
                                 }
                             });
                             comboBox.setEditable(true);
@@ -129,7 +136,7 @@ public class IKARulePopUpViewController implements Initializable{
                             public void handle(ActionEvent event) {
                                 System.out.println("[INTERACTION] DATA DELETE!!!!!!");
                                 getTableView().getItems().remove(getTableRow().getIndex());
-                                setCompletionRule();
+                                refreshCompletionRule();
                             }
                         });
 
@@ -154,21 +161,42 @@ public class IKARulePopUpViewController implements Initializable{
 
     @FXML
     protected void handleClickOK(ActionEvent event){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("확인");
-        alert.setHeaderText(completeRuleComboBox.getPromptText());
-        alert.setContentText("위 Rule을 정말 저장하시겠습니까?");
+//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//        alert.setTitle("확인");
+//        alert.setHeaderText(completeRuleComboBox.getPromptText());
+//        alert.setContentText("위 Rule을 정말 저장하시겠습니까?");
+//
+//        Optional<ButtonType> result = alert.showAndWait();
+//        if (result.get() == ButtonType.OK){
+//            // 데이터 삭제.
+//            Stage stage = (Stage) mainView.getScene().getWindow();
+//            stage.close();
+//
+////            IKADataController.getInstance().ruleEditDialogOK();
+//        } else {
+//            // 취소.
+//        }
 
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
-            // 데이터 삭제.
-            Stage stage = (Stage) mainView.getScene().getWindow();
-            stage.close();
+        ArrayList<String> antList = new ArrayList<String>();
+        ArrayList<String> consqList = new ArrayList<String>();
 
-//            IKADataController.getInstance().ruleEditDialogOK();
-        } else {
-            // 취소.
+        for(Object obj : antecedentTableView.getItems()){
+            AtomRow item = (AtomRow) obj;
+            if(!item.getAtom().equals(COMBOBOX))
+                antList.add(item.getAtom());
         }
+        for(Object obj : conseqeuntTableView.getItems()){
+            AtomRow item = (AtomRow) obj;
+            if(!item.getAtom().equals(COMBOBOX))
+                consqList.add(item.getAtom());
+        }
+
+        IKADataController.getInstance().ruleEditDialogOK(antList, consqList, authorTextField.getText(), patientID,indexOfOpinion);
+        IKAPaneController.getInstance().refreshPatientOpinionReferenceList(
+                IKADataController.getInstance(),patientID, indexOfOpinion);
+
+        Stage stage = (Stage) mainView.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
@@ -268,18 +296,24 @@ public class IKARulePopUpViewController implements Initializable{
         antecedentTableView.setItems(antecendentData);
         conseqeuntTableView.setItems(consequentData);
 
-        setCompletionRule();
+        refreshCompletionRule();
 
 
     }
 
+    public void setPatientID(Long patientID){
+        this.patientID = patientID;
+    }
+    public void setOpinionIndex(int opinionIndex){
+        this.indexOfOpinion = opinionIndex;
+    }
     public void setRule(IKADataController dataController, String ruleId){
         if(ruleId != null)
             _selectedRule = dataController.getRule(Long.valueOf(ruleId));
         initTable();
     }
 
-    private void setCompletionRule(){
+    private void refreshCompletionRule(){
         ArrayList antecedentList = new ArrayList();
         ArrayList consequentList = new ArrayList();
         for(Object row : antecedentTableView.getItems()){

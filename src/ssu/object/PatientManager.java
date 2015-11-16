@@ -53,7 +53,15 @@ public class PatientManager {
                 String regDate = tokens[0];
                 Long regId = Long.parseLong(tokens[1]);
                 String name = tokens[2];
-                String gender = tokens[3];
+
+                String gender = "";
+                if (tokens[3].equals("M")) {
+                    gender = Tags.PATIENT_GENDER_MALE;
+                } else if (tokens[3].equals("F")) {
+                    gender = Tags.PATIENT_GENDER_FEMALE;
+                } else {
+                    gender = Tags.PATIENT_GENDER_UNKNOWN;
+                }
                 int age = Integer.parseInt(tokens[4]);
 
                 Patient newPatient = new Patient(name, age, gender, regId, regDate);

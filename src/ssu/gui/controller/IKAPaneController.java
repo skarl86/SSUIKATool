@@ -241,6 +241,13 @@ public class IKAPaneController implements IKAPaneInterface {
             _opinionTextArea.setText("");
         }
     }
+    public void refreshOpinionPageLabel(IKADataController dataController, Label pageLabel, Long patientID){
+        ArrayList<String> opinionList = (ArrayList) dataController.getPatientOpinion(patientID);
+        if(opinionList.size() > 0)
+            pageLabel.setText(String.format("%s / %s", _opinionIndex+1, opinionList.size()));
+        else
+            pageLabel.setText(String.format("%s / %s", _opinionIndex, opinionList.size()));
+    }
 
     @Override
     public void createPatientOpinionReferenceList(TableView ruleReferenceTableView, TableColumn ruleIdColumn,
@@ -261,9 +268,9 @@ public class IKAPaneController implements IKAPaneInterface {
     }
 
     @Override
-    public void refreshPatientOpinionReferenceList(IKADataController dataController, Long patientId, int indeOfOpinion){
+    public void refreshPatientOpinionReferenceList(IKADataController dataController, Long patientId, int indexOfOpinion){
         ArrayList<IKADataController.OpinionReferenceList> elmList =
-                (ArrayList<IKADataController.OpinionReferenceList>) dataController.getRuleReferenceListInOpinion(patientId, indeOfOpinion);
+                (ArrayList<IKADataController.OpinionReferenceList>) dataController.getRuleReferenceListInOpinion(patientId, indexOfOpinion);
 
         _ruleIdColumn.setCellValueFactory(
                 new PropertyValueFactory<PatientReferenceRow, String>("ruleId")
@@ -283,7 +290,7 @@ public class IKAPaneController implements IKAPaneInterface {
 
         final ObservableList<PatientReferenceRow> data = FXCollections.observableArrayList();
 
-        Format format = new SimpleDateFormat("yyyy MM dd HH:mm:ss");
+        Format format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
         for(IKADataController.OpinionReferenceList opn : elmList){
             data.add(new PatientReferenceRow(String.valueOf(opn.ruleId), opn.rule, opn.author, format.format(opn.madeDate), format.format(opn.modifiedDate)));
@@ -327,8 +334,11 @@ public class IKAPaneController implements IKAPaneInterface {
         }
     }
 
-    public void deleteRuleReferenceList(IKADataController dataController, TableView tableView){
+    public void deleteRuleReferenceList(IKADataController dataController, TableView tableView, Long patientId){
+        PatientReferenceRow item = ((PatientReferenceRow)tableView.getSelectionModel().getSelectedItem());
+        Long ruleId = Long.valueOf(item.getRuleId());
         tableView.getItems().remove(tableView.getSelectionModel().getSelectedIndex());
         tableView.getSelectionModel().clearSelection();
+        dataController.deleteRule(_opinionIndex,patientId,ruleId);
     }
 }

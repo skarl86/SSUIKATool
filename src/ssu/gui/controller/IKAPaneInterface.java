@@ -1,9 +1,6 @@
 package ssu.gui.controller;
 
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 
 import java.util.List;
 import java.util.Map;
@@ -22,8 +19,9 @@ public interface IKAPaneInterface {
     public void createPatientOpinionReferenceList(TableView ruleReferenceTableView, TableColumn ruleIdColumn,
                                                   TableColumn ruleColumn, TableColumn authorColumn,
                                                   TableColumn madeDateColumn, TableColumn modifiedDateColumn);
-    public void refreshPatientOpinionReferenceList(IKADataController dataController, Long patientId, int indeOfOpinion);
-    public void deleteRuleReferenceList(IKADataController dataController, TableView tableView);
+    public void refreshPatientOpinionReferenceList(IKADataController dataController, Long patientId, int indexOfOpinion);
+    public void deleteRuleReferenceList(IKADataController dataController, TableView tableView, Long patientId);
     public void nextOpinion(IKADataController dataController, Long patientId);
     public void previousOpinion(IKADataController dataController, Long patientId);
+    public void refreshOpinionPageLabel(IKADataController dataController, Label pageLabel, Long patientID);
 }

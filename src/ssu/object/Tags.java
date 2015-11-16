@@ -48,9 +48,9 @@ public final class Tags {
     /**
      * Patient Value
      */
-    public static final String PATIENT_GENDER_MALE = "M";
-    public static final String PATIENT_GENDER_FEMALE = "F";
-    public static final String PATIENT_GENDER_UNKNOWN = "U";
+    public static final String PATIENT_GENDER_MALE = "Male";
+    public static final String PATIENT_GENDER_FEMALE = "Female";
+    public static final String PATIENT_GENDER_UNKNOWN = "Unknown";
 
     /**
      * Test Value

@@ -148,7 +148,7 @@
                                                 <Insets left="15.0" right="15.0" />
                                              </HBox.margin>
                                           </Button>
-                                          <TextArea fx:id="opinionTextArea" prefHeight="80.0" prefWidth="522.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" HBox.hgrow="ALWAYS" />
+                                          <TextArea fx:id="opinionTextArea" editable="false" prefHeight="80.0" prefWidth="522.0" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" HBox.hgrow="ALWAYS" />
                                           <Button fx:id="rightOpinionButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#handleRightClickButtonAction" styleClass="nextButton" text="Next   " GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                              <HBox.margin>
                                                 <Insets left="15.0" right="15.0" />
@@ -159,7 +159,7 @@
                                     <HBox>
                                        <children>
                                           <Region HBox.hgrow="ALWAYS" />
-                                          <Label alignment="CENTER" contentDisplay="CENTER" text="Label" HBox.hgrow="ALWAYS" />
+                                          <Label fx:id="opinionPageLabel" alignment="CENTER" contentDisplay="CENTER" text="Label" HBox.hgrow="ALWAYS" />
                                           <Region HBox.hgrow="ALWAYS" />
                                        </children>
                                     </HBox>
@@ -177,11 +177,11 @@
                                  <children>
                                     <TableView fx:id="ruleReferenceTableView" VBox.vgrow="ALWAYS">
                                        <columns>
-                                          <TableColumn fx:id="ruleIdColumn" prefWidth="75.0" text="ID" />
-                                          <TableColumn fx:id="ruleColumn" prefWidth="75.0" text="Rule" />
-                                          <TableColumn fx:id="authorColumn" prefWidth="75.0" text="작성자" />
-                                          <TableColumn fx:id="madeDateColumn" prefWidth="75.0" text="생성일" />
-                                          <TableColumn fx:id="modifiedDateColumn" prefWidth="75.0" text="수정일" />
+                                          <TableColumn fx:id="ruleIdColumn" editable="false" prefWidth="37.0" resizable="false" text="ID" />
+                                          <TableColumn fx:id="ruleColumn" editable="false" prefWidth="250.0" resizable="false" text="Rule" />
+                                          <TableColumn fx:id="authorColumn" editable="false" prefWidth="73.0" resizable="false" text="작성자" />
+                                          <TableColumn fx:id="madeDateColumn" editable="false" prefWidth="170.0" resizable="false" text="생성일" />
+                                          <TableColumn fx:id="modifiedDateColumn" editable="false" prefWidth="158.0" resizable="false" text="수정일" />
                                        </columns>
                                        <VBox.margin>
                                           <Insets bottom="2.0" />

@@ -20,6 +20,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -67,6 +68,8 @@ public class IKATool extends Application implements Initializable {
     @FXML private TableColumn<IKAPaneController.PatientDetailRow, String> testNameColumn;
     @FXML private TableColumn<IKAPaneController.PatientDetailRow, String> testNumValueColumn;
     @FXML private TableColumn<IKAPaneController.PatientDetailRow, String> testTextValueColumn;
+
+    @FXML private Label opinionPageLabel;
 
     @FXML private TextArea opinionTextArea;
     @FXML private Button leftOpinionButton;
@@ -135,14 +138,14 @@ public class IKATool extends Application implements Initializable {
             IKAPaneController.PatientReferenceRow selectedItem = ruleReferenceTableView.getSelectionModel().getSelectedItem();
             if(selectedItem != null) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirmation Dialog");
-                alert.setHeaderText("Look, a Confirmation Dialog");
-                alert.setContentText("Are you ok with this?");
+                alert.setTitle("확인");
+                alert.setHeaderText(selectedItem.getRule());
+                alert.setContentText("정말 삭제 하시겠습니까?");
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
                     // 데이터 삭제.
-                    paneController.deleteRuleReferenceList(dataController, ruleReferenceTableView);
+                    paneController.deleteRuleReferenceList(dataController, ruleReferenceTableView, currentPatientId);
                 } else {
                     // 취소.
                 }
@@ -153,11 +156,13 @@ public class IKATool extends Application implements Initializable {
     @FXML protected void handleLeftClickButtonAction(ActionEvent event){
         System.out.println(event);
         this.paneController.previousOpinion(this.dataController, currentPatientId);
+        paneController.refreshOpinionPageLabel(dataController, opinionPageLabel, currentPatientId);
     }
 
     @FXML protected void handleRightClickButtonAction(ActionEvent event){
         System.out.println(event);
         this.paneController.nextOpinion(this.dataController, currentPatientId);
+        paneController.refreshOpinionPageLabel(dataController, opinionPageLabel, currentPatientId);
     }
 
     public void initView(){
@@ -167,6 +172,7 @@ public class IKATool extends Application implements Initializable {
         this.paneController.createPatientOpinionList(opinionTextArea);
         this.paneController.createPatientOpinionReferenceList(ruleReferenceTableView, ruleIdColumn,
                 ruleColumn, authorColumn, madeDateColumn, modifiedDateColumn);
+        paneController.refreshOpinionPageLabel(dataController, opinionPageLabel, currentPatientId);
 
         // Action 등록.
         patientTreeView.getSelectionModel().selectedItemProperty().addListener( new ChangeListener() {
@@ -182,6 +188,7 @@ public class IKATool extends Application implements Initializable {
                     paneController.refreshPatientDetailList(dataController, currentPatientId);
                     paneController.refreshPatientOpinionList(dataController,currentPatientId);
                     paneController.refreshPatientOpinionReferenceList(dataController, currentPatientId, 0);
+                    paneController.refreshOpinionPageLabel(dataController, opinionPageLabel, currentPatientId);
                 }
                 // do what ever you want
             }
@@ -189,6 +196,9 @@ public class IKATool extends Application implements Initializable {
         });
     }
 
+    public int getOpinionIndex(){
+        return Integer.valueOf(opinionPageLabel.getText().split("/")[0].trim()) - 1;
+    }
     @Override
     public void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("IKAMainTool.fxml"));
@@ -292,6 +302,8 @@ public class IKATool extends Application implements Initializable {
             controller.setRule(dataController, selectedItem.getRuleId());
         else
             controller.setRule(dataController, null);
+        controller.setOpinionIndex(getOpinionIndex());
+        controller.setPatientID(currentPatientId);
 
         stage.setScene(new Scene(root));
         stage.setTitle("Rule Editor");
@@ -318,24 +330,5 @@ public class IKATool extends Application implements Initializable {
                 System.out.println("initJPanel");
             }
         });
-    }
-
-    /**
-     * 환자 소견과 관련 Rule을 지우는 메소드로써, 참조하는 Rule ID를 삭제하고 실질적인 Rule은 삭제하지 않는다.
-     * @param opinion 환자 소견 객체.
-     * @param ruleId 사용자가 선택한 Rule의 id
-     * @return 정상적으로 삭제되면 true, 해당 소견에 없는 rule id면 false를 리턴.
-     */
-    public boolean deleteRule(Opinion opinion, Long ruleId) {
-        ArrayList<Long> rules = opinion.getRules();
-
-        for (Long id : rules) {
-            if (id == ruleId) {
-                rules.remove(id);
-                return true;
-            }
-        }
-
-        return false;
     }
 }
