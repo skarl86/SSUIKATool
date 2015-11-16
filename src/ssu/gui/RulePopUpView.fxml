@@ -43,9 +43,9 @@
                     </items>
                   </ComboBox>
                   <Text layoutX="41.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author" />
-                  <TextField fx:id="authorTextField" layoutX="136.0" layoutY="52.0" prefWidth="102.0" />
                   <Button layoutX="343.0" layoutY="56.0" mnemonicParsing="false" onAction="#handleClickOK" prefWidth="74.0" styleClass="okButton" text="OK" />
                   <Button cancelButton="true" layoutX="425.0" layoutY="56.0" mnemonicParsing="false" onAction="#handleclickCancel" prefWidth="74.0" styleClass="cancelButton" text="Cancel" />
+                        <Label fx:id="authorLabel" layoutX="136.0" layoutY="53.0" prefHeight="17.0" prefWidth="178.0" text="Label" />
                 </children>
               </AnchorPane>
             </items>

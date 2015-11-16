@@ -59,7 +59,7 @@ public class IKARulePopUpViewController implements Initializable{
 
     @FXML GridPane mainView;
 
-    @FXML TextField authorTextField;
+    @FXML Label authorLabel;
 
     private Long patientID;
     private int indexOfOpinion;
@@ -193,7 +193,7 @@ public class IKARulePopUpViewController implements Initializable{
                 consqList.add(item.getAtom());
         }
 
-        IKADataController.getInstance().ruleEditDialogOK(antList, consqList, authorTextField.getText(), patientID,indexOfOpinion);
+        IKADataController.getInstance().ruleEditDialogOK(antList, consqList, authorLabel.getText(), patientID,indexOfOpinion);
         IKAPaneController.getInstance().refreshPatientOpinionReferenceList(
                 IKADataController.getInstance(),patientID, indexOfOpinion);
 
@@ -234,6 +234,11 @@ public class IKARulePopUpViewController implements Initializable{
             }
         });
     }
+
+    public void setAuthor(String author){
+        authorLabel.setText(author);
+    }
+
     private void refreshTable(ArrayList<String> antecedentList, ArrayList<String> conseqeuntList){
         // 현재 테이블에 있는 Antecedent 값을
         // 새로운 값을 넣어주기 위해서 다 지움.
