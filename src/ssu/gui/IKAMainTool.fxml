@@ -26,6 +26,7 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Edit">
                <items>
+                  <MenuItem mnemonicParsing="false" onAction="#alertInputAuthor" text="Input Author" />
                   <MenuItem mnemonicParsing="false" text="Delete" />
                </items>
             </Menu>
@@ -44,7 +45,7 @@
       </MenuBar>
       <HBox alignment="CENTER" minWidth="-Infinity" prefHeight="749.0" prefWidth="1264.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
          <children>
-            <SplitPane dividerPositions="0.5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <SplitPane fx:id="leftSplitPane" disable="true" dividerPositions="0.5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <items>
                   <AnchorPane SplitPane.resizableWithParent="false">
                      <children>
@@ -132,7 +133,7 @@
                   <Insets />
                </HBox.margin>
             </SplitPane>
-            <SplitPane dividerPositions="0.12173913043478261" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" HBox.hgrow="ALWAYS">
+            <SplitPane fx:id="rightSplitPane" disable="true" dividerPositions="0.12173913043478261" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" HBox.hgrow="ALWAYS">
                <items>
                   <AnchorPane>
                      <children>

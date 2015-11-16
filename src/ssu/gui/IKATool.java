@@ -58,6 +58,9 @@ public class IKATool extends Application implements Initializable {
     private IKADataController dataController = IKADataController.getInstance();
     private IKAPaneController paneController = IKAPaneController.getInstance();
 
+    @FXML private SplitPane leftSplitPane;
+    @FXML private SplitPane rightSplitPane;
+
     @FXML private TreeView patientTreeView;
 
     @FXML private TableView<IKAPaneController.PatientRow> patientTableView;
@@ -87,6 +90,8 @@ public class IKATool extends Application implements Initializable {
     @FXML private TableColumn<IKAPaneController.PatientReferenceRow, String> modifiedDateColumn;
 
     private Long currentPatientId = -2L;
+
+    private String authorName = "";
 
     /**
      * View
@@ -287,7 +292,22 @@ public class IKATool extends Application implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("[UI] Initialize View.");
+        alertInputAuthor();
         initView();
+    }
+    @FXML protected void alertInputAuthor(){
+        TextInputDialog dialog = new TextInputDialog("Anonymous");
+        dialog.setTitle("Input Author");
+        dialog.setHeaderText("작성자 정보 입력창");
+        dialog.setContentText("작성자 명을 입력해주세요 : ");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            System.out.println("Your name: " + result.get());
+            authorName = result.get();
+            leftSplitPane.setDisable(false);
+            rightSplitPane.setDisable(false);
+        }
     }
 
     private void modalRuleEditView(ActionEvent event, IKAPaneController.PatientReferenceRow selectedItem) throws IOException {
@@ -304,6 +324,7 @@ public class IKATool extends Application implements Initializable {
             controller.setRule(dataController, null);
         controller.setOpinionIndex(getOpinionIndex());
         controller.setPatientID(currentPatientId);
+        controller.setAuthor(authorName);
 
         stage.setScene(new Scene(root));
         stage.setTitle("Rule Editor");
