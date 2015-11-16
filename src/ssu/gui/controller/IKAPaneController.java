@@ -236,11 +236,13 @@ public class IKAPaneController implements IKAPaneInterface {
         ArrayList<String> opinionList = (ArrayList) dataController.getPatientOpinion(patientId);
         System.out.println("환자 소견 갯수 : " + opinionList.size());
         if(opinionList.size() != 0){
+            _opinionIndex = 0;
             _opinionTextArea.setText(opinionList.get(_opinionIndex));
         }else{
             _opinionTextArea.setText("");
         }
     }
+    @Override
     public void refreshOpinionPageLabel(IKADataController dataController, Label pageLabel, Long patientID){
         ArrayList<String> opinionList = (ArrayList) dataController.getPatientOpinion(patientID);
         if(opinionList.size() > 0)
