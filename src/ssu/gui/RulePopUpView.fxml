@@ -12,7 +12,7 @@
 
 <GridPane fx:id="mainView" alignment="CENTER" hgap="10.0" prefHeight="386.000022070315" prefWidth="528.0" styleClass="okButton" stylesheets="@resources/main.css" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ssu.gui.controller.IKARulePopUpViewController">
   <children>
-      <TitledPane>
+      <TitledPane collapsible="false">
          <content>
           <SplitPane dividerPositions="0.7506493506493507" focusTraversable="true" orientation="VERTICAL" prefHeight="446.0" prefWidth="528.0">
             <items>
