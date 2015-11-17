@@ -1,12 +1,12 @@
-package ssu.object.test;
+package ssu.object.test.value.string;
 
 import ssu.object.Tags;
 
 /**
  * Created by JasonHong on 2015. 11. 14..
  */
-public class Found_NotFound extends StringValue {
-    public Found_NotFound(String value) {
+public class StringAmount extends StringValue {
+    public StringAmount(String value) {
         this.value = value;
     }
 
@@ -17,7 +17,7 @@ public class Found_NotFound extends StringValue {
 
     @Override
     public String printSavingFormat() {
-        String line = Tags.TEST_VALUE_TYPE_FOUNDNOTFOUND + Tags.TEST_VALUE_SPLITER + getTestValue();
+        String line = Tags.TEST_VALUE_TYPE_AMOUNT + Tags.TEST_VALUE_SPLITER + getTestValue();
 
         return line;
     }

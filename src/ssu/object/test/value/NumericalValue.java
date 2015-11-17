@@ -1,4 +1,4 @@
-package ssu.object.test;
+package ssu.object.test.value;
 
 import ssu.object.Tags;
 

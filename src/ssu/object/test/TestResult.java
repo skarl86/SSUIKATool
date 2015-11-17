@@ -2,6 +2,7 @@ package ssu.object.test;
 
 import ssu.object.Savable;
 import ssu.object.Tags;
+import ssu.object.test.value.TestValue;
 
 import java.util.ArrayList;
 

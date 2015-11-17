@@ -1,12 +1,12 @@
-package ssu.object.test;
+package ssu.object.test.value.string;
 
 import ssu.object.Tags;
 
 /**
  * Created by JasonHong on 2015. 11. 14..
  */
-public class ReactiveNonReative extends StringValue {
-    public ReactiveNonReative(String value) {
+public class BloodType extends StringValue {
+    public BloodType(String value) {
         this.value = value;
     }
 
@@ -17,7 +17,7 @@ public class ReactiveNonReative extends StringValue {
 
     @Override
     public String printSavingFormat() {
-        String line = Tags.TEST_VALUE_TYPE_REACTIVE_NONREACTIVE + Tags.TEST_VALUE_SPLITER + getTestValue();
+        String line = Tags.TEST_VALUE_TYPE_BLOOD + Tags.TEST_VALUE_SPLITER + getTestValue();
 
         return line;
     }

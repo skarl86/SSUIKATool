@@ -1,12 +1,12 @@
-package ssu.object.test;
+package ssu.object.test.value.string;
 
 import ssu.object.Tags;
 
 /**
  * Created by JasonHong on 2015. 11. 14..
  */
-public class RhType extends StringValue {
-    public RhType(String value) {
+public class Normal extends StringValue {
+    public Normal(String value) {
         this.value = value;
     }
 
@@ -17,7 +17,7 @@ public class RhType extends StringValue {
 
     @Override
     public String printSavingFormat() {
-        String line = Tags.TEST_VALUE_TYPE_RH + Tags.TEST_VALUE_SPLITER + getTestValue();
+        String line = Tags.TEST_VALUE_TYPE_NORMAL + Tags.TEST_VALUE_SPLITER + getTestValue();
 
         return line;
     }

@@ -4,6 +4,7 @@ import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxUtils;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by beggar3004 on 15. 11. 8..
@@ -42,6 +43,7 @@ public final class Tags {
     public static final String PATIENT_OPINION_RULE_SPLITER = ",";
 
     public static final String TEST_ITEM_SPLITER = ",";
+    public static final String TEST_ITEM_TYPE_SPLITER = "_";
 
     public static final String TEST_VALUE_SPLITER = ":";
 
@@ -53,7 +55,7 @@ public final class Tags {
     public static final String PATIENT_GENDER_UNKNOWN = "Unknown";
 
     /**
-     * Test Value
+     * Test Value Type
      */
     public static final String TEST_VALUE_TYPE_NORMAL = "NO";
     public static final String TEST_VALUE_TYPE_NORMAL_VALUE = "Normal";
@@ -65,7 +67,7 @@ public final class Tags {
     public static final String TEST_VALUE_TYPE_POS = "Positive";
     public static final String TEST_VALUE_TYPE_NEG = "Negative";
     public static final String TEST_VALUE_TYPE_REACTIVE_NONREACTIVE = "RN";
-    public static final String TEST_VALUE_TYPE_REACTEVE = "Reactive";
+    public static final String TEST_VALUE_TYPE_REACTIVE = "Reactive";
     public static final String TEST_VALUE_TYPE_NONREATIVE = "Non Reactive";
     public static final String TEST_VALUE_TYPE_MTHFR_C677T = "MTHFRC677T";
     public static final String TEST_VALUE_TYPE_MTHFR_C677T_CT_HETEROZYGOTE = "CT heterozygote";
@@ -82,6 +84,52 @@ public final class Tags {
     public static final String TEST_VALUE_TYPE_RH = "RH";
     public static final String TEST_VALUE_TYPE_RH_PLUS = "+";
     public static final String TEST_VALUE_TYPE_RH_MINUS = "-";
+    public static final String TEST_VALUE_TYPE_RANGE = "RA";
+    public static final String TEST_VALUE_TYPE_COMPARISON = "CO";
+    public static final String TEST_VALUE_TYPE_LESSTHAN = "<";
+    public static final String TEST_VALUE_TYPE_LESSTHAN_EQUAL = "<=";
+    public static final String TEST_VALUE_TYPE_GREATERTHAN = ">";
+    public static final String TEST_VALUE_TYPE_GREATERTHAN_EQUAL = ">=";
+
+    /**
+     * 입력받은 type에 따라 관련 List를 리턴.
+     * @param type
+     * @return
+     */
+    public static final ArrayList<String> getTypeList(String type) {
+        ArrayList<String> list = new ArrayList<String>();
+
+        if (type.equals("HL")) {                    // High, Low, Normal
+            list.add(Tags.TEST_VALUE_TYPE_HIGH);
+            list.add(Tags.TEST_VALUE_TYPE_LOW);
+            list.add(Tags.TEST_VALUE_TYPE_NORMAL);
+        } else if (type.equals("PN")) {             // Positive, Negative
+            list.add(Tags.TEST_VALUE_TYPE_POS);
+            list.add(Tags.TEST_VALUE_TYPE_NEG);
+        } else if (type.equals("RN")) {             // Active, Non Reactive
+            list.add(Tags.TEST_VALUE_TYPE_REACTIVE);
+            list.add(Tags.TEST_VALUE_TYPE_NONREATIVE);
+        } else if (type.equals("FN")) {             // Found, Not found
+            list.add(Tags.TEST_VALUE_TYPE_FOUND);
+            list.add(Tags.TEST_VALUE_TYPE_NOT_FOUND);
+        } else if (type.equals("ABO")) {            // Blood Type
+            list.add(Tags.TEST_VALUE_TYPE_BLOOD_A);
+            list.add(Tags.TEST_VALUE_TYPE_BLOOD_B);
+            list.add(Tags.TEST_VALUE_TYPE_BLOOD_O);
+            list.add(Tags.TEST_VALUE_TYPE_BLOOD_AB);
+        } else if (type.equals("RH")) {             // Rh +, -
+            list.add(Tags.TEST_VALUE_TYPE_RH_PLUS);
+            list.add(Tags.TEST_VALUE_TYPE_RH_MINUS);
+        } else {                                    // 없으면
+            list.add(Tags.TEST_VALUE_TYPE_HIGH);
+            list.add(Tags.TEST_VALUE_TYPE_LOW);
+            list.add(Tags.TEST_VALUE_TYPE_NORMAL);
+            list.add(Tags.TEST_VALUE_TYPE_POS);
+            list.add(Tags.TEST_VALUE_TYPE_NEG);
+        }
+
+        return list;
+    }
 
     /**
      * jGraphX

@@ -49,8 +49,18 @@ public class TestItemManager {
                  */
                 String name = tokens[0];
                 String description = tokens[1];
+                String types = tokens[2];
 
                 TestItem newTestItem = new TestItem(name, description);
+                if (types.contains(Tags.TEST_ITEM_TYPE_SPLITER)) { // Type이 여러개
+                    String[] typeToken =  types.split(Tags.TEST_ITEM_TYPE_SPLITER);
+                    for (int i=0; i<typeToken.length; i++) {
+                        newTestItem.addType(typeToken[i]);
+                    }
+                } else {    // Type이 하나.
+                    newTestItem.addType(types);
+                }
+
                 allTestItems.put(name, newTestItem);
 
                 line = br.readLine();
