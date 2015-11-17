@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.collections.*?>
 <?import javafx.geometry.Insets?>
@@ -10,53 +11,95 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.text.*?>
 
-<GridPane fx:id="mainView" alignment="CENTER" hgap="10.0" prefHeight="386.000022070315" prefWidth="528.0" styleClass="okButton" stylesheets="@resources/main.css" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ssu.gui.controller.IKARulePopUpViewController">
-  <children>
-      <TitledPane collapsible="false">
-         <content>
-          <SplitPane dividerPositions="0.7506493506493507" focusTraversable="true" orientation="VERTICAL" prefHeight="446.0" prefWidth="528.0">
-            <items>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="272.0" prefWidth="839.0">
-                     <children>
-                        <TableView fx:id="antecedentTableView" layoutX="6.0" layoutY="6.0" prefHeight="265.0" prefWidth="263.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="265.0" AnchorPane.topAnchor="0.0">
-                          <columns>
-                            <TableColumn fx:id="antecedentColumn" prefWidth="258.0" text="조건" />
-                          </columns>
-                        </TableView>
-                        <TableView fx:id="conseqeuntTableView" layoutX="259.0" layoutY="6.0" prefHeight="265.0" prefWidth="269.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="259.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                          <columns>
-                            <TableColumn fx:id="consequentColumn" prefWidth="265.0" text="결과" />
-                          </columns>
-                        </TableView>
-                     </children>
-              </AnchorPane>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="43.2197265625" prefWidth="526.0">
-                <children>
-                  <Text layoutX="41.0" layoutY="30.0" scaleX="1.0" scaleY="0.999991257518534" strokeType="OUTSIDE" strokeWidth="0.0" text="Complete Rule" />
-                  <ComboBox fx:id="completeRuleComboBox" layoutX="136.0" layoutY="16.0" prefWidth="364.0">
-                    <items>
-                      <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="Item 1" />
-                        <String fx:value="Item 2" />
-                        <String fx:value="Item 3" />
-                      </FXCollections>
-                    </items>
-                  </ComboBox>
-                  <Text layoutX="41.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author" />
-                  <Button layoutX="343.0" layoutY="56.0" mnemonicParsing="false" onAction="#handleClickOK" prefWidth="74.0" styleClass="okButton" text="OK" />
-                  <Button cancelButton="true" layoutX="425.0" layoutY="56.0" mnemonicParsing="false" onAction="#handleclickCancel" prefWidth="74.0" styleClass="cancelButton" text="Cancel" />
-                        <Label fx:id="authorLabel" layoutX="136.0" layoutY="53.0" prefHeight="17.0" prefWidth="178.0" text="Label" />
-                </children>
-              </AnchorPane>
-            </items>
-          </SplitPane>
-         </content>
-      </TitledPane>
-  </children>
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-  </rowConstraints>
+<GridPane fx:id="mainView" alignment="CENTER" hgap="10.0" prefHeight="605.0" prefWidth="528.0" styleClass="okButton" stylesheets="@resources/main.css" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ssu.gui.controller.IKARulePopUpViewController">
+    <children>
+        <VBox prefHeight="594.0" prefWidth="530.0">
+            <children>
+                <TitledPane prefHeight="360.0" prefWidth="530.0" text="Table Rule Editor">
+                    <content>
+                        <SplitPane dividerPositions="0.1897590361445783" focusTraversable="true" orientation="VERTICAL" prefHeight="317.0" prefWidth="528.0">
+                            <items>
+                                <HBox prefHeight="81.0" prefWidth="530.0">
+                                    <children>
+                                        <Label prefHeight="26.0" prefWidth="33.0" text="Label">
+                                            <HBox.margin>
+                                                <Insets left="15.0" right="5.0" top="20.0" />
+                                            </HBox.margin>
+                                        </Label>
+                                        <ComboBox editable="true" prefHeight="26.0" prefWidth="193.0">
+                                            <HBox.margin>
+                                                <Insets top="20.0" />
+                                            </HBox.margin>
+                                        </ComboBox>
+                                        <Region prefHeight="51.0" prefWidth="21.0" />
+                                        <Label prefHeight="26.0" prefWidth="33.0" text="Label">
+                                            <HBox.margin>
+                                                <Insets right="5.0" top="20.0" />
+                                            </HBox.margin>
+                                        </Label>
+                                        <ComboBox editable="true" prefHeight="26.0" prefWidth="214.0">
+                                            <HBox.margin>
+                                                <Insets top="20.0" />
+                                            </HBox.margin>
+                                        </ComboBox>
+                                    </children>
+                                </HBox>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="272.0" prefWidth="839.0">
+                                    <children>
+                                        <TableView fx:id="antecedentTableView" layoutX="6.0" layoutY="6.0" prefHeight="265.0" prefWidth="263.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="265.0" AnchorPane.topAnchor="0.0">
+                                            <columns>
+                                                <TableColumn fx:id="antecedentColumn" prefWidth="137.0" text="조건" />
+                                                <TableColumn prefWidth="122.0" text="Value" />
+                                            </columns>
+                                        </TableView>
+                                        <TableView fx:id="conseqeuntTableView" layoutX="259.0" layoutY="6.0" prefHeight="265.0" prefWidth="269.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="259.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <columns>
+                                                <TableColumn fx:id="consequentColumn" prefWidth="265.0" text="결과" />
+                                            </columns>
+                                        </TableView>
+                                    </children>
+                                </AnchorPane>
+                            </items>
+                        </SplitPane>
+                    </content>
+                </TitledPane>
+                <TableView prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                        <TableColumn maxWidth="529.0" prefWidth="529.0" text="CompleteRule" />
+                    </columns>
+                </TableView>
+                <HBox prefHeight="48.0" prefWidth="530.0">
+                    <children>
+                        <Text layoutX="41.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author" wrappingWidth="39.39634323120117">
+                            <HBox.margin>
+                                <Insets left="25.0" top="10.0" />
+                            </HBox.margin>
+                        </Text>
+                        <Label fx:id="authorLabel" layoutX="136.0" layoutY="24.0" prefHeight="17.0" prefWidth="115.0" text="Label">
+                            <HBox.margin>
+                                <Insets left="15.0" top="10.0" />
+                            </HBox.margin>
+                        </Label>
+                        <Region prefHeight="39.0" prefWidth="170.0" />
+                        <Button layoutX="343.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleClickOK" prefWidth="74.0" styleClass="okButton" text="OK">
+                            <HBox.margin>
+                                <Insets top="7.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button cancelButton="true" layoutX="425.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleclickCancel" prefWidth="74.0" styleClass="cancelButton" text="Cancel">
+                            <HBox.margin>
+                                <Insets left="5.0" top="7.0" />
+                            </HBox.margin>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+    </rowConstraints>
 </GridPane>
