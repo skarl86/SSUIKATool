@@ -318,6 +318,20 @@ public class IKADataController extends IKAController implements IKADataRequestIn
     }
 
     /**
+     * 모든 Atom 리스트를 리턴.
+     * @return
+     */
+    public ArrayList<String> getAllAtomList() {
+        ArrayList<String> atomList = new ArrayList<String>();
+
+        for (Map.Entry<String, Atom> entry : this.atomManager.getAllAtoms().entrySet()) {
+            atomList.add(entry.getValue().getName());
+        }
+
+        return atomList;
+    }
+
+    /**
      * 사용자가 Atom을 입력할 때마다 입력한 Atom들이 포함된 Rule들의 리스트를 리턴.
      * @param antecedents 사용자가 입력한 Atom들.
      * @param consequents 사용자가 입력한 Atom들.
@@ -372,4 +386,26 @@ public class IKADataController extends IKAController implements IKADataRequestIn
         // PatientManager 저장.
         this.patientManager.savePatients();
     }
+
+    /**
+     * Atom명을 파라미터로 받아 해당 Atom에 맞는 value type의 string list를 리턴하는 인터페이스
+     * @param atom
+     * @return
+     */
+    public ArrayList<String> getAtomValueList(String atom) {
+        HashMap<String, TestItem> allTestItems = TestItemManager.getInstance().getAllTestItems();
+        ArrayList<String> list = new ArrayList<String>();
+
+        if (allTestItems.containsKey(atom)) {
+            ArrayList<String> types = allTestItems.get(atom).getTypes();
+            for (String type : types) {
+                list.addAll(Tags.getTypeList(type));
+            }
+        } else {
+            list.addAll(Tags.getTypeList(null));
+        }
+
+        return list;
+    }
+
 }

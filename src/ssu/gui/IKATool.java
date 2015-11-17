@@ -335,27 +335,6 @@ public class IKATool extends Application implements Initializable {
         stage.show();
     }
 
-    /**
-     * Atom명을 파라미터로 받아 해당 Atom에 맞는 value type의 string list를 리턴하는 인터페이스
-     * @param atom
-     * @return
-     */
-    public ArrayList<String> getAtomValueList(String atom) {
-        HashMap<String, TestItem> allTestItems = TestItemManager.getInstance().getAllTestItems();
-        ArrayList<String> list = new ArrayList<String>();
-
-        if (allTestItems.containsKey(atom)) {
-            ArrayList<String> types = allTestItems.get(atom).getTypes();
-            for (String type : types) {
-                list.addAll(Tags.getTypeList(type));
-            }
-        } else {
-            list.addAll(Tags.getTypeList(null));
-        }
-
-        return list;
-    }
-
     /*
     Java Swing 삽입 부분
      */
