@@ -229,8 +229,8 @@ public class IKARulePopUpViewController implements Initializable{
     }
 
     private void refreshCompletionRule(){
-        ArrayList antecedentList = new ArrayList();
-        ArrayList consequentList = new ArrayList();
+        ArrayList<String> antecedentList = new ArrayList();
+        ArrayList<String> consequentList = new ArrayList();
 
         for(Object row : antecedentTableView.getItems()){
             antecedentList.add(((AtomRow)row).getAtom());
@@ -292,8 +292,6 @@ public class IKARulePopUpViewController implements Initializable{
 
         antecedentTableView.setItems(antecendentData);
         conseqeuntTableView.setItems(consequentData);
-
-        refreshCompletionRule();
     }
     private void initAntecendentAutoCompleteComboBox(){
         antecedentComboBox.getEditor().textProperty().addListener(new ChangeListener<String>() {
@@ -301,6 +299,7 @@ public class IKARulePopUpViewController implements Initializable{
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if(!(antecedentComboBox.getEditor().getText().length() == 0)) {
+                    antecedentComboBox.show();
                     newInputValue = newValue;
                     ObservableList data = FXCollections.observableArrayList(IKADataController.getInstance().getAtomCompletionList(newValue));
                     antecedentComboBox.setItems(data);
@@ -312,7 +311,6 @@ public class IKARulePopUpViewController implements Initializable{
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 AppTestLog.printLog("Selection");
-                antecedentTableView.getItems().add(newInputValue);
             }
         });
         antecedentComboBox.addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
@@ -320,7 +318,10 @@ public class IKARulePopUpViewController implements Initializable{
             @Override
             public void handle(KeyEvent event) {
                 if(event.getCode() == KeyCode.ENTER){
-                    antecedentTableView.getItems().add(newInputValue);
+                    antecedentTableView.getItems().add(new AtomRow(newInputValue, ""));
+                    antecedentComboBox.getEditor().clear();
+                    antecedentComboBox.getSelectionModel().clearSelection();
+                    refreshCompletionRule();
                 }
             }
         });
@@ -331,6 +332,7 @@ public class IKARulePopUpViewController implements Initializable{
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if(!(consequentComboBox.getEditor().getText().length() == 0)) {
+                    antecedentComboBox.show();
                     newInputValue = newValue;
                     ObservableList data = FXCollections.observableArrayList(IKADataController.getInstance().getAtomCompletionList(newValue));
                     consequentComboBox.setItems(data);
@@ -342,7 +344,7 @@ public class IKARulePopUpViewController implements Initializable{
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 AppTestLog.printLog("Selection");
-                conseqeuntTableView.getItems().add(newInputValue);
+//                conseqeuntTableView.getItems().add(new AtomRow(newInputValue, ""));
             }
         });
         consequentComboBox.addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
@@ -350,7 +352,10 @@ public class IKARulePopUpViewController implements Initializable{
             @Override
             public void handle(KeyEvent event) {
                 if(event.getCode() == KeyCode.ENTER){
-                    conseqeuntTableView.getItems().add(newInputValue);
+                    conseqeuntTableView.getItems().add(new AtomRow(newInputValue, ""));
+                    consequentComboBox.getEditor().clear();
+                    consequentComboBox.getSelectionModel().clearSelection();
+                    refreshCompletionRule();
                 }
             }
         });
