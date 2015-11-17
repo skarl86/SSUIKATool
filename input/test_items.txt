@@ -9,12 +9,12 @@ RBC,RBC에 관한 검사항목입니다.,HL_PN
 MPV,MPV에 관한 검사항목입니다.,HL_PN
 Occult Blood,Occult Blood에 관한 검사항목입니다.,PN
 Hb,Hb에 관한 검사항목입니다.,HL_PN
-FSH,FSH,HL_PN
+FSH,FSH에 관한 검사항목입니다.,HL_PN
 Hb A1c,Hb A1c에 관한 검사항목입니다.,HL
 CEA,CEA에 관한 검사항목입니다.,HL_PN
 %,%에 관한 검사항목입니다.,HL_PN
 HCV-Ab,HCV-Ab에 관한 검사항목입니다.,PN
-Deoxypyridinolin,Deoxypyridinolin,HL_PN
+Deoxypyridinolin,Deoxypyridinolin에 관한 검사항목입니다.,HL_PN
 Casts,Casts에 관한 검사항목입니다.,FN
 Diff.count,Diff.count에 관한 검사항목입니다.,HL_PN
 Ketone,Ketone에 관한 검사항목입니다.,PN
@@ -47,7 +47,7 @@ Crystals,Crystals에 관한 검사항목입니다.,FN
 CK,CK에 관한 검사항목입니다.,HL_PN
 Phosphorus,Phosphorus에 관한 검사항목입니다.,HL_PN
 S.G,S.G에 관한 검사항목입니다.,HL_PN
-TG,TG에 관한 검사항목입니다.HL_PN
+TG,TG에 관한 검사항목입니다.,HL_PN
 MCH,MCH에 관한 검사항목입니다.,HL_PN
 ALB,ALB에 관한 검사항목입니다.,HL_PN
 Prothrombin,Prothrombin에 관한 검사항목입니다.,PN
@@ -83,7 +83,7 @@ ASO(QL),ASO(QL)에 관한 검사항목입니다.,PN
 S-Osmo,S-Osmo에 관한 검사항목입니다.,HL_PN
 TSH,TSH에 관한 검사항목입니다.,HL
 Myelocyte,Myelocyte에 관한 검사항목입니다.,HL_PN
-CRP(OL),CRP(OL),HL_PN
+CRP(OL),CRP(OL)에 관한 검사항목입니다.,HL_PN
 T.Bili.,T.Bili.에 관한 검사항목입니다.,HL_PN
 Protein,Protein에 관한 검사항목입니다.,PN
 Metamyelocyte,Metamyelocyte에 관한 검사항목입니다.,HL_PN
