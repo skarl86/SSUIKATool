@@ -402,7 +402,7 @@ public class IKADataController extends IKAController implements IKADataRequestIn
                 list.addAll(Tags.getTypeList(type));
             }
         } else {
-            list.addAll(Tags.getTypeList(null));
+            list.addAll(Tags.getTypeList(""));
         }
 
         return list;
