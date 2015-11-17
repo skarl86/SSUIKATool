@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.text.*?>
 
-<GridPane fx:id="mainView" alignment="CENTER" hgap="10.0" prefHeight="605.0" prefWidth="528.0" styleClass="okButton" stylesheets="@resources/main.css" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ssu.gui.controller.IKARulePopUpViewController">
+<GridPane fx:id="mainView" alignment="CENTER" hgap="10.0" prefHeight="605.0" prefWidth="537.0" styleClass="okButton" stylesheets="@resources/main.css" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ssu.gui.controller.IKARulePopUpViewController">
     <children>
         <VBox prefHeight="594.0" prefWidth="530.0">
             <children>
@@ -19,14 +19,14 @@
                     <content>
                         <SplitPane dividerPositions="0.1897590361445783" focusTraversable="true" orientation="VERTICAL" prefHeight="317.0" prefWidth="528.0">
                             <items>
-                                <HBox prefHeight="81.0" prefWidth="530.0">
+                                <HBox fx:id="splitTopBox" prefHeight="81.0" prefWidth="530.0">
                                     <children>
                                         <Label prefHeight="26.0" prefWidth="33.0" text="Label">
                                             <HBox.margin>
                                                 <Insets left="15.0" right="5.0" top="20.0" />
                                             </HBox.margin>
                                         </Label>
-                                        <ComboBox editable="true" prefHeight="26.0" prefWidth="193.0">
+                                        <ComboBox fx:id="antecedentComboBox" editable="true" prefHeight="26.0" prefWidth="193.0">
                                             <HBox.margin>
                                                 <Insets top="20.0" />
                                             </HBox.margin>
@@ -37,7 +37,7 @@
                                                 <Insets right="5.0" top="20.0" />
                                             </HBox.margin>
                                         </Label>
-                                        <ComboBox editable="true" prefHeight="26.0" prefWidth="214.0">
+                                        <ComboBox fx:id="consequentComboBox" editable="true" prefHeight="26.0" prefWidth="214.0">
                                             <HBox.margin>
                                                 <Insets top="20.0" />
                                             </HBox.margin>
@@ -48,13 +48,14 @@
                                     <children>
                                         <TableView fx:id="antecedentTableView" layoutX="6.0" layoutY="6.0" prefHeight="265.0" prefWidth="263.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="265.0" AnchorPane.topAnchor="0.0">
                                             <columns>
-                                                <TableColumn fx:id="antecedentColumn" prefWidth="137.0" text="조건" />
-                                                <TableColumn prefWidth="122.0" text="Value" />
+                                                <TableColumn fx:id="antecedentColumn" prefWidth="137.0" resizable="false" text="조건" />
+                                                <TableColumn fx:id="antecedentValueColumn" prefWidth="122.0" resizable="false" text="Value" />
                                             </columns>
                                         </TableView>
                                         <TableView fx:id="conseqeuntTableView" layoutX="259.0" layoutY="6.0" prefHeight="265.0" prefWidth="269.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="259.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <columns>
-                                                <TableColumn fx:id="consequentColumn" prefWidth="265.0" text="결과" />
+                                                <TableColumn fx:id="consequentColumn" prefWidth="153.0" resizable="false" text="결과" />
+                                                <TableColumn fx:id="consequentValueColumn" prefWidth="113.0" text="Value" />
                                             </columns>
                                         </TableView>
                                     </children>
@@ -63,14 +64,14 @@
                         </SplitPane>
                     </content>
                 </TitledPane>
-                <TableView prefHeight="200.0" prefWidth="200.0">
+                <TableView fx:id="completeRuleTable" prefHeight="200.0" prefWidth="200.0">
                     <columns>
                         <TableColumn maxWidth="529.0" prefWidth="529.0" text="CompleteRule" />
                     </columns>
                 </TableView>
                 <HBox prefHeight="48.0" prefWidth="530.0">
                     <children>
-                        <Text layoutX="41.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author" wrappingWidth="39.39634323120117">
+                        <Text layoutX="41.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author" wrappingWidth="49.39634323120117">
                             <HBox.margin>
                                 <Insets left="25.0" top="10.0" />
                             </HBox.margin>
