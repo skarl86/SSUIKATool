@@ -15,13 +15,13 @@
     <children>
         <VBox prefHeight="594.0" prefWidth="530.0">
             <children>
-                <TitledPane prefHeight="360.0" prefWidth="530.0" text="Table Rule Editor">
+                <TitledPane collapsible="false" prefHeight="360.0" prefWidth="530.0" text="Table Rule Editor">
                     <content>
                         <SplitPane dividerPositions="0.1897590361445783" focusTraversable="true" orientation="VERTICAL" prefHeight="317.0" prefWidth="528.0">
                             <items>
                                 <HBox fx:id="splitTopBox" prefHeight="81.0" prefWidth="530.0">
                                     <children>
-                                        <Label prefHeight="26.0" prefWidth="33.0" text="Label">
+                                        <Label prefHeight="26.0" prefWidth="33.0" text="조건 :">
                                             <HBox.margin>
                                                 <Insets left="15.0" right="5.0" top="20.0" />
                                             </HBox.margin>
@@ -32,7 +32,7 @@
                                             </HBox.margin>
                                         </ComboBox>
                                         <Region prefHeight="51.0" prefWidth="21.0" />
-                                        <Label prefHeight="26.0" prefWidth="33.0" text="Label">
+                                        <Label prefHeight="26.0" prefWidth="33.0" text="결과 :">
                                             <HBox.margin>
                                                 <Insets right="5.0" top="20.0" />
                                             </HBox.margin>
@@ -66,12 +66,12 @@
                 </TitledPane>
                 <TableView fx:id="completeRuleTable" prefHeight="200.0" prefWidth="200.0">
                     <columns>
-                        <TableColumn maxWidth="529.0" prefWidth="529.0" text="CompleteRule" />
+                        <TableColumn fx:id="completeRuleColumn" maxWidth="529.0" prefWidth="529.0" text="CompleteRule" />
                     </columns>
                 </TableView>
                 <HBox prefHeight="48.0" prefWidth="530.0">
                     <children>
-                        <Text layoutX="41.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author" wrappingWidth="49.39634323120117">
+                        <Text layoutX="40.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author :" wrappingWidth="49.39634323120117">
                             <HBox.margin>
                                 <Insets left="25.0" top="10.0" />
                             </HBox.margin>
