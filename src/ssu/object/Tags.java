@@ -30,6 +30,7 @@ public final class Tags {
      * Spliter 타입.
      */
     public static final String ATOM_SPLITER = ",";
+    public static final String ATOM_VALUE_SPLITER = "_";
 
     public static final String RULE_SPLITER = ",";
     public static final String RULE_THEN_SPLITER = "-";
@@ -134,8 +135,16 @@ public final class Tags {
     /**
      * jGraphX
      */
+    public static final int GRAPH_NODE_WIDTH = 100;
+    public static final int GRAPH_NODE_ATOM_WIDTH = 60;
+    public static final int GRAPH_NODE_VALUE_WIDTH = 40;
+    public static final int GRAPH_NODE_HEIGHT = 30;
+    public static final int GRAPH_JUSTIFICATION_WIDTH = 20;
+    public static final int GRAPH_JUSTIFICATION_HEIGHT = 20;
+
     public static final String GRAPH_NODE_STYLE = mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_ELLIPSE + ";" + mxConstants.STYLE_FILLCOLOR + "=" + mxUtils.getHexColorString(new Color(242,177,188));
     public static final String GRAPH_JUSTIFICATION_STYLE = mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_TRIANGLE + ";" + mxConstants.STYLE_FILLCOLOR + "=" + mxUtils.getHexColorString(new Color(242,250,17));
+
 
     private Tags() {}
 }

@@ -6,7 +6,6 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,25 +21,19 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import ssu.gui.controller.IKAController;
 import ssu.gui.controller.IKADataController;
 import ssu.gui.controller.IKAPaneController;
 import ssu.gui.controller.IKARulePopUpViewController;
-import ssu.object.*;
-import ssu.object.patient.Opinion;
-import ssu.object.rule.Atom;
+import ssu.gui.view.GraphView;
+import ssu.object.RuleManager;
 import ssu.object.rule.Rule;
-import ssu.object.test.TestItem;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
@@ -353,4 +346,5 @@ public class IKATool extends Application implements Initializable {
             }
         });
     }
+
 }

@@ -393,7 +393,7 @@ public class IKADataController extends IKAController implements IKADataRequestIn
      * @return
      */
     public ArrayList<String> getAtomValueList(String atom) {
-        HashMap<String, TestItem> allTestItems = TestItemManager.getInstance().getAllTestItems();
+        HashMap<String, TestItem> allTestItems = this.testItemManager.getAllTestItems();
         ArrayList<String> list = new ArrayList<String>();
 
         if (allTestItems.containsKey(atom)) {
@@ -406,6 +406,38 @@ public class IKADataController extends IKAController implements IKADataRequestIn
         }
 
         return list;
+    }
+
+    /**
+     * 파라미터로 받은 consequent를 가지는 Rule의 리스트를 리턴.
+     * @param checkConsequents
+     * @return
+     */
+    public ArrayList<Rule> getRuleByConsequent(ArrayList<String> checkConsequents) {
+        ArrayList<Rule> ruleList = new ArrayList<Rule>();
+
+        for (Map.Entry<Long, Rule> entry : this.ruleManager.getAllRules().entrySet()) {
+            Rule rule = entry.getValue();
+
+            // 1. Consequent의 이름으로 이루어진 List를 생성.
+            ArrayList<String> consList = new ArrayList<String>();
+            for (Atom cons : rule.getConsequents()) {
+                consList.add(cons.getName());
+            }
+
+            // 2. CheckList를 생성해서 파라미터로 받은 consequent 리스트와 비교한 결과를 CheckList에 저장.
+            ArrayList<Boolean> checkList = new ArrayList<Boolean>();
+            for (String checkCons : checkConsequents) {
+                checkList.add(consList.contains(checkCons));
+            }
+
+            // 3. 포함하지 않는 것이 없다면
+            if (!checkList.contains(false)) {
+                ruleList.add(rule);
+            }
+        }
+
+        return ruleList;
     }
 
 }
