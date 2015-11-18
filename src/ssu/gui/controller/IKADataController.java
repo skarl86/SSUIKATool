@@ -431,7 +431,7 @@ public class IKADataController extends IKAController implements IKADataRequestIn
                 checkList.add(consList.contains(checkCons));
             }
 
-            // 3. 포함하지 않는 것이 없다면
+            // 3. 포함하지 않는 것이 없다면 해당 rule을 추가.
             if (!checkList.contains(false)) {
                 ruleList.add(rule);
             }
