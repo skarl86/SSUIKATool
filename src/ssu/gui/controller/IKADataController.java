@@ -311,7 +311,8 @@ public class IKADataController extends IKAController implements IKADataRequestIn
         ArrayList<String> completionList = new ArrayList<String>();
 
         for (Map.Entry<String, Atom> entry : this.atomManager.getAllAtoms().entrySet()) {
-            if (entry.getKey().startsWith(value)) {
+            String atomStr = entry.getKey();
+            if (atomStr.startsWith(value) && !atomStr.contains("_")) {
                 completionList.add(entry.getKey());
             }
         }
