@@ -47,13 +47,22 @@ public class Rule implements Savable {
         if (checkAntecedents.size() == 0 && checkConsequents.size() == 0) {
             return false;
         } else {
+            // 1.
             ArrayList<String> antecedentStringList = new ArrayList<String>();
             ArrayList<String> consequentStringList = new ArrayList<String>();
 
             for (Atom antecedent : getAntecedents()) {
+                if (antecedent.getName().contains("_")) {
+                    antecedentStringList.add(antecedent.getName().substring(0, antecedent.getName().indexOf("_")));
+                }
+
                 antecedentStringList.add(antecedent.getName());
             }
             for (Atom consequent : getConsequents()) {
+                if (consequent.getName().contains("_")) {
+                    consequentStringList.add(consequent.getName().substring(0, consequent.getName().indexOf("_")));
+                }
+
                 consequentStringList.add(consequent.getName());
             }
 
