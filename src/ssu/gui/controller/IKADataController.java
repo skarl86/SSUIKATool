@@ -226,7 +226,7 @@ public class IKADataController extends IKAController implements IKADataRequestIn
 
     /**
      * 환자 소견과 관련 Rule을 지우는 메소드로써, 참조하는 Rule ID를 삭제하고 실질적인 Rule은 삭제하지 않는다.
-     * @param opinion 환자 소견 객체.
+     * @param indexOfOpinion 환자 소견 객체의 index.
      * @param ruleId 사용자가 선택한 Rule의 id
      * @return 정상적으로 삭제되면 true, 해당 소견에 없는 rule id면 false를 리턴.
      */
@@ -242,12 +242,14 @@ public class IKADataController extends IKAController implements IKADataRequestIn
 
         }
 
-        ArrayList<Long> rules = opinion.getRules();
+        if (opinion != null) {
+            ArrayList<Long> rules = opinion.getRules();
 
-        for (Long id : rules) {
-            if (id == ruleId) {
-                rules.remove(id);
-                return true;
+            for (Long id : rules) {
+                if (id.equals(ruleId)) {
+                    rules.remove(id);
+                    return true;
+                }
             }
         }
 
@@ -325,7 +327,24 @@ public class IKADataController extends IKAController implements IKADataRequestIn
         ArrayList<String> atomList = new ArrayList<String>();
 
         for (Map.Entry<String, Atom> entry : this.atomManager.getAllAtoms().entrySet()) {
+            Atom atom = entry.getValue();
             atomList.add(entry.getValue().getName());
+        }
+
+        return atomList;
+    }
+
+    /**
+     * Value를 가지지 않는 모든 Atom 리스트를 리턴.
+     * @return
+     */
+    public ArrayList<String> getAllAtomsExceptValueList() {
+        ArrayList<String> atomList = new ArrayList<String>();
+
+        for (Map.Entry<String, Atom> entry : this.atomManager.getAllAtoms().entrySet()) {
+            Atom atom = entry.getValue();
+            if (!atom.getName().contains("_"))  // _ 이면 Atom과 Value가 존재하는 것. Value가 존재하지 않은 Atom의 목록을 넘겨야함.
+                atomList.add(entry.getValue().getName());
         }
 
         return atomList;

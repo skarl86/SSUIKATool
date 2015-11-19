@@ -32,7 +32,7 @@ public class GraphView extends JPanel {
             {
                 mxGeometry geo = getCellGeometry(cell);
 
-                return (geo != null) ? geo.isRelative() : false;
+                return (geo != null) && geo.isRelative();
             }
 
             // Implements a tooltip that shows the actual

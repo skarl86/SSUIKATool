@@ -1,0 +1,96 @@
+20150107,8118,Unknown,Unknown,0
+T.Protein,7.2,,
+ALB,4.5,,
+A/G Ratio,1.7,,
+BUN,14,,
+Creatinine,0.66,,
+U.A,4.6,,
+Glu(FBS),72,,
+T.Bili.,0.4,,
+D.Bili,0.1,,
+AST,121,,H
+ALT,135,,H
+γ-GT,27,,
+ALP,38,,
+LDH,327,,H
+CK,111,,
+Amylase,83,,
+Chol,201,,
+TG,143,,
+HDL-C,68,,H
+Ca,9.1,,
+Phosphorus,3.8,,
+Na,139,,
+K,4.7,,
+Cl,102,,
+Iron,126,,
+UIBC,229,,
+TIBC,355,,
+Urine(10),0,**,
+PH,6.5,,
+Nitrite,0,Negative,
+S.G,1.018,,
+Protein,0,Negative,
+Glucose,0,Negative,
+Ketone,0,Negative,
+Bilirubin,0,Negative,
+Occult Blood,0,Trace,
+Urobilinogen,0,Norm,
+Leukocyte,0,Negative,
+Microscopic,0,**,
+R.B.C,0,3-5,
+W.B.C,0,0-2,
+E.P cells,0,3-5,
+Casts,0,Not found,
+Bacteria,0,Not found,
+Crystals,0,Not found,
+Others,0,Not found,
+WBC,7.49,,
+Diff.count,0,**,
+Segment,65.6,,
+Band,0,,
+Lymphocyte,24.2,,
+Monocyte,7.2,,
+Eosinophil,2.5,,
+Basophil,0.5,,
+RBC,5.06,,
+Hb,15.2,,
+HCT,44.8,,
+MCV,88.5,,
+MCH,30,,
+MCHC,33.9,,
+Platelet,251,,
+ABO(Cell) type,0,O,
+Rh,0,Positive,
+CRP(QL),0,Negative,
+RF (QL),0,Negative,
+HBs Ag(정밀),0,Negative 0.16,
+HBs Ab(정밀),0,Positive 710.69,
+HCV-Ab,0,Negative 0.05,
+HIV-Ab,0,Negative 0.10,
+RPR정밀,0,Non-Reactive < 0.2,
+AFP,2.55,,
+CEA,1.3,,
+CA19-9,1.4,,
+CA125,8.6,,
+TSH,1.64,,
+Free T4,0.96,,
+25-OH-VitD,16.54,,
+*
+귀하의 검진결과는 아래와 같습니다.
+공복 혈당이 정상입니다. 당뇨검사의 결과가 정상입니다.
+신장기능 검사 결과는 정상입니다.
+요산의 농도가 정상입니다. 요산은 통풍의 원인입니다.
+류마티스인자(RF)가 정상입니다. 류마티스관절염의 30%에서 음성을 보이므로 임상증상과 영상의학적 소견 등을 참고하여야 합니다.
+AST, ALT와 LDH가 높습니다. 간 및 담도계 기능 이상이 의심됩니다.
+지질검사의 결과 정상 입니다.
+B형간염항체 양성으로 B형간염 면역상태입니다.
+C형간염항체 음성입니다. C형간염이 없습니다.
+빈혈이 없으며 철분도 부족하지 않습니다.
+혈구질환 관련 검사의 결과 정상입니다.
+혈액형은 O형 Rh 양성입니다.
+종양표지자검사는 정상입니다. 종양 표지자는 종양 등에서 생성되어 혈액이나 체액으로 분비되는 여러 종류의 물질입니다.
+소변 혈색소와 적혈구가 검출되었습니다. 월경혈의 오염, 요로결석 등의 요로계 질환이나 심한 운동이나 무증상성 혈뇨와 관련이 있습니다.
+갑상선기능 검사 결과 정상입니다.
+비타민D 저장량(25OH-비타민D)이 불충분합니다.비타민D가 부족하면 골다공증, 골연화증, 근육강직 및 뼈의 통증이 발생할 수 있습니다.
+건강을 위하여 과로를 피하시고 규칙적인 운동을 권합니다. 정기적인 검진이 질병의 조기 발견 및 예방에 중요합니다.

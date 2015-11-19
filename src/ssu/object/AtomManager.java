@@ -109,6 +109,12 @@ public class AtomManager {
         this.allAtoms.remove(atom.getName(), atom);
     }
 
+    /**
+     *
+     * @param value
+     * @param type
+     * @return
+     */
     public Atom getAtomOrCreate(String value, int type) {
         Atom atom = null;
 
