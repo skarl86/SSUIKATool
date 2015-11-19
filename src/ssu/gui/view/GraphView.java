@@ -97,6 +97,8 @@ public class GraphView extends JPanel {
      * @param rules
      */
     public void drawRules(ArrayList<Rule> rules) {
+        clearGraph();
+
         for (Rule rule : rules) {
             drawRule(rule);
         }
