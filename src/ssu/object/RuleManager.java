@@ -193,6 +193,30 @@ public class RuleManager {
     }
 
     /**
+     *
+     * @param atom
+     * @return
+     */
+    public ArrayList<Rule> getAllRulesByConseqent(String atom) {
+        ArrayList<Rule> rules = new ArrayList<Rule>();
+
+        for (Map.Entry<Long, Rule> entry : this.allRules.entrySet()) {
+            Rule rule = entry.getValue();
+
+            for (Atom con : rule.getConsequents()) {
+                if (con.getName().equals(atom)) {
+                    rules.add(rule);
+                    break;
+                }
+            }
+        }
+
+        return rules;
+    }
+
+
+
+    /**
      * Exp : Rule을 추가.
      * @param rule
      */
