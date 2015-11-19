@@ -164,7 +164,7 @@ public class GraphView extends JPanel {
                         valueGeo.setOffset(new mxPoint(0,-Tags.GRAPH_NODE_HEIGHT / 2));
                         valueGeo.setRelative(true);
 
-                        mxCell valueCell = new mxCell(antValue[2], valueGeo, "ROUNDED;fillColor=#D5F2D3");
+                        mxCell valueCell = new mxCell(antValue[1], valueGeo, "ROUNDED;fillColor=#D5F2D3");
                         valueCell.setVertex(true);
 
                         this.graph.addCell(valueCell, antCell);
@@ -214,7 +214,7 @@ public class GraphView extends JPanel {
                         valueGeo.setOffset(new mxPoint(0,-Tags.GRAPH_NODE_HEIGHT / 2));
                         valueGeo.setRelative(true);
 
-                        mxCell valueCell = new mxCell(conValue[2], valueGeo, "ROUNDED;fillColor=#D5F2D3");
+                        mxCell valueCell = new mxCell(conValue[1], valueGeo, "ROUNDED;fillColor=#D5F2D3");
                         valueCell.setVertex(true);
 
                         this.graph.addCell(valueCell, conCell);
