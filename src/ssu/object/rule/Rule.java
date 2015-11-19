@@ -57,19 +57,7 @@ public class Rule implements Savable {
                 consequentStringList.add(consequent.getName());
             }
 
-            for (String checkAntecedent : checkAntecedents)  {
-                if (!antecedentStringList.contains(checkAntecedent)) {
-                    return false;
-                }
-            }
-
-            for (String checkConsequent : checkConsequents) {
-                if (!consequentStringList.contains(checkConsequent)) {
-                    return false;
-                }
-            }
-
-            return true;
+            return (antecedentStringList.containsAll(checkAntecedents) && consequentStringList.containsAll(checkConsequents));
         }
     }
 
