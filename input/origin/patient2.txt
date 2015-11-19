@@ -1,0 +1,95 @@
+20150106,478,최동호,Unknown,0
+T.Protein,7.8,,
+ALB,5.1,,
+Globulin,2.7,,
+A/G Ratio,1.9,,
+BUN,13,,
+Creatinine,1.09,,
+U.A,5.6,,
+Glu(FBS),101,,
+T.Bili.,0.9,,
+D.Bili,0.1,,
+AST,129,,H
+ALT,149,,H
+γ-GT,279,,H
+ALP,57,,
+LDH,435,,H
+Amylase,58,,
+Chol,201,,
+TG,120,,
+HDL-C,67,,H
+Ca,9.9,,
+Phosphorus,4.5,,
+Na,142,,
+K,6.2,,H
+Cl,101,,
+Iron,192,,
+Urine(10),0,**,
+PH,5,,
+Nitrite,0,Negative,
+S.G,1.024,,
+Protein,0,Negative,
+Glucose,0,Negative,
+Ketone,0,Negative,
+Bilirubin,0,Negative,
+Occult Blood,0,Negative,
+Urobilinogen,0,Norm,
+Leukocyte,0,Negative,
+Microscopic,0,**,
+R.B.C,0,0-2,
+W.B.C,0,0-2,
+E.P cells,0,0-2,
+Casts,0,Not found,
+Bacteria,0,Not found,
+Crystals,0,Amp.Urate,
+Others,0,Not found,
+WBC,9.75,,
+Diff.count,0,**,
+Segment,37.1,,L
+Band,0,,
+Lymphocyte,46.9,,H
+Monocyte,8.4,,
+Eosinophil,6.7,,H
+Basophil,0.9,,
+RBC,6,,
+Hb,19.1,,H
+HCT,54.4,,H
+MCV,90.7,,
+MCH,31.8,,
+MCHC,35.1,,
+RDW,12,,
+Platelet,259,,
+PCT,0.32,,
+MPV,12.2,,
+PDW,16.9,,
+ABO(Cell) type,0,A,
+Rh,0,Positive,
+CRP(QL),0,Negative,
+RF (QL),0,Negative,
+HBs Ag(정밀),0,Negative 0.17,
+HBs Ab(정밀),0,Positive 321.88,
+HIV-Ab,0,Negative < 0.10,
+RPR정밀,0,Non-Reactive < 0.2,
+AFP,2.98,,
+CEA,2,,
+CA19-9,5.5,,
+PSA,0.54,,
+T4,9.36,,
+TSH,2.22,,
+*
+최동호님의 검진결과는 아래와 같습니다.
+공복혈당장애에 해당됩니다. 대한당뇨병학회에서는 공복혈당 100-125mg/dL를 공복혈당장애로 지정하였습니다. 당뇨를 예방하기 위하여 지속적인 운동 및 체중관리, 정기적인 혈당검사를 권합니다.
+신장기능 검사 결과는 정상입니다.
+요산의 농도가 정상입니다. 요산은 통풍의 원인입니다.
+류마티스인자(RF)가 정상입니다. 류마티스관절염의 30%에서 음성을 보이므로 임상증상과 영상의학적 소견 등을 참고하여야 합니다.
+AST, ALT, r-GTP와 LDH가 높습니다. 간 및 담도계 기능이상이 의심됩니다.
+칼륨이 증가하였습니다. 검체가 용혈되었으므로, 적혈구에 높게 존재하는 칼륨이 유출되어 위증가를 보일 수 있습니다. 칼륨증가의 가장 흔한 원인은 신장기능이상입니다. 심하면 미슥거리고 설사를 할수 있습니다.
+지질검사의 결과 정상 입니다.
+B형간염항체 양성으로 B형간염 면역상태입니다.
+혈색소가 높습니다. 금식이나 탈수로 인해서 혈액이 농축되었거나 적혈구증다증(흡연, 본태성 등) 일 수 있습니다.
+호산구(Eosinophil)가 증가하였습니다. 기생충감염이나 알레르기질환이 가장 흔한 원인입니다.
+혈액형은 A형 Rh 양성입니다.
+종양표지자검사는 정상입니다. 종양 표지자는 종양 등에서 생성되어 혈액이나 체액으로 분비되는 여러 종류의 물질입니다.
+소변에서 결정체가 발견되었습니다. amp.urate결정체는 정상에서도 발견될 수 있습니다.
+갑상선기능 검사 결과 정상입니다.
+최동호님, 건강을 위하여 과로를 피하시고 규칙적인 운동을 권합니다. 정기적인 검진이 질병의 조기 발견 및 예방에 중요합니다.

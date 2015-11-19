@@ -39,7 +39,7 @@ public final class Tags {
     public static final String PATIENT_SPLITER = "_";
     public static final String PATIENT_TEST_RESULT_SPLITER = "!";
     public static final String PATIENT_TEST_VALUE_SPLITER = ",";
-    public static final String PATIENT_OPINION_SPLITER = "-";
+    public static final String PATIENT_OPINION_SPLITER = "!";
     public static final String PATIENT_OPINION_RULELIST_SPLITER = ":";
     public static final String PATIENT_OPINION_RULE_SPLITER = ",";
 
@@ -59,17 +59,17 @@ public final class Tags {
      * Test Value Type
      */
     public static final String TEST_VALUE_TYPE_NORMAL = "NO";
-    public static final String TEST_VALUE_TYPE_NORMAL_VALUE = "Normal";
+    public static final String TEST_VALUE_TYPE_NORMAL_VALUE = "Norm";
     public static final String TEST_VALUE_TYPE_NUMERIC = "N";
     public static final String TEST_VALUE_TYPE_HIGHLOW = "HL";
-    public static final String TEST_VALUE_TYPE_HIGH = "High";
-    public static final String TEST_VALUE_TYPE_LOW = "Low";
+    public static final String TEST_VALUE_TYPE_HIGH = "H";
+    public static final String TEST_VALUE_TYPE_LOW = "L";
     public static final String TEST_VALUE_TYPE_POSNEG = "PN";
     public static final String TEST_VALUE_TYPE_POS = "Positive";
     public static final String TEST_VALUE_TYPE_NEG = "Negative";
     public static final String TEST_VALUE_TYPE_REACTIVE_NONREACTIVE = "RN";
     public static final String TEST_VALUE_TYPE_REACTIVE = "Reactive";
-    public static final String TEST_VALUE_TYPE_NONREATIVE = "Non Reactive";
+    public static final String TEST_VALUE_TYPE_NONREATIVE = "Non-Reactive";
     public static final String TEST_VALUE_TYPE_MTHFR_C677T = "MTHFRC677T";
     public static final String TEST_VALUE_TYPE_MTHFR_C677T_CT_HETEROZYGOTE = "CT heterozygote";
     public static final String TEST_VALUE_TYPE_FOUNDNOTFOUND = "FN";
@@ -83,14 +83,8 @@ public final class Tags {
     public static final String TEST_VALUE_TYPE_BLOOD_AB = "AB";
     public static final String TEST_VALUE_TYPE_BLOOD_B = "B";
     public static final String TEST_VALUE_TYPE_RH = "RH";
-    public static final String TEST_VALUE_TYPE_RH_PLUS = "+";
-    public static final String TEST_VALUE_TYPE_RH_MINUS = "-";
     public static final String TEST_VALUE_TYPE_RANGE = "RA";
-    public static final String TEST_VALUE_TYPE_COMPARISON = "CO";
-    public static final String TEST_VALUE_TYPE_LESSTHAN = "<";
-    public static final String TEST_VALUE_TYPE_LESSTHAN_EQUAL = "<=";
-    public static final String TEST_VALUE_TYPE_GREATERTHAN = ">";
-    public static final String TEST_VALUE_TYPE_GREATERTHAN_EQUAL = ">=";
+    public static final String TEST_VALUE_TYPE_ETC = "ETC";
 
     /**
      * 입력받은 type에 따라 관련 List를 리턴.
@@ -118,9 +112,9 @@ public final class Tags {
             list.add(Tags.TEST_VALUE_TYPE_BLOOD_B);
             list.add(Tags.TEST_VALUE_TYPE_BLOOD_O);
             list.add(Tags.TEST_VALUE_TYPE_BLOOD_AB);
-        } else if (type.equals("RH")) {             // Rh +, -
-            list.add(Tags.TEST_VALUE_TYPE_RH_PLUS);
-            list.add(Tags.TEST_VALUE_TYPE_RH_MINUS);
+        } else if (type.equals("RH")) {             // Rh Positive, Negative
+            list.add(Tags.TEST_VALUE_TYPE_POS);
+            list.add(Tags.TEST_VALUE_TYPE_NEG);
         } else {                                    // 없으면
             list.add(Tags.TEST_VALUE_TYPE_HIGH);
             list.add(Tags.TEST_VALUE_TYPE_LOW);

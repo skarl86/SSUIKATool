@@ -3,10 +3,10 @@ package ssu.object.test.value.string;
 import ssu.object.Tags;
 
 /**
- * Created by JasonHong on 2015. 11. 14..
+ * Created by JasonHong on 2015. 11. 19..
  */
-public class ReactiveNonReative extends StringValue {
-    public ReactiveNonReative(String value) {
+public class Etc extends StringValue {
+    public Etc (String value) {
         this.value = value;
     }
 
@@ -17,7 +17,7 @@ public class ReactiveNonReative extends StringValue {
 
     @Override
     public String printSavingFormat() {
-        String line = Tags.TEST_VALUE_TYPE_REACTIVE_NONREACTIVE + Tags.TEST_VALUE_SPLITER + getTestValue();
+        String line = Tags.TEST_VALUE_TYPE_ETC + Tags.TEST_VALUE_SPLITER + getTestValue();
 
         return line;
     }

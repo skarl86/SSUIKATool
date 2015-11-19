@@ -1,5 +1,0 @@
-0,홍진영,1446922992068,1446922992068,ASTHigh-LiverDisease
-1,홍진영,1447648044132,1447650632257,ASTHigh_ALTHigh-LiverDisease
-2,홍진영,1447648080561,1447648080561,ALTHigh_ASTHigh_ALPHigh-LiverDisease
-3,홍진영,1447648099988,1447648216618,Unconjugate bilirubin-LiverDisease
-4,홍진영,1447648144684,1447648144684,Unconjugate bilirubin_Globulin-LiverDisease

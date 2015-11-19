@@ -39,6 +39,8 @@ Bacteria,Bacteria에 관한 검사항목입니다.,AM
 BUN,BUN에 관한 검사항목입니다.,HL_PN
 W.B.C,W.B.C에 관한 검사항목입니다.,RA
 Creatinine,Creatinine에 관한 검사항목입니다.,HL_PN
+T4,T4에 관한 검사항목입니다.,PN_HL
+20150102,20150102에 관한 검사항목입니다.,ETC
 AST,AST에 관한 검사항목입니다.,HL_PN
 R.B.C,R.B.C에 관한 검사항목입니다.,RA
 Monocyte,Monocyte에 관한 검사항목입니다.,HL_PN
@@ -79,6 +81,7 @@ HIV-Ab,HIV-Ab에 관한 검사항목입니다.,PN
 Pro.C activity,Pro.C activity에 관한 검사항목입니다.,HL_PN
 MS Ab,MS Ab에 관한 검사항목입니다.,HL
 RPR정밀,RPR정밀에 관한 검사항목입니다.,RN
+PSA,PSA에 관한 검사항목입니다.,PN_HL
 ASO(QL),ASO(QL)에 관한 검사항목입니다.,PN
 S-Osmo,S-Osmo에 관한 검사항목입니다.,HL_PN
 TSH,TSH에 관한 검사항목입니다.,HL
@@ -121,6 +124,7 @@ Prothrombin gene,Prothrombin gene에 관한 검사항목입니다.,PN
 U.A,U.A에 관한 검사항목입니다.,HL_PN
 β2-MG,β2-MG에 관한 검사항목입니다.,HL_PN
 Eosinophil,Eosinophil에 관한 검사항목입니다.,HL_PN
+25-OH-VitD,25-OH-VitD에 관한 검사항목입니다.,HL
 APTT,APTT에 관한 검사항목입니다.,HL_PN
 Microscopic,Microscopic에 관한 검사항목입니다.,HL_PN
 UIBC,UIBC에 관한 검사항목입니다.,HL_PN
