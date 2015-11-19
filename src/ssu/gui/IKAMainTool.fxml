@@ -45,13 +45,13 @@
       </MenuBar>
       <HBox alignment="CENTER" minWidth="-Infinity" prefHeight="749.0" prefWidth="1264.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
          <children>
-            <SplitPane fx:id="leftSplitPane" disable="true" dividerPositions="0.5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <SplitPane fx:id="leftSplitPane" disable="true" dividerPositions="0.35" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <items>
                   <AnchorPane SplitPane.resizableWithParent="false">
                      <children>
                         <SplitPane dividerPositions="0.5" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <items>
-                              <AnchorPane>
+                              <AnchorPane SplitPane.resizableWithParent="false">
                                  <children>
                                     <TitledPane alignment="CENTER" animated="false" collapsible="false" styleClass="common" stylesheets="@resources/main.css" text="환자 목록" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <content>
@@ -66,7 +66,7 @@
                               </AnchorPane>
                               <AnchorPane>
                                  <children>
-                                    <TitledPane alignment="CENTER" animated="false" collapsible="false" minWidth="-Infinity" styleClass="common" text="환자 기본 정보" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <TitledPane alignment="CENTER" animated="false" collapsible="false" styleClass="common" text="환자 기본 정보" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <content>
                                           <VBox alignment="CENTER">
                                              <children>
@@ -108,9 +108,9 @@
                   </AnchorPane>
                   <AnchorPane SplitPane.resizableWithParent="false">
                      <children>
-                        <TitledPane alignment="CENTER" collapsible="false" styleClass="common" text="환자 상세 정보" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
+                        <TitledPane alignment="CENTER" collapsible="false" styleClass="common" text="환자 상세 정보" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <content>
-                              <ScrollPane fitToHeight="true" fitToWidth="true" prefViewportHeight="628.0" prefViewportWidth="248.0" prefWidth="350.0">
+                              <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="ALWAYS" prefViewportHeight="628.0" prefViewportWidth="350.0">
                                  <content>
                                     <TableView fx:id="patientDetailTable">
                                        <columns>
