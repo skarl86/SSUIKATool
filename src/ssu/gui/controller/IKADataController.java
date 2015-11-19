@@ -8,6 +8,7 @@ import ssu.object.rule.Rule;
 import ssu.object.test.TestItem;
 import ssu.object.test.TestResult;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -63,6 +64,11 @@ public class IKADataController extends IKAController implements IKADataRequestIn
     protected RuleManager ruleManager = RuleManager.getInstance();
     protected TestItemManager testItemManager = TestItemManager.getInstance();
     protected PatientManager patientManager = PatientManager.getInstance();
+
+    private static final String DELIMITER = "_";
+
+    public static final String ANTECEDENT = "antecedent";
+    public static final String CONSEQUENT = "consequent";
 
     public static enum DataType {
         PATIENT_LIST,
@@ -458,6 +464,50 @@ public class IKADataController extends IKAController implements IKADataRequestIn
         }
 
         return ruleList;
+    }
+
+    private HashMap<String, String> makeAtomAndValue(Atom atom){
+        HashMap<String, String> atomAndValue = new HashMap<String, String>();
+
+        if(atom.getName().contains(DELIMITER)) {
+            atomAndValue.put(atom.getName().split(DELIMITER)[0], atom.getName().split(DELIMITER)[1]);
+        }else{
+            atomAndValue.put(atom.getName().split(DELIMITER)[0], "");
+        }
+
+        return atomAndValue;
+    }
+
+    public HashMap<String, ArrayList<HashMap<String, String>>> getAtomAndValue(String atomFormalString){
+        HashMap<String, ArrayList<HashMap<String, String>>> anteAndConsEachValue = new HashMap<String, ArrayList<HashMap<String, String>>>();
+
+        Rule rule = getRuleByFormalFormat(atomFormalString);
+
+        for(Atom atom : rule.getAntecedents()){
+            HashMap<String, String> atomAndValue = makeAtomAndValue(atom);
+
+            if(anteAndConsEachValue.containsKey(ANTECEDENT)){
+                anteAndConsEachValue.get(ANTECEDENT).add(atomAndValue);
+            }else{
+                ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
+                list.add(atomAndValue);
+                anteAndConsEachValue.put(ANTECEDENT, list);
+            }
+        }
+
+        for(Atom atom : rule.getConsequents()){
+            HashMap<String, String> atomAndValue = makeAtomAndValue(atom);
+
+            if(anteAndConsEachValue.containsKey(CONSEQUENT)){
+                anteAndConsEachValue.get(CONSEQUENT).add(atomAndValue);
+            }else{
+                ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
+                list.add(atomAndValue);
+                anteAndConsEachValue.put(CONSEQUENT, list);
+            }
+        }
+
+        return anteAndConsEachValue;
     }
 
 }
