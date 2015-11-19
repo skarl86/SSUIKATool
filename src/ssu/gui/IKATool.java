@@ -250,11 +250,11 @@ public class IKATool extends Application implements Initializable {
         VBox.setVgrow(swingNode,Priority.ALWAYS);
         vbox.setPrefSize(600,500);
 
-        Text label = new Text("TEST : ");
+        Text label = new Text("Consequent : ");
 
         ComboBox consequentComboBox = new ComboBox();
+        consequentComboBox.setEditable(true);
 
-        consequentComboBox.getItems().addAll("간질환","폐질환");
 
         HBox hBox = new HBox(2);
 
@@ -302,6 +302,10 @@ public class IKATool extends Application implements Initializable {
             leftSplitPane.setDisable(false);
             rightSplitPane.setDisable(false);
         }
+        //System.out.println("Your name: " + result.get());
+        authorName = "test";
+        leftSplitPane.setDisable(false);
+        rightSplitPane.setDisable(false);
     }
 
     private void modalRuleEditView(ActionEvent event, IKAPaneController.PatientReferenceRow selectedItem) throws IOException {
