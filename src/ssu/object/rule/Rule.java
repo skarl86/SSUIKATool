@@ -40,6 +40,8 @@ public class Rule implements Savable {
      * @param checkAntecedents
      * @param checkConsequents
      * @return 해당 조건들이 이 Rule의 subpart일 경우 true, 아니면 false
+     * * To-do lists
+     * 추후 수정 필요.
      */
     public boolean containAtoms(ArrayList<String> checkAntecedents, ArrayList<String> checkConsequents) {
 
@@ -47,29 +49,59 @@ public class Rule implements Savable {
         if (checkAntecedents.size() == 0 && checkConsequents.size() == 0) {
             return false;
         } else {
-            ArrayList<String> antecedentStringList = new ArrayList<String>();
-            ArrayList<String> consequentStringList = new ArrayList<String>();
+            if (checkAntecedents.size() != 0 && checkConsequents.size() != 0) {
+                ArrayList<String> antecedentStringList = new ArrayList<String>();
+                ArrayList<String> consequentStringList = new ArrayList<String>();
 
-            for (Atom antecedent : getAntecedents()) {
-                antecedentStringList.add(antecedent.getName());
-            }
-            for (Atom consequent : getConsequents()) {
-                consequentStringList.add(consequent.getName());
-            }
-
-            for (String checkAntecedent : checkAntecedents)  {
-                if (!antecedentStringList.contains(checkAntecedent)) {
-                    return false;
+                for (Atom antecedent : getAntecedents()) {
+                    antecedentStringList.add(antecedent.getName());
                 }
-            }
-
-            for (String checkConsequent : checkConsequents) {
-                if (!consequentStringList.contains(checkConsequent)) {
-                    return false;
+                for (Atom consequent : getConsequents()) {
+                    consequentStringList.add(consequent.getName());
                 }
-            }
 
-            return true;
+                for (String checkAntecedent : checkAntecedents)  {
+                    if (!antecedentStringList.contains(checkAntecedent)) {
+                        return false;
+                    }
+                }
+
+                for (String checkConsequent : checkConsequents) {
+                    if (!consequentStringList.contains(checkConsequent)) {
+                        return false;
+                    }
+                }
+
+                return true;
+            } else if (checkAntecedents.size() != 0){
+                ArrayList<String> antecedentStringList = new ArrayList<String>();
+
+                for (Atom antecedent : getAntecedents()) {
+                    antecedentStringList.add(antecedent.getName());
+                }
+
+                for (String checkAntecedent : checkAntecedents)  {
+                    if (!antecedentStringList.contains(checkAntecedent)) {
+                        return false;
+                    }
+                }
+
+                return true;
+            } else {
+                ArrayList<String> consequentStringList = new ArrayList<String>();
+
+                for (Atom consequent : getConsequents()) {
+                    consequentStringList.add(consequent.getName());
+                }
+
+                for (String checkConsequent : checkConsequents) {
+                    if (!consequentStringList.contains(checkConsequent)) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
         }
     }
 
