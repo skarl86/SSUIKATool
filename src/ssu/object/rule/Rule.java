@@ -54,16 +54,16 @@ public class Rule implements Savable {
             for (Atom antecedent : getAntecedents()) {
                 if (antecedent.getName().contains("_")) {
                     antecedentStringList.add(antecedent.getName().substring(0, antecedent.getName().indexOf("_")));
-                } else {
-                    antecedentStringList.add(antecedent.getName());
                 }
+
+                antecedentStringList.add(antecedent.getName());
             }
             for (Atom consequent : getConsequents()) {
                 if (consequent.getName().contains("_")) {
                     consequentStringList.add(consequent.getName().substring(0, consequent.getName().indexOf("_")));
-                } else {
-                    consequentStringList.add(consequent.getName());
                 }
+
+                consequentStringList.add(consequent.getName());
             }
 
             return (antecedentStringList.containsAll(checkAntecedents) && consequentStringList.containsAll(checkConsequents));
