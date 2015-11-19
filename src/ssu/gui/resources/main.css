@@ -6,8 +6,6 @@
     -fx-background-size: 18 18 18 18;
     -fx-background-position:left;
     -fx-background-image-padding 5 5 5 5;
-
-
 }
 
 .addButton{
@@ -26,7 +24,7 @@
 }
 
 .addButton{
--fx-padding: 5 5 5 5;
+    -fx-padding: 5 5 5 5;
     -fx-graphic: url("addBtnImg.png");
 }
 
@@ -44,11 +42,7 @@
 -fx-background-image: url("next24.png");
 -fx-background-position: right;
 -fx-background-repeat: no-repeat;
-/*
 
-    -fx-padding: 5 5 5 5;
-    -fx-graphic: url("next24.png");
-    */
 }
 
 .previous24Button{
@@ -56,9 +50,7 @@
 -fx-background-position: left;
 -fx-background-repeat: no-repeat;
 }
-/*
-    TitlePanel Tilte CSS
-*/
+
 .common  > .title {
 -fx-background-color:  linear-gradient(#CDE8F8 30%, #B8E1FA 100%);
 -fx-background-radius: 8px;
@@ -78,5 +70,19 @@
 .common  > .title > .text{
 -fx-font-size: 11pt;
 -fx-font-align: center;
+}
 
+
+.root {
+  -fx-font-family: "malgun";
+
+}
+
+@font-face {
+    font-family: 'malgun';
+    src: url('malgun.ttf');
+}
+
+.text {
+    -fx-font-family: "malgun";
 }
