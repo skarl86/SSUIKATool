@@ -325,7 +325,24 @@ public class IKADataController extends IKAController implements IKADataRequestIn
         ArrayList<String> atomList = new ArrayList<String>();
 
         for (Map.Entry<String, Atom> entry : this.atomManager.getAllAtoms().entrySet()) {
+            Atom atom = entry.getValue();
             atomList.add(entry.getValue().getName());
+        }
+
+        return atomList;
+    }
+
+    /**
+     * Value를 가지지 않는 모든 Atom 리스트를 리턴.
+     * @return
+     */
+    public ArrayList<String> getAllAtomsExceptValueList() {
+        ArrayList<String> atomList = new ArrayList<String>();
+
+        for (Map.Entry<String, Atom> entry : this.atomManager.getAllAtoms().entrySet()) {
+            Atom atom = entry.getValue();
+            if (!atom.getName().contains("_"))  // _ 이면 Atom과 Value가 존재하는 것. Value가 존재하지 않은 Atom의 목록을 넘겨야함.
+                atomList.add(entry.getValue().getName());
         }
 
         return atomList;

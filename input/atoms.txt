@@ -22,7 +22,6 @@ Conjugate bilirubin,0
 신장염,0
 γ-globulin 저하증,0
 흡수장애,0
-ALTHigh,0
 감염증,0
 LiverDisease,0
 Nephrosis 증후군,0
@@ -54,12 +53,10 @@ AST,0
 LDH 결손증,0
 백혈병,0
 Albumin,0
-ALPHigh,0
 Cholinesterase,0
 만성염증성 질환,0
 LAP,0
 담도계 폐쇄,0
-ASTHigh,0
 GGTP,0
 담관암,0
 만성간염,0
