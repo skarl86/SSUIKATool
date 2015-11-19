@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.text.*?>
 
-<GridPane fx:id="mainView" alignment="CENTER" hgap="10.0" prefHeight="605.0" prefWidth="537.0" styleClass="okButton" stylesheets="@resources/main.css" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ssu.gui.controller.IKARulePopUpViewController">
+<GridPane fx:id="mainView" alignment="CENTER" hgap="10.0" prefHeight="605.0" prefWidth="569.0" styleClass="okButton" stylesheets="@resources/main.css" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ssu.gui.controller.IKARulePopUpViewController">
     <children>
         <VBox prefHeight="594.0" prefWidth="530.0">
             <children>
@@ -21,10 +21,13 @@
                             <items>
                                 <HBox fx:id="splitTopBox" prefHeight="81.0" prefWidth="530.0">
                                     <children>
-                                        <Label prefHeight="26.0" prefWidth="33.0" text="조건 :">
+                                        <Label prefHeight="26.0" prefWidth="43.0" text="조건 :">
                                             <HBox.margin>
                                                 <Insets left="15.0" right="5.0" top="20.0" />
                                             </HBox.margin>
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
                                         </Label>
                                         <ComboBox fx:id="antecedentComboBox" editable="true" prefHeight="26.0" prefWidth="193.0">
                                             <HBox.margin>
@@ -32,10 +35,13 @@
                                             </HBox.margin>
                                         </ComboBox>
                                         <Region prefHeight="51.0" prefWidth="21.0" />
-                                        <Label prefHeight="26.0" prefWidth="33.0" text="결과 :">
+                                        <Label prefHeight="26.0" prefWidth="48.0" text="결과 :">
                                             <HBox.margin>
                                                 <Insets right="5.0" top="20.0" />
                                             </HBox.margin>
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
                                         </Label>
                                         <ComboBox fx:id="consequentComboBox" editable="true" prefHeight="26.0" prefWidth="214.0">
                                             <HBox.margin>
