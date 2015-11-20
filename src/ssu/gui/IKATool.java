@@ -274,8 +274,10 @@ public class IKATool extends Application implements Initializable {
             // ComboBox에 텍스트를 입력한 후 "Enter"를 선택했을때,
             @Override
             public void handle(KeyEvent event) {
-                if(event.getCode() == KeyCode.ENTER){
+                if (event.getCode() == KeyCode.ENTER) {
                     AppTestLog.printLog("Enter");
+                    consequentComboBox.getEditor().clear();
+                    consequentComboBox.getSelectionModel().clearSelection();
                     graphView.drawRules(RuleManager.getInstance().getAllRulesByConseqent(consequentComboBox.getEditor().getText()));
                 }
             }
