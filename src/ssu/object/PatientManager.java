@@ -43,7 +43,8 @@ public class PatientManager {
      */
     public void loadPatients(HashMap<String, TestItem> allTestItems) {
         try {
-            BufferedReader br = new BufferedReader(new FileReader(Tags.PATIENT_FILE_PATH));
+            InputStream is = this.getClass().getResourceAsStream(Tags.PATIENT_FILE_PATH);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
             String line = br.readLine();
 
             while (line != null) {
@@ -188,7 +189,7 @@ public class PatientManager {
      */
     public void savePatients() {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(Tags.PATIENT_FILE_PATH));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(this.getClass().getResource(Tags.PATIENT_FILE_PATH).getPath()));
             for (Patient patient : this.allPatients) {
                 bw.write(patient.printSavingFormat() + "\n");
             }

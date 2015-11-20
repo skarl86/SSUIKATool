@@ -5,6 +5,7 @@ import ssu.object.rule.AtomClass;
 import ssu.object.rule.AtomPredicate;
 
 import java.io.*;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,7 +42,8 @@ public class AtomManager {
     public void loadAtomList() {
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader(Tags.ATOM_FILE_PATH));
+            InputStream is = this.getClass().getResourceAsStream(Tags.ATOM_FILE_PATH);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
             String line = br.readLine();
 
             while (line != null) {
@@ -80,7 +82,7 @@ public class AtomManager {
      */
     public void saveAtomList() {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(Tags.ATOM_FILE_PATH));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(this.getClass().getResource(Tags.ATOM_FILE_PATH).getPath()));
             for (Map.Entry<String, Atom> entry : this.allAtoms.entrySet()) {
                 Atom atom = entry.getValue();
                 bw.write(atom.printSavingFormat() + "\n");
