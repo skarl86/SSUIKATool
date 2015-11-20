@@ -11,6 +11,7 @@ Bilirubin,0
 신증후군,0
 폐쇄성 황달,0
 Globulin,0
+AST_H,0
 림프구성 백혈병,0
 Liver panel,0
 Total protein,0
@@ -20,6 +21,7 @@ Conjugate bilirubin,0
 유기인산 중독,0
 악성종양,0
 신장염,0
+ALT_H,0
 γ-globulin 저하증,0
 흡수장애,0
 감염증,0
@@ -27,6 +29,7 @@ LiverDisease,0
 Nephrosis 증후군,0
 지방간,0
 총담관결석증,0
+ALP_H,0
 Unconjugate bilirubin,0
 영양실조,0
 담관계질환,0

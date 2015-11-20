@@ -42,7 +42,8 @@ public class RuleManager {
      */
     private void loadRuleConfigure() {
         try {
-            BufferedReader br = new BufferedReader(new FileReader(Tags.RULE_CONFIGURE_FILE_PATH));
+            InputStream is = this.getClass().getResourceAsStream(Tags.RULE_CONFIGURE_FILE_PATH);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
             String line = br.readLine();
 
             while (line != null) {
@@ -64,7 +65,7 @@ public class RuleManager {
      */
     private void saveRuleConfigure() {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(Tags.RULE_CONFIGURE_FILE_PATH));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(this.getClass().getResource(Tags.RULE_CONFIGURE_FILE_PATH).getPath()));
             bw.write(this.ruleNumber.toString());
 
             bw.close();
@@ -82,7 +83,8 @@ public class RuleManager {
         loadRuleConfigure();
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader(Tags.RULE_FILE_PATH));
+            InputStream is = this.getClass().getResourceAsStream(Tags.RULE_FILE_PATH);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
             String line = br.readLine();
 
             while (line != null) {
@@ -144,7 +146,7 @@ public class RuleManager {
         saveRuleConfigure();
 
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(Tags.RULE_FILE_PATH));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(this.getClass().getResource(Tags.RULE_FILE_PATH).getPath()));
             for (Map.Entry<Long, Rule> entry : this.allRules.entrySet()) {
                 Rule rule = entry.getValue();
                 bw.write(rule.printSavingFormat() + "\n");
@@ -191,6 +193,30 @@ public class RuleManager {
 
         return null;
     }
+
+    /**
+     *
+     * @param atom
+     * @return
+     */
+    public ArrayList<Rule> getAllRulesByConseqent(String atom) {
+        ArrayList<Rule> rules = new ArrayList<Rule>();
+
+        for (Map.Entry<Long, Rule> entry : this.allRules.entrySet()) {
+            Rule rule = entry.getValue();
+
+            for (Atom con : rule.getConsequents()) {
+                if (con.getName().equals(atom)) {
+                    rules.add(rule);
+                    break;
+                }
+            }
+        }
+
+        return rules;
+    }
+
+
 
     /**
      * Exp : Rule을 추가.

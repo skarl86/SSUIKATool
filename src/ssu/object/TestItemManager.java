@@ -38,7 +38,8 @@ public class TestItemManager {
      */
     public void loadTestItemList() {
         try {
-            BufferedReader br = new BufferedReader(new FileReader(Tags.TESTITEM_FILE_PATH));
+            InputStream is = this.getClass().getResourceAsStream(Tags.TESTITEM_FILE_PATH);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
             String line = br.readLine();
 
             while (line != null) {
@@ -79,7 +80,7 @@ public class TestItemManager {
      */
     public void saveTestItemList() {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(Tags.TESTITEM_FILE_PATH));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(this.getClass().getResource(Tags.TESTITEM_FILE_PATH).getPath()));
             for (Map.Entry<String, TestItem> entry : this.allTestItems.entrySet()) {
                 TestItem testItem = entry.getValue();
                 bw.write(testItem.printSavingFormat() + "\n");

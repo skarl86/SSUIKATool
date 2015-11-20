@@ -327,6 +327,25 @@ public class IKADataController extends IKAController implements IKADataRequestIn
     }
 
     /**
+     * GraphView에서 사용자가 Atom을 입력할 때마다 입력한 값으로 시작하는 Atom들의 리스트를 리턴.
+     * @param value 사용자가 입력한 값.
+     * @return 사용자가 입력한 값으로 시작하는 Atom들의 리스트.
+     */
+    public ArrayList<String> getAtomCompletionListInGraphView(String value) {
+        // 파라미터의 value로 각 Atom들을 비교(첫글자부터) 비교해서 해당되면 리스트에 삽입.
+        ArrayList<String> completionList = new ArrayList<String>();
+
+        for (Map.Entry<String, Atom> entry : this.atomManager.getAllAtoms().entrySet()) {
+            String atomStr = entry.getKey();
+            if (atomStr.startsWith(value)) {
+                completionList.add(entry.getKey());
+            }
+        }
+
+        return completionList;
+    }
+
+    /**
      * 모든 Atom 리스트를 리턴.
      * @return
      */

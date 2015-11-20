@@ -6,6 +6,8 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,6 +23,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -32,6 +36,7 @@ import ssu.gui.controller.IKARulePopUpViewController;
 import ssu.gui.view.GraphView;
 import ssu.object.RuleManager;
 import ssu.object.rule.Rule;
+import ssu.util.AppTestLog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -252,9 +257,29 @@ public class IKATool extends Application implements Initializable {
 
         Text label = new Text("Consequent : ");
 
-        ComboBox consequentComboBox = new ComboBox();
+        final ComboBox consequentComboBox = new ComboBox();
         consequentComboBox.setEditable(true);
+        consequentComboBox.getEditor().textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(!(consequentComboBox.getEditor().getText().length() == 0)) {
+                    consequentComboBox.show();
+                    ObservableList data = FXCollections.observableArrayList(IKADataController.getInstance().getAtomCompletionListInGraphView(newValue));
+                    consequentComboBox.setItems(data);
+                }
+            }
+        });
 
+        consequentComboBox.addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+            // ComboBox에 텍스트를 입력한 후 "Enter"를 선택했을때,
+            @Override
+            public void handle(KeyEvent event) {
+                if(event.getCode() == KeyCode.ENTER){
+                    AppTestLog.printLog("Enter");
+                    graphView.drawRules(RuleManager.getInstance().getAllRulesByConseqent(consequentComboBox.getEditor().getText()));
+                }
+            }
+        });
 
         HBox hBox = new HBox(2);
 
@@ -346,6 +371,8 @@ public class IKATool extends Application implements Initializable {
                 panel.setPreferredSize(new Dimension(700,600));
                 swingNode.setContent(panel.getGraphComponent());
                 panel.repaint();
+                graphView = panel;
+
                 System.out.println("initJPanel");
             }
         });

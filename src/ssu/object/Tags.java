@@ -14,11 +14,11 @@ public final class Tags {
     /**
      * File Path
      */
-    public static final String ATOM_FILE_PATH = "input/atoms.txt";
-    public static final String PATIENT_FILE_PATH = "input/patients.txt";
-    public static final String RULE_FILE_PATH = "input/rules.txt";
-    public static final String RULE_CONFIGURE_FILE_PATH = "input/rules_configure.txt";
-    public static final String TESTITEM_FILE_PATH = "input/test_items.txt";
+    public static final String ATOM_FILE_PATH = "resources/atoms.txt";
+    public static final String PATIENT_FILE_PATH = "resources/patients.txt";
+    public static final String RULE_FILE_PATH = "resources/rules.txt";
+    public static final String RULE_CONFIGURE_FILE_PATH = "resources/rules_configure.txt";
+    public static final String TESTITEM_FILE_PATH = "resources/test_items.txt";
 
     /**
      * Atom의 타입.
@@ -136,7 +136,8 @@ public final class Tags {
     public static final int GRAPH_JUSTIFICATION_WIDTH = 20;
     public static final int GRAPH_JUSTIFICATION_HEIGHT = 20;
 
-    public static final String GRAPH_NODE_STYLE = mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_ELLIPSE + ";" + mxConstants.STYLE_FILLCOLOR + "=" + mxUtils.getHexColorString(new Color(242,177,188));
+    public static final String GRAPH_NODE_ANTECEDENT_STYLE = mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_ELLIPSE + ";" + mxConstants.STYLE_FILLCOLOR + "=" + mxUtils.getHexColorString(new Color(207,252,252));
+    public static final String GRAPH_NODE_CONSEQUENT_STYLE = mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_ELLIPSE + ";" + mxConstants.STYLE_FILLCOLOR + "=" + mxUtils.getHexColorString(new Color(242,177,188));
     public static final String GRAPH_JUSTIFICATION_STYLE = mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_TRIANGLE + ";" + mxConstants.STYLE_FILLCOLOR + "=" + mxUtils.getHexColorString(new Color(242,250,17));
 
 
