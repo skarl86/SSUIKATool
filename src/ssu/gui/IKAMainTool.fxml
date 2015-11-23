@@ -72,9 +72,7 @@
                                              <children>
                                                 <HBox fillHeight="false">
                                                    <children>
-                                                      <Label layoutX="20.0" layoutY="7.0" text="Date" />
                                                       <Region minHeight="0.0" minWidth="30.0" prefHeight="0.0" prefWidth="87.0" HBox.hgrow="ALWAYS" />
-                                                      <Label layoutX="95.0" layoutY="7.0" text="Patient" />
                                                    </children>
                                                    <VBox.margin>
                                                       <Insets bottom="10.0" />
