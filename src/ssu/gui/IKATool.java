@@ -276,9 +276,9 @@ public class IKATool extends Application implements Initializable {
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.ENTER) {
                     AppTestLog.printLog("Enter");
+                    graphView.drawRules(RuleManager.getInstance().getAllRulesByConseqent(consequentComboBox.getEditor().getText()));
                     consequentComboBox.getEditor().clear();
                     consequentComboBox.getSelectionModel().clearSelection();
-                    graphView.drawRules(RuleManager.getInstance().getAllRulesByConseqent(consequentComboBox.getEditor().getText()));
                 }
             }
         });
