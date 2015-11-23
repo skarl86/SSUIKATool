@@ -1,23 +1,16 @@
 package ssu.gui.controller;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 
 import javafx.event.ActionEvent;
@@ -26,19 +19,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import ssu.gui.IKATool;
-import ssu.object.AtomManager;
 import ssu.object.rule.Atom;
 import ssu.object.rule.Rule;
 import ssu.util.AppTestLog;
-import sun.plugin2.jvm.RemoteJVMLauncher;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.text.Collator;
 import java.util.*;
@@ -54,19 +42,19 @@ public class IKARulePopUpViewController implements Initializable{
     private final static String ANTECEDENT_TABLE = "antecendentTable";
     private final static String CONSEQUENT_TABLE = "conseqeuntTable";
 
-    @FXML TableView antecedentTableView;
-    @FXML TableView conseqeuntTableView;
-    @FXML TableView completeRuleTable;
+    @FXML TableView<AtomRow> antecedentTableView;
+    @FXML TableView<AtomRow> consequentTableView;
+    @FXML TableView<CompleteRuleRow> completeRuleTable;
 
-    @FXML TableColumn antecedentColumn;
-    @FXML TableColumn antecedentValueColumn;
-    @FXML TableColumn consequentColumn;
-    @FXML TableColumn consequentValueColumn;
+    @FXML TableColumn<AtomRow, String> antecedentColumn;
+    @FXML TableColumn<AtomRow, String> antecedentValueColumn;
+    @FXML TableColumn<AtomRow, String> consequentColumn;
+    @FXML TableColumn<AtomRow, String> consequentValueColumn;
 
-    @FXML TableColumn completeRuleColumn;
+    @FXML TableColumn<CompleteRuleRow, String> completeRuleColumn;
 
-    @FXML ComboBox antecedentComboBox;
-    @FXML ComboBox consequentComboBox;
+    @FXML ComboBox<String> antecedentComboBox;
+    @FXML ComboBox<String> consequentComboBox;
 
     @FXML GridPane mainView;
 
@@ -79,13 +67,16 @@ public class IKARulePopUpViewController implements Initializable{
     private int indexOfOpinion;
     private String newInputValue;
 
-    private HashMap<Integer, ComboBox> antecedentValueMap = new HashMap<Integer, ComboBox>();
-    private HashMap<Integer, ComboBox> consequentValueMap = new HashMap<Integer, ComboBox>();
+    private HashMap<Integer, ComboBox<String>> antecedentValueMap = new HashMap<Integer, ComboBox<String>>();
+    private HashMap<Integer, ComboBox<String>> consequentValueMap = new HashMap<Integer, ComboBox<String>>();
 
     // Atom Row Entity
     public class AtomRow {
         private final StringProperty atom;
         private final StringProperty value;
+
+        public StringProperty atomProperty(){ return atom; }
+        public StringProperty valueProperty(){ return value; }
 
         private AtomRow(String atom, String value){
             this.atom = new SimpleStringProperty(atom);
@@ -101,6 +92,8 @@ public class IKARulePopUpViewController implements Initializable{
     public class CompleteRuleRow {
         private final StringProperty completeRule;
 
+        public StringProperty completeRuleProperty(){ return completeRule; }
+
         private CompleteRuleRow(String atom){
             this.completeRule = new SimpleStringProperty(atom);
         }
@@ -108,11 +101,11 @@ public class IKARulePopUpViewController implements Initializable{
         public String getCompleteRule() { return completeRule.get(); }
     }
 
-    class ValueCallFactor implements Callback<TableColumn<String, String>, TableCell<String, String>>{
+    class ValueCallFactor implements Callback<TableColumn<AtomRow, String>, TableCell<AtomRow, String>>{
 
         @Override
-        public TableCell<String, String> call(TableColumn<String, String> param) {
-            TableCell<String ,String> cell = new TableCell<String,String>(){
+        public TableCell<AtomRow, String> call(TableColumn<AtomRow, String> param) {
+            TableCell<AtomRow ,String> cell = new TableCell<AtomRow,String>(){
                 @Override
                 public void updateItem(String item, boolean empty) {
                     super.updateItem(item, empty);
@@ -120,23 +113,24 @@ public class IKARulePopUpViewController implements Initializable{
                         AppTestLog.printLog("Initialize Value Column");
                         AppTestLog.printLog(getTableView().getId());
                         AppTestLog.printLog(String.valueOf(getIndex()));
-                        AppTestLog.printLog("Atom :" + item);
+                        AppTestLog.printLog(String.format("Value : [%s]", item));
 
                         HBox box= new HBox();
-                        ComboBox valueList = getAtomComboBox(getTableView(), getIndex());
+                        ComboBox<String> valueList = getAtomComboBox(getTableView(), getIndex());
 
                         valueList.setId(VALUE_COMBOBOX_ID);
-                        ObservableList data = FXCollections.observableArrayList(IKADataController.getInstance().getAtomValueList(item));
+                        ObservableList<String> data =
+                                FXCollections.observableArrayList(IKADataController.getInstance().getAtomValueList(item));
                         data.add("");
                         valueList.setItems(data);
+
+                        // Value가 존재하면 Value Item을 선택.
+                        if(item.length() >= 1){
+                            valueList.getSelectionModel().select(item);
+                        }
+
                         box.getChildren().add(valueList);
                         box.setAlignment(Pos.CENTER);
-
-//                        if(getTableView().getId().equals(CONSEQUENT_TABLE)){
-//                            consequentValueMap.put(getIndex(), valueList);
-//                        }else if(getTableView().getId().equals(ANTECEDENT_TABLE)){
-//                            antecedentValueMap.put(getIndex(), valueList);
-//                        }
 
                         setGraphic(box);
                     }else{
@@ -149,12 +143,11 @@ public class IKARulePopUpViewController implements Initializable{
         }
     }
 
-    class AtomCallFactor implements Callback<TableColumn<AtomRow, String>, TableCell<AtomRow, String>>{
+    class AtomCallFactor implements Callback<TableColumn<AtomRow, String>, TableCell<AtomRow, String> >{
 
         @Override
         public TableCell<AtomRow, String> call(TableColumn<AtomRow, String> param) {
-            TableCell<AtomRow,String> cell = new TableCell<AtomRow,String>(){
-                //                    ImageView imageview = new ImageView();
+            return new TableCell<AtomRow, String>(){
                 Button deleteButton = new Button();
 
                 Image imageDecline = new Image(getClass().getResourceAsStream("../resources/deleteCellImg.png"));
@@ -191,14 +184,13 @@ public class IKARulePopUpViewController implements Initializable{
                     }
                 }
             };
-            return cell;
         }
     }
 
     @FXML
     protected void handleClickOK(ActionEvent event){
         ArrayList<String> antList = makeAtomList(antecedentTableView);
-        ArrayList<String> consqList = makeAtomList(conseqeuntTableView);
+        ArrayList<String> consqList = makeAtomList(consequentTableView);
 
         if(isOKException(antList, consqList)){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -217,13 +209,13 @@ public class IKARulePopUpViewController implements Initializable{
         }
     }
 
-    private ComboBox getAtomComboBox(TableView tableView, int index){
-        ComboBox valueList = null;
+    private ComboBox<String> getAtomComboBox(TableView tableView, int index){
+        ComboBox<String> valueList = null;
 
         if(tableView.getId().equals(CONSEQUENT_TABLE)){
             valueList = consequentValueMap.get(index);
             if(valueList == null) {
-                valueList = new ComboBox();
+                valueList = new ComboBox<String>();
                 consequentValueMap.put(index, valueList);
             }else {
                 valueList = consequentValueMap.get(index);
@@ -231,7 +223,7 @@ public class IKARulePopUpViewController implements Initializable{
         }else if(tableView.getId().equals(ANTECEDENT_TABLE)){
             valueList = antecedentValueMap.get(index);
             if(valueList == null) {
-                valueList = new ComboBox();
+                valueList = new ComboBox<String>();
                 antecedentValueMap.put(index, valueList);
             }else {
                 valueList = antecedentValueMap.get(index);
@@ -243,7 +235,7 @@ public class IKARulePopUpViewController implements Initializable{
     private ArrayList<String> makeAtomList(TableView<AtomRow> tableView){
         ArrayList<String> atomList = new ArrayList<String>();
         for(int i = 0 ; i < tableView.getItems().size(); i++){
-            AtomRow item = (AtomRow) tableView.getItems().get(i);
+            AtomRow item = tableView.getItems().get(i);
 
             String atomValue = getAtomValue(tableView.getId(), i);
 
@@ -259,7 +251,7 @@ public class IKARulePopUpViewController implements Initializable{
 
     private String getAtomValue(String tableName, int index){
         String value = "";
-        ComboBox valueComboBox = null;
+        ComboBox<String> valueComboBox = null;
 
         if(tableName.equals(CONSEQUENT_TABLE)){
             valueComboBox = consequentValueMap.get(index);
@@ -285,12 +277,12 @@ public class IKARulePopUpViewController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         AppTestLog.printLog("[UI] Initialize PopViewController");
         initAutoCompleteComboBox(antecedentComboBox, antecedentTableView);
-        initAutoCompleteComboBox(consequentComboBox, conseqeuntTableView);
+        initAutoCompleteComboBox(consequentComboBox, consequentTableView);
     }
 
-    private void initAutoCompleteComboBox(final ComboBox comboBox, final TableView tableView){
-        ObservableList data = FXCollections.observableArrayList(IKADataController.getInstance().getAllAtomList());
-        comboBox.setItems(new SortedList(data, Collator.getInstance()));
+    private void initAutoCompleteComboBox(final ComboBox<String> comboBox, final TableView<AtomRow> tableView){
+        ObservableList<String> data = FXCollections.observableArrayList(IKADataController.getInstance().getAllAtomList());
+        comboBox.setItems(new SortedList<String>(data, Collator.getInstance()));
 
         comboBox.getEditor().textProperty().addListener(new ChangeListener<String>() {
             // ComboBox에 텍스트를 입력할 때 마다 불리는 이벤트.
@@ -299,7 +291,7 @@ public class IKARulePopUpViewController implements Initializable{
                 if(!(comboBox.getEditor().getText().length() == 0)) {
                     comboBox.show();
                     newInputValue = newValue;
-                    ObservableList data = FXCollections.observableArrayList(IKADataController.getInstance().getAtomCompletionList(newValue));
+                    ObservableList<String> data = FXCollections.observableArrayList(IKADataController.getInstance().getAtomCompletionList(newValue));
                     comboBox.setItems(data);
                 }
             }
@@ -361,12 +353,16 @@ public class IKARulePopUpViewController implements Initializable{
         ObservableList<AtomRow> antecendentData = FXCollections.observableArrayList();
         ObservableList<AtomRow> consequentData = FXCollections.observableArrayList();
 
+        String[] atomValue = null;
+
         if(_selectedRule != null){
             for(Atom atm : _selectedRule.getAntecedents()){
-                antecendentData.add(new AtomRow(atm.getName(), atm.getName()));
+                atomValue = IKADataController.getInstance().getAtomAndValue(atm);
+                antecendentData.add(new AtomRow(atomValue[0], atomValue[1]));
             }
             for(Atom atm : _selectedRule.getConsequents()){
-                consequentData.add(new AtomRow(atm.getName(), atm.getName()));
+                atomValue = IKADataController.getInstance().getAtomAndValue(atm);
+                consequentData.add(new AtomRow(atomValue[0], atomValue[1]));
             }
         }
 
@@ -378,18 +374,16 @@ public class IKARulePopUpViewController implements Initializable{
 
         antecedentTableView.setItems(antecendentData);
         antecedentTableView.setId(ANTECEDENT_TABLE);
-        conseqeuntTableView.setItems(consequentData);
-        conseqeuntTableView.setId(CONSEQUENT_TABLE);
+        consequentTableView.setItems(consequentData);
+        consequentTableView.setId(CONSEQUENT_TABLE);
 
-        completeRuleTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
-                //Check whether item is selected and set value of selected item to Label
+        completeRuleTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
+            if( newSelection != null){
                 if(completeRuleTable.getSelectionModel().getSelectedItem() != null) {
-                    TableView.TableViewSelectionModel selectionModel = completeRuleTable.getSelectionModel();
+                    TableView.TableViewSelectionModel<CompleteRuleRow> selectionModel = completeRuleTable.getSelectionModel();
                     ObservableList selectedCells = selectionModel.getSelectedCells();
                     TablePosition tablePosition = (TablePosition) selectedCells.get(0);
-                    Object val = tablePosition.getTableColumn().getCellData(newValue);
+                    Object val = tablePosition.getTableColumn().getCellData(newSelection);
 
                     AppTestLog.printLog("Selected Complete Rule. : " + val.toString());
                     HashMap<String, ArrayList<HashMap<String, String>>> atomAndValue =
@@ -402,7 +396,7 @@ public class IKARulePopUpViewController implements Initializable{
         });
     }
 
-    private boolean isOKException(ArrayList antecedentList, ArrayList conseqeuntList){ return antecedentList.isEmpty() || conseqeuntList.isEmpty(); }
+    private boolean isOKException(ArrayList<String> antecedentList, ArrayList<String> conseqeuntList){ return antecedentList.isEmpty() || conseqeuntList.isEmpty(); }
     private boolean isDuplicateAtom(ArrayList antecedentList, ArrayList conseqeuntList) {
         return true;
     }
@@ -418,10 +412,10 @@ public class IKARulePopUpViewController implements Initializable{
         for(HashMap<String, String> atomAndValue : antcAtomAndValue){
             for(Map.Entry<String, String> atom : atomAndValue.entrySet()){
                 antecendentData.add(new AtomRow(atom.getKey(),""));
-                ComboBox box = antecedentValueMap.get(index);
+                ComboBox<String> box = antecedentValueMap.get(index);
                 if(box ==null){
-                    box = new ComboBox();
-                    ObservableList data = FXCollections.observableArrayList(IKADataController.getInstance().getAtomValueList(atom.getKey()));
+                    box = new ComboBox<String>();
+                    ObservableList<String> data = FXCollections.observableArrayList(IKADataController.getInstance().getAtomValueList(atom.getKey()));
                     data.add("");
                     box.setItems(data);
                     antecedentValueMap.put(index, box);
@@ -435,10 +429,10 @@ public class IKARulePopUpViewController implements Initializable{
         for(HashMap<String, String> atomAndValue : consAtomAndValue){
             for(Map.Entry<String, String> atom : atomAndValue.entrySet()){
                 consequentData.add(new AtomRow(atom.getKey(),""));
-                ComboBox box = consequentValueMap.get(index);
+                ComboBox<String> box = consequentValueMap.get(index);
                 if(box ==null){
-                    box = new ComboBox();
-                    ObservableList data = FXCollections.observableArrayList(IKADataController.getInstance().getAtomValueList(atom.getKey()));
+                    box = new ComboBox<String>();
+                    ObservableList<String> data = FXCollections.observableArrayList(IKADataController.getInstance().getAtomValueList(atom.getKey()));
                     data.add("");
                     box.setItems(data);
                     consequentValueMap.put(index, box);
@@ -450,7 +444,7 @@ public class IKARulePopUpViewController implements Initializable{
         }
 
         antecedentTableView.setItems(antecendentData);
-        conseqeuntTableView.setItems(consequentData);
+        consequentTableView.setItems(consequentData);
     }
     private void refreshAtomTableView(Rule selectedCompleteRule){
         ObservableList<AtomRow> antecendentData = FXCollections.observableArrayList();
@@ -466,11 +460,11 @@ public class IKARulePopUpViewController implements Initializable{
         }
 
         antecedentTableView.setItems(antecendentData);
-        conseqeuntTableView.setItems(consequentData);
+        consequentTableView.setItems(consequentData);
     }
 
-    private void refreshAutoCompleteAfterSelectionOrEnter(ComboBox comboBox){
-        ObservableList data = FXCollections.observableArrayList(IKADataController.getInstance().getAllAtomList());
+    private void refreshAutoCompleteAfterSelectionOrEnter(ComboBox<String> comboBox){
+        ObservableList<String> data = FXCollections.observableArrayList(IKADataController.getInstance().getAllAtomList());
         comboBox.setItems(data);
         refreshCompletionRule();
     }
@@ -478,13 +472,13 @@ public class IKARulePopUpViewController implements Initializable{
     private void refreshCompletionRule(){
         AppTestLog.printLog("Refresh Comlletion Rule Table");
 
-        ArrayList<String> antecedentList = new ArrayList();
-        ArrayList<String> consequentList = new ArrayList();
+        ArrayList<String> antecedentList = new ArrayList<String>();
+        ArrayList<String> consequentList = new ArrayList<String>();
 
         for(Object row : antecedentTableView.getItems()){
             antecedentList.add(((AtomRow)row).getAtom());
         }
-        for(Object row : conseqeuntTableView.getItems()){
+        for(Object row : consequentTableView.getItems()){
             consequentList.add(((AtomRow)row).getAtom());
         }
 

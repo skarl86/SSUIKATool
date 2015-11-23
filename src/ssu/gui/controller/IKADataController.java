@@ -484,7 +484,18 @@ public class IKADataController extends IKAController implements IKADataRequestIn
 
         return ruleList;
     }
+    public String[] getAtomAndValue(Atom atom){
+        String[] atomAndValue = new String[2];
+        if(atom.getName().contains(DELIMITER)) {
+            atomAndValue[0] = atom.getName().split(DELIMITER)[0];
+            atomAndValue[1] = atom.getName().split(DELIMITER)[1];
+        }else{
+            atomAndValue[0] = atom.getName().split(DELIMITER)[0];
+            atomAndValue[1] = "";
+        }
 
+        return atomAndValue;
+    }
     private HashMap<String, String> makeAtomAndValue(Atom atom){
         HashMap<String, String> atomAndValue = new HashMap<String, String>();
 
