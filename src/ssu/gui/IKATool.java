@@ -330,7 +330,6 @@ public class IKATool extends Application implements Initializable {
             rightSplitPane.setDisable(false);
         }
         //System.out.println("Your name: " + result.get());
-        authorName = "test";
         leftSplitPane.setDisable(false);
         rightSplitPane.setDisable(false);
     }
