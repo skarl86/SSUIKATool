@@ -58,7 +58,7 @@
                                                 <TableColumn fx:id="antecedentValueColumn" prefWidth="122.0" resizable="false" text="Value" />
                                             </columns>
                                         </TableView>
-                                        <TableView fx:id="conseqeuntTableView" layoutX="259.0" layoutY="6.0" prefHeight="265.0" prefWidth="269.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="259.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                        <TableView fx:id="consequentTableView" layoutX="259.0" layoutY="6.0" prefHeight="265.0" prefWidth="269.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="259.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <columns>
                                                 <TableColumn fx:id="consequentColumn" prefWidth="153.0" resizable="false" text="결과" />
                                                 <TableColumn fx:id="consequentValueColumn" prefWidth="113.0" text="Value" />
