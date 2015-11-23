@@ -396,9 +396,35 @@ public class IKARulePopUpViewController implements Initializable{
         });
     }
 
-    private boolean isOKException(ArrayList<String> antecedentList, ArrayList<String> conseqeuntList){ return antecedentList.isEmpty() || conseqeuntList.isEmpty(); }
-    private boolean isDuplicateAtom(ArrayList antecedentList, ArrayList conseqeuntList) {
-        return true;
+    private boolean isOKException(ArrayList<String> antecedentList,
+                                  ArrayList<String> conseqeuntList){
+        return antecedentList.isEmpty() ||
+                conseqeuntList.isEmpty() ||
+                isDuplicateAtom(antecedentList, conseqeuntList);
+    }
+
+    /**
+     * UI상으로 중복체크를 막기 전까지 임시로 처리.
+     * @param antecedentList
+     * @param conseqeuntList
+     * @return
+     */
+    private boolean isDuplicateAtom(ArrayList<String> antecedentList, ArrayList<String> conseqeuntList) {
+        Set<String> set = new HashSet<String>();
+        String delimeter = "_";
+        boolean isDuplicate = false;
+
+        for(String atom : antecedentList){
+            if(atom.contains(delimeter)){
+                isDuplicate = !set.add(atom.split(delimeter)[0]);
+            }else{
+                isDuplicate = !set.add(atom);
+            }
+
+            if(isDuplicate) return isDuplicate;
+        }
+
+        return isDuplicate;
     }
 
     private void refreshAtomTableView(HashMap<String, ArrayList<HashMap<String, String>>> anteAndConsEachValues){
