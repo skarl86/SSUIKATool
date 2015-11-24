@@ -42,6 +42,11 @@ public class IKARulePopUpViewController implements Initializable{
     private final static String ANTECEDENT_TABLE = "antecendentTable";
     private final static String CONSEQUENT_TABLE = "conseqeuntTable";
 
+    private final static int EXCEPTION_NONE = -1;
+    private final static int EXCEPTION_EMPTY_RULE = 1;
+    private final static int EXCEPTION_DUPLICATE_RULE = 2;
+
+
     @FXML TableView<AtomRow> antecedentTableView;
     @FXML TableView<AtomRow> consequentTableView;
     @FXML TableView<CompleteRuleRow> completeRuleTable;
@@ -192,12 +197,24 @@ public class IKARulePopUpViewController implements Initializable{
         ArrayList<String> antList = makeAtomList(antecedentTableView);
         ArrayList<String> consqList = makeAtomList(consequentTableView);
 
-        if(isOKException(antList, consqList)){
+        String contentText = "";
+
+        int exceptionType = isOKException(antList, consqList);
+
+        if(exceptionType != EXCEPTION_NONE){
+            switch (isOKException(antList, consqList)){
+                case EXCEPTION_DUPLICATE_RULE:
+                    contentText = "중복 된 Atom이 존재합니다. 확인해주세요.";
+                    break;
+                case EXCEPTION_EMPTY_RULE:
+                    contentText = "조건 또는 결과의 Atom이 비어있습니다. 확인해주세요.";
+                    break;
+            }
+
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("에러");
-            alert.setHeaderText("잘못 된 Rule.");
-            alert.setContentText("Rule이 잘못되었습니다. 확인해 주세요.");
-
+            alert.setHeaderText("Rule이 잘못되었습니다.");
+            alert.setContentText(contentText);
             alert.showAndWait();
         }else{
             IKADataController.getInstance().ruleEditDialogOK(antList, consqList, authorLabel.getText(), patientID,indexOfOpinion);
@@ -396,11 +413,17 @@ public class IKARulePopUpViewController implements Initializable{
         });
     }
 
-    private boolean isOKException(ArrayList<String> antecedentList,
+    private int isOKException(ArrayList<String> antecedentList,
                                   ArrayList<String> conseqeuntList){
-        return antecedentList.isEmpty() ||
-                conseqeuntList.isEmpty() ||
-                isDuplicateAtom(antecedentList, conseqeuntList);
+        int exceptionType = -1;
+
+        if(antecedentList.isEmpty() || conseqeuntList.isEmpty()){
+            exceptionType = EXCEPTION_EMPTY_RULE;
+        }
+        if(isDuplicateAtom(antecedentList, conseqeuntList)){
+            exceptionType = EXCEPTION_DUPLICATE_RULE;
+        }
+        return exceptionType;
     }
 
     /**
