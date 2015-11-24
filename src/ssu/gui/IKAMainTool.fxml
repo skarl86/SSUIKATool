@@ -177,10 +177,10 @@
                                     <TableView fx:id="ruleReferenceTableView" VBox.vgrow="ALWAYS">
                                        <columns>
                                           <TableColumn fx:id="ruleIdColumn" editable="false" prefWidth="37.0" resizable="false" text="ID" />
-                                          <TableColumn fx:id="ruleColumn" editable="false" prefWidth="250.0" text="Rule" />
-                                          <TableColumn fx:id="authorColumn" editable="false" prefWidth="73.0" resizable="false" text="작성자" />
-                                          <TableColumn fx:id="madeDateColumn" editable="false" prefWidth="170.0" resizable="false" text="생성일" />
-                                          <TableColumn fx:id="modifiedDateColumn" editable="false" prefWidth="158.0" resizable="false" text="수정일" />
+                                          <TableColumn fx:id="ruleColumn" editable="false" prefWidth="210.0" resizable="false" text="Rule" />
+                                          <TableColumn fx:id="authorColumn" editable="false" resizable="false" text="작성자" />
+                                          <TableColumn fx:id="madeDateColumn" editable="false" prefWidth="140.0" resizable="false" text="생성일" />
+                                          <TableColumn fx:id="modifiedDateColumn" editable="false" prefWidth="140.0" resizable="false" text="수정일" />
                                        </columns>
                                        <VBox.margin>
                                           <Insets bottom="2.0" />
