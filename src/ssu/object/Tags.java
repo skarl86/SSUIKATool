@@ -33,7 +33,7 @@ public final class Tags {
     public static final String ATOM_VALUE_SPLITER = "_";
 
     public static final String RULE_SPLITER = ",";
-    public static final String RULE_THEN_SPLITER = "-";
+    public static final String RULE_THEN_SPLITER = ":";
     public static final String RULE_ATOM_SPLITER = "!";
 
     public static final String PATIENT_SPLITER = "_";
