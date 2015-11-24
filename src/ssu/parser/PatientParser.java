@@ -71,6 +71,8 @@ public class PatientParser {
                     Long regID = Long.parseLong(defValues[PATIENT_INFO_REGID_INDEX]);
                     String regDate = defValues[PATIENT_INFO_REGDATE_INDEX];
 
+                    System.out.println("환자 생성 : " + regDate + "_" + regID);
+
                     // 환자 객체 생성.
                     Patient newPatient = new Patient(name, age, gender, regID, regDate);
 
