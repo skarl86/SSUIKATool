@@ -55,11 +55,7 @@
                                  <children>
                                     <TitledPane alignment="CENTER" animated="false" collapsible="false" styleClass="common" stylesheets="@resources/main.css" text="환자 목록" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <content>
-                                          <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="ALWAYS" layoutX="10.0" layoutY="10.0" vbarPolicy="ALWAYS">
-                                             <content>
-                                                <TreeView fx:id="patientTreeView" />
-                                             </content>
-                                          </ScrollPane>
+                                          <TreeView fx:id="patientTreeView" prefHeight="361.0" prefWidth="176.0" />
                                        </content>
                                     </TitledPane>
                                  </children>
