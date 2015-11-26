@@ -687,14 +687,20 @@ public class IKADataController extends IKAController implements IKADataRequestIn
      * @param consequents
      * @return
      */
-    public boolean checkExistedRuleByConditions(ArrayList<String> antecedents, ArrayList<String> consequents) {
+    public boolean checkExistedRuleByConditions(Long patientId, ArrayList<String> antecedents, ArrayList<String> consequents) {
         Rule rule = ruleManager.getExistedRuleByCondition(antecedents, consequents);
+        Patient currentPat = patientManager.getAllPatients().get(patientId);
 
-        if (rule != null) {
-            return true;
-        } else {
-            return false;
+        for (Opinion op : currentPat.getAllOpinions()) {
+            for (Long ruleId : op.getRules()) {
+                if (ruleId == rule.getId()) {
+                    return true;
+                }
+            }
         }
+
+        return false;
+
     }
 
 }
