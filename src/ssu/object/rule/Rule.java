@@ -235,7 +235,11 @@ public class Rule implements Savable {
         if (this.byPatientsOpinions.containsKey(patientId)) {
             ArrayList<Integer> opinions = this.byPatientsOpinions.get(patientId);
             if (opinions.contains(indexOfOpinion)) {
-                opinions.remove(opinions.indexOf(indexOfOpinion));
+                opinions.remove((Integer) indexOfOpinion);
+
+                if (opinions.size() == 0) {
+                    this.byPatientsOpinions.remove(patientId);
+                }
             }
         }
     }

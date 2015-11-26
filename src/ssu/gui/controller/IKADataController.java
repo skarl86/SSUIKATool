@@ -326,6 +326,10 @@ public class IKADataController extends IKAController implements IKADataRequestIn
 
         Opinion opinion = null;
 
+        // Rule의 Patient, Opinion의 레퍼런스 정보를 지움.
+        Rule deleteRule = this.ruleManager.getAllRules().get(ruleId);
+        deleteRule.removePatientOneOpinion(patientId, indexOfOpinion);
+
         // Patient의 Opinion에서 Rule의 레퍼런스 정보를 지움.
         for (Map.Entry<Long, Patient> entry : this.patientManager.getAllPatients().entrySet()) {
             Patient pat = entry.getValue();
@@ -352,10 +356,6 @@ public class IKADataController extends IKAController implements IKADataRequestIn
                 }
             }
         }
-
-        // Rule의 Patient, Opinion의 레퍼런스 정보를 지움.
-        Rule deleteRule = this.ruleManager.getAllRules().get(ruleId);
-        deleteRule.removePatientOneOpinion(patientId, indexOfOpinion);
 
         return false;
     }
