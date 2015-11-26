@@ -4,6 +4,8 @@ import ssu.object.Savable;
 import ssu.object.Tags;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by beggar3004 on 15. 11. 8..
@@ -16,6 +18,8 @@ public class Rule implements Savable {
     private Long modifiedDate;
     private ArrayList<Atom> antecedents;
     private ArrayList<Atom> consequents;
+    // 해당 Rule과 관련된 환자와 소견 id를 저장.
+    private HashMap<Long, ArrayList<Integer>> byPatientsOpinions;
 
     public Rule(Long id, String author, Long madeDate, Long modifiedDate) {
         this.id = id;
@@ -24,6 +28,7 @@ public class Rule implements Savable {
         this.modifiedDate = modifiedDate;
         this.antecedents = new ArrayList<Atom>();
         this.consequents = new ArrayList<Atom>();
+        this.byPatientsOpinions = new HashMap<Long, ArrayList<Integer>>();
     }
 
     public Rule(Long id, String author) {
@@ -33,6 +38,7 @@ public class Rule implements Savable {
         this.modifiedDate = 0L;
         this.antecedents = new ArrayList<Atom>();
         this.consequents = new ArrayList<Atom>();
+        this.byPatientsOpinions = new HashMap<Long, ArrayList<Integer>>();
     }
 
     /**
@@ -52,14 +58,14 @@ public class Rule implements Savable {
             ArrayList<String> consequentStringList = new ArrayList<String>();
 
             for (Atom antecedent : getAntecedents()) {
-                if (antecedent.getName().contains("_")) {
+                if (antecedent.getName().contains(Tags.ATOM_VALUE_SPLITER)) {
                     antecedentStringList.add(antecedent.getName().substring(0, antecedent.getName().indexOf("_")));
                 }
 
                 antecedentStringList.add(antecedent.getName());
             }
             for (Atom consequent : getConsequents()) {
-                if (consequent.getName().contains("_")) {
+                if (consequent.getName().contains(Tags.ATOM_VALUE_SPLITER)) {
                     consequentStringList.add(consequent.getName().substring(0, consequent.getName().indexOf("_")));
                 }
 
@@ -106,6 +112,7 @@ public class Rule implements Savable {
         line += getMadeDate() + Tags.RULE_SPLITER;
         line += getModifiedDate() + Tags.RULE_SPLITER;
 
+        // Rule 형식.
         String semiRuleString = "";
         for (int i=0; i<getAntecedents().size(); i++) {
             Atom atom = getAntecedents().get(i);
@@ -122,7 +129,30 @@ public class Rule implements Savable {
                 semiRuleString += Tags.RULE_ATOM_SPLITER;
             }
         }
-        line += semiRuleString;
+        line += semiRuleString + Tags.RULE_SPLITER;
+
+        // 참조하는 환자와 소견 id
+        ArrayList<Long> patients = new ArrayList<Long>(getByPatientsOpinions().keySet());
+        String patientOpStr = "";
+        for (int i=0; i<patients.size(); i++) {
+            Long patient = patients.get(i);
+            patientOpStr += patient + Tags.RULE_PATIENT_OPINION_SPLITER;
+
+            ArrayList<Integer> opinions = getByPatientsOpinions().get(patient);
+            for (int j=0; j<opinions.size(); j++) {
+                patientOpStr += opinions.get(j);
+
+                if (j < opinions.size() - 1) {
+                    patientOpStr += Tags.RULE_PATIENT_OPINION_SPLITER;
+                }
+            }
+
+            if (i < patients.size() - 1) {
+                patientOpStr += Tags.RULE_PATIENT_SPLITER;
+            }
+        }
+
+        line += patientOpStr;
 
         return line;
     }
@@ -141,6 +171,37 @@ public class Rule implements Savable {
 
     public boolean removeConsequent(Atom atom) {
         return this.consequents.remove(atom);
+    }
+
+    public void addPatientAllOpinion(Long patientId, ArrayList<Integer> opinions) {
+        if (this.byPatientsOpinions.containsKey(patientId)) {
+            this.byPatientsOpinions.get(patientId).addAll(opinions);
+        } else {
+            this.byPatientsOpinions.put(patientId, opinions);
+        }
+    }
+
+    public void addPatientOneOpinion(Long patientId, int indexOfOpinion) {
+        if (this.byPatientsOpinions.containsKey(patientId)) {
+            ArrayList<Integer> opinions = this.byPatientsOpinions.get(patientId);
+            if (!opinions.contains(indexOfOpinion)) {
+                opinions.add(indexOfOpinion);
+            }
+        } else {
+            ArrayList<Integer> opinions = new ArrayList<Integer>();
+            opinions.add(indexOfOpinion);
+
+            this.byPatientsOpinions.put(patientId, opinions);
+        }
+    }
+
+    public void removePatientOneOpinion(Long patientId, int indexOfOpinion) {
+        if (this.byPatientsOpinions.containsKey(patientId)) {
+            ArrayList<Integer> opinions = this.byPatientsOpinions.get(patientId);
+            if (opinions.contains(indexOfOpinion)) {
+                opinions.remove(opinions.indexOf(indexOfOpinion));
+            }
+        }
     }
 
     /*
@@ -194,4 +255,7 @@ public class Rule implements Savable {
         this.consequents = consequents;
     }
 
+    public HashMap<Long, ArrayList<Integer>> getByPatientsOpinions() {
+        return byPatientsOpinions;
+    }
 }

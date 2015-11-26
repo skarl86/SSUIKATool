@@ -8,7 +8,6 @@ import ssu.object.rule.Rule;
 import ssu.object.test.TestItem;
 import ssu.object.test.TestResult;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -88,7 +87,8 @@ public class IKADataController extends IKAController implements IKADataRequestIn
     public List<IKADataController.OpinionReferenceList> getOpinionReferenceList(Long patientRegId, Long ruleId){
         List<OpinionReferenceList> pList = new ArrayList<OpinionReferenceList>();
 
-        for (Patient pat : this.patientManager.getAllPatients()){
+        for (Map.Entry<Long, Patient> entry : this.patientManager.getAllPatients().entrySet()) {
+            Patient pat = entry.getValue();
             if(patientRegId.equals(pat.getRegId())) {
                 for(Opinion opn : pat.getAllOpinions()){
                     if(this.ruleManager.getAllRules().containsKey(ruleId)){
@@ -105,6 +105,23 @@ public class IKADataController extends IKAController implements IKADataRequestIn
             }
         }
 
+//        for (Patient pat : this.patientManager.getAllPatients()){
+//            if(patientRegId.equals(pat.getRegId())) {
+//                for(Opinion opn : pat.getAllOpinions()){
+//                    if(this.ruleManager.getAllRules().containsKey(ruleId)){
+//                        Rule rule = this.ruleManager.getAllRules().get(ruleId);
+//                        OpinionReferenceList op = new OpinionReferenceList();
+//                        op.author = rule.getAuthor();
+//                        op.madeDate = rule.getMadeDate();
+//                        op.modifiedDate = rule.getModifiedDate();
+//                        op.rule = rule.printFormalFormat();
+//                        op.ruleId = rule.getId();
+//                        pList.add(op);
+//                    }
+//                }
+//            }
+//        }
+
         return pList;
     }
 
@@ -116,19 +133,28 @@ public class IKADataController extends IKAController implements IKADataRequestIn
     public List<String> getPatientOpinion(Long patientRegId){
         List<String> pList = new ArrayList<String>();
 
-        for (Patient pat : this.patientManager.getAllPatients()){
+        for (Map.Entry<Long, Patient> entry : this.patientManager.getAllPatients().entrySet()) {
+            Patient pat = entry.getValue();
             if(patientRegId.equals(pat.getRegId())){
                 for(Opinion opn : pat.getAllOpinions()){
                     pList.add(opn.getOpinion());
                 }
             }
         }
+//        for (Patient pat : this.patientManager.getAllPatients()){
+//            if(patientRegId.equals(pat.getRegId())){
+//                for(Opinion opn : pat.getAllOpinions()){
+//                    pList.add(opn.getOpinion());
+//                }
+//            }
+//        }
         return pList;
     }
 
     public List<OpinionReferenceList> getRuleReferenceListInOpinion(Long patientRegId, int indexOfOpinion){
         List<OpinionReferenceList> ruleListInOpinion = new ArrayList<OpinionReferenceList>();
-        for (Patient pat : this.patientManager.getAllPatients()){
+        for (Map.Entry<Long, Patient> entry : this.patientManager.getAllPatients().entrySet()) {
+            Patient pat = entry.getValue();
             if(patientRegId.equals(pat.getRegId())){
                 for(Long ruleId : pat.getAllOpinions().get(indexOfOpinion).getRules()){
                     Rule rule = this.ruleManager.getAllRules().get(ruleId);
@@ -142,6 +168,21 @@ public class IKADataController extends IKAController implements IKADataRequestIn
                 }
             }
         }
+//        for (Patient pat : this.patientManager.getAllPatients()){
+//            if(patientRegId.equals(pat.getRegId())){
+//                for(Long ruleId : pat.getAllOpinions().get(indexOfOpinion).getRules()){
+//                    Rule rule = this.ruleManager.getAllRules().get(ruleId);
+//                    OpinionReferenceList op = new OpinionReferenceList();
+//                    op.author = rule.getAuthor();
+//                    op.madeDate = rule.getMadeDate();
+//                    op.modifiedDate = rule.getModifiedDate();
+//                    op.rule = rule.printFormalFormat();
+//                    op.ruleId = rule.getId();
+//                    ruleListInOpinion.add(op);
+//                }
+//            }
+//        }
+
         return ruleListInOpinion;
     }
 
@@ -153,7 +194,8 @@ public class IKADataController extends IKAController implements IKADataRequestIn
     public List<PatientDetailListElement> getPatientsDetailList(Long patientRegId){
         List<PatientDetailListElement> pList = new ArrayList<PatientDetailListElement>();
 
-        for(Patient pat : this.patientManager.getAllPatients()){
+        for (Map.Entry<Long, Patient> entry : this.patientManager.getAllPatients().entrySet()) {
+            Patient pat = entry.getValue();
             if(patientRegId.equals(pat.getRegId())){
                 for(TestResult rst : pat.getAllTestResults()){
                     TestItem itm = rst.getTestItem();
@@ -170,6 +212,23 @@ public class IKADataController extends IKAController implements IKADataRequestIn
                 }
             }
         }
+//        for(Patient pat : this.patientManager.getAllPatients()){
+//            if(patientRegId.equals(pat.getRegId())){
+//                for(TestResult rst : pat.getAllTestResults()){
+//                    TestItem itm = rst.getTestItem();
+//                    PatientDetailListElement elm = new PatientDetailListElement();
+//                    elm.testName = itm.getName();
+//                    if(1 < rst.getTestValues().size()){
+//                        elm.testValue = rst.getTestValues().get(0).getTestValue();
+//                        elm.testTextValue = rst.getTestValues().get(1).getTestValue();
+//                    }else{
+//                        elm.testValue = rst.getTestValues().get(0).getTestValue();
+//                        elm.testTextValue = "-";
+//                    }
+//                    pList.add(elm);
+//                }
+//            }
+//        }
         return pList;
     }
 
@@ -181,9 +240,9 @@ public class IKADataController extends IKAController implements IKADataRequestIn
     public PatientDefaultListElement getPatientsDefaultList(Long patientRegId){
 
         PatientDefaultListElement elm = null;
-        for(Patient pat : this.patientManager.getAllPatients()){
+        for (Map.Entry<Long, Patient> entry : this.patientManager.getAllPatients().entrySet()) {
+            Patient pat = entry.getValue();
             if(pat.getRegId().equals(patientRegId)){
-
                 elm = new PatientDefaultListElement();
                 elm.age = pat.getAge();
                 elm.gender = pat.getGender();
@@ -192,6 +251,17 @@ public class IKADataController extends IKAController implements IKADataRequestIn
                 break;
             }
         }
+//        for(Patient pat : this.patientManager.getAllPatients()){
+//            if(pat.getRegId().equals(patientRegId)){
+//
+//                elm = new PatientDefaultListElement();
+//                elm.age = pat.getAge();
+//                elm.gender = pat.getGender();
+//                elm.name = pat.getName();
+//
+//                break;
+//            }
+//        }
 
         return elm;
     }
@@ -203,7 +273,8 @@ public class IKADataController extends IKAController implements IKADataRequestIn
     public Map<String, List<PatientListElement>> getPatientsList(){
         Map patientMap = new HashMap<String, PatientListElement>();
         ArrayList<PatientListElement> tempList = null;
-        for(Patient pat : this.patientManager.getAllPatients()){
+        for (Map.Entry<Long, Patient> entry : this.patientManager.getAllPatients().entrySet()) {
+            Patient pat = entry.getValue();
             PatientListElement elm = new PatientListElement();
             elm.date = pat.getRegDate();
             elm.regId = pat.getRegId();
@@ -218,6 +289,21 @@ public class IKADataController extends IKAController implements IKADataRequestIn
             tempList.add(elm);
             patientMap.put(elm.date, tempList);
         }
+//        for(Patient pat : this.patientManager.getAllPatients()){
+//            PatientListElement elm = new PatientListElement();
+//            elm.date = pat.getRegDate();
+//            elm.regId = pat.getRegId();
+//            elm.name = pat.getName();
+//
+//            if(patientMap.containsKey(elm.date)){
+//                tempList = (ArrayList)patientMap.get(elm.date);
+//                tempList.add(elm);
+//                patientMap.put(elm.date, tempList);
+//            }
+//            tempList = new ArrayList<PatientListElement>();
+//            tempList.add(elm);
+//            patientMap.put(elm.date, tempList);
+//        }
 
         return patientMap;
     }
@@ -240,13 +326,21 @@ public class IKADataController extends IKAController implements IKADataRequestIn
 
         Opinion opinion = null;
 
-        for(Patient pat : this.patientManager.getAllPatients()){
+        // Patient의 Opinion에서 Rule의 레퍼런스 정보를 지움.
+        for (Map.Entry<Long, Patient> entry : this.patientManager.getAllPatients().entrySet()) {
+            Patient pat = entry.getValue();
             if(pat.getRegId().equals(patientId)){
                 opinion = pat.getAllOpinions().get(indexOfOpinion);
                 break;
             }
-
         }
+//        for(Patient pat : this.patientManager.getAllPatients()){
+//            if(pat.getRegId().equals(patientId)){
+//                opinion = pat.getAllOpinions().get(indexOfOpinion);
+//                break;
+//            }
+//
+//        }
 
         if (opinion != null) {
             ArrayList<Long> rules = opinion.getRules();
@@ -258,6 +352,10 @@ public class IKADataController extends IKAController implements IKADataRequestIn
                 }
             }
         }
+
+        // Rule의 Patient, Opinion의 레퍼런스 정보를 지움.
+        Rule deleteRule = this.ruleManager.getAllRules().get(ruleId);
+        deleteRule.removePatientOneOpinion(patientId, indexOfOpinion);
 
         return false;
     }
@@ -280,6 +378,8 @@ public class IKADataController extends IKAController implements IKADataRequestIn
         if (newRule != null) {  // Rule이 이미 존재하는 경우.
             newRule.setAuthor(author);
             newRule.setModifiedDate(modifiedTime);
+            // 해당 Rule을 참조하는 환자 ID와 opinion id를 기록.
+            newRule.addPatientOneOpinion(patientId, indexOfOpinion);
         } else {                // Rule이 존재하지 않는 경우.
             newRule = new Rule(this.ruleManager.getRuleNumber(), author, modifiedTime, modifiedTime);
 
@@ -292,16 +392,27 @@ public class IKADataController extends IKAController implements IKADataRequestIn
                 newRule.addConsequent(this.atomManager.getAtomOrCreate(consequent, Tags.ATOM_TYPE_CLASS));
             }
 
+            // 해당 Rule을 참조하는 환자 ID와 opinion id를 기록.
+            newRule.addPatientOneOpinion(patientId, indexOfOpinion);
+
             this.ruleManager.addRule(newRule);
 
         }
-        for(Patient pat : this.patientManager.getAllPatients()){
+//        for(Patient pat : this.patientManager.getAllPatients()){
+//            if(pat.getRegId().equals(patientId)){
+//                Opinion opinion = pat.getAllOpinions().get(indexOfOpinion);
+//                opinion.addRule(newRule.getId());
+//                break;
+//            }
+//
+//        }
+        for (Map.Entry<Long, Patient> entry : this.patientManager.getAllPatients().entrySet()) {
+            Patient pat = entry.getValue();
             if(pat.getRegId().equals(patientId)){
                 Opinion opinion = pat.getAllOpinions().get(indexOfOpinion);
                 opinion.addRule(newRule.getId());
                 break;
             }
-
         }
 
         return newRule.getId();
