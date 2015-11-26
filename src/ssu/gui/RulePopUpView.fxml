@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.text.*?>
 
-<GridPane fx:id="mainView" alignment="CENTER" hgap="10.0" prefHeight="605.0" prefWidth="945.0" styleClass="okButton" stylesheets="@resources/main.css" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ssu.gui.controller.IKARulePopUpViewController">
+<GridPane fx:id="mainView" alignment="CENTER" hgap="10.0" prefHeight="605.0" prefWidth="1007.0" styleClass="okButton" stylesheets="@resources/main.css" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ssu.gui.controller.IKARulePopUpViewController">
     <children>
       <HBox>
          <children>
@@ -104,26 +104,27 @@
                       </HBox>
                   </children>
               </VBox>
-            <HBox prefHeight="595.0" prefWidth="401.0">
+            <HBox prefHeight="595.0" prefWidth="471.0">
                <children>
-                  <VBox prefHeight="595.0" prefWidth="192.0">
+                  <VBox prefHeight="595.0" prefWidth="266.0">
                      <children>
-                        <TitledPane prefHeight="419.0" prefWidth="202.0" text="환자 목록">
+                        <TitledPane prefHeight="419.0" prefWidth="244.0" text="환자 목록">
                            <content>
                               <ScrollPane prefHeight="200.0" prefWidth="200.0">
                                  <content>
-                                    <TableView fx:id="patientTable" prefHeight="400.0" prefWidth="195.0">
+                                    <TableView fx:id="patientTable" prefHeight="400.0" prefWidth="246.0">
                                        <columns>
-                                          <TableColumn fx:id="nameColumn" prefWidth="112.0" text="이름" />
-                                          <TableColumn fx:id="genderColumn" minWidth="8.0" prefWidth="37.0" text="성별" />
-                                          <TableColumn fx:id="ageColumn" prefWidth="36.0" text="나이" />
+                                          <TableColumn fx:id="nameColumn1" prefWidth="71.0" text="ID" />
+                                          <TableColumn fx:id="nameColumn" prefWidth="77.0" text="이름" />
+                                          <TableColumn fx:id="genderColumn" minWidth="8.0" prefWidth="50.0" text="성별" />
+                                          <TableColumn fx:id="ageColumn" prefWidth="50.0" text="나이" />
                                        </columns>
                                     </TableView>
                                  </content>
                               </ScrollPane>
                            </content>
                         </TitledPane>
-                        <TitledPane prefHeight="175.0" prefWidth="202.0" text="소견">
+                        <TitledPane prefHeight="304.0" prefWidth="260.0" text="소견">
                            <content>
                               <TextArea fx:id="opinionTextArea" prefHeight="174.0" prefWidth="152.0" wrapText="true" />
                            </content>
