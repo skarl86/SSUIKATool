@@ -112,11 +112,11 @@
                            <content>
                               <ScrollPane prefHeight="200.0" prefWidth="200.0">
                                  <content>
-                                    <TableView prefHeight="400.0" prefWidth="195.0">
+                                    <TableView fx:id="patientTable" prefHeight="400.0" prefWidth="195.0">
                                        <columns>
-                                          <TableColumn prefWidth="112.0" text="이름" />
-                                          <TableColumn minWidth="8.0" prefWidth="37.0" text="성별" />
-                                          <TableColumn prefWidth="36.0" text="나이" />
+                                          <TableColumn fx:id="nameColumn" prefWidth="112.0" text="이름" />
+                                          <TableColumn fx:id="genderColumn" minWidth="8.0" prefWidth="37.0" text="성별" />
+                                          <TableColumn fx:id="ageColumn" prefWidth="36.0" text="나이" />
                                        </columns>
                                     </TableView>
                                  </content>
@@ -125,7 +125,7 @@
                         </TitledPane>
                         <TitledPane prefHeight="175.0" prefWidth="202.0" text="소견">
                            <content>
-                              <TextArea prefHeight="174.0" prefWidth="152.0" />
+                              <TextArea fx:id="opinionTextArea" prefHeight="174.0" prefWidth="152.0" wrapText="true" />
                            </content>
                         </TitledPane>
                      </children>
@@ -140,8 +140,8 @@
                                  </columnResizePolicy>
                                  <columns>
                                     <TableColumn fx:id="testNameColumn" prefWidth="44.0" text="검사명" />
-                                    <TableColumn fx:id="testNumValueColumn" minWidth="0.0" prefWidth="117.0" text="수치값" />
-                                    <TableColumn fx:id="testTextValueColumn" prefWidth="75.0" text="문자값" />
+                                    <TableColumn fx:id="testValueColumn" minWidth="0.0" prefWidth="117.0" text="수치값" />
+                                    <TableColumn fx:id="textValueColumn" prefWidth="75.0" text="문자값" />
                                  </columns>
                               </TableView>
                            </content>

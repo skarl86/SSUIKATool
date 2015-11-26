@@ -25,8 +25,13 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import org.controlsfx.control.textfield.TextFields;
+import ssu.object.PatientManager;
+import ssu.object.patient.Opinion;
+import ssu.object.patient.Patient;
 import ssu.object.rule.Atom;
 import ssu.object.rule.Rule;
+import ssu.object.test.TestItem;
+import ssu.object.test.TestResult;
 import ssu.util.AppTestLog;
 
 import java.io.IOException;
@@ -48,16 +53,27 @@ public class IKARulePopUpViewController implements Initializable{
     private final static int EXCEPTION_NONE = -1;
     private final static int EXCEPTION_EMPTY_RULE = 1;
     private final static int EXCEPTION_DUPLICATE_RULE = 2;
+    private final static int EXCEPTION_DUPLICATE_ATOM = 3;
 
 
     @FXML TableView<AtomRow> antecedentTableView;
     @FXML TableView<AtomRow> consequentTableView;
     @FXML TableView<CompleteRuleRow> completeRuleTable;
+    @FXML TableView<PatientRow> patientTable;
+    @FXML TableView<PatientDetailRow> patientDetailTable;
 
     @FXML TableColumn<AtomRow, String> antecedentColumn;
     @FXML TableColumn<AtomRow, String> antecedentValueColumn;
     @FXML TableColumn<AtomRow, String> consequentColumn;
     @FXML TableColumn<AtomRow, String> consequentValueColumn;
+
+    @FXML TableColumn<PatientRow, String> nameColumn;
+    @FXML TableColumn<PatientRow, String> genderColumn;
+    @FXML TableColumn<PatientRow, String> ageColumn;
+
+    @FXML TableColumn<PatientDetailRow, String> testNameColumn;
+    @FXML TableColumn<PatientDetailRow, String> testValueColumn;
+    @FXML TableColumn<PatientDetailRow, String> textValueColumn;
 
     @FXML TableColumn<CompleteRuleRow, String> completeRuleColumn;
 
@@ -72,13 +88,66 @@ public class IKARulePopUpViewController implements Initializable{
 
     @FXML HBox splitTopBox;
 
+    @FXML TextArea opinionTextArea;
 
     private Long patientID;
     private int indexOfOpinion;
     private String newInputValue;
+    private ArrayList<Patient> patientsList;
 
     private HashMap<Integer, ComboBox<String>> antecedentValueMap = new HashMap<Integer, ComboBox<String>>();
     private HashMap<Integer, ComboBox<String>> consequentValueMap = new HashMap<Integer, ComboBox<String>>();
+
+    public class PatientDetailRow{
+        private final StringProperty testName;
+        private final StringProperty testValue;
+        private final StringProperty textValue;
+
+        private PatientDetailRow(String testName, String testValue, String textValue){
+            this.testName = new SimpleStringProperty(testName);
+            this.testValue = new SimpleStringProperty(testValue);
+            this.textValue = new SimpleStringProperty(textValue);
+        }
+
+        public void setTestName(String testName){ this.testName.set(testName); }
+        public String getTestName(){return this.testName.get();}
+
+        public void setTestValue(String testValue){ this.testValue.set(testValue); }
+        public String getTestValue(){return this.testValue.get();}
+
+        public void setTextValue(String textValue){ this.textValue.set(textValue); }
+        public String getTextValue(){return this.textValue.get();}
+
+    }
+    public class PatientRow{
+        private final StringProperty name;
+        private final StringProperty gender;
+        private final StringProperty age;
+        private final StringProperty id;
+
+        public StringProperty nameProperty() { return name; }
+        public StringProperty genderProperty() { return gender; }
+        public StringProperty ageProperty() { return age; }
+        public StringProperty idProperty() { return id; }
+
+        private PatientRow(String name, String gender, String age, String id){
+            this.name = new SimpleStringProperty(name);
+            this.gender = new SimpleStringProperty(gender);
+            this.age = new SimpleStringProperty(age);
+            this.id = new SimpleStringProperty(id);
+        }
+        public void setId(String id){ this.id.set(id); }
+        public String getId(){ return this.id.get(); }
+
+        public void setName(String name){ this.name.set(name); }
+        public String getName() { return name.get(); }
+
+        public void setGender(String gender){ this.gender.set(gender); }
+        public String getGender() { return gender.get(); }
+
+        public void setAge(String age){ this.age.set(age); }
+        public String getAge() { return age.get(); }
+    }
 
     // Atom Row Entity
     public class AtomRow {
@@ -243,11 +312,14 @@ public class IKARulePopUpViewController implements Initializable{
 
         if(exceptionType != EXCEPTION_NONE){
             switch (isOKException(antList, consqList)){
-                case EXCEPTION_DUPLICATE_RULE:
+                case EXCEPTION_DUPLICATE_ATOM:
                     contentText = "중복 된 Atom이 존재합니다. 확인해주세요.";
                     break;
                 case EXCEPTION_EMPTY_RULE:
                     contentText = "조건 또는 결과의 Atom이 비어있습니다. 확인해주세요.";
+                    break;
+                case EXCEPTION_DUPLICATE_RULE:
+                    contentText = "중복 된 Rule이 존재합니다. 확인해주세요.";
                     break;
             }
 
@@ -440,6 +512,14 @@ public class IKARulePopUpViewController implements Initializable{
                 new PropertyValueFactory<CompleteRuleRow, String>("completeRule")
         );
 
+        nameColumn.setCellValueFactory(new PropertyValueFactory<PatientRow, String>("name"));
+        genderColumn.setCellValueFactory(new PropertyValueFactory<PatientRow, String>("gender"));
+        ageColumn.setCellValueFactory(new PropertyValueFactory<PatientRow, String>("age"));
+
+        testNameColumn.setCellValueFactory(new PropertyValueFactory<PatientDetailRow, String>("testName"));
+        testValueColumn.setCellValueFactory(new PropertyValueFactory<PatientDetailRow, String>("testValue"));
+        textValueColumn.setCellValueFactory(new PropertyValueFactory<PatientDetailRow, String>("textValue"));
+
         ObservableList<AtomRow> antecendentData = FXCollections.observableArrayList();
         ObservableList<AtomRow> consequentData = FXCollections.observableArrayList();
 
@@ -464,7 +544,6 @@ public class IKARulePopUpViewController implements Initializable{
 
         completeRuleColumn.setCellFactory(new PreviousRuleCallFactor());
 
-
         antecedentTableView.setItems(antecendentData);
         antecedentTableView.setId(ANTECEDENT_TABLE);
         consequentTableView.setItems(consequentData);
@@ -473,17 +552,31 @@ public class IKARulePopUpViewController implements Initializable{
         completeRuleTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
             if( newSelection != null){
                 if(completeRuleTable.getSelectionModel().getSelectedItem() != null) {
-
-                    Rule selectedRule = IKADataController.getInstance()
-                            .getRuleByFormalFormat(newSelection.getCompleteRule());
-                    if(selectedRule != null){
-                        // key -> patient id, values -> opinion index
-                        HashMap<Long, ArrayList<Integer>> map = selectedRule.getByPatientsOpinions();
+                    if(newSelection.getCompleteRule() != null){
+                        ArrayList<Patient> patients = IKADataController.getInstance()
+                                .getTempPatientList(newSelection.getCompleteRule());
+                        if(!patients.isEmpty()){
+                            patientsList = patients;
+                            refreshPatientTableView(patients);
+                        }
                     }
 
                 }
             }
         });
+
+        patientTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
+            if( newSelection != null) {
+                if (patientTable.getSelectionModel().getSelectedItem() != null) {
+                    Patient selectedPat = patientsList.get(patientTable.getItems().indexOf(newSelection));
+                    ArrayList<Opinion> tempOpin = selectedPat.getAllOpinions();
+                    opinionTextArea.setText(tempOpin.get(0).getOpinion());
+                    refreshPatientDetailTableView(selectedPat.getAllTestResults());
+                }
+            }
+        });
+
+
     }
 
     private int isOKException(ArrayList<String> antecedentList,
@@ -494,11 +587,16 @@ public class IKARulePopUpViewController implements Initializable{
             exceptionType = EXCEPTION_EMPTY_RULE;
         }
         if(isDuplicateAtom(antecedentList, conseqeuntList)){
+            exceptionType = EXCEPTION_DUPLICATE_ATOM;
+        }
+        if(isDuplicateRule(antecedentList, conseqeuntList)){
             exceptionType = EXCEPTION_DUPLICATE_RULE;
         }
         return exceptionType;
     }
-
+    private boolean isDuplicateRule(ArrayList<String> antecedentList, ArrayList<String> conseqeuntList){
+        return IKADataController.getInstance().checkExistedRuleByConditions(patientID, antecedentList, conseqeuntList);
+    }
     /**
      * UI상으로 중복체크를 막기 전까지 임시로 처리.
      * @param antecedentList
@@ -520,7 +618,48 @@ public class IKARulePopUpViewController implements Initializable{
             if(isDuplicate) return isDuplicate;
         }
 
+        set.clear();
+
+        for(String atom : conseqeuntList){
+            if(atom.contains(delimeter)){
+                isDuplicate = !set.add(atom.split(delimeter)[0]);
+            }else{
+                isDuplicate = !set.add(atom);
+            }
+
+            if(isDuplicate) return isDuplicate;
+        }
+
         return isDuplicate;
+    }
+
+    private void refreshPatientDetailTableView(ArrayList<TestResult> testResults){
+        ObservableList<PatientDetailRow> tempPatientDetailData = FXCollections.observableArrayList();
+
+        for(TestResult rst : testResults){
+            TestItem item = rst.getTestItem();
+            if(1 < rst.getTestValues().size()){
+                tempPatientDetailData.add(
+                        new PatientDetailRow(
+                                item.getName(), rst.getTestValues().get(0).getTestValue(), rst.getTestValues().get(1).getTestValue()));
+            }else{
+                tempPatientDetailData.add(
+                        new PatientDetailRow(item.getName(), rst.getTestValues().get(0).getTestValue(), "-"));
+            }
+        }
+
+        patientDetailTable.setItems(tempPatientDetailData);
+    }
+    private void refreshPatientTableView(ArrayList<Patient> tempPatients){
+        ObservableList<PatientRow> tempPatientsData = FXCollections.observableArrayList();
+
+        for(Patient pat : tempPatients){
+            tempPatientsData.add(
+                    new PatientRow(
+                            pat.getName(),pat.getGender(),String.valueOf(pat.getAge()), String.valueOf(pat.getRegId())));
+        }
+
+        patientTable.setItems(tempPatientsData);
     }
 
     private void refreshAtomTableView(HashMap<String, ArrayList<HashMap<String, String>>> anteAndConsEachValues){
@@ -614,8 +753,13 @@ public class IKARulePopUpViewController implements Initializable{
         }
 
         completeRuleTable.setItems(data);
+        clearPatientInformation();
     }
-
+    private void clearPatientInformation(){
+        patientTable.getItems().clear();
+        patientDetailTable.getItems().clear();
+        opinionTextArea.clear();
+    }
     /**
      * Modal 로 띄울때 전달해줘야할 작성자 이름.
      * @param author
