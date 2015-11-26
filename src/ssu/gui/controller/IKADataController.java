@@ -651,18 +651,34 @@ public class IKADataController extends IKAController implements IKADataRequestIn
         return anteAndConsEachValue;
     }
 
-    public void get(String formalString){
+    /**
+     *
+     * @param formalString
+     * @return
+     */
+    public ArrayList<Patient> getTempPatientList(String formalString){
         Rule rule = getRuleByFormalFormat(formalString);
         HashMap<Long, Patient> patientMap = patientManager.getAllPatients();
+        ArrayList<Patient> tempPatientList = new ArrayList<Patient>();
 
         if(rule != null){
             // key -> patient id, values -> opinion index
-            HashMap<Long, ArrayList<Integer>> opnMap = rule.getByPatientsOpinions();
+            HashMap<Long, ArrayList<Integer>> patientsOpinions = rule.getByPatientsOpinions();
 
-            for(Map.Entry<Long, ArrayList<Integer>> opn : opnMap.entrySet()){
-                Patient pat = patientMap.get(opn.getKey());
+            for(Map.Entry<Long, ArrayList<Integer>> patientOp : patientsOpinions.entrySet()){
+                Patient pat = patientMap.get(patientOp.getKey());
+
+                Patient tempPat = new Patient(pat.getName(), pat.getAge(), pat.getGender(), pat.getRegId(), pat.getRegDate());
+                tempPat.setAllTestResults(pat.getAllTestResults());
+                for (Integer index : patientOp.getValue()) {
+                    tempPat.addOpinion(pat.getAllOpinions().get(index));
+                }
+
+                tempPatientList.add(tempPat);
             }
         }
+
+        return tempPatientList;
     }
 
 }
