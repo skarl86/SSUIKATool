@@ -681,4 +681,20 @@ public class IKADataController extends IKAController implements IKADataRequestIn
         return tempPatientList;
     }
 
+    /**
+     *
+     * @param antecedents
+     * @param consequents
+     * @return
+     */
+    public boolean checkExistedRuleByConditions(ArrayList<String> antecedents, ArrayList<String> consequents) {
+        Rule rule = ruleManager.getExistedRuleByCondition(antecedents, consequents);
+
+        if (rule != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

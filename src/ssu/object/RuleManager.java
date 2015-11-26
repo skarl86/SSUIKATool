@@ -207,37 +207,6 @@ public class RuleManager {
     }
 
     /**
-     * Antecedent, Consequent로 이미 존재하는 Rule인지 검색.
-     * @param antecedents
-     * @param consequents
-     * @return
-     */
-    public boolean checkExistedRuleByCondition(ArrayList<String> antecedents, ArrayList<String> consequents) {
-
-        // 파라미터의 조건들을 Formal 형식의 Rule string을 생성.
-        String formalFormat = "";
-        for (int i=0; i<antecedents.size(); i++) {
-            formalFormat += antecedents.get(i);
-            if (i < antecedents.size() - 1) formalFormat += ",";
-        }
-        formalFormat += "->";
-        for (int i=0; i<consequents.size(); i++) {
-            formalFormat += consequents.get(i);
-            if (i < consequents.size() - 1) formalFormat += ",";
-        }
-
-        for (Map.Entry<Long, Rule> entry : getAllRules().entrySet()) {
-            Rule rule = entry.getValue();
-
-            if (rule.printFormalFormat().equals(formalFormat)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      *
      * @param atom
      * @return
