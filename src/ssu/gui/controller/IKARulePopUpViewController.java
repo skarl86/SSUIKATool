@@ -22,6 +22,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+
+import org.controlsfx.control.textfield.TextFields;
 import ssu.object.rule.Atom;
 import ssu.object.rule.Rule;
 import ssu.util.AppTestLog;
@@ -58,8 +60,10 @@ public class IKARulePopUpViewController implements Initializable{
 
     @FXML TableColumn<CompleteRuleRow, String> completeRuleColumn;
 
-    @FXML ComboBox<String> antecedentComboBox;
-    @FXML ComboBox<String> consequentComboBox;
+//    @FXML ComboBox<String> antecedentComboBox;
+//    @FXML ComboBox<String> consequentComboBox;
+    @FXML TextField antecedentTextField;
+    @FXML TextField consequentTextField;
 
     @FXML GridPane mainView;
 
@@ -293,56 +297,89 @@ public class IKARulePopUpViewController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         AppTestLog.printLog("[UI] Initialize PopViewController");
-        initAutoCompleteComboBox(antecedentComboBox, antecedentTableView);
-        initAutoCompleteComboBox(consequentComboBox, consequentTableView);
-    }
+//        initAutoCompleteComboBox(antecedentComboBox, antecedentTableView);
+//        initAutoCompleteComboBox(consequentComboBox, consequentTableView);
 
-    private void initAutoCompleteComboBox(final ComboBox<String> comboBox, final TableView<AtomRow> tableView){
-        ObservableList<String> data = FXCollections.observableArrayList(IKADataController.getInstance().getAllAtomList());
-        comboBox.setItems(new SortedList<String>(data, Collator.getInstance()));
+        TextFields.bindAutoCompletion(
+                antecedentTextField,
+                IKADataController.getInstance().getAllAtomsExceptValueList()
+        );
+        TextFields.bindAutoCompletion(
+                consequentTextField,
+                IKADataController.getInstance().getAllAtomsExceptValueList()
+        );
 
-        comboBox.getEditor().textProperty().addListener(new ChangeListener<String>() {
-            // ComboBox에 텍스트를 입력할 때 마다 불리는 이벤트.
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if(!(comboBox.getEditor().getText().length() == 0)) {
-                    comboBox.show();
-                    newInputValue = newValue;
-                    ObservableList<String> data = FXCollections.observableArrayList(IKADataController.getInstance().getAtomCompletionList(newValue));
-                    comboBox.setItems(data);
-                }
-            }
-        });
-
-        comboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-            // ComboBox에 리스트 중에서 선택 했을 때.
-            @Override
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                if(newValue != null){
-                    AppTestLog.printLog("Selection");
-                    tableView.getItems().add(new AtomRow(newInputValue, ""));
-                    refreshAutoCompleteAfterSelectionOrEnter(comboBox);
-                    comboBox.getEditor().clear();
-                    comboBox.getSelectionModel().clearSelection();
-                }
-            }
-        });
-
-        comboBox.addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
-            // ComboBox에 텍스트를 입력한 후 "Enter"를 선택했을때,
+        antecedentTextField.addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 AppTestLog.printLog("Enter");
-                if(event.getCode() == KeyCode.ENTER){
-                    tableView.getItems().add(new AtomRow(newInputValue, ""));
-                    refreshAutoCompleteAfterSelectionOrEnter(comboBox);
-                    comboBox.getEditor().clear();
-                    comboBox.getSelectionModel().clearSelection();
+                if(event.getCode() == KeyCode.ENTER) {
+                    AppTestLog.printLog(antecedentTextField.getText());
+                    antecedentTableView.getItems().add(new AtomRow(antecedentTextField.getText(), ""));
+                    refreshCompletionRule();
+                }
+            }
+        });
 
+        consequentTextField.addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                AppTestLog.printLog("Enter");
+                if(event.getCode() == KeyCode.ENTER) {
+                    AppTestLog.printLog(consequentTextField.getText());
+                    consequentTableView.getItems().add(new AtomRow(consequentTextField.getText(), ""));
+                    refreshCompletionRule();
                 }
             }
         });
     }
+
+//    private void initAutoCompleteComboBox(final ComboBox<String> comboBox, final TableView<AtomRow> tableView){
+//        ObservableList<String> data = FXCollections.observableArrayList(IKADataController.getInstance().getAllAtomList());
+//        comboBox.setItems(new SortedList<String>(data, Collator.getInstance()));
+//
+//        comboBox.getEditor().textProperty().addListener(new ChangeListener<String>() {
+//            // ComboBox에 텍스트를 입력할 때 마다 불리는 이벤트.
+//            @Override
+//            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+//                if(!(comboBox.getEditor().getText().length() == 0)) {
+//                    comboBox.show();
+//                    newInputValue = newValue;
+//                    ObservableList<String> data = FXCollections.observableArrayList(IKADataController.getInstance().getAtomCompletionList(newValue));
+//                    comboBox.setItems(data);
+//                }
+//            }
+//        });
+//
+//        comboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+//            // ComboBox에 리스트 중에서 선택 했을 때.
+//            @Override
+//            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+//                if(newValue != null){
+//                    AppTestLog.printLog("Selection");
+//                    tableView.getItems().add(new AtomRow(newInputValue, ""));
+//                    refreshAutoCompleteAfterSelectionOrEnter(comboBox);
+//                    comboBox.getEditor().clear();
+//                    comboBox.getSelectionModel().clearSelection();
+//                }
+//            }
+//        });
+//
+//        comboBox.addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+//            // ComboBox에 텍스트를 입력한 후 "Enter"를 선택했을때,
+//            @Override
+//            public void handle(KeyEvent event) {
+//                AppTestLog.printLog("Enter");
+//                if(event.getCode() == KeyCode.ENTER){
+//                    tableView.getItems().add(new AtomRow(newInputValue, ""));
+//                    refreshAutoCompleteAfterSelectionOrEnter(comboBox);
+//                    comboBox.getEditor().clear();
+//                    comboBox.getSelectionModel().clearSelection();
+//
+//                }
+//            }
+//        });
+//    }
 
     private void initTable(){
         AppTestLog.printLog("Initailize Table");
