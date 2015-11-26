@@ -157,9 +157,9 @@ public class IKARulePopUpViewController implements Initializable{
         @Override
         public TableCell<AtomRow, String> call(TableColumn<AtomRow, String> param) {
             return new TableCell<AtomRow, String>(){
-                Button deleteButton = new Button();
+                Button deleteButton = new Button("X");
 
-                Image imageDecline = new Image(getClass().getResourceAsStream("../resources/deleteCellImg.png"));
+//                Image imageDecline = new Image(getClass().getResourceAsStream("../resources/deleteCellImg.png"));
 
                 @Override
                 public void updateItem(String item, boolean empty) {
@@ -171,10 +171,10 @@ public class IKARulePopUpViewController implements Initializable{
                         HBox hbox = new HBox();
                         hbox.getChildren().add(new Label(item));
                         hbox.setAlignment(Pos.CENTER);
-                        deleteButton.setGraphic(new ImageView(imageDecline));
-                        deleteButton.setBackground(Background.EMPTY);
+//                        deleteButton.setGraphic(new ImageView(imageDecline));
+//                        deleteButton.setBackground(Background.EMPTY);
                         box.getChildren().addAll(hbox, deleteButton);
-                        box.setSpacing(2);
+                        box.setSpacing(12);
 
                         //SETTING ALL THE GRAPHICS COMPONENT FOR CELL
                         setGraphic(box);
