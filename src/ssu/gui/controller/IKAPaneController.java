@@ -255,18 +255,34 @@ public class IKAPaneController implements IKAPaneInterface {
     public void createPatientOpinionReferenceList(TableView ruleReferenceTableView, TableColumn ruleIdColumn,
                                                   TableColumn ruleColumn, TableColumn authorColumn,
                                                   TableColumn madeDateColumn, TableColumn modifiedDateColumn) {
-        if(_ruleReferenceTableView == null)
+        if(_ruleReferenceTableView == null) {
             _ruleReferenceTableView = ruleReferenceTableView;
-        if(_ruleIdColumn == null)
+        }
+        if(_ruleIdColumn == null) {
             _ruleIdColumn = ruleIdColumn;
-        if(_ruleColumn == null)
+//            _ruleIdColumn.prefWidthProperty()
+//                    .bind(_ruleReferenceTableView.widthProperty().divide(20)); // w * 1/10
+        }
+        if(_ruleColumn == null) {
             _ruleColumn = ruleColumn;
-        if(_authorColumn == null)
+//            _ruleColumn.prefWidthProperty()
+//                    .bind(_ruleReferenceTableView.widthProperty().divide(2.5)); // w * 4/10
+        }
+        if(_authorColumn == null) {
             _authorColumn = authorColumn;
-        if(_madeDateColumn == null)
+//            _authorColumn.prefWidthProperty()
+//                    .bind(_ruleReferenceTableView.widthProperty().divide(5)); // w * 2/10
+        }
+        if(_madeDateColumn == null) {
             _madeDateColumn = madeDateColumn;
-        if(_modifiedDateColumn == null)
+//            _madeDateColumn.prefWidthProperty()
+//                    .bind(_ruleReferenceTableView.widthProperty().divide(3)); // w * 3/10
+        }
+        if(_modifiedDateColumn == null) {
             _modifiedDateColumn = modifiedDateColumn;
+//            _modifiedDateColumn.prefWidthProperty()
+//                    .bind(_ruleReferenceTableView.widthProperty().divide(3)); // w * 3/10
+        }
     }
 
     @Override
