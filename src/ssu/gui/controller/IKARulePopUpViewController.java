@@ -19,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -110,6 +111,41 @@ public class IKARulePopUpViewController implements Initializable{
         public String getCompleteRule() { return completeRule.get(); }
     }
 
+    class PreviousRuleCallFactor implements Callback<TableColumn<CompleteRuleRow, String>, TableCell<CompleteRuleRow, String>>{
+
+        @Override
+        public TableCell<CompleteRuleRow, String> call(TableColumn<CompleteRuleRow, String> param) {
+            TableCell<CompleteRuleRow, String> cell = new TableCell<CompleteRuleRow, String>(){
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(empty ? null : item);
+                    setGraphic(null);
+                }
+            };
+
+            cell.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if (event.getClickCount() == 2) {
+                        AppTestLog.printLog("double clicked!");
+                        TableCell c = (TableCell) event.getSource();
+                        AppTestLog.printLog("Cell text: " + c.getText());
+
+                        TableView.TableViewSelectionModel<CompleteRuleRow> selectionModel = completeRuleTable.getSelectionModel();
+                        ObservableList selectedCells = selectionModel.getSelectedCells();
+                        TablePosition tablePosition = (TablePosition) selectedCells.get(0);
+                        HashMap<String, ArrayList<HashMap<String, String>>> atomAndValue =
+                                IKADataController.getInstance().getAtomAndValue(c.getText());
+//                    Rule selectedCompleteRule = IKADataController.getInstance().getRuleByFormalFormat(val.toString());
+//                    refreshAtomTableView(selectedCompleteRule);
+                        refreshAtomTableView(atomAndValue);
+                    }
+                }
+            });
+            return cell;
+        }
+    }
     class ValueCallFactor implements Callback<TableColumn<AtomRow, String>, TableCell<AtomRow, String>>{
 
         @Override
@@ -426,6 +462,9 @@ public class IKARulePopUpViewController implements Initializable{
         antecedentValueColumn.setCellFactory(new ValueCallFactor());
         consequentValueColumn.setCellFactory(new ValueCallFactor());
 
+        completeRuleColumn.setCellFactory(new PreviousRuleCallFactor());
+
+
         antecedentTableView.setItems(antecendentData);
         antecedentTableView.setId(ANTECEDENT_TABLE);
         consequentTableView.setItems(consequentData);
@@ -434,17 +473,14 @@ public class IKARulePopUpViewController implements Initializable{
         completeRuleTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
             if( newSelection != null){
                 if(completeRuleTable.getSelectionModel().getSelectedItem() != null) {
-                    TableView.TableViewSelectionModel<CompleteRuleRow> selectionModel = completeRuleTable.getSelectionModel();
-                    ObservableList selectedCells = selectionModel.getSelectedCells();
-                    TablePosition tablePosition = (TablePosition) selectedCells.get(0);
-                    Object val = tablePosition.getTableColumn().getCellData(newSelection);
 
-                    AppTestLog.printLog("Selected Complete Rule. : " + val.toString());
-                    HashMap<String, ArrayList<HashMap<String, String>>> atomAndValue =
-                            IKADataController.getInstance().getAtomAndValue(val.toString());
-//                    Rule selectedCompleteRule = IKADataController.getInstance().getRuleByFormalFormat(val.toString());
-//                    refreshAtomTableView(selectedCompleteRule);
-                    refreshAtomTableView(atomAndValue);
+                    Rule selectedRule = IKADataController.getInstance()
+                            .getRuleByFormalFormat(newSelection.getCompleteRule());
+                    if(selectedRule != null){
+                        // key -> patient id, values -> opinion index
+                        HashMap<Long, ArrayList<Integer>> map = selectedRule.getByPatientsOpinions();
+                    }
+
                 }
             }
         });

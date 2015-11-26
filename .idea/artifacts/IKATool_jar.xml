@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="IKATool:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/IKATool_jar</output-path>
+    <root id="archive" name="IKATool.jar">
+      <element id="module-output" name="IKATool" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/jgraphx.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/controlsfx-8.20.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/fxsampler-1.0.8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/openjfx-dialogs-1.0.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/controlsfx-samples-8.20.9.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

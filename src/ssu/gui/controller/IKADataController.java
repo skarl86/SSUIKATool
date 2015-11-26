@@ -651,4 +651,18 @@ public class IKADataController extends IKAController implements IKADataRequestIn
         return anteAndConsEachValue;
     }
 
+    public void get(String formalString){
+        Rule rule = getRuleByFormalFormat(formalString);
+        HashMap<Long, Patient> patientMap = patientManager.getAllPatients();
+
+        if(rule != null){
+            // key -> patient id, values -> opinion index
+            HashMap<Long, ArrayList<Integer>> opnMap = rule.getByPatientsOpinions();
+
+            for(Map.Entry<Long, ArrayList<Integer>> opn : opnMap.entrySet()){
+                Patient pat = patientMap.get(opn.getKey());
+            }
+        }
+    }
+
 }
