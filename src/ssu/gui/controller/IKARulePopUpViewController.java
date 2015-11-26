@@ -67,6 +67,7 @@ public class IKARulePopUpViewController implements Initializable{
     @FXML TableColumn<AtomRow, String> consequentColumn;
     @FXML TableColumn<AtomRow, String> consequentValueColumn;
 
+    @FXML TableColumn<PatientRow, String> idColumn;
     @FXML TableColumn<PatientRow, String> nameColumn;
     @FXML TableColumn<PatientRow, String> genderColumn;
     @FXML TableColumn<PatientRow, String> ageColumn;
@@ -512,6 +513,7 @@ public class IKARulePopUpViewController implements Initializable{
                 new PropertyValueFactory<CompleteRuleRow, String>("completeRule")
         );
 
+        idColumn.setCellValueFactory(new PropertyValueFactory<PatientRow, String>("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<PatientRow, String>("name"));
         genderColumn.setCellValueFactory(new PropertyValueFactory<PatientRow, String>("gender"));
         ageColumn.setCellValueFactory(new PropertyValueFactory<PatientRow, String>("age"));

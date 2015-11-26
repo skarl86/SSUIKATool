@@ -114,7 +114,7 @@
                                  <content>
                                     <TableView fx:id="patientTable" prefHeight="400.0" prefWidth="246.0">
                                        <columns>
-                                          <TableColumn fx:id="nameColumn1" prefWidth="71.0" text="ID" />
+                                          <TableColumn fx:id="idColumn" prefWidth="71.0" text="ID" />
                                           <TableColumn fx:id="nameColumn" prefWidth="77.0" text="이름" />
                                           <TableColumn fx:id="genderColumn" minWidth="8.0" prefWidth="50.0" text="성별" />
                                           <TableColumn fx:id="ageColumn" prefWidth="50.0" text="나이" />
