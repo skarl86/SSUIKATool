@@ -693,7 +693,7 @@ public class IKADataController extends IKAController implements IKADataRequestIn
 
         for (Opinion op : currentPat.getAllOpinions()) {
             for (Long ruleId : op.getRules()) {
-                if (ruleId == rule.getId()) {
+                if ((rule != null) &&(ruleId == rule.getId())) {
                     return true;
                 }
             }
