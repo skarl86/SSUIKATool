@@ -59,14 +59,14 @@ public class Rule implements Savable {
 
             for (Atom antecedent : getAntecedents()) {
                 if (antecedent.getName().contains(Tags.ATOM_VALUE_SPLITER)) {
-                    antecedentStringList.add(antecedent.getName().substring(0, antecedent.getName().indexOf("_")));
+                    antecedentStringList.add(antecedent.getName().substring(0, antecedent.getName().indexOf(Tags.ATOM_VALUE_SPLITER)));
                 }
 
                 antecedentStringList.add(antecedent.getName());
             }
             for (Atom consequent : getConsequents()) {
                 if (consequent.getName().contains(Tags.ATOM_VALUE_SPLITER)) {
-                    consequentStringList.add(consequent.getName().substring(0, consequent.getName().indexOf("_")));
+                    consequentStringList.add(consequent.getName().substring(0, consequent.getName().indexOf(Tags.ATOM_VALUE_SPLITER)));
                 }
 
                 consequentStringList.add(consequent.getName());
@@ -101,10 +101,6 @@ public class Rule implements Savable {
         return  ruleString;
     }
 
-    /**
-     * Exp: Rule의 저장 format으로 출력.
-     * @return
-     */
     @Override
     public String printSavingFormat() {
         String line = getId() + Tags.RULE_SPLITER;
@@ -157,30 +153,65 @@ public class Rule implements Savable {
         return line;
     }
 
+    /**
+     * 파라미터로 받은 atom을 antecedent 리스트에 추가.
+     * @param atom
+     * @return
+     */
     public boolean addAntecedent(Atom atom) {
         return this.antecedents.add(atom);
     }
 
+    /**
+     * 파라미터로 받은 atom을 antecedent 리스트에서 제거.
+     * @param atom
+     * @return
+     */
     public boolean removeAntecedent(Atom atom) {
         return this.antecedents.remove(atom);
     }
 
+    /**
+     * 파라미터로 받은 atom을 consequent 리스트에 추가.
+     * @param atom
+     * @return
+     */
     public boolean addConsequent(Atom atom) {
         return this.consequents.add(atom);
     }
 
+    /**
+     * 파라미터로 받은 atom을 consequent 리스트에서 제거.
+     * @param atom
+     * @return
+     */
     public boolean removeConsequent(Atom atom) {
         return this.consequents.remove(atom);
     }
 
+    /**
+     * 파라미터로 받은 환자 id와 optinon indices를 추가.
+     * @param patientId
+     * @param opinions
+     */
     public void addPatientAllOpinion(Long patientId, ArrayList<Integer> opinions) {
         if (this.byPatientsOpinions.containsKey(patientId)) {
-            this.byPatientsOpinions.get(patientId).addAll(opinions);
+            ArrayList<Integer> dest = this.byPatientsOpinions.get(patientId);
+            for (Integer opId : opinions) {
+                if (!dest.contains(opId)) {
+                    dest.add(opId);
+                }
+            }
         } else {
             this.byPatientsOpinions.put(patientId, opinions);
         }
     }
 
+    /**
+     * 파라미터로 받은 환자의 id와 소견 id를 추가.
+     * @param patientId
+     * @param indexOfOpinion
+     */
     public void addPatientOneOpinion(Long patientId, int indexOfOpinion) {
         if (this.byPatientsOpinions.containsKey(patientId)) {
             ArrayList<Integer> opinions = this.byPatientsOpinions.get(patientId);
@@ -195,6 +226,11 @@ public class Rule implements Savable {
         }
     }
 
+    /**
+     * 파라미터로 받은 환자의 id와 소견 id를 제거.
+     * @param patientId
+     * @param indexOfOpinion
+     */
     public void removePatientOneOpinion(Long patientId, int indexOfOpinion) {
         if (this.byPatientsOpinions.containsKey(patientId)) {
             ArrayList<Integer> opinions = this.byPatientsOpinions.get(patientId);

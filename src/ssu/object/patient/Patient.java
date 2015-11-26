@@ -29,26 +29,42 @@ public class Patient implements Savable {
         this.allOpinions = new ArrayList<Opinion>();
     }
 
+    /**
+     * 파라미터로 받은 테스트 결과를 추가.
+     * @param testResult
+     * @return
+     */
     public boolean addTestResult(TestResult testResult) {
-        return  this.allTestResults.add(testResult);
+        return this.allTestResults.add(testResult);
     }
 
+    /**
+     * 파라미터로 받은 테스트 결과를 제거.
+     * @param testResult
+     * @return
+     */
     public boolean removeTestResult(TestResult testResult) {
         return  this.allTestResults.remove(testResult);
     }
 
+    /**
+     * 파라미터로 받은 소견을 추가.
+     * @param opinion
+     * @return
+     */
     public boolean addOpinion(Opinion opinion) {
         return this.allOpinions.add(opinion);
     }
 
+    /**
+     * 파라미터로 받은 소견을 제거.
+     * @param opinion
+     * @return
+     */
     public boolean removeOpinion(Opinion opinion) {
         return this.allOpinions.remove(opinion);
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public String printSavingFormat() {
         String line = getRegDate() + Tags.PATIENT_SPLITER;
@@ -84,7 +100,6 @@ public class Patient implements Savable {
     /*
      * Getter & Setter
      */
-
     public String getName() {
         return name;
     }
