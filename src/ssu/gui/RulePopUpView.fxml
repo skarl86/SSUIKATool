@@ -29,11 +29,11 @@
                                     <Font size="10.0" />
                                  </font>
                                         </Label>
-                                        <ComboBox fx:id="antecedentComboBox" editable="true" prefHeight="26.0" prefWidth="193.0">
-                                            <HBox.margin>
-                                                <Insets top="20.0" />
-                                            </HBox.margin>
-                                        </ComboBox>
+                              <TextField fx:id="antecedentTextField">
+                                 <HBox.margin>
+                                    <Insets right="15.0" top="20.0" />
+                                 </HBox.margin>
+                              </TextField>
                                         <Region prefHeight="51.0" prefWidth="21.0" />
                                         <Label prefHeight="26.0" prefWidth="48.0" text="결과 :">
                                             <HBox.margin>
@@ -43,11 +43,11 @@
                                     <Font size="9.0" />
                                  </font>
                                         </Label>
-                                        <ComboBox fx:id="consequentComboBox" editable="true" prefHeight="26.0" prefWidth="214.0">
-                                            <HBox.margin>
-                                                <Insets top="20.0" />
-                                            </HBox.margin>
-                                        </ComboBox>
+                              <TextField fx:id="consequentTextField">
+                                 <HBox.margin>
+                                    <Insets right="15.0" top="20.0" />
+                                 </HBox.margin>
+                              </TextField>
                                     </children>
                                 </HBox>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="272.0" prefWidth="839.0">
