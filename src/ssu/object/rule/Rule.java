@@ -125,30 +125,33 @@ public class Rule implements Savable {
                 semiRuleString += Tags.RULE_ATOM_SPLITER;
             }
         }
-        line += semiRuleString + Tags.RULE_SPLITER;
+        line += semiRuleString;
 
-        // 참조하는 환자와 소견 id
-        ArrayList<Long> patients = new ArrayList<Long>(getByPatientsOpinions().keySet());
-        String patientOpStr = "";
-        for (int i=0; i<patients.size(); i++) {
-            Long patient = patients.get(i);
-            patientOpStr += patient + Tags.RULE_PATIENT_OPINION_SPLITER;
+        if (!getByPatientsOpinions().isEmpty()) {
+            line += Tags.RULE_SPLITER;
+            // 참조하는 환자와 소견 id
+            ArrayList<Long> patients = new ArrayList<Long>(getByPatientsOpinions().keySet());
+            String patientOpStr = "";
+            for (int i=0; i<patients.size(); i++) {
+                Long patient = patients.get(i);
+                patientOpStr += patient + Tags.RULE_PATIENT_OPINION_SPLITER;
 
-            ArrayList<Integer> opinions = getByPatientsOpinions().get(patient);
-            for (int j=0; j<opinions.size(); j++) {
-                patientOpStr += opinions.get(j);
+                ArrayList<Integer> opinions = getByPatientsOpinions().get(patient);
+                for (int j=0; j<opinions.size(); j++) {
+                    patientOpStr += opinions.get(j);
 
-                if (j < opinions.size() - 1) {
-                    patientOpStr += Tags.RULE_PATIENT_OPINION_SPLITER;
+                    if (j < opinions.size() - 1) {
+                        patientOpStr += Tags.RULE_PATIENT_OPINION_SPLITER;
+                    }
+                }
+
+                if (i < patients.size() - 1) {
+                    patientOpStr += Tags.RULE_PATIENT_SPLITER;
                 }
             }
 
-            if (i < patients.size() - 1) {
-                patientOpStr += Tags.RULE_PATIENT_SPLITER;
-            }
+            line += patientOpStr;
         }
-
-        line += patientOpStr;
 
         return line;
     }
