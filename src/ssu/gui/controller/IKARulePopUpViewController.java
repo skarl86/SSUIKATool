@@ -49,6 +49,7 @@ public class IKARulePopUpViewController implements Initializable{
     private final static String VALUE_COMBOBOX_ID = "valueList";
     private final static String ANTECEDENT_TABLE = "antecendentTable";
     private final static String CONSEQUENT_TABLE = "conseqeuntTable";
+    private final static String DELIMITER_CONDITION_AND_VALUE = "_";
 
     private final static int EXCEPTION_NONE = -1;
     private final static int EXCEPTION_EMPTY_RULE = 1;
@@ -99,6 +100,9 @@ public class IKARulePopUpViewController implements Initializable{
     private HashMap<Integer, ComboBox<String>> antecedentValueMap = new HashMap<Integer, ComboBox<String>>();
     private HashMap<Integer, ComboBox<String>> consequentValueMap = new HashMap<Integer, ComboBox<String>>();
 
+    /**
+     * 환자 상세 정보 Table의 Entity 클래스.
+     */
     public class PatientDetailRow{
         private final StringProperty testName;
         private final StringProperty testValue;
@@ -120,6 +124,10 @@ public class IKARulePopUpViewController implements Initializable{
         public String getTextValue(){return this.textValue.get();}
 
     }
+
+    /**
+     * 환자 Table의 Entity 클래스.
+     */
     public class PatientRow{
         private final StringProperty name;
         private final StringProperty gender;
@@ -150,7 +158,10 @@ public class IKARulePopUpViewController implements Initializable{
         public String getAge() { return age.get(); }
     }
 
-    // Atom Row Entity
+
+    /**
+     * Atom Table의 Entity 클래스.
+     */
     public class AtomRow {
         private final StringProperty atom;
         private final StringProperty value;
@@ -168,7 +179,9 @@ public class IKARulePopUpViewController implements Initializable{
         public String getValue() { return value.get(); }
     }
 
-    // Antecedent Row Entity
+    /**
+     * Complete(:=Previous) Rule Table의 Entity 클래스.
+     */
     public class CompleteRuleRow {
         private final StringProperty completeRule;
 
@@ -181,6 +194,9 @@ public class IKARulePopUpViewController implements Initializable{
         public String getCompleteRule() { return completeRule.get(); }
     }
 
+    /**
+     * Complete(:=Previous) Rule Table의 Cell 생성시 Call되는 Callback 객체.
+     */
     class PreviousRuleCallFactor implements Callback<TableColumn<CompleteRuleRow, String>, TableCell<CompleteRuleRow, String>>{
 
         @Override
@@ -216,6 +232,10 @@ public class IKARulePopUpViewController implements Initializable{
             return cell;
         }
     }
+
+    /**
+     * Conditions(Consequent, Antecedent)의 Value Table의 Cell이 생성될 때 불리는 Callback 객체.
+     */
     class ValueCallFactor implements Callback<TableColumn<AtomRow, String>, TableCell<AtomRow, String>>{
 
         @Override
@@ -258,6 +278,9 @@ public class IKARulePopUpViewController implements Initializable{
         }
     }
 
+    /**
+     * Conditions(Consequent, Antecedent) Table의 Cell이 생성될 때 불리는 Callback 객체.
+     */
     class AtomCallFactor implements Callback<TableColumn<AtomRow, String>, TableCell<AtomRow, String> >{
 
         @Override
@@ -302,6 +325,10 @@ public class IKARulePopUpViewController implements Initializable{
         }
     }
 
+    /**
+     * UI상의 OK Button을 눌렀을 때 Event 처리.
+     * @param event
+     */
     @FXML
     protected void handleClickOK(ActionEvent event){
         ArrayList<String> antList = makeAtomList(antecedentTableView);
@@ -339,6 +366,13 @@ public class IKARulePopUpViewController implements Initializable{
         }
     }
 
+    /**
+     * UI 흐름상 Conditions(Antecedent, Consequent) Cell을 생성(또는 갱신)할 때
+     * Value Combobox의 객체를 가져올 때 사용.
+     * @param tableView
+     * @param index
+     * @return
+     */
     private ComboBox<String> getAtomComboBox(TableView tableView, int index){
         ComboBox<String> valueList = null;
 
@@ -362,6 +396,14 @@ public class IKARulePopUpViewController implements Initializable{
 
         return valueList;
     }
+
+    /**
+     * UI 흐름상 Conditions(Antecedent, Consequent) Table과 그에 해당하는 Value를
+     * Delimiter를 합친 String 형태로 반환해야 하기 때문에
+     * 이때 사용하는 메소드.
+     * @param tableView
+     * @return
+     */
     private ArrayList<String> makeAtomList(TableView<AtomRow> tableView){
         ArrayList<String> atomList = new ArrayList<String>();
         for(int i = 0 ; i < tableView.getItems().size(); i++){
@@ -372,13 +414,20 @@ public class IKARulePopUpViewController implements Initializable{
             if(atomValue.length() == 0){
                 atomList.add(item.getAtom());
             }else{
-                atomList.add(item.getAtom()+"_"+atomValue);
+                atomList.add(item.getAtom()+ DELIMITER_CONDITION_AND_VALUE + atomValue);
             }
         }
 
         return atomList;
     }
 
+    /**
+     * UI상 Atom의 Value값이 Combobox의 Text로 되어있기 때문에
+     * Table에 해당하는 Value 값을 가져오기 오기 위한 메소드.
+     * @param tableName
+     * @param index
+     * @return
+     */
     private String getAtomValue(String tableName, int index){
         String value = "";
         ComboBox<String> valueComboBox = null;
@@ -396,6 +445,11 @@ public class IKARulePopUpViewController implements Initializable{
         return value;
     }
 
+    /**
+     * UI상 Cancel 버튼을 눌렀을 때 Event를 처리하는 메소드.
+     * @param event
+     * @throws IOException
+     */
     @FXML
     protected void handleclickCancel(ActionEvent event) throws IOException {
         System.out.println(event);
@@ -490,6 +544,9 @@ public class IKARulePopUpViewController implements Initializable{
 //        });
 //    }
 
+    /**
+     * 처음 모든 Table들을 초기화 하기 위한 메소드.
+     */
     private void initTable(){
         AppTestLog.printLog("Initailize Table");
 
@@ -581,6 +638,13 @@ public class IKARulePopUpViewController implements Initializable{
 
     }
 
+    /**
+     * UI상으로 모든 Conditions 작성이 완료 된 후
+     * Exception에 해당하는 경우를 Check 하기 위한 메소드.
+     * @param antecedentList
+     * @param conseqeuntList
+     * @return
+     */
     private int isOKException(ArrayList<String> antecedentList,
                                   ArrayList<String> conseqeuntList){
         int exceptionType = -1;
@@ -599,6 +663,7 @@ public class IKARulePopUpViewController implements Initializable{
     private boolean isDuplicateRule(ArrayList<String> antecedentList, ArrayList<String> conseqeuntList){
         return IKADataController.getInstance().checkExistedRuleByConditions(patientID, antecedentList, conseqeuntList);
     }
+
     /**
      * UI상으로 중복체크를 막기 전까지 임시로 처리.
      * @param antecedentList
@@ -635,6 +700,11 @@ public class IKARulePopUpViewController implements Initializable{
         return isDuplicate;
     }
 
+    /**
+     * UI상 환자 상세 정보가 Previous Rule을 선택 할 때 마다 갱신되어야 하기 때문에
+     * 갱신을 위한 메소드.
+     * @param testResults
+     */
     private void refreshPatientDetailTableView(ArrayList<TestResult> testResults){
         ObservableList<PatientDetailRow> tempPatientDetailData = FXCollections.observableArrayList();
 
@@ -652,6 +722,12 @@ public class IKARulePopUpViewController implements Initializable{
 
         patientDetailTable.setItems(tempPatientDetailData);
     }
+
+    /**
+     * UI상 환자 정보가 Previous Rule을 선택 할 때 마다 갱신되어야 하기 때문에
+     * 갱신을 위한 메소드.
+     * @param tempPatients
+     */
     private void refreshPatientTableView(ArrayList<Patient> tempPatients){
         ObservableList<PatientRow> tempPatientsData = FXCollections.observableArrayList();
 
@@ -664,6 +740,14 @@ public class IKARulePopUpViewController implements Initializable{
         patientTable.setItems(tempPatientsData);
     }
 
+    /**
+     * UI상 Previous Rule을 선택 했을 때, Conditions과 Values가 변경되어야 하는데
+     * 이 때 Table 갱신을 하기 위한 메소드.
+     * Map은 Antecedent와 Consequent 상수를 키로 갖고
+     * 그에 해당하는 Atom을 키로 Value List를 값으로 하는 Map을 값으로 갖는다.
+     * Atom의 Value는 ComboBox 객체의 Selected Text 값이기 때문에 이를 가져오는 과정이 포함되어 있다.
+     * @param anteAndConsEachValues
+     */
     private void refreshAtomTableView(HashMap<String, ArrayList<HashMap<String, String>>> anteAndConsEachValues){
         ArrayList<HashMap<String, String>> antcAtomAndValue = anteAndConsEachValues.get(IKADataController.ANTECEDENT);
         ArrayList<HashMap<String, String>> consAtomAndValue = anteAndConsEachValues.get(IKADataController.CONSEQUENT);
@@ -709,6 +793,7 @@ public class IKARulePopUpViewController implements Initializable{
         antecedentTableView.setItems(antecendentData);
         consequentTableView.setItems(consequentData);
     }
+    /**
     private void refreshAtomTableView(Rule selectedCompleteRule){
         ObservableList<AtomRow> antecendentData = FXCollections.observableArrayList();
         ObservableList<AtomRow> consequentData = FXCollections.observableArrayList();
@@ -731,7 +816,11 @@ public class IKARulePopUpViewController implements Initializable{
         comboBox.setItems(data);
         refreshCompletionRule();
     }
+    **/
 
+    /**
+     * Complete(:=Previous) Rule Table을 갱신하기 위한 메소드.
+     */
     private void refreshCompletionRule(){
         AppTestLog.printLog("Refresh Comlletion Rule Table");
 
@@ -757,6 +846,11 @@ public class IKARulePopUpViewController implements Initializable{
         completeRuleTable.setItems(data);
         clearPatientInformation();
     }
+
+    /**
+     * UI상 Previous Rule을 선택 했을 때 환자 정보, 환자 상세 정보 그리고 소견이
+     * 갱신되어야 하기 때문에 이전에 들어있던 값들을 다 Clear 처리 해준다.
+     */
     private void clearPatientInformation(){
         patientTable.getItems().clear();
         patientDetailTable.getItems().clear();

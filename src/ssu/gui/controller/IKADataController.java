@@ -595,6 +595,14 @@ public class IKADataController extends IKAController implements IKADataRequestIn
 
         return ruleList;
     }
+
+    /**
+     * Atom에 해당하는 Value값이 있으면 Value를 포함한 String 배열을 넘겨준다.
+     * 없을 경우는 "" 값을 넣은 String 배열을 넘겨준다.
+     * @param atom
+     * @return
+     */
+
     public String[] getAtomAndValue(Atom atom){
         String[] atomAndValue = new String[2];
         if(atom.getName().contains(DELIMITER)) {
@@ -607,6 +615,13 @@ public class IKADataController extends IKAController implements IKADataRequestIn
 
         return atomAndValue;
     }
+
+    /**
+     * Atom에 해당하는 Value값이 있으면 Atom을 Key, Value를 값으로한 Map 객체를 넘겨준다.
+     * 없을 경우는 Atom을 Key, Value를 ""값으로한 Map 객체을 넘겨준다.
+     * @param atom
+     * @return
+     */
     private HashMap<String, String> makeAtomAndValue(Atom atom){
         HashMap<String, String> atomAndValue = new HashMap<String, String>();
 
@@ -619,6 +634,13 @@ public class IKADataController extends IKAController implements IKADataRequestIn
         return atomAndValue;
     }
 
+    /**
+     * Atom Formal 문자열 값을 넘기면 그에 해당하는 Atom과 Value 리스트를 넘겨준다.
+     * Consequent 또는 Antecedent를 키로 하고 값에 대항하는 리스트에 Atom이 Key이고 Value가 값인
+     * ArrayList를 Value로 갖는 Map객체를 넘겨준다.
+     * @param atomFormalString
+     * @return
+     */
     public HashMap<String, ArrayList<HashMap<String, String>>> getAtomAndValue(String atomFormalString){
         HashMap<String, ArrayList<HashMap<String, String>>> anteAndConsEachValue = new HashMap<String, ArrayList<HashMap<String, String>>>();
 
@@ -682,10 +704,11 @@ public class IKADataController extends IKAController implements IKADataRequestIn
     }
 
     /**
-     *
+     * 환자 ID에 해당하는 Condition이 존재하는지를 확인.
+     * @param patientId
      * @param antecedents
      * @param consequents
-     * @return
+     * @return 존재 여부를 Return한다.
      */
     public boolean checkExistedRuleByConditions(Long patientId, ArrayList<String> antecedents, ArrayList<String> consequents) {
         Rule rule = ruleManager.getExistedRuleByCondition(antecedents, consequents);
