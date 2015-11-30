@@ -1,31 +1,27 @@
 package ssu.gui.controller;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 import org.controlsfx.control.textfield.TextFields;
-import ssu.object.PatientManager;
+import ssu.gui.controller.entity.AtomRow;
+import ssu.gui.controller.entity.PatientDetailRow;
+import ssu.gui.controller.entity.PatientRow;
+import ssu.gui.controller.entity.PreviousRuleRow;
+import ssu.gui.controller.factory.AtomCallFactor;
+import ssu.gui.controller.factory.PreviousRuleCallFactor;
+import ssu.gui.controller.factory.ValueCallFactor;
 import ssu.object.patient.Opinion;
 import ssu.object.patient.Patient;
 import ssu.object.rule.Atom;
@@ -36,7 +32,6 @@ import ssu.util.AppTestLog;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.Collator;
 import java.util.*;
 
 /**
@@ -46,7 +41,6 @@ public class IKARulePopUpViewController implements Initializable{
     private Rule _selectedRule;
     private final static int COMBO_TYPE_ANT = 0;
     private final static int COMBO_TYPE_COSEQ = 1;
-    private final static String VALUE_COMBOBOX_ID = "valueList";
     private final static String ANTECEDENT_TABLE = "antecendentTable";
     private final static String CONSEQUENT_TABLE = "conseqeuntTable";
     private final static String DELIMITER_CONDITION_AND_VALUE = "_";
@@ -56,10 +50,12 @@ public class IKARulePopUpViewController implements Initializable{
     private final static int EXCEPTION_DUPLICATE_RULE = 2;
     private final static int EXCEPTION_DUPLICATE_ATOM = 3;
 
+    public final static String VALUE_COMBOBOX_ID = "valueList";
+
 
     @FXML TableView<AtomRow> antecedentTableView;
     @FXML TableView<AtomRow> consequentTableView;
-    @FXML TableView<CompleteRuleRow> completeRuleTable;
+    @FXML TableView<PreviousRuleRow> completeRuleTable;
     @FXML TableView<PatientRow> patientTable;
     @FXML TableView<PatientDetailRow> patientDetailTable;
 
@@ -77,7 +73,7 @@ public class IKARulePopUpViewController implements Initializable{
     @FXML TableColumn<PatientDetailRow, String> testValueColumn;
     @FXML TableColumn<PatientDetailRow, String> textValueColumn;
 
-    @FXML TableColumn<CompleteRuleRow, String> completeRuleColumn;
+    @FXML TableColumn<PreviousRuleRow, String> completeRuleColumn;
 
 //    @FXML ComboBox<String> antecedentComboBox;
 //    @FXML ComboBox<String> consequentComboBox;
@@ -94,235 +90,27 @@ public class IKARulePopUpViewController implements Initializable{
 
     private Long patientID;
     private int indexOfOpinion;
-    private String newInputValue;
+//    private String newInputValue;
     private ArrayList<Patient> patientsList;
 
     private HashMap<Integer, ComboBox<String>> antecedentValueMap = new HashMap<Integer, ComboBox<String>>();
     private HashMap<Integer, ComboBox<String>> consequentValueMap = new HashMap<Integer, ComboBox<String>>();
 
     /**
-     * 환자 상세 정보 Table의 Entity 클래스.
+     *
      */
-    public class PatientDetailRow{
-        private final StringProperty testName;
-        private final StringProperty testValue;
-        private final StringProperty textValue;
-
-        private PatientDetailRow(String testName, String testValue, String textValue){
-            this.testName = new SimpleStringProperty(testName);
-            this.testValue = new SimpleStringProperty(testValue);
-            this.textValue = new SimpleStringProperty(textValue);
-        }
-
-        public void setTestName(String testName){ this.testName.set(testName); }
-        public String getTestName(){return this.testName.get();}
-
-        public void setTestValue(String testValue){ this.testValue.set(testValue); }
-        public String getTestValue(){return this.testValue.get();}
-
-        public void setTextValue(String textValue){ this.textValue.set(textValue); }
-        public String getTextValue(){return this.textValue.get();}
-
-    }
-
-    /**
-     * 환자 Table의 Entity 클래스.
-     */
-    public class PatientRow{
-        private final StringProperty name;
-        private final StringProperty gender;
-        private final StringProperty age;
-        private final StringProperty id;
-
-        public StringProperty nameProperty() { return name; }
-        public StringProperty genderProperty() { return gender; }
-        public StringProperty ageProperty() { return age; }
-        public StringProperty idProperty() { return id; }
-
-        private PatientRow(String name, String gender, String age, String id){
-            this.name = new SimpleStringProperty(name);
-            this.gender = new SimpleStringProperty(gender);
-            this.age = new SimpleStringProperty(age);
-            this.id = new SimpleStringProperty(id);
-        }
-        public void setId(String id){ this.id.set(id); }
-        public String getId(){ return this.id.get(); }
-
-        public void setName(String name){ this.name.set(name); }
-        public String getName() { return name.get(); }
-
-        public void setGender(String gender){ this.gender.set(gender); }
-        public String getGender() { return gender.get(); }
-
-        public void setAge(String age){ this.age.set(age); }
-        public String getAge() { return age.get(); }
-    }
 
 
     /**
-     * Atom Table의 Entity 클래스.
+     * UI상 Cancel 버튼을 눌렀을 때 Event를 처리하는 메소드.
+     * @param event
+     * @throws IOException
      */
-    public class AtomRow {
-        private final StringProperty atom;
-        private final StringProperty value;
-
-        public StringProperty atomProperty(){ return atom; }
-        public StringProperty valueProperty(){ return value; }
-
-        private AtomRow(String atom, String value){
-            this.atom = new SimpleStringProperty(atom);
-            this.value = new SimpleStringProperty(value);
-        }
-        public void setAtom(String atom){ this.atom.set(atom);}
-        public String getAtom() { return atom.get(); }
-        public void setValue(String value){ this.value.set(value);}
-        public String getValue() { return value.get(); }
-    }
-
-    /**
-     * Complete(:=Previous) Rule Table의 Entity 클래스.
-     */
-    public class CompleteRuleRow {
-        private final StringProperty completeRule;
-
-        public StringProperty completeRuleProperty(){ return completeRule; }
-
-        private CompleteRuleRow(String atom){
-            this.completeRule = new SimpleStringProperty(atom);
-        }
-        public void setCompleteRule(String completeRule){ this.completeRule.set(completeRule);}
-        public String getCompleteRule() { return completeRule.get(); }
-    }
-
-    /**
-     * Complete(:=Previous) Rule Table의 Cell 생성시 Call되는 Callback 객체.
-     */
-    class PreviousRuleCallFactor implements Callback<TableColumn<CompleteRuleRow, String>, TableCell<CompleteRuleRow, String>>{
-
-        @Override
-        public TableCell<CompleteRuleRow, String> call(TableColumn<CompleteRuleRow, String> param) {
-            TableCell<CompleteRuleRow, String> cell = new TableCell<CompleteRuleRow, String>(){
-                @Override
-                public void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    setText(empty ? null : item);
-                    setGraphic(null);
-                }
-            };
-
-            cell.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    if (event.getClickCount() == 2) {
-                        AppTestLog.printLog("double clicked!");
-                        TableCell c = (TableCell) event.getSource();
-                        AppTestLog.printLog("Cell text: " + c.getText());
-
-                        TableView.TableViewSelectionModel<CompleteRuleRow> selectionModel = completeRuleTable.getSelectionModel();
-                        ObservableList selectedCells = selectionModel.getSelectedCells();
-                        TablePosition tablePosition = (TablePosition) selectedCells.get(0);
-                        HashMap<String, ArrayList<HashMap<String, String>>> atomAndValue =
-                                IKADataController.getInstance().getAtomAndValue(c.getText());
-//                    Rule selectedCompleteRule = IKADataController.getInstance().getRuleByFormalFormat(val.toString());
-//                    refreshAtomTableView(selectedCompleteRule);
-                        refreshAtomTableView(atomAndValue);
-                    }
-                }
-            });
-            return cell;
-        }
-    }
-
-    /**
-     * Conditions(Consequent, Antecedent)의 Value Table의 Cell이 생성될 때 불리는 Callback 객체.
-     */
-    class ValueCallFactor implements Callback<TableColumn<AtomRow, String>, TableCell<AtomRow, String>>{
-
-        @Override
-        public TableCell<AtomRow, String> call(TableColumn<AtomRow, String> param) {
-            TableCell<AtomRow ,String> cell = new TableCell<AtomRow,String>(){
-                @Override
-                public void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if(item != null){
-                        AppTestLog.printLog("Initialize Value Column");
-                        AppTestLog.printLog(getTableView().getId());
-                        AppTestLog.printLog(String.valueOf(getIndex()));
-                        AppTestLog.printLog(String.format("Value : [%s]", item));
-
-                        HBox box= new HBox();
-                        ComboBox<String> valueList = getAtomComboBox(getTableView(), getIndex());
-
-                        valueList.setId(VALUE_COMBOBOX_ID);
-                        ObservableList<String> data =
-                                FXCollections.observableArrayList(IKADataController.getInstance().getAtomValueList(item));
-                        data.add("");
-                        valueList.setItems(data);
-
-                        // Value가 존재하면 Value Item을 선택.
-                        if(item.length() >= 1){
-                            valueList.getSelectionModel().select(item);
-                        }
-
-                        box.getChildren().add(valueList);
-                        box.setAlignment(Pos.CENTER);
-
-                        setGraphic(box);
-                    }else{
-                        setGraphic(null);
-                    }
-                }
-            };
-
-            return cell;
-        }
-    }
-
-    /**
-     * Conditions(Consequent, Antecedent) Table의 Cell이 생성될 때 불리는 Callback 객체.
-     */
-    class AtomCallFactor implements Callback<TableColumn<AtomRow, String>, TableCell<AtomRow, String> >{
-
-        @Override
-        public TableCell<AtomRow, String> call(TableColumn<AtomRow, String> param) {
-            return new TableCell<AtomRow, String>(){
-                Button deleteButton = new Button("X");
-
-//                Image imageDecline = new Image(getClass().getResourceAsStream("../resources/deleteCellImg.png"));
-
-                @Override
-                public void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if(item!=null){
-                        AppTestLog.printLog("Initialize atom Column");
-                        HBox box= new HBox();
-//                            box.setSpacing(50) ;
-                        HBox hbox = new HBox();
-                        hbox.getChildren().add(new Label(item));
-                        hbox.setAlignment(Pos.CENTER);
-//                        deleteButton.setGraphic(new ImageView(imageDecline));
-//                        deleteButton.setBackground(Background.EMPTY);
-                        box.getChildren().addAll(hbox, deleteButton);
-                        box.setSpacing(12);
-
-                        //SETTING ALL THE GRAPHICS COMPONENT FOR CELL
-                        setGraphic(box);
-
-                        deleteButton.setOnAction(new EventHandler<ActionEvent>() {
-                            @Override
-                            public void handle(ActionEvent event) {
-                                AppTestLog.printLog("DATA DELETE!!!!!!");
-                                getTableView().getItems().remove(getTableRow().getIndex());
-                                refreshCompletionRule();
-                            }
-                        });
-
-                    }else{
-                        setGraphic(null);
-                    }
-                }
-            };
-        }
+    @FXML
+    protected void handleclickCancel(ActionEvent event) throws IOException {
+        System.out.println(event);
+        Stage stage = (Stage) mainView.getScene().getWindow();
+        stage.close();
     }
 
     /**
@@ -373,7 +161,7 @@ public class IKARulePopUpViewController implements Initializable{
      * @param index
      * @return
      */
-    private ComboBox<String> getAtomComboBox(TableView tableView, int index){
+    public ComboBox<String> getAtomComboBox(TableView tableView, int index){
         ComboBox<String> valueList = null;
 
         if(tableView.getId().equals(CONSEQUENT_TABLE)){
@@ -443,18 +231,6 @@ public class IKARulePopUpViewController implements Initializable{
         }
 
         return value;
-    }
-
-    /**
-     * UI상 Cancel 버튼을 눌렀을 때 Event를 처리하는 메소드.
-     * @param event
-     * @throws IOException
-     */
-    @FXML
-    protected void handleclickCancel(ActionEvent event) throws IOException {
-        System.out.println(event);
-        Stage stage = (Stage) mainView.getScene().getWindow();
-        stage.close();
     }
 
     @Override
@@ -567,7 +343,7 @@ public class IKARulePopUpViewController implements Initializable{
         );
 
         completeRuleColumn.setCellValueFactory(
-                new PropertyValueFactory<CompleteRuleRow, String>("completeRule")
+                new PropertyValueFactory<PreviousRuleRow, String>("completeRule")
         );
 
         idColumn.setCellValueFactory(new PropertyValueFactory<PatientRow, String>("id"));
@@ -595,13 +371,13 @@ public class IKARulePopUpViewController implements Initializable{
             }
         }
 
-        antecedentColumn.setCellFactory(new AtomCallFactor());
-        consequentColumn.setCellFactory(new AtomCallFactor());
+        antecedentColumn.setCellFactory(new AtomCallFactor(this));
+        consequentColumn.setCellFactory(new AtomCallFactor(this));
 
-        antecedentValueColumn.setCellFactory(new ValueCallFactor());
-        consequentValueColumn.setCellFactory(new ValueCallFactor());
+        antecedentValueColumn.setCellFactory(new ValueCallFactor(this));
+        consequentValueColumn.setCellFactory(new ValueCallFactor(this));
 
-        completeRuleColumn.setCellFactory(new PreviousRuleCallFactor());
+        completeRuleColumn.setCellFactory(new PreviousRuleCallFactor(this, completeRuleTable));
 
         antecedentTableView.setItems(antecendentData);
         antecedentTableView.setId(ANTECEDENT_TABLE);
@@ -611,9 +387,9 @@ public class IKARulePopUpViewController implements Initializable{
         completeRuleTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
             if( newSelection != null){
                 if(completeRuleTable.getSelectionModel().getSelectedItem() != null) {
-                    if(newSelection.getCompleteRule() != null){
+                    if(newSelection.getPreviousRule() != null){
                         ArrayList<Patient> patients = IKADataController.getInstance()
-                                .getTempPatientList(newSelection.getCompleteRule());
+                                .getTempPatientList(newSelection.getPreviousRule());
                         if(!patients.isEmpty()){
                             patientsList = patients;
                             refreshPatientTableView(patients);
@@ -748,7 +524,7 @@ public class IKARulePopUpViewController implements Initializable{
      * Atom의 Value는 ComboBox 객체의 Selected Text 값이기 때문에 이를 가져오는 과정이 포함되어 있다.
      * @param anteAndConsEachValues
      */
-    private void refreshAtomTableView(HashMap<String, ArrayList<HashMap<String, String>>> anteAndConsEachValues){
+    public void refreshAtomTableView(HashMap<String, ArrayList<HashMap<String, String>>> anteAndConsEachValues){
         ArrayList<HashMap<String, String>> antcAtomAndValue = anteAndConsEachValues.get(IKADataController.ANTECEDENT);
         ArrayList<HashMap<String, String>> consAtomAndValue = anteAndConsEachValues.get(IKADataController.CONSEQUENT);
 
@@ -821,7 +597,7 @@ public class IKARulePopUpViewController implements Initializable{
     /**
      * Complete(:=Previous) Rule Table을 갱신하기 위한 메소드.
      */
-    private void refreshCompletionRule(){
+    public void refreshCompletionRule(){
         AppTestLog.printLog("Refresh Comlletion Rule Table");
 
         ArrayList<String> antecedentList = new ArrayList<String>();
@@ -837,10 +613,10 @@ public class IKARulePopUpViewController implements Initializable{
         ArrayList<String> newCompleteRuleList = IKADataController.getInstance()
                 .getRuleCompletionList(antecedentList, consequentList);
 
-        ObservableList<CompleteRuleRow> data = FXCollections.observableArrayList();
+        ObservableList<PreviousRuleRow> data = FXCollections.observableArrayList();
 
         for(String rule : newCompleteRuleList){
-            data.add(new CompleteRuleRow(rule));
+            data.add(new PreviousRuleRow(rule));
         }
 
         completeRuleTable.setItems(data);
