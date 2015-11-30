@@ -15,9 +15,9 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<VBox minHeight="712.0" minWidth="987.0" prefHeight="803.0" prefWidth="1384.0" snapToPixel="false" stylesheets="@resources/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ssu.gui.IKATool">
+<VBox minHeight="712.0" minWidth="987.0" prefHeight="803.0" prefWidth="1195.0" snapToPixel="false" stylesheets="@resources/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ssu.gui.IKATool">
    <children>
-      <MenuBar style="-fx-background-color: FFFFFF;" stylesheets="@resources/main.css">
+      <MenuBar prefHeight="25.0" prefWidth="1109.0" style="-fx-background-color: FFFFFF;" stylesheets="@resources/main.css">
          <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
@@ -43,9 +43,9 @@
             </Menu>
          </menus>
       </MenuBar>
-      <HBox alignment="CENTER" minWidth="-Infinity" prefHeight="774.0" prefWidth="1328.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
+      <HBox alignment="CENTER" minWidth="-Infinity" prefHeight="778.0" prefWidth="1067.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
          <children>
-            <SplitPane fx:id="leftSplitPane" disable="true" dividerPositions="0.35" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <SplitPane fx:id="leftSplitPane" disable="true" dividerPositions="0.35" prefHeight="778.0" prefWidth="481.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <items>
                   <AnchorPane SplitPane.resizableWithParent="false">
                      <children>
@@ -115,8 +115,8 @@
                                     <TreeTableView prefHeight="200.0" prefWidth="200.0">
                                       <columns>
                                         <TreeTableColumn prefWidth="75.0" text="항목" />
-                                        <TreeTableColumn prefWidth="75.0" text="상세항목" />
-                                          <TreeTableColumn prefWidth="75.0" text="항목" />
+                                        <TreeTableColumn prefWidth="120.0" text="상세항목" />
+                                          <TreeTableColumn prefWidth="93.0" text="값" />
                                       </columns>
                                     </TreeTableView>
                                  </content>
@@ -130,42 +130,46 @@
                   <Insets />
                </HBox.margin>
             </SplitPane>
-            <TitledPane alignment="CENTER" animated="false" collapsible="false" prefHeight="774.0" prefWidth="256.0" styleClass="common" text="환자 소견">
-               <content>
-                  <ListView fx:id="opinionListView" prefHeight="200.0" prefWidth="200.0" />
-               </content>
-            </TitledPane>
-            <TitledPane alignment="CENTER" animated="false" collapsible="false" prefHeight="774.0" prefWidth="630.0" styleClass="common" text="소견관련 Rule List">
-               <content>
-                  <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <TableView fx:id="ruleReferenceTableView" VBox.vgrow="ALWAYS">
-                           <columns>
-                              <TableColumn fx:id="ruleIdColumn" editable="false" prefWidth="37.0" resizable="false" text="ID" />
-                              <TableColumn fx:id="ruleColumn" editable="false" prefWidth="250.0" resizable="false" text="Rule" />
-                              <TableColumn fx:id="authorColumn" editable="false" prefWidth="73.0" resizable="false" text="작성자" />
-                              <TableColumn fx:id="madeDateColumn" editable="false" prefWidth="170.0" resizable="false" text="생성일" />
-                              <TableColumn fx:id="modifiedDateColumn" editable="false" prefWidth="158.0" resizable="false" text="수정일" />
-                           </columns>
-                           <VBox.margin>
-                              <Insets bottom="2.0" />
-                           </VBox.margin>
-                        </TableView>
-                        <HBox>
+            <VBox>
+               <children>
+                  <TitledPane alignment="CENTER" animated="false" collapsible="false" prefHeight="774.0" prefWidth="256.0" styleClass="common" text="환자 소견">
+                     <content>
+                        <ListView fx:id="opinionListView" prefHeight="200.0" prefWidth="200.0" />
+                     </content>
+                  </TitledPane>
+                  <TitledPane alignment="CENTER" animated="false" collapsible="false" prefHeight="774.0" prefWidth="630.0" styleClass="common" text="소견관련 Rule List">
+                     <content>
+                        <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Region HBox.hgrow="ALWAYS" />
-                              <Button fx:id="addButton" mnemonicParsing="false" onAction="#clickAddButton" prefWidth="100.0" styleClass="addButton" text="Add" GridPane.halignment="RIGHT" />
-                              <Region HBox.hgrow="ALWAYS" />
-                              <Button fx:id="editButton" mnemonicParsing="false" onAction="#clickEditButton" prefHeight="25.0" prefWidth="100.0" styleClass="editButton" text="Edit" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                              <Region HBox.hgrow="ALWAYS" />
-                              <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#clickDeleteButton" prefHeight="25.0" prefWidth="100.0" styleClass="deleteButton" text="Delete" GridPane.columnIndex="2" />
-                              <Region HBox.hgrow="ALWAYS" />
+                              <TableView fx:id="ruleReferenceTableView" VBox.vgrow="ALWAYS">
+                                 <columns>
+                                    <TableColumn fx:id="ruleIdColumn" editable="false" prefWidth="37.0" resizable="false" text="ID" />
+                                    <TableColumn fx:id="ruleColumn" editable="false" prefWidth="250.0" resizable="false" text="Rule" />
+                                    <TableColumn fx:id="authorColumn" editable="false" prefWidth="73.0" resizable="false" text="작성자" />
+                                    <TableColumn fx:id="madeDateColumn" editable="false" prefWidth="170.0" resizable="false" text="생성일" />
+                                    <TableColumn fx:id="modifiedDateColumn" editable="false" prefWidth="158.0" resizable="false" text="수정일" />
+                                 </columns>
+                                 <VBox.margin>
+                                    <Insets bottom="2.0" />
+                                 </VBox.margin>
+                              </TableView>
+                              <HBox>
+                                 <children>
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <Button fx:id="addButton" mnemonicParsing="false" onAction="#clickAddButton" prefWidth="100.0" styleClass="addButton" text="Add" GridPane.halignment="RIGHT" />
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <Button fx:id="editButton" mnemonicParsing="false" onAction="#clickEditButton" prefHeight="25.0" prefWidth="100.0" styleClass="editButton" text="Edit" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#clickDeleteButton" prefHeight="25.0" prefWidth="100.0" styleClass="deleteButton" text="Delete" GridPane.columnIndex="2" />
+                                    <Region HBox.hgrow="ALWAYS" />
+                                 </children>
+                              </HBox>
                            </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-               </content>
-            </TitledPane>
+                        </VBox>
+                     </content>
+                  </TitledPane>
+               </children>
+            </VBox>
          </children>
       </HBox>
    </children>
