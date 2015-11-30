@@ -9,19 +9,21 @@ import ssu.object.test.value.string.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by beggar3004 on 15. 11. 8..
  */
 public class PatientManager {
 
-    private ArrayList<Patient> allPatients;
+//    private ArrayList<Patient> allPatients;
+    private HashMap<Long, Patient> allPatients;
 
     // 혹시 추후 멀티스레딩을 위한.
     private volatile static PatientManager uniqueInstance;
 
     private PatientManager() {
-        this.allPatients = new ArrayList<Patient>();
+        this.allPatients = new HashMap<Long, Patient>();
     }
 
     // 인스턴스가 있는지 확인하고 없으면 동기화된 블럭으로 진입.
@@ -190,9 +192,15 @@ public class PatientManager {
     public void savePatients() {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(this.getClass().getResource(Tags.PATIENT_FILE_PATH).getPath()));
-            for (Patient patient : this.allPatients) {
+
+            for (Map.Entry<Long, Patient> entry : this.allPatients.entrySet()) {
+                Patient patient = entry.getValue();
+
                 bw.write(patient.printSavingFormat() + "\n");
             }
+//            for (Patient patient : this.allPatients) {
+//                bw.write(patient.printSavingFormat() + "\n");
+//            }
 
             bw.close();
         } catch (IOException e) {
@@ -205,15 +213,17 @@ public class PatientManager {
      * @param patient
      * @return
      */
-    public boolean addPatient(Patient patient) {
-        return this.allPatients.add(patient);
+    public void addPatient(Patient patient) {
+
+        this.allPatients.put(patient.getRegId(), patient);
+//        return this.allPatients.add(patient);
     }
 
     /*
      * Getter & Setter
      */
 
-    public ArrayList<Patient> getAllPatients() {
+    public HashMap<Long, Patient> getAllPatients() {
         return allPatients;
     }
 }

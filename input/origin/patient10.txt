@@ -1,0 +1,77 @@
+20150327,17905,Unknown,Unknown,0
+T.Protein,6.7,,
+ALB,4.1,,
+BUN,11,,
+Creatinine,1.03,,
+U.A,5.6,,
+Glu(FBS),81,,
+T.Bili.,6.6,,H
+D.Bili,6.3,,H
+AST,187,,H
+ALT,334,,H
+γ-GT,1932,,H
+LDH,246,,
+CK,100,,
+Amylase,45,,
+Lipase,24,,
+Chol,198,,
+TG,109,,
+HDL-C,49,,
+LDL-C,109,,
+Ca,9.1,,
+Phosphorus,3.4,,
+Urine(10),0,**,
+PH,5,,
+Nitrite,0,Negative,
+S.G,1.018,,
+Protein,0,Negative,
+Glucose,0,Negative,
+Ketone,0,Trace,
+Bilirubin,0,1 Positive,
+Occult Blood,0,Negative,
+Urobilinogen,0,Trace,
+Leukocyte,0,Negative,
+Microscopic,0,**,
+R.B.C,0,0-2,
+W.B.C,0,0-2,
+E.P cells,0,0-2,
+Casts,0,Not found,
+Bacteria,0,Not found,
+Crystals,0,Not found,
+Others,0,Not found,
+WBC,7.54,,
+Diff.count,0,**,
+Segment,61.2,,
+Band,0,,
+Lymphocyte,23.9,,
+Monocyte,11.4,,H
+Eosinophil,3.1,,
+Basophil,0.4,,
+RBC,4.05,,
+Hb,13.3,,
+HCT,39.8,,
+MCV,98.3,,H
+MCH,32.8,,
+MCHC,33.4,,
+Platelet,234,,
+ESR,36,,H
+ABO(Cell) type,0,B,
+Rh,0,Positive,
+CRP(QL),0,Positive,
+RF (QL),0,Negative,
+HBs Ag(정밀),0,Negative 0.20,
+HBs Ab(정밀),0,Negative 1.14,
+HCV-Ab,0,Negative 0.03,
+HIV-Ab,0,Negative < 0.10,
+RPR정밀,0,Non-Reactive < 0.2,
+AFP,2.93,,
+CEA,3.8,,
+CA19-9,95.3,,H
+PSA,0.94,,
+T3,99,,
+TSH,0.93,,
+Free T4,1.28,,
+*
+AST, ALT와 r-GTP가 높고 빌리루빈(황달)이 증가 하였습니다. 간 및 담도계 기능이상이 의심됩니다.
+CA19-9가 증가하였습니다. 췌장암, 직장암, 담낭, 담관암, 간암 등에서 증가하고, 또한 담석증, 간질환 등 양성질환에서도 증가하므로, 특히 임상적증상(원인없는 체중감소, 복부통증, 설사, 혈변 등)과 질환 유무를 확인하세요.
+소변 빌리루빈과 우로빌리노겐이 검출되었습니다. 간질환과 관련이 있습니다.

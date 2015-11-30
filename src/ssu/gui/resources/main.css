@@ -7,12 +7,12 @@
     -fx-background-position:left;
     -fx-background-image-padding 5 5 5 5;
 }
-
+/*
 .addButton{
 -fx-padding: 5 5 5 5;
-    -fx-graphic: url("addBtnImg.png");
+    -fx-graphic: url("ssu/gui/resources/addBtnImg.png");
 }
-
+*/
 .editButton{
 -fx-padding: 5 5 5 5;
     -fx-graphic: url("editBtnImg.png");

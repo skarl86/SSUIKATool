@@ -1,0 +1,88 @@
+20150418,8061,Unknown,Unknown,0
+T.Protein,8,,
+ALB,4.6,,
+Globulin,3.4,,
+A/G Ratio,1.4,,
+BUN,16,,
+Creatinine,1.02,,
+B/C Ratio,15.7,,
+U.A,6.1,,
+Glu(FBS),116,,H
+T.Bili.,8.6,,H
+D.Bili,7.6,,H
+AST,459,,H
+ALT,623,,H
+γ-GT,696,,H
+ALP,380,,H
+LDH,321,,H
+Amylase,76,,
+Chol,307,,H
+TG,125,,
+HDL-C,44,,
+LDL-C,193,,H
+Ca,10.3,,H
+Phosphorus,3.7,,
+Na,142,,
+K,4.5,,
+Cl,103,,
+Iron,116,,
+UIBC,281,,
+Urine(10),0,**,
+PH,5,,
+Nitrite,0,Negative,
+S.G,1.02,,
+Protein,0,Trace,
+Glucose,0,Negative,
+Ketone,0,Trace,
+Bilirubin,0,2 Positive,
+Occult Blood,0,Negative,
+Urobilinogen,0,Norm,
+Leukocyte,0,Negative,
+Microscopic,0,**,
+R.B.C,0,0-2,
+W.B.C,0,0-2,
+E.P cells,0,3-5,
+Casts,0,Not found,
+Bacteria,0,Not found,
+Crystals,0,Ca.Oxalate,
+Others,0,Not found,
+WBC,4.51,,
+Diff.count,0,**,
+Segment,54.4,,
+Band,0,,
+Lymphocyte,34.1,,
+Monocyte,7.3,,
+Eosinophil,3.1,,
+Basophil,1.1,,
+RBC,5.2,,
+Hb,14.6,,
+HCT,44.8,,
+MCV,86.2,,
+MCH,28.1,,
+MCHC,32.6,,
+RDW,14.8,,
+Platelet,318,,
+PCT,0.38,,
+MPV,11.9,,
+PDW,15.3,,
+ABO(Cell) type,0,A,
+Rh,0,Positive,
+CRP(QN),0.2,,
+RF (QN),11.3,,
+HBs Ag(정밀),0,Negative 0.19,
+HBs Ab(정밀),0,Positive 15.62,
+HCV-Ab,0,Negative 0.25,
+HIV-Ab,0,Negative < 0.10,
+RPR정밀,0,Non-Reactive < 0.2,
+AFP,8.21,,H
+CEA,1.9,,
+CA19-9,9.3,,
+PSA,0.93,,
+T3,94.8,,
+TSH,1.84,,
+Free T4,1.11,,
+Ferritin,622.6,,H
+*
+AST, ALT, r-GTP, ALP와 LDH가 높고 빌리루빈(황달)이 증가하였습니다. 간 및 담도계 기능이상이 의심됩니다.
+AFP(알파태아성단백)이 증가하였습니다. 주로 간암과 일부 위암 등 악성종양에서 증가하고, 급만성 간염, 간경화증과 관련이 있습니다.
+소변 빌리루빈과 우로빌리노겐이 검출되었습니다. 간질환과 관련이 있습니다.

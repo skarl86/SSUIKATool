@@ -10,8 +10,8 @@ import java.util.ArrayList;
  */
 public class Opinion implements Savable {
 
-    private String opinion;
-    private ArrayList<Long> rules;
+    private String opinion;             // 소견 자체 문자열.
+    private ArrayList<Long> rules;      // 소견과 연관된 Rule의 id 리스트.
 
     public Opinion(String opinion) {
         this.opinion = opinion;

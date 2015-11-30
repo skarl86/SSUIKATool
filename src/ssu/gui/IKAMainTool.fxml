@@ -55,11 +55,7 @@
                                  <children>
                                     <TitledPane alignment="CENTER" animated="false" collapsible="false" styleClass="common" stylesheets="@resources/main.css" text="환자 목록" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <content>
-                                          <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="ALWAYS" layoutX="10.0" layoutY="10.0" vbarPolicy="ALWAYS">
-                                             <content>
-                                                <TreeView fx:id="patientTreeView" />
-                                             </content>
-                                          </ScrollPane>
+                                          <TreeView fx:id="patientTreeView" prefHeight="361.0" prefWidth="176.0" />
                                        </content>
                                     </TitledPane>
                                  </children>
@@ -72,9 +68,7 @@
                                              <children>
                                                 <HBox fillHeight="false">
                                                    <children>
-                                                      <Label layoutX="20.0" layoutY="7.0" text="Date" />
                                                       <Region minHeight="0.0" minWidth="30.0" prefHeight="0.0" prefWidth="87.0" HBox.hgrow="ALWAYS" />
-                                                      <Label layoutX="95.0" layoutY="7.0" text="Patient" />
                                                    </children>
                                                    <VBox.margin>
                                                       <Insets bottom="10.0" />
@@ -179,14 +173,17 @@
                                     <TableView fx:id="ruleReferenceTableView" VBox.vgrow="ALWAYS">
                                        <columns>
                                           <TableColumn fx:id="ruleIdColumn" editable="false" prefWidth="37.0" resizable="false" text="ID" />
-                                          <TableColumn fx:id="ruleColumn" editable="false" prefWidth="250.0" resizable="false" text="Rule" />
-                                          <TableColumn fx:id="authorColumn" editable="false" prefWidth="73.0" resizable="false" text="작성자" />
-                                          <TableColumn fx:id="madeDateColumn" editable="false" prefWidth="170.0" resizable="false" text="생성일" />
-                                          <TableColumn fx:id="modifiedDateColumn" editable="false" prefWidth="158.0" resizable="false" text="수정일" />
+                                          <TableColumn fx:id="ruleColumn" editable="false" prefWidth="210.0" resizable="false" text="Rule" />
+                                          <TableColumn fx:id="authorColumn" editable="false" resizable="false" text="작성자" />
+                                          <TableColumn fx:id="madeDateColumn" editable="false" prefWidth="140.0" resizable="false" text="생성일" />
+                                          <TableColumn fx:id="modifiedDateColumn" editable="false" prefWidth="140.0" resizable="false" text="수정일" />
                                        </columns>
                                        <VBox.margin>
                                           <Insets bottom="2.0" />
                                        </VBox.margin>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
                                     </TableView>
                                     <HBox>
                                        <children>

@@ -1,46 +1,37 @@
 package ssu.gui.controller;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import javafx.util.Callback;
-import ssu.gui.IKATool;
-import ssu.object.AtomManager;
+
+import org.controlsfx.control.textfield.TextFields;
+import ssu.gui.controller.entity.AtomRow;
+import ssu.gui.controller.entity.PatientDetailRow;
+import ssu.gui.controller.entity.PatientRow;
+import ssu.gui.controller.entity.PreviousRuleRow;
+import ssu.gui.controller.factory.AtomCallFactor;
+import ssu.gui.controller.factory.PreviousRuleCallFactor;
+import ssu.gui.controller.factory.ValueCallFactor;
+import ssu.object.patient.Opinion;
+import ssu.object.patient.Patient;
 import ssu.object.rule.Atom;
 import ssu.object.rule.Rule;
+import ssu.object.test.TestItem;
+import ssu.object.test.TestResult;
 import ssu.util.AppTestLog;
-import sun.plugin2.jvm.RemoteJVMLauncher;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URL;
-import java.text.Collator;
 import java.util.*;
 
 /**
@@ -50,23 +41,44 @@ public class IKARulePopUpViewController implements Initializable{
     private Rule _selectedRule;
     private final static int COMBO_TYPE_ANT = 0;
     private final static int COMBO_TYPE_COSEQ = 1;
-    private final static String VALUE_COMBOBOX_ID = "valueList";
     private final static String ANTECEDENT_TABLE = "antecendentTable";
     private final static String CONSEQUENT_TABLE = "conseqeuntTable";
+    private final static String DELIMITER_CONDITION_AND_VALUE = "_";
 
-    @FXML TableView antecedentTableView;
-    @FXML TableView conseqeuntTableView;
-    @FXML TableView completeRuleTable;
+    private final static int EXCEPTION_NONE = -1;
+    private final static int EXCEPTION_EMPTY_RULE = 1;
+    private final static int EXCEPTION_DUPLICATE_RULE = 2;
+    private final static int EXCEPTION_DUPLICATE_ATOM = 3;
 
-    @FXML TableColumn antecedentColumn;
-    @FXML TableColumn antecedentValueColumn;
-    @FXML TableColumn consequentColumn;
-    @FXML TableColumn consequentValueColumn;
+    public final static String VALUE_COMBOBOX_ID = "valueList";
 
-    @FXML TableColumn completeRuleColumn;
 
-    @FXML ComboBox antecedentComboBox;
-    @FXML ComboBox consequentComboBox;
+    @FXML TableView<AtomRow> antecedentTableView;
+    @FXML TableView<AtomRow> consequentTableView;
+    @FXML TableView<PreviousRuleRow> completeRuleTable;
+    @FXML TableView<PatientRow> patientTable;
+    @FXML TableView<PatientDetailRow> patientDetailTable;
+
+    @FXML TableColumn<AtomRow, String> antecedentColumn;
+    @FXML TableColumn<AtomRow, String> antecedentValueColumn;
+    @FXML TableColumn<AtomRow, String> consequentColumn;
+    @FXML TableColumn<AtomRow, String> consequentValueColumn;
+
+    @FXML TableColumn<PatientRow, String> idColumn;
+    @FXML TableColumn<PatientRow, String> nameColumn;
+    @FXML TableColumn<PatientRow, String> genderColumn;
+    @FXML TableColumn<PatientRow, String> ageColumn;
+
+    @FXML TableColumn<PatientDetailRow, String> testNameColumn;
+    @FXML TableColumn<PatientDetailRow, String> testValueColumn;
+    @FXML TableColumn<PatientDetailRow, String> textValueColumn;
+
+    @FXML TableColumn<PreviousRuleRow, String> completeRuleColumn;
+
+//    @FXML ComboBox<String> antecedentComboBox;
+//    @FXML ComboBox<String> consequentComboBox;
+    @FXML TextField antecedentTextField;
+    @FXML TextField consequentTextField;
 
     @FXML GridPane mainView;
 
@@ -74,138 +86,63 @@ public class IKARulePopUpViewController implements Initializable{
 
     @FXML HBox splitTopBox;
 
+    @FXML TextArea opinionTextArea;
 
     private Long patientID;
     private int indexOfOpinion;
-    private String newInputValue;
+//    private String newInputValue;
+    private ArrayList<Patient> patientsList;
 
-    private HashMap<Integer, ComboBox> antecedentValueMap = new HashMap<Integer, ComboBox>();
-    private HashMap<Integer, ComboBox> consequentValueMap = new HashMap<Integer, ComboBox>();
+    private HashMap<Integer, ComboBox<String>> antecedentValueMap = new HashMap<Integer, ComboBox<String>>();
+    private HashMap<Integer, ComboBox<String>> consequentValueMap = new HashMap<Integer, ComboBox<String>>();
 
-    // Atom Row Entity
-    public class AtomRow {
-        private final StringProperty atom;
-        private final StringProperty value;
+    /**
+     *
+     */
 
-        private AtomRow(String atom, String value){
-            this.atom = new SimpleStringProperty(atom);
-            this.value = new SimpleStringProperty(value);
-        }
-        public void setAtom(String atom){ this.atom.set(atom);}
-        public String getAtom() { return atom.get(); }
-        public void setValue(String value){ this.value.set(value);}
-        public String getValue() { return value.get(); }
+
+    /**
+     * UI상 Cancel 버튼을 눌렀을 때 Event를 처리하는 메소드.
+     * @param event
+     * @throws IOException
+     */
+    @FXML
+    protected void handleclickCancel(ActionEvent event) throws IOException {
+        System.out.println(event);
+        Stage stage = (Stage) mainView.getScene().getWindow();
+        stage.close();
     }
 
-    // Antecedent Row Entity
-    public class CompleteRuleRow {
-        private final StringProperty completeRule;
-
-        private CompleteRuleRow(String atom){
-            this.completeRule = new SimpleStringProperty(atom);
-        }
-        public void setCompleteRule(String completeRule){ this.completeRule.set(completeRule);}
-        public String getCompleteRule() { return completeRule.get(); }
-    }
-
-    class ValueCallFactor implements Callback<TableColumn<String, String>, TableCell<String, String>>{
-
-        @Override
-        public TableCell<String, String> call(TableColumn<String, String> param) {
-            TableCell<String ,String> cell = new TableCell<String,String>(){
-                @Override
-                public void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if(item != null){
-                        AppTestLog.printLog("Initialize Value Column");
-                        AppTestLog.printLog(getTableView().getId());
-                        AppTestLog.printLog(String.valueOf(getIndex()));
-                        AppTestLog.printLog("Atom :" + item);
-
-                        HBox box= new HBox();
-                        ComboBox valueList = getAtomComboBox(getTableView(), getIndex());
-
-                        valueList.setId(VALUE_COMBOBOX_ID);
-                        ObservableList data = FXCollections.observableArrayList(IKADataController.getInstance().getAtomValueList(item));
-                        data.add("");
-                        valueList.setItems(data);
-                        box.getChildren().add(valueList);
-                        box.setAlignment(Pos.CENTER);
-
-//                        if(getTableView().getId().equals(CONSEQUENT_TABLE)){
-//                            consequentValueMap.put(getIndex(), valueList);
-//                        }else if(getTableView().getId().equals(ANTECEDENT_TABLE)){
-//                            antecedentValueMap.put(getIndex(), valueList);
-//                        }
-
-                        setGraphic(box);
-                    }else{
-                        setGraphic(null);
-                    }
-                }
-            };
-
-            return cell;
-        }
-    }
-
-    class AtomCallFactor implements Callback<TableColumn<AtomRow, String>, TableCell<AtomRow, String>>{
-
-        @Override
-        public TableCell<AtomRow, String> call(TableColumn<AtomRow, String> param) {
-            TableCell<AtomRow,String> cell = new TableCell<AtomRow,String>(){
-                //                    ImageView imageview = new ImageView();
-                Button deleteButton = new Button();
-
-                Image imageDecline = new Image(getClass().getResourceAsStream("../resources/deleteCellImg.png"));
-
-                @Override
-                public void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if(item!=null){
-                        AppTestLog.printLog("Initialize atom Column");
-                        HBox box= new HBox();
-//                            box.setSpacing(50) ;
-                        HBox hbox = new HBox();
-                        hbox.getChildren().add(new Label(item));
-                        hbox.setAlignment(Pos.CENTER);
-                        deleteButton.setGraphic(new ImageView(imageDecline));
-                        deleteButton.setBackground(Background.EMPTY);
-                        box.getChildren().addAll(hbox, deleteButton);
-                        box.setSpacing(2);
-
-                        //SETTING ALL THE GRAPHICS COMPONENT FOR CELL
-                        setGraphic(box);
-
-                        deleteButton.setOnAction(new EventHandler<ActionEvent>() {
-                            @Override
-                            public void handle(ActionEvent event) {
-                                AppTestLog.printLog("DATA DELETE!!!!!!");
-                                getTableView().getItems().remove(getTableRow().getIndex());
-                                refreshCompletionRule();
-                            }
-                        });
-
-                    }else{
-                        setGraphic(null);
-                    }
-                }
-            };
-            return cell;
-        }
-    }
-
+    /**
+     * UI상의 OK Button을 눌렀을 때 Event 처리.
+     * @param event
+     */
     @FXML
     protected void handleClickOK(ActionEvent event){
         ArrayList<String> antList = makeAtomList(antecedentTableView);
-        ArrayList<String> consqList = makeAtomList(conseqeuntTableView);
+        ArrayList<String> consqList = makeAtomList(consequentTableView);
 
-        if(isOKException(antList, consqList)){
+        String contentText = "";
+
+        int exceptionType = isOKException(antList, consqList);
+
+        if(exceptionType != EXCEPTION_NONE){
+            switch (isOKException(antList, consqList)){
+                case EXCEPTION_DUPLICATE_ATOM:
+                    contentText = "중복 된 Atom이 존재합니다. 확인해주세요.";
+                    break;
+                case EXCEPTION_EMPTY_RULE:
+                    contentText = "조건 또는 결과의 Atom이 비어있습니다. 확인해주세요.";
+                    break;
+                case EXCEPTION_DUPLICATE_RULE:
+                    contentText = "중복 된 Rule이 존재합니다. 확인해주세요.";
+                    break;
+            }
+
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("에러");
-            alert.setHeaderText("잘못 된 Rule.");
-            alert.setContentText("Rule이 잘못되었습니다. 확인해 주세요.");
-
+            alert.setHeaderText("Rule이 잘못되었습니다.");
+            alert.setContentText(contentText);
             alert.showAndWait();
         }else{
             IKADataController.getInstance().ruleEditDialogOK(antList, consqList, authorLabel.getText(), patientID,indexOfOpinion);
@@ -217,13 +154,20 @@ public class IKARulePopUpViewController implements Initializable{
         }
     }
 
-    private ComboBox getAtomComboBox(TableView tableView, int index){
-        ComboBox valueList = null;
+    /**
+     * UI 흐름상 Conditions(Antecedent, Consequent) Cell을 생성(또는 갱신)할 때
+     * Value Combobox의 객체를 가져올 때 사용.
+     * @param tableView
+     * @param index
+     * @return
+     */
+    public ComboBox<String> getAtomComboBox(TableView tableView, int index){
+        ComboBox<String> valueList = null;
 
         if(tableView.getId().equals(CONSEQUENT_TABLE)){
             valueList = consequentValueMap.get(index);
             if(valueList == null) {
-                valueList = new ComboBox();
+                valueList = new ComboBox<String>();
                 consequentValueMap.put(index, valueList);
             }else {
                 valueList = consequentValueMap.get(index);
@@ -231,7 +175,7 @@ public class IKARulePopUpViewController implements Initializable{
         }else if(tableView.getId().equals(ANTECEDENT_TABLE)){
             valueList = antecedentValueMap.get(index);
             if(valueList == null) {
-                valueList = new ComboBox();
+                valueList = new ComboBox<String>();
                 antecedentValueMap.put(index, valueList);
             }else {
                 valueList = antecedentValueMap.get(index);
@@ -240,26 +184,41 @@ public class IKARulePopUpViewController implements Initializable{
 
         return valueList;
     }
+
+    /**
+     * UI 흐름상 Conditions(Antecedent, Consequent) Table과 그에 해당하는 Value를
+     * Delimiter를 합친 String 형태로 반환해야 하기 때문에
+     * 이때 사용하는 메소드.
+     * @param tableView
+     * @return
+     */
     private ArrayList<String> makeAtomList(TableView<AtomRow> tableView){
         ArrayList<String> atomList = new ArrayList<String>();
         for(int i = 0 ; i < tableView.getItems().size(); i++){
-            AtomRow item = (AtomRow) tableView.getItems().get(i);
+            AtomRow item = tableView.getItems().get(i);
 
             String atomValue = getAtomValue(tableView.getId(), i);
 
             if(atomValue.length() == 0){
                 atomList.add(item.getAtom());
             }else{
-                atomList.add(item.getAtom()+"_"+atomValue);
+                atomList.add(item.getAtom()+ DELIMITER_CONDITION_AND_VALUE + atomValue);
             }
         }
 
         return atomList;
     }
 
+    /**
+     * UI상 Atom의 Value값이 Combobox의 Text로 되어있기 때문에
+     * Table에 해당하는 Value 값을 가져오기 오기 위한 메소드.
+     * @param tableName
+     * @param index
+     * @return
+     */
     private String getAtomValue(String tableName, int index){
         String value = "";
-        ComboBox valueComboBox = null;
+        ComboBox<String> valueComboBox = null;
 
         if(tableName.equals(CONSEQUENT_TABLE)){
             valueComboBox = consequentValueMap.get(index);
@@ -274,67 +233,96 @@ public class IKARulePopUpViewController implements Initializable{
         return value;
     }
 
-    @FXML
-    protected void handleclickCancel(ActionEvent event) throws IOException {
-        System.out.println(event);
-        Stage stage = (Stage) mainView.getScene().getWindow();
-        stage.close();
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         AppTestLog.printLog("[UI] Initialize PopViewController");
-        initAutoCompleteComboBox(antecedentComboBox, antecedentTableView);
-        initAutoCompleteComboBox(consequentComboBox, conseqeuntTableView);
-    }
+//        initAutoCompleteComboBox(antecedentComboBox, antecedentTableView);
+//        initAutoCompleteComboBox(consequentComboBox, consequentTableView);
 
-    private void initAutoCompleteComboBox(final ComboBox comboBox, final TableView tableView){
-        ObservableList data = FXCollections.observableArrayList(IKADataController.getInstance().getAllAtomList());
-        comboBox.setItems(new SortedList(data, Collator.getInstance()));
+        TextFields.bindAutoCompletion(
+                antecedentTextField,
+                IKADataController.getInstance().getAllAtomsExceptValueList()
+        );
+        TextFields.bindAutoCompletion(
+                consequentTextField,
+                IKADataController.getInstance().getAllAtomsExceptValueList()
+        );
 
-        comboBox.getEditor().textProperty().addListener(new ChangeListener<String>() {
-            // ComboBox에 텍스트를 입력할 때 마다 불리는 이벤트.
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if(!(comboBox.getEditor().getText().length() == 0)) {
-                    comboBox.show();
-                    newInputValue = newValue;
-                    ObservableList data = FXCollections.observableArrayList(IKADataController.getInstance().getAtomCompletionList(newValue));
-                    comboBox.setItems(data);
-                }
-            }
-        });
-
-        comboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-            // ComboBox에 리스트 중에서 선택 했을 때.
-            @Override
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                if(newValue != null){
-                    AppTestLog.printLog("Selection");
-                    tableView.getItems().add(new AtomRow(newInputValue, ""));
-                    refreshAutoCompleteAfterSelectionOrEnter(comboBox);
-                    comboBox.getEditor().clear();
-                    comboBox.getSelectionModel().clearSelection();
-                }
-            }
-        });
-
-        comboBox.addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
-            // ComboBox에 텍스트를 입력한 후 "Enter"를 선택했을때,
+        antecedentTextField.addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 AppTestLog.printLog("Enter");
-                if(event.getCode() == KeyCode.ENTER){
-                    tableView.getItems().add(new AtomRow(newInputValue, ""));
-                    refreshAutoCompleteAfterSelectionOrEnter(comboBox);
-                    comboBox.getEditor().clear();
-                    comboBox.getSelectionModel().clearSelection();
+                if(event.getCode() == KeyCode.ENTER) {
+                    AppTestLog.printLog(antecedentTextField.getText());
+                    antecedentTableView.getItems().add(new AtomRow(antecedentTextField.getText(), ""));
+                    refreshCompletionRule();
+                }
+            }
+        });
 
+        consequentTextField.addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                AppTestLog.printLog("Enter");
+                if(event.getCode() == KeyCode.ENTER) {
+                    AppTestLog.printLog(consequentTextField.getText());
+                    consequentTableView.getItems().add(new AtomRow(consequentTextField.getText(), ""));
+                    refreshCompletionRule();
                 }
             }
         });
     }
 
+//    private void initAutoCompleteComboBox(final ComboBox<String> comboBox, final TableView<AtomRow> tableView){
+//        ObservableList<String> data = FXCollections.observableArrayList(IKADataController.getInstance().getAllAtomList());
+//        comboBox.setItems(new SortedList<String>(data, Collator.getInstance()));
+//
+//        comboBox.getEditor().textProperty().addListener(new ChangeListener<String>() {
+//            // ComboBox에 텍스트를 입력할 때 마다 불리는 이벤트.
+//            @Override
+//            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+//                if(!(comboBox.getEditor().getText().length() == 0)) {
+//                    comboBox.show();
+//                    newInputValue = newValue;
+//                    ObservableList<String> data = FXCollections.observableArrayList(IKADataController.getInstance().getAtomCompletionList(newValue));
+//                    comboBox.setItems(data);
+//                }
+//            }
+//        });
+//
+//        comboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+//            // ComboBox에 리스트 중에서 선택 했을 때.
+//            @Override
+//            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+//                if(newValue != null){
+//                    AppTestLog.printLog("Selection");
+//                    tableView.getItems().add(new AtomRow(newInputValue, ""));
+//                    refreshAutoCompleteAfterSelectionOrEnter(comboBox);
+//                    comboBox.getEditor().clear();
+//                    comboBox.getSelectionModel().clearSelection();
+//                }
+//            }
+//        });
+//
+//        comboBox.addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+//            // ComboBox에 텍스트를 입력한 후 "Enter"를 선택했을때,
+//            @Override
+//            public void handle(KeyEvent event) {
+//                AppTestLog.printLog("Enter");
+//                if(event.getCode() == KeyCode.ENTER){
+//                    tableView.getItems().add(new AtomRow(newInputValue, ""));
+//                    refreshAutoCompleteAfterSelectionOrEnter(comboBox);
+//                    comboBox.getEditor().clear();
+//                    comboBox.getSelectionModel().clearSelection();
+//
+//                }
+//            }
+//        });
+//    }
+
+    /**
+     * 처음 모든 Table들을 초기화 하기 위한 메소드.
+     */
     private void initTable(){
         AppTestLog.printLog("Initailize Table");
 
@@ -355,59 +343,188 @@ public class IKARulePopUpViewController implements Initializable{
         );
 
         completeRuleColumn.setCellValueFactory(
-                new PropertyValueFactory<CompleteRuleRow, String>("completeRule")
+                new PropertyValueFactory<PreviousRuleRow, String>("completeRule")
         );
+
+        idColumn.setCellValueFactory(new PropertyValueFactory<PatientRow, String>("id"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<PatientRow, String>("name"));
+        genderColumn.setCellValueFactory(new PropertyValueFactory<PatientRow, String>("gender"));
+        ageColumn.setCellValueFactory(new PropertyValueFactory<PatientRow, String>("age"));
+
+        testNameColumn.setCellValueFactory(new PropertyValueFactory<PatientDetailRow, String>("testName"));
+        testValueColumn.setCellValueFactory(new PropertyValueFactory<PatientDetailRow, String>("testValue"));
+        textValueColumn.setCellValueFactory(new PropertyValueFactory<PatientDetailRow, String>("textValue"));
 
         ObservableList<AtomRow> antecendentData = FXCollections.observableArrayList();
         ObservableList<AtomRow> consequentData = FXCollections.observableArrayList();
 
+        String[] atomValue = null;
+
         if(_selectedRule != null){
             for(Atom atm : _selectedRule.getAntecedents()){
-                antecendentData.add(new AtomRow(atm.getName(), atm.getName()));
+                atomValue = IKADataController.getInstance().getAtomAndValue(atm);
+                antecendentData.add(new AtomRow(atomValue[0], atomValue[1]));
             }
             for(Atom atm : _selectedRule.getConsequents()){
-                consequentData.add(new AtomRow(atm.getName(), atm.getName()));
+                atomValue = IKADataController.getInstance().getAtomAndValue(atm);
+                consequentData.add(new AtomRow(atomValue[0], atomValue[1]));
             }
         }
 
-        antecedentColumn.setCellFactory(new AtomCallFactor());
-        consequentColumn.setCellFactory(new AtomCallFactor());
+        antecedentColumn.setCellFactory(new AtomCallFactor(this));
+        consequentColumn.setCellFactory(new AtomCallFactor(this));
 
-        antecedentValueColumn.setCellFactory(new ValueCallFactor());
-        consequentValueColumn.setCellFactory(new ValueCallFactor());
+        antecedentValueColumn.setCellFactory(new ValueCallFactor(this));
+        consequentValueColumn.setCellFactory(new ValueCallFactor(this));
+
+        completeRuleColumn.setCellFactory(new PreviousRuleCallFactor(this, completeRuleTable));
 
         antecedentTableView.setItems(antecendentData);
         antecedentTableView.setId(ANTECEDENT_TABLE);
-        conseqeuntTableView.setItems(consequentData);
-        conseqeuntTableView.setId(CONSEQUENT_TABLE);
+        consequentTableView.setItems(consequentData);
+        consequentTableView.setId(CONSEQUENT_TABLE);
 
-        completeRuleTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
-                //Check whether item is selected and set value of selected item to Label
+        completeRuleTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
+            if( newSelection != null){
                 if(completeRuleTable.getSelectionModel().getSelectedItem() != null) {
-                    TableView.TableViewSelectionModel selectionModel = completeRuleTable.getSelectionModel();
-                    ObservableList selectedCells = selectionModel.getSelectedCells();
-                    TablePosition tablePosition = (TablePosition) selectedCells.get(0);
-                    Object val = tablePosition.getTableColumn().getCellData(newValue);
+                    if(newSelection.getPreviousRule() != null){
+                        ArrayList<Patient> patients = IKADataController.getInstance()
+                                .getTempPatientList(newSelection.getPreviousRule());
+                        if(!patients.isEmpty()){
+                            patientsList = patients;
+                            refreshPatientTableView(patients);
+                        }
+                    }
 
-                    AppTestLog.printLog("Selected Complete Rule. : " + val.toString());
-                    HashMap<String, ArrayList<HashMap<String, String>>> atomAndValue =
-                            IKADataController.getInstance().getAtomAndValue(val.toString());
-//                    Rule selectedCompleteRule = IKADataController.getInstance().getRuleByFormalFormat(val.toString());
-//                    refreshAtomTableView(selectedCompleteRule);
-                    refreshAtomTableView(atomAndValue);
                 }
             }
         });
+
+        patientTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
+            if( newSelection != null) {
+                if (patientTable.getSelectionModel().getSelectedItem() != null) {
+                    Patient selectedPat = patientsList.get(patientTable.getItems().indexOf(newSelection));
+                    ArrayList<Opinion> tempOpin = selectedPat.getAllOpinions();
+                    opinionTextArea.setText(tempOpin.get(0).getOpinion());
+                    refreshPatientDetailTableView(selectedPat.getAllTestResults());
+                }
+            }
+        });
+
+
     }
 
-    private boolean isOKException(ArrayList antecedentList, ArrayList conseqeuntList){ return antecedentList.isEmpty() || conseqeuntList.isEmpty(); }
-    private boolean isDuplicateAtom(ArrayList antecedentList, ArrayList conseqeuntList) {
-        return true;
+    /**
+     * UI상으로 모든 Conditions 작성이 완료 된 후
+     * Exception에 해당하는 경우를 Check 하기 위한 메소드.
+     * @param antecedentList
+     * @param conseqeuntList
+     * @return
+     */
+    private int isOKException(ArrayList<String> antecedentList,
+                                  ArrayList<String> conseqeuntList){
+        int exceptionType = -1;
+
+        if(antecedentList.isEmpty() || conseqeuntList.isEmpty()){
+            exceptionType = EXCEPTION_EMPTY_RULE;
+        }
+        if(isDuplicateAtom(antecedentList, conseqeuntList)){
+            exceptionType = EXCEPTION_DUPLICATE_ATOM;
+        }
+        if(isDuplicateRule(antecedentList, conseqeuntList)){
+            exceptionType = EXCEPTION_DUPLICATE_RULE;
+        }
+        return exceptionType;
+    }
+    private boolean isDuplicateRule(ArrayList<String> antecedentList, ArrayList<String> conseqeuntList){
+        return IKADataController.getInstance().checkExistedRuleByConditions(patientID, antecedentList, conseqeuntList);
     }
 
-    private void refreshAtomTableView(HashMap<String, ArrayList<HashMap<String, String>>> anteAndConsEachValues){
+    /**
+     * UI상으로 중복체크를 막기 전까지 임시로 처리.
+     * @param antecedentList
+     * @param conseqeuntList
+     * @return
+     */
+    private boolean isDuplicateAtom(ArrayList<String> antecedentList, ArrayList<String> conseqeuntList) {
+        Set<String> set = new HashSet<String>();
+        String delimeter = "_";
+        boolean isDuplicate = false;
+
+        for(String atom : antecedentList){
+            if(atom.contains(delimeter)){
+                isDuplicate = !set.add(atom.split(delimeter)[0]);
+            }else{
+                isDuplicate = !set.add(atom);
+            }
+
+            if(isDuplicate) return isDuplicate;
+        }
+
+        set.clear();
+
+        for(String atom : conseqeuntList){
+            if(atom.contains(delimeter)){
+                isDuplicate = !set.add(atom.split(delimeter)[0]);
+            }else{
+                isDuplicate = !set.add(atom);
+            }
+
+            if(isDuplicate) return isDuplicate;
+        }
+
+        return isDuplicate;
+    }
+
+    /**
+     * UI상 환자 상세 정보가 Previous Rule을 선택 할 때 마다 갱신되어야 하기 때문에
+     * 갱신을 위한 메소드.
+     * @param testResults
+     */
+    private void refreshPatientDetailTableView(ArrayList<TestResult> testResults){
+        ObservableList<PatientDetailRow> tempPatientDetailData = FXCollections.observableArrayList();
+
+        for(TestResult rst : testResults){
+            TestItem item = rst.getTestItem();
+            if(1 < rst.getTestValues().size()){
+                tempPatientDetailData.add(
+                        new PatientDetailRow(
+                                item.getName(), rst.getTestValues().get(0).getTestValue(), rst.getTestValues().get(1).getTestValue()));
+            }else{
+                tempPatientDetailData.add(
+                        new PatientDetailRow(item.getName(), rst.getTestValues().get(0).getTestValue(), "-"));
+            }
+        }
+
+        patientDetailTable.setItems(tempPatientDetailData);
+    }
+
+    /**
+     * UI상 환자 정보가 Previous Rule을 선택 할 때 마다 갱신되어야 하기 때문에
+     * 갱신을 위한 메소드.
+     * @param tempPatients
+     */
+    private void refreshPatientTableView(ArrayList<Patient> tempPatients){
+        ObservableList<PatientRow> tempPatientsData = FXCollections.observableArrayList();
+
+        for(Patient pat : tempPatients){
+            tempPatientsData.add(
+                    new PatientRow(
+                            pat.getName(),pat.getGender(),String.valueOf(pat.getAge()), String.valueOf(pat.getRegId())));
+        }
+
+        patientTable.setItems(tempPatientsData);
+    }
+
+    /**
+     * UI상 Previous Rule을 선택 했을 때, Conditions과 Values가 변경되어야 하는데
+     * 이 때 Table 갱신을 하기 위한 메소드.
+     * Map은 Antecedent와 Consequent 상수를 키로 갖고
+     * 그에 해당하는 Atom을 키로 Value List를 값으로 하는 Map을 값으로 갖는다.
+     * Atom의 Value는 ComboBox 객체의 Selected Text 값이기 때문에 이를 가져오는 과정이 포함되어 있다.
+     * @param anteAndConsEachValues
+     */
+    public void refreshAtomTableView(HashMap<String, ArrayList<HashMap<String, String>>> anteAndConsEachValues){
         ArrayList<HashMap<String, String>> antcAtomAndValue = anteAndConsEachValues.get(IKADataController.ANTECEDENT);
         ArrayList<HashMap<String, String>> consAtomAndValue = anteAndConsEachValues.get(IKADataController.CONSEQUENT);
 
@@ -418,10 +535,10 @@ public class IKARulePopUpViewController implements Initializable{
         for(HashMap<String, String> atomAndValue : antcAtomAndValue){
             for(Map.Entry<String, String> atom : atomAndValue.entrySet()){
                 antecendentData.add(new AtomRow(atom.getKey(),""));
-                ComboBox box = antecedentValueMap.get(index);
+                ComboBox<String> box = antecedentValueMap.get(index);
                 if(box ==null){
-                    box = new ComboBox();
-                    ObservableList data = FXCollections.observableArrayList(IKADataController.getInstance().getAtomValueList(atom.getKey()));
+                    box = new ComboBox<String>();
+                    ObservableList<String> data = FXCollections.observableArrayList(IKADataController.getInstance().getAtomValueList(atom.getKey()));
                     data.add("");
                     box.setItems(data);
                     antecedentValueMap.put(index, box);
@@ -435,10 +552,10 @@ public class IKARulePopUpViewController implements Initializable{
         for(HashMap<String, String> atomAndValue : consAtomAndValue){
             for(Map.Entry<String, String> atom : atomAndValue.entrySet()){
                 consequentData.add(new AtomRow(atom.getKey(),""));
-                ComboBox box = consequentValueMap.get(index);
+                ComboBox<String> box = consequentValueMap.get(index);
                 if(box ==null){
-                    box = new ComboBox();
-                    ObservableList data = FXCollections.observableArrayList(IKADataController.getInstance().getAtomValueList(atom.getKey()));
+                    box = new ComboBox<String>();
+                    ObservableList<String> data = FXCollections.observableArrayList(IKADataController.getInstance().getAtomValueList(atom.getKey()));
                     data.add("");
                     box.setItems(data);
                     consequentValueMap.put(index, box);
@@ -450,8 +567,9 @@ public class IKARulePopUpViewController implements Initializable{
         }
 
         antecedentTableView.setItems(antecendentData);
-        conseqeuntTableView.setItems(consequentData);
+        consequentTableView.setItems(consequentData);
     }
+    /**
     private void refreshAtomTableView(Rule selectedCompleteRule){
         ObservableList<AtomRow> antecendentData = FXCollections.observableArrayList();
         ObservableList<AtomRow> consequentData = FXCollections.observableArrayList();
@@ -466,40 +584,54 @@ public class IKARulePopUpViewController implements Initializable{
         }
 
         antecedentTableView.setItems(antecendentData);
-        conseqeuntTableView.setItems(consequentData);
+        consequentTableView.setItems(consequentData);
     }
 
-    private void refreshAutoCompleteAfterSelectionOrEnter(ComboBox comboBox){
-        ObservableList data = FXCollections.observableArrayList(IKADataController.getInstance().getAllAtomList());
+    private void refreshAutoCompleteAfterSelectionOrEnter(ComboBox<String> comboBox){
+        ObservableList<String> data = FXCollections.observableArrayList(IKADataController.getInstance().getAllAtomList());
         comboBox.setItems(data);
         refreshCompletionRule();
     }
+    **/
 
-    private void refreshCompletionRule(){
+    /**
+     * Complete(:=Previous) Rule Table을 갱신하기 위한 메소드.
+     */
+    public void refreshCompletionRule(){
         AppTestLog.printLog("Refresh Comlletion Rule Table");
 
-        ArrayList<String> antecedentList = new ArrayList();
-        ArrayList<String> consequentList = new ArrayList();
+        ArrayList<String> antecedentList = new ArrayList<String>();
+        ArrayList<String> consequentList = new ArrayList<String>();
 
         for(Object row : antecedentTableView.getItems()){
             antecedentList.add(((AtomRow)row).getAtom());
         }
-        for(Object row : conseqeuntTableView.getItems()){
+        for(Object row : consequentTableView.getItems()){
             consequentList.add(((AtomRow)row).getAtom());
         }
 
         ArrayList<String> newCompleteRuleList = IKADataController.getInstance()
                 .getRuleCompletionList(antecedentList, consequentList);
 
-        ObservableList<CompleteRuleRow> data = FXCollections.observableArrayList();
+        ObservableList<PreviousRuleRow> data = FXCollections.observableArrayList();
 
         for(String rule : newCompleteRuleList){
-            data.add(new CompleteRuleRow(rule));
+            data.add(new PreviousRuleRow(rule));
         }
 
         completeRuleTable.setItems(data);
+        clearPatientInformation();
     }
 
+    /**
+     * UI상 Previous Rule을 선택 했을 때 환자 정보, 환자 상세 정보 그리고 소견이
+     * 갱신되어야 하기 때문에 이전에 들어있던 값들을 다 Clear 처리 해준다.
+     */
+    private void clearPatientInformation(){
+        patientTable.getItems().clear();
+        patientDetailTable.getItems().clear();
+        opinionTextArea.clear();
+    }
     /**
      * Modal 로 띄울때 전달해줘야할 작성자 이름.
      * @param author

@@ -33,8 +33,10 @@ public final class Tags {
     public static final String ATOM_VALUE_SPLITER = "_";
 
     public static final String RULE_SPLITER = ",";
-    public static final String RULE_THEN_SPLITER = "-";
+    public static final String RULE_THEN_SPLITER = ":";
     public static final String RULE_ATOM_SPLITER = "!";
+    public static final String RULE_PATIENT_SPLITER = "_";
+    public static final String RULE_PATIENT_OPINION_SPLITER = "-";
 
     public static final String PATIENT_SPLITER = "_";
     public static final String PATIENT_TEST_RESULT_SPLITER = "!";
@@ -97,7 +99,7 @@ public final class Tags {
         if (type.equals("HL")) {                    // High, Low, Normal
             list.add(Tags.TEST_VALUE_TYPE_HIGH);
             list.add(Tags.TEST_VALUE_TYPE_LOW);
-            list.add(Tags.TEST_VALUE_TYPE_NORMAL);
+            list.add(Tags.TEST_VALUE_TYPE_NORMAL_VALUE);
         } else if (type.equals("PN")) {             // Positive, Negative
             list.add(Tags.TEST_VALUE_TYPE_POS);
             list.add(Tags.TEST_VALUE_TYPE_NEG);
@@ -118,7 +120,7 @@ public final class Tags {
         } else {                                    // 없으면
             list.add(Tags.TEST_VALUE_TYPE_HIGH);
             list.add(Tags.TEST_VALUE_TYPE_LOW);
-            list.add(Tags.TEST_VALUE_TYPE_NORMAL);
+            list.add(Tags.TEST_VALUE_TYPE_NORMAL_VALUE);
             list.add(Tags.TEST_VALUE_TYPE_POS);
             list.add(Tags.TEST_VALUE_TYPE_NEG);
         }

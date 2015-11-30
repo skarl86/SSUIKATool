@@ -88,7 +88,7 @@ public class RuleManager {
             String line = br.readLine();
 
             while (line != null) {
-                String[] tokens = line.split(Tags.RULE_SPLITER);
+                String[] tokens = line.split(Tags.RULE_SPLITER, 5);
                 /*
                  * Rule 형식
                  * id,author,madeDate,modifiedDate,AST+ALT-LiverDisease
@@ -121,6 +121,20 @@ public class RuleManager {
                     }
                 } else {
                     newRule.addConsequent(allAtoms.get(semiRuleTokens[1]));
+                }
+
+                if (tokens.length > 5 && tokens[5].contains(Tags.RULE_PATIENT_SPLITER)) {
+                    String[] patientOpTokens = tokens[5].split(Tags.RULE_PATIENT_SPLITER);
+                    for (int i=0; i<patientOpTokens.length; i++) {
+                        String[] patientOpinions = patientOpTokens[i].split(Tags.RULE_PATIENT_OPINION_SPLITER);
+                        Long patientId = Long.parseLong(patientOpinions[0]);
+                        ArrayList<Integer> opinions = new ArrayList<Integer>();
+                        for (int j=1; j<=patientOpinions.length-1; j++) {
+                            opinions.add(Integer.parseInt(patientOpinions[j]));
+                        }
+
+                        newRule.addPatientAllOpinion(patientId, opinions);
+                    }
                 }
 
                 allRules.put(newRule.getId(), newRule);

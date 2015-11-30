@@ -124,6 +124,12 @@ public class AtomManager {
             atom = this.allAtoms.get(value);
         } else {
             // 새로운 Atom을 생성.
+            // 1. Value가 있는 경우.
+            if (value.contains(Tags.ATOM_VALUE_SPLITER)) {
+                atom = new AtomClass(value.substring(0, value.indexOf(Tags.ATOM_VALUE_SPLITER)));
+                addAtom(atom);
+            }
+
             switch (type) {
                 case Tags.ATOM_TYPE_CLASS:
                     atom = new AtomClass(value);

@@ -1,4 +1,5 @@
 Chol,Chol에 관한 검사항목입니다.,HL_PN
+TPA (TPS),TPA (TPS)에 관한 검사항목입니다.,HL
 ABO(Cell) type,ABO(Cell) type에 관한 검사항목입니다.,ABO
 MPG,MPG에 관한 검사항목입니다.,HL_PN
 Ferritin,Ferritin에 관한 검사항목입니다.,HL_PN
@@ -7,6 +8,7 @@ Blast,Blast에 관한 검사항목입니다.,HL_PN
 Globulin,Globulin에 관한 검사항목입니다.,HL_PN
 RBC,RBC에 관한 검사항목입니다.,HL_PN
 MPV,MPV에 관한 검사항목입니다.,HL_PN
+Eosinophil count,Eosinophil count에 관한 검사항목입니다.,HL
 Occult Blood,Occult Blood에 관한 검사항목입니다.,PN
 Hb,Hb에 관한 검사항목입니다.,HL_PN
 FSH,FSH에 관한 검사항목입니다.,HL_PN
@@ -17,10 +19,12 @@ HCV-Ab,HCV-Ab에 관한 검사항목입니다.,PN
 Deoxypyridinolin,Deoxypyridinolin에 관한 검사항목입니다.,HL_PN
 Casts,Casts에 관한 검사항목입니다.,FN
 Diff.count,Diff.count에 관한 검사항목입니다.,HL_PN
+HBs Ab정성,HBs Ab정성에 관한 검사항목입니다.,PN
 Ketone,Ketone에 관한 검사항목입니다.,PN
 CRP(QL),CRP(QL)에 관한 검사항목입니다.,PN
 Anti beta 2-GPI,Anti beta 2-GPI에 관한 검사항목입니다.,HL
 MCHC,MCHC에 관한 검사항목입니다.에 관한 검사항목입니다.,HL_PN
+LDL-C(계산법),LDL-C(계산법)에 관한 검사항목입니다.,ETC
 P.T,P.T에 관한 검사항목입니다.,HL_PN
 DPD,DPD에 관한 검사항목입니다.,HL_PN
 D.Bili,D.Bili에 관한 검사항목입니다.,HL_PN
@@ -37,18 +41,24 @@ Lupus(Screening),Lupus(Screening)에 관한 검사항목입니다.,PN
 Rh,Rh에 관한 검사항목입니다.,RH
 Bacteria,Bacteria에 관한 검사항목입니다.,AM
 BUN,BUN에 관한 검사항목입니다.,HL_PN
+Anti-HAV,Anti-HAV에 관한 검사항목입니다.,PN
 W.B.C,W.B.C에 관한 검사항목입니다.,RA
+T3,T3에 관한 검사항목입니다.,PN_HL
 Creatinine,Creatinine에 관한 검사항목입니다.,HL_PN
 T4,T4에 관한 검사항목입니다.,PN_HL
 20150102,20150102에 관한 검사항목입니다.,ETC
+HBs Ag정성,HBs Ag정성에 관한 검사항목입니다.,PN
 AST,AST에 관한 검사항목입니다.,HL_PN
 R.B.C,R.B.C에 관한 검사항목입니다.,RA
 Monocyte,Monocyte에 관한 검사항목입니다.,HL_PN
 RDW,RDW에 관한 검사항목입니다.,HL
+ESR,ESR에 관한 검사항목입니다.,HL
 Crystals,Crystals에 관한 검사항목입니다.,FN
 CK,CK에 관한 검사항목입니다.,HL_PN
 Phosphorus,Phosphorus에 관한 검사항목입니다.,HL_PN
+CRP(QN),CRP(QN)에 관한 검사항목입니다.,PN_HL
 S.G,S.G에 관한 검사항목입니다.,HL_PN
+ABO(Back) type,ABO(Back) type에 관한 검사항목입니다.,ABO
 TG,TG에 관한 검사항목입니다.,HL_PN
 MCH,MCH에 관한 검사항목입니다.,HL_PN
 ALB,ALB에 관한 검사항목입니다.,HL_PN
@@ -84,9 +94,13 @@ RPR정밀,RPR정밀에 관한 검사항목입니다.,RN
 PSA,PSA에 관한 검사항목입니다.,PN_HL
 ASO(QL),ASO(QL)에 관한 검사항목입니다.,PN
 S-Osmo,S-Osmo에 관한 검사항목입니다.,HL_PN
+H.pylori IgM,H.pylori IgM에 관한 검사항목입니다.,PN
+Giemsa stain,Giemsa stain에 관한 검사항목입니다.,PN_HL
 TSH,TSH에 관한 검사항목입니다.,HL
+H.pylori IgG,H.pylori IgG에 관한 검사항목입니다.,PN
 Myelocyte,Myelocyte에 관한 검사항목입니다.,HL_PN
 CRP(OL),CRP(OL)에 관한 검사항목입니다.,HL_PN
+생검1-3개,생검1-3개에 관한 검사항목입니다.,PN_HL
 T.Bili.,T.Bili.에 관한 검사항목입니다.,HL_PN
 Protein,Protein에 관한 검사항목입니다.,PN
 Metamyelocyte,Metamyelocyte에 관한 검사항목입니다.,HL_PN
@@ -94,11 +108,13 @@ Cardio IgM,Cardio IgM에 관한 검사항목입니다.,PN
 HCT,HCT에 관한 검사항목입니다.,HL_PN
 MTHFR C677T,MTHFR C677T에 관한 검사항목입니다.,MTHFRC677T
 C.R.F,C.R.F에 관한 검사항목입니다.,HL_PN
+HAV Ab IgG,HAV Ab IgG에 관한 검사항목입니다.,PN
 Mg,Mg에 관한 검사항목입니다.,HL_PN
 RF (QL),RF (QL)에 관한 검사항목입니다.,PN
 Factor V mutatio,Factor V mutatio에 관한 검사항목입니다.,PN
 PCT,PCT에 관한 검사항목입니다.,HL_PN
 E.P cells,E.P cells에 관한 검사항목입니다.,HL_PN
+Ig E,Ig E에 관한 검사항목입니다.,PN_HL
 LDL-C,LDL-C에 관한 검사항목입니다.,HL_PN
 Promyelocyte,Promyelocyte에 관한 검사항목입니다.,HL_PN
 Iron,Iron에 관한 검사항목입니다.,HL_PN
@@ -115,6 +131,7 @@ CA125,CA125에 관한 검사항목입니다.,HL_PN
 WBC,WBC에 관한 검사항목입니다.,HL
 A/G Ratio,A/G Ratio에 관한 검사항목입니다.,HL_PN
 HbA1c,HbA1c에 관한 검사항목입니다.,HL_PN
+HAVAbIgM,HAVAbIgM에 관한 검사항목입니다.,PN
 Others,Others에 관한 검사항목입니다.,FN
 PDW,PDW에 관한 검사항목입니다.,HL_PN
 Amylase,Amylase에 관한 검사항목입니다.,HL_PN
@@ -132,5 +149,6 @@ Platelet,Platelet에 관한 검사항목입니다.,HL_PN
 Creatinine(RU),Creatinine(RU)에 관한 검사항목입니다.,HL_PN
 Microscopy,Microscopy에 관한 검사항목입니다.,HL_PN
 PH,PH에 관한 검사항목입니다.,HL_PN
+RF (QN),RF (QN)에 관한 검사항목입니다.,PN_HL
 Anti ds-DNA IgG,Anti ds-DNA IgG에 관한 검사항목입니다.,PN
 Chromosome(PB),Chromosome(PB)에 관한 검사항목입니다.,HL_PN

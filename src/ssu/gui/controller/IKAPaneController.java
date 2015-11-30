@@ -14,10 +14,7 @@ import ssu.object.patient.Patient;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by NCri on 2015. 11. 13..
@@ -148,10 +145,15 @@ public class IKAPaneController implements IKAPaneInterface {
         if(_patientTreeView == null)
             _patientTreeView = patientTreeView;
 
+        TreeMap<String, List<IKADataController.PatientListElement>> tm = new TreeMap<String, List<IKADataController.PatientListElement>>(patientMap);
+        Iterator<String> iterator = tm.keySet().iterator();
+
         TreeItem<String> root2 = new TreeItem<String>("Patient");
-        for( Map.Entry<String, List<IKADataController.PatientListElement>> elem : patientMap.entrySet() ){
-            TreeItem<String> root = new TreeItem(elem.getKey());
-            for(IKADataController.PatientListElement pat : elem.getValue()){
+        String key = "";
+        while(iterator.hasNext()){
+            key = iterator.next();
+            TreeItem<String> root = new TreeItem(key);
+            for(IKADataController.PatientListElement pat : patientMap.get(key)){
                 TreeItem<String> itemChild = new TreeItem(pat.regId + " (" + pat.name + ")");
                 itemChild.setExpanded(true);
                 root.getChildren().add(itemChild);
@@ -255,18 +257,34 @@ public class IKAPaneController implements IKAPaneInterface {
     public void createPatientOpinionReferenceList(TableView ruleReferenceTableView, TableColumn ruleIdColumn,
                                                   TableColumn ruleColumn, TableColumn authorColumn,
                                                   TableColumn madeDateColumn, TableColumn modifiedDateColumn) {
-        if(_ruleReferenceTableView == null)
+        if(_ruleReferenceTableView == null) {
             _ruleReferenceTableView = ruleReferenceTableView;
-        if(_ruleIdColumn == null)
+        }
+        if(_ruleIdColumn == null) {
             _ruleIdColumn = ruleIdColumn;
-        if(_ruleColumn == null)
+//            _ruleIdColumn.prefWidthProperty()
+//                    .bind(_ruleReferenceTableView.widthProperty().divide(20)); // w * 1/10
+        }
+        if(_ruleColumn == null) {
             _ruleColumn = ruleColumn;
-        if(_authorColumn == null)
+//            _ruleColumn.prefWidthProperty()
+//                    .bind(_ruleReferenceTableView.widthProperty().divide(2.5)); // w * 4/10
+        }
+        if(_authorColumn == null) {
             _authorColumn = authorColumn;
-        if(_madeDateColumn == null)
+//            _authorColumn.prefWidthProperty()
+//                    .bind(_ruleReferenceTableView.widthProperty().divide(5)); // w * 2/10
+        }
+        if(_madeDateColumn == null) {
             _madeDateColumn = madeDateColumn;
-        if(_modifiedDateColumn == null)
+//            _madeDateColumn.prefWidthProperty()
+//                    .bind(_ruleReferenceTableView.widthProperty().divide(3)); // w * 3/10
+        }
+        if(_modifiedDateColumn == null) {
             _modifiedDateColumn = modifiedDateColumn;
+//            _modifiedDateColumn.prefWidthProperty()
+//                    .bind(_ruleReferenceTableView.widthProperty().divide(3)); // w * 3/10
+        }
     }
 
     @Override

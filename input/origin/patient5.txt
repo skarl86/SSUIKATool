@@ -1,0 +1,89 @@
+20150109,48332,Unknown,Unknown,0
+T.Protein,5.9,,L
+ALB,2.9,,L
+BUN,5,,L
+Creatinine,0.65,,
+U.A,5.6,,
+Glu(FBS),126,,H
+T.Bili.,6.6,,H
+D.Bili,5.5,,H
+AST,369,,H
+ALT,143,,H
+γ-GT,2229,,H
+ALP,421,,H
+Amylase,35,,
+Chol,271,,
+TG,403,,H
+HDL-C,12,,L
+LDL-C,205,,H
+Ca,8.8,,
+Na,136,,
+K,3.8,,
+Cl,99,,
+Iron,129,,
+UIBC,16,<,L
+TIBC,113,,L
+HbA1c,0,**,
+Hb A1c,5.4,,
+MPG,108,,
+IFCC환산결과,36,,
+Mg,1.71,,
+LDL-C(계산법),0,계산불가,H
+Urine(10),0,**,
+PH,5,,
+Nitrite,0,Negative,
+S.G,1.022,,
+Protein,0,Negative,
+Glucose,0,Negative,
+Ketone,0,Negative,
+Bilirubin,0,1 Positive,
+Occult Blood,0,Negative,
+Urobilinogen,0,1 Positive,
+Leukocyte,0,1 Positive,
+Microscopic,0,**,
+R.B.C,0,0-2,
+W.B.C,0,3-5,
+E.P cells,0,3-5,
+Casts,0,Not found,
+Bacteria,0,Not found,
+Crystals,0,Amp.Urate,
+Others,0,Not found,
+WBC,4.39,,
+Diff.count,0,**,
+Segment,76.1,,
+Band,0,,
+Lymphocyte,20.3,,
+Monocyte,2.7,,
+Eosinophil,0.7,,
+Basophil,0.2,,
+RBC,3.54,,L
+Hb,12.5,,
+HCT,36.6,,
+MCV,103.4,,H
+MCH,35.3,,H
+MCHC,34.2,,
+Platelet,80,,L
+Eosinophil count,30,,L
+Rh,0,Positive,
+ABO(Back) type,0,A,
+HBs Ag정성,0,Negative,
+HBs Ab정성,0,Negative,
+CRP(QL),0,Positive,
+RF (QL),0,Negative,
+HCV-Ab,0,Negative 0.04,
+HIV-Ab,0,Negative < 0.10,
+RPR정밀,0,Non-Reactive < 0.2,
+AFP,3.82,,
+CEA,4.2,,
+CA19-9,2.4,,
+CA125,24.6,,
+β2-MG,2.28,,H
+T3,45.7,,L
+TSH,3.77,,
+Free T4,1.14,,
+Ig E,110.1,,
+*
+AST, ALT, ALP와 r-GTP가 높고 빌리루빈(황달)이 증가하였습니다. 간 및 담도계 기능이상이 의심됩니다.
+알부민이 감소하였습니다. 중증의 간질환, 영양실조, 신증후군, 염증성 질환, 임신, 침상안정, 수액과공급, 복수 등에 의해서 감소할 수 있습니다.
+CEA(암태아항원)는 흡연자이시면 정상범위에 속하며, 비흡연자이시면 증가상태에 해당됩니다. 대장암, 전이성 간암, 폐암 등에서 증가하지만, 노인, 간질환, 염증, 과다한 흡연에서도 증가합니다.
+소변 빌리루빈과 우로빌리노겐이 검출되었습니다. 간질환과 관련이 있습니다.
