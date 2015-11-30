@@ -1,12 +1,13 @@
 package ssu.gui.controller;
 
+import javafx.scene.control.TreeItem;
 import ssu.object.*;
 import ssu.object.patient.Opinion;
 import ssu.object.patient.Patient;
 import ssu.object.rule.Atom;
 import ssu.object.rule.Rule;
-import ssu.object.test.TestItem;
-import ssu.object.test.TestResult;
+import ssu.object.test.*;
+import ssu.object.test.value.TestValue;
 
 import java.util.*;
 
@@ -723,6 +724,64 @@ public class IKADataController extends IKAController implements IKADataRequestIn
         }
 
         return false;
+
+    }
+
+    /**
+     * 환자 Id로 상세 정보를 TreeItem으로 만들어 리턴.
+     * @param patientId
+     * @return
+     */
+    public TreeItem<String> getTestResultTreeByPatientId(Long patientId) {
+
+        HashMap<String, TestComponent> testComponents = this.testItemManager.getAllTestItems();
+
+        TreeItem<String> rootNode = new TreeItem<>(patientId + "");
+        if (this.patientManager.getAllPatients().containsKey(patientId)) {
+            Patient patient = this.patientManager.getAllPatients().get(patientId);
+
+            ArrayList<TestResultComponent> testResultComponents = new ArrayList<>(patient.getAllTestResults().values());
+            for (TestResultComponent testResultComponent : testResultComponents) {
+                TestResultCategory testResultCategory = (TestResultCategory) testResultComponent;
+                if (testResultCategory.getTestResultComponents().size() > 1) {
+                    ArrayList<TestResultComponent> testResults = testResultCategory.getTestResultComponents();
+                    TestResult parent = (TestResult) testResults.get(0);
+                    String result = "";
+                    for (TestValue testValue : parent.getTestValues()) {
+                        result += testValue.getTestValue() + " ";
+                    }
+                    TestCategory parentTestCategory = (TestCategory) testComponents.get(parent.getCode());
+
+                    TreeItem<String> parentNode = new TreeItem<>(((TestItem) parentTestCategory.getTestComponents().get(0)).getName() + " " + result);
+                    for (int i=1; i<testResultCategory.getTestResultComponents().size(); i++) {
+                        TestResult testResult = (TestResult) testResultCategory.getTestResultComponents().get(i);
+                        TestItem testItem = (TestItem) parentTestCategory.getTestComponents().get(i);
+
+                        String value = "";
+                        for (TestValue testValue : testResult.getTestValues()) {
+                            value += testValue.getTestValue() + " ";
+                        }
+
+                        parentNode.getChildren().add(new TreeItem<>(testItem.getName() + " " + value));
+
+                    }
+
+                    rootNode.getChildren().add(parentNode);
+                } else {
+                    String label = "";
+                    TestResult testResult = (TestResult) testResultCategory.getTestResultComponents().get(0);
+                    for (TestValue testValue : testResult.getTestValues()) {
+                        label += testValue.getTestValue() + " ";
+                    }
+                    rootNode.getChildren().add(new TreeItem<>(label));
+                }
+            }
+
+            return rootNode;
+
+        } else {
+            return null;
+        }
 
     }
 
