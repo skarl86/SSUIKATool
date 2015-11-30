@@ -1,5 +1,7 @@
 package ssu.object;
 
+import ssu.object.test.TestCategory;
+import ssu.object.test.TestComponent;
 import ssu.object.test.TestItem;
 
 import java.io.*;
@@ -11,13 +13,14 @@ import java.util.Map;
  */
 public class TestItemManager {
 
-    private HashMap<String, TestItem> allTestItems;
+    private HashMap<String, TestComponent> allTestItems;
+    private final int TEST_ITEM_TOKENS_LENGTH = 5;
 
     // 혹시 추후 멀티스레딩을 위한.
     private volatile static TestItemManager uniqueInstance;
 
     private TestItemManager() {
-        this.allTestItems = new HashMap<String, TestItem>();
+        this.allTestItems = new HashMap<String, TestComponent>();
     }
 
     // 인스턴스가 있는지 확인하고 없으면 동기화된 블럭으로 진입.
@@ -43,26 +46,28 @@ public class TestItemManager {
             String line = br.readLine();
 
             while (line != null) {
-                String[] tokens = line.split(Tags.TEST_ITEM_SPLITER);
+                String[] tokens = line.split(Tags.TEST_ITEM_SPLITER, TEST_ITEM_TOKENS_LENGTH);
                 /*
                  * TestItem 형식
-                 * name,description
+                 * code, subcode, name, description, value-type
                  */
-                String name = tokens[0];
-                String description = tokens[1];
-                String types = tokens[2];
+                String code = tokens[0];
+                String subcode = tokens[1];
+                String name = tokens[2];
+                String description = tokens[3];
+                String types = tokens[4];
 
-                TestItem newTestItem = new TestItem(name, description);
-                if (types.contains(Tags.TEST_ITEM_TYPE_SPLITER)) { // Type이 여러개
-                    String[] typeToken =  types.split(Tags.TEST_ITEM_TYPE_SPLITER);
-                    for (int i=0; i<typeToken.length; i++) {
-                        newTestItem.addType(typeToken[i]);
-                    }
-                } else {    // Type이 하나.
-                    newTestItem.addType(types);
+                if (this.allTestItems.containsKey(code)) { // 이미 Category가 있는 경우.
+                    TestCategory testCategory = (TestCategory) this.allTestItems.get(code);
+                    TestItem newTestItem = createTestItem(subcode, name, description, types);
+                    testCategory.add(newTestItem);
+                } else {
+                    TestCategory newTestCategory = new TestCategory(code);
+                    TestItem newTestItem = createTestItem(subcode, name, description, types);
+                    newTestCategory.add(newTestItem);
+
+                    this.allTestItems.put(code, newTestCategory);
                 }
-
-                allTestItems.put(name, newTestItem);
 
                 line = br.readLine();
             }
@@ -77,19 +82,64 @@ public class TestItemManager {
 
     /**
      *
+     * @param code
+     * @param name
+     * @param description
+     * @param types
+     * @return
+     */
+    public TestItem createTestItem(String code, String name, String description, String types) {
+        TestItem newTestItem = new TestItem(code, name, description);
+
+        if (types.contains(Tags.TEST_ITEM_TYPE_SPLITER)) { // Type이 여러개
+            String[] typeToken =  types.split(Tags.TEST_ITEM_TYPE_SPLITER);
+            for (int i=0; i<typeToken.length; i++) {
+                newTestItem.addType(typeToken[i]);
+            }
+        } else {    // Type이 하나.
+            newTestItem.addType(types);
+        }
+
+        return newTestItem;
+    }
+
+    /**
+     *
      */
     public void saveTestItemList() {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(this.getClass().getResource(Tags.TESTITEM_FILE_PATH).getPath()));
-            for (Map.Entry<String, TestItem> entry : this.allTestItems.entrySet()) {
-                TestItem testItem = entry.getValue();
-                bw.write(testItem.printSavingFormat() + "\n");
+            for (Map.Entry<String, TestComponent> entry : this.allTestItems.entrySet()) {
+                TestComponent testComponent = entry.getValue();
+                bw.write(testComponent.printSavingFormat() + "\n");
             }
 
             bw.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public String printAllTestItems() {
+        String line = "";
+
+        for (Map.Entry<String, TestComponent> entry : this.allTestItems.entrySet()) {
+            TestComponent testComponent = entry.getValue();
+            line += testComponent.printSavingFormat() + "\n";
+        }
+
+        return line;
+    }
+
+    public int countAllTestItems() {
+        int count = 0;
+
+        for (Map.Entry<String, TestComponent> entry : this.allTestItems.entrySet()) {
+            TestComponent testComponent = entry.getValue();
+            count += testComponent.count();
+        }
+
+        return count;
     }
 
     public void addTestItem(TestItem testItem) {
@@ -99,7 +149,7 @@ public class TestItemManager {
     /*
      * Getter & Setter
      */
-    public HashMap<String, TestItem> getAllTestItems() {
+    public HashMap<String, TestComponent> getAllTestItems() {
         return allTestItems;
     }
 }

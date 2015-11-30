@@ -6,8 +6,7 @@ import ssu.object.Tags;
 import ssu.object.TestItemManager;
 import ssu.object.patient.Opinion;
 import ssu.object.patient.Patient;
-import ssu.object.test.TestItem;
-import ssu.object.test.TestResult;
+import ssu.object.test.*;
 import ssu.object.test.value.NumericalValue;
 import ssu.object.test.value.string.*;
 
@@ -35,11 +34,13 @@ public class PatientParser {
     static int PATIENT_INFO_GENDER_INDEX = 3;
     static int PATIENT_INFO_AGE_INDEX = 4;
 
-    static int PATIENT_TESTVALUE_COUNT = 4;
-    static int PATIENT_TESTVALUE_NAME_INDEX = 0;
-    static int PATIENT_TESTVALUE_NUMERICAL_INDEX = 1;
-    static int PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX = 2;
-    static int PATIENT_TESTVALUE_HIGHLOW_INDEX = 3;
+    static int PATIENT_TESTVALUE_COUNT = 6;
+    static int PATIENT_TESTVALUE_CODE_INDEX = 0;
+    static int PATIENT_TESTVALUE_SUBCODE_INDEX = 1;
+    static int PATIENT_TESTVALUE_NAME_INDEX = 2;
+    static int PATIENT_TESTVALUE_NUMERICAL_INDEX = 3;
+    static int PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX = 4;
+    static int PATIENT_TESTVALUE_HIGHLOW_INDEX = 5;
 
 
     public static void main(String[] args) {
@@ -48,11 +49,12 @@ public class PatientParser {
         final File folder = new File("input/origin");
         listFilesForFolder(folder);
 
+
+
         testItemManager.saveTestItemList();
 
         patientManager.savePatients();
 
-        patientManager.loadPatients(testItemManager.getAllTestItems());
     }
 
     public static void listFilesForFolder(final File folder) {
@@ -79,82 +81,66 @@ public class PatientParser {
                     line = br.readLine();
 
                     // 2. 환자 검사결과 부분.
+                    HashMap<String, TestComponent> allTestItems = testItemManager.getAllTestItems();
                     while (!line.equals("*")) {
                         String[] values = line.split(",", PATIENT_TESTVALUE_COUNT);
 
                         // 2-1. 환자 데이터에서 기존의 testitem 중에 없는 것을 추가.
-                        HashMap<String, TestItem> allTestItems = testItemManager.getAllTestItems();
-                        TestItem testItem = allTestItems.get(values[PATIENT_TESTVALUE_NAME_INDEX]);
-                        if (testItem == null) {
-                            // TestItem 객체 생성.
-                            TestItem newTestItem = new TestItem(values[PATIENT_TESTVALUE_NAME_INDEX], values[PATIENT_TESTVALUE_NAME_INDEX] + "에 관한 검사항목입니다.");
-                            // TestItem의 type을 지정함.
-                            if (values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].isEmpty() && values[PATIENT_TESTVALUE_HIGHLOW_INDEX].isEmpty()) { // 문자값이 모두 존재하지 않는 경우.
-                                // 예비처리를 위한 HL, POSNEG를 추가해줌.
-                                newTestItem.addType(Tags.TEST_VALUE_TYPE_POSNEG);
-                                newTestItem.addType(Tags.TEST_VALUE_TYPE_HIGHLOW);
-                            } else if (!values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].isEmpty()) {     // High, Low를 제외한 나머지 문자값이 존재하는 경우.
-                                if (values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].contains(Tags.TEST_VALUE_TYPE_NEG) ||
-                                        values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].contains(Tags.TEST_VALUE_TYPE_POS)) { // Positive, Negative
-                                    newTestItem.addType(Tags.TEST_VALUE_TYPE_POSNEG);
-                                } else if (values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].contains("Norm")) {    // Norm
-                                    newTestItem.addType(Tags.TEST_VALUE_TYPE_NORMAL);
-                                } else if (values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].contains("-")) {       // Range
-                                    newTestItem.addType(Tags.TEST_VALUE_TYPE_RANGE);
-                                } else if (values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].contains(Tags.TEST_VALUE_TYPE_FOUND)
-                                        || values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].contains(Tags.TEST_VALUE_TYPE_NOT_FOUND)) { // Found, Non found
-                                    newTestItem.addType(Tags.TEST_VALUE_TYPE_FOUNDNOTFOUND);
-                                } else if (values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].contains(Tags.TEST_VALUE_TYPE_BLOOD_A) ||
-                                            values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].contains(Tags.TEST_VALUE_TYPE_BLOOD_B) ||
-                                            values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].contains(Tags.TEST_VALUE_TYPE_BLOOD_AB) ||
-                                            values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].contains(Tags.TEST_VALUE_TYPE_BLOOD_O)) {     // Blood type
-                                    newTestItem.addType(Tags.TEST_VALUE_TYPE_BLOOD);
-                                } else if (values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].contains(Tags.TEST_VALUE_TYPE_REACTIVE) ||
-                                            values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].contains(Tags.TEST_VALUE_TYPE_NONREATIVE)) {
-                                    newTestItem.addType(Tags.TEST_VALUE_TYPE_REACTIVE_NONREACTIVE);
-                                } else {        // etc : 추후 타입이 추가될 수 있음.
-                                    newTestItem.addType(Tags.TEST_VALUE_TYPE_ETC);
-                                }
-                            } else if (!values[PATIENT_TESTVALUE_HIGHLOW_INDEX].isEmpty()) {  //  // High, Low 문자값이 존재하는 경우.
-                                newTestItem.addType(Tags.TEST_VALUE_TYPE_HIGHLOW);
-                            }
-                            testItemManager.addTestItem(newTestItem);
-                            testItem = newTestItem;
+                        TestComponent testComponent = allTestItems.get(values[PATIENT_TESTVALUE_CODE_INDEX]);
 
-                            System.out.println(values[PATIENT_TESTVALUE_NAME_INDEX] + "이 추가됨.");
-                        }
-                        // 2-2. 환자 객체에 TestResult 생성후 추가.
-                        TestResult newTestResult = new TestResult(testItem);
-                        // Numerial Value 추가.
-                        newTestResult.addTestValue(new NumericalValue(Double.parseDouble(values[PATIENT_TESTVALUE_NUMERICAL_INDEX])));
-                        // String Value 추가.
-                        if (!values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].isEmpty()) {
-                            if (values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].contains(Tags.TEST_VALUE_TYPE_NEG) ||
-                                    values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].contains(Tags.TEST_VALUE_TYPE_POS)) { // Positive, Negative
-                                newTestResult.addTestValue(new PosNeg(values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX]));
-                            } else if (values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].contains("Norm")) {    // Norm
-                                newTestResult.addTestValue(new Normal(values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX]));
-                            } else if (values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].contains(Tags.TEST_VALUE_TYPE_FOUND)
-                                    || values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].contains(Tags.TEST_VALUE_TYPE_NOT_FOUND)) { // Found, Non found
-                                newTestResult.addTestValue(new Found_NotFound(values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX]));
-                            } else if (values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].contains(Tags.TEST_VALUE_TYPE_BLOOD_A) ||
-                                    values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].contains(Tags.TEST_VALUE_TYPE_BLOOD_B) ||
-                                    values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].contains(Tags.TEST_VALUE_TYPE_BLOOD_AB) ||
-                                    values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].contains(Tags.TEST_VALUE_TYPE_BLOOD_O)) {     // Blood type
-                                newTestResult.addTestValue(new BloodType(values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX]));
-                            } else if (values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].contains(Tags.TEST_VALUE_TYPE_REACTIVE) ||
-                                    values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].contains(Tags.TEST_VALUE_TYPE_NONREATIVE)) {
-                                newTestResult.addTestValue(new Reactive_NonReative(values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX]));
-                            } else if (values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].contains("-")) {       // Range
-                                newTestResult.addTestValue(new Range(values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX]));
-                            } else {        // etc : 추후 타입이 추가될 수 있음.
-                                newTestResult.addTestValue(new Etc(values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX]));
+                        if (testComponent == null) {    // TestCategory 생성
+                            // TestCategory 생성.
+                            TestCategory newTestCategory = new TestCategory(values[PATIENT_TESTVALUE_CODE_INDEX]);
+
+                            // TestTypes 생성.
+                            TestItem newTestItem = testItemManager.createTestItem(values[PATIENT_TESTVALUE_SUBCODE_INDEX],
+                                    values[PATIENT_TESTVALUE_NAME_INDEX],
+                                    values[PATIENT_TESTVALUE_NAME_INDEX] + "에 관한 검사항목입니다.",
+                                    Tags.getParsedType(values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX], values[PATIENT_TESTVALUE_HIGHLOW_INDEX]));
+
+                            newTestCategory.add(newTestItem);
+
+                            allTestItems.put(newTestCategory.getCode(), newTestCategory);
+
+                            System.out.println("Main : " + values[PATIENT_TESTVALUE_CODE_INDEX] + "_" + values[PATIENT_TESTVALUE_NAME_INDEX] + "이 추가됨.");
+                        } else if (!values[PATIENT_TESTVALUE_SUBCODE_INDEX].isEmpty()) {
+                            TestCategory testCategory = (TestCategory) allTestItems.get(values[PATIENT_TESTVALUE_CODE_INDEX]);
+
+                            if (!testCategory.contains(values[PATIENT_TESTVALUE_NAME_INDEX])) {
+                                TestItem testItem = testItemManager.createTestItem(values[PATIENT_TESTVALUE_SUBCODE_INDEX],
+                                        values[PATIENT_TESTVALUE_NAME_INDEX],
+                                        values[PATIENT_TESTVALUE_NAME_INDEX] + "에 관한 검사항목입니다.",
+                                        Tags.getParsedType(values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX], values[PATIENT_TESTVALUE_HIGHLOW_INDEX]));
+
+                                testCategory.add(testItem);
+
+                                System.out.println("Sub : " + values[PATIENT_TESTVALUE_CODE_INDEX] + "_" + values[PATIENT_TESTVALUE_NAME_INDEX] + "이 추가됨.");
                             }
-                        } else if (!values[PATIENT_TESTVALUE_HIGHLOW_INDEX].isEmpty()) {
-                            newTestResult.addTestValue(new HighLow(values[PATIENT_TESTVALUE_HIGHLOW_INDEX]));
                         }
-                        // TestResult를 환자 객체에 추가.
-                        newPatient.addTestResult(newTestResult);
+
+                        // 2-2. 환자 객체에 TestResult 생성후 추가.
+                        if (newPatient.getAllTestResults().containsKey(values[PATIENT_TESTVALUE_CODE_INDEX])) { // 이미 카테고리가 있는 경우.
+                            TestResultCategory testResultCategory = (TestResultCategory) newPatient.getAllTestResults().get(values[PATIENT_TESTVALUE_CODE_INDEX]);
+                            TestResult newTestResult = new TestResult(values[PATIENT_TESTVALUE_SUBCODE_INDEX]);
+                            newTestResult.addTestValue(new NumericalValue(Double.parseDouble(values[PATIENT_TESTVALUE_NUMERICAL_INDEX])));
+                            if (!values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].isEmpty() || !values[PATIENT_TESTVALUE_HIGHLOW_INDEX].isEmpty()) {
+                                newTestResult.addTestValue(Tags.getParsedStringValue(values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX], values[PATIENT_TESTVALUE_HIGHLOW_INDEX]));
+                            }
+
+
+                            testResultCategory.add(newTestResult);
+                        } else {
+                            TestResultCategory testResultCategory = new TestResultCategory(values[PATIENT_TESTVALUE_CODE_INDEX]);
+                            TestResult newTestResult = new TestResult(values[PATIENT_TESTVALUE_SUBCODE_INDEX]);
+                            newTestResult.addTestValue(new NumericalValue(Double.parseDouble(values[PATIENT_TESTVALUE_NUMERICAL_INDEX])));
+                            if (!values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX].isEmpty() || !values[PATIENT_TESTVALUE_HIGHLOW_INDEX].isEmpty()) {
+                                newTestResult.addTestValue(Tags.getParsedStringValue(values[PATIENT_TESTVALUE_EXCEPT_HIGHLOW_INDEX], values[PATIENT_TESTVALUE_HIGHLOW_INDEX]));
+                            }
+
+                            testResultCategory.add(newTestResult);
+
+                            newPatient.getAllTestResults().put(testResultCategory.getCode(), testResultCategory);
+                        }
 
                         line = br.readLine();
                     }

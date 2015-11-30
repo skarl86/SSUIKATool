@@ -2,6 +2,7 @@ package ssu.object;
 
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxUtils;
+import ssu.object.test.value.string.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -126,6 +127,72 @@ public final class Tags {
         }
 
         return list;
+    }
+
+    public static final String getParsedType(String exceptHighLowToken, String highLowToken) {
+        String types = null;
+
+        if (exceptHighLowToken.isEmpty() && highLowToken.isEmpty()) { // 문자값이 모두 존재하지 않는 경우.
+            // 예비처리를 위한 HL, POSNEG를 추가해줌.
+            types = Tags.TEST_VALUE_TYPE_POSNEG + "_" + Tags.TEST_VALUE_TYPE_HIGHLOW;
+        } else if (!exceptHighLowToken.isEmpty()) {     // High, Low를 제외한 나머지 문자값이 존재하는 경우.
+            if (exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_NEG) ||
+                    exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_POS)) { // Positive, Negative
+                types = Tags.TEST_VALUE_TYPE_POSNEG;
+            } else if (exceptHighLowToken.contains("Norm")) {    // Norm
+                types = Tags.TEST_VALUE_TYPE_NORMAL;
+            } else if (exceptHighLowToken.contains("-")) {       // Range
+                types = Tags.TEST_VALUE_TYPE_RANGE;
+            } else if (exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_FOUND)
+                    || exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_NOT_FOUND)) { // Found, Non found
+                types = Tags.TEST_VALUE_TYPE_FOUNDNOTFOUND;
+            } else if (exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_BLOOD_A) ||
+                    exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_BLOOD_B) ||
+                    exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_BLOOD_AB) ||
+                    exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_BLOOD_O)) {     // Blood type
+                types = Tags.TEST_VALUE_TYPE_BLOOD;
+            } else if (exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_REACTIVE) ||
+                    exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_NONREATIVE)) {
+                types = Tags.TEST_VALUE_TYPE_REACTIVE_NONREACTIVE;
+            } else {        // etc : 추후 타입이 추가될 수 있음.
+                types = Tags.TEST_VALUE_TYPE_ETC;
+            }
+        } else if (!highLowToken.isEmpty()) {  //  // High, Low 문자값이 존재하는 경우.
+            types = Tags.TEST_VALUE_TYPE_HIGHLOW;
+        }
+
+        return types;
+    }
+
+    public static StringValue getParsedStringValue(String exceptHighLowToken, String highLowToken) {
+        // String Value 추가.
+        if (!exceptHighLowToken.isEmpty()) {
+            if (exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_NEG) ||
+                    exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_POS)) { // Positive, Negative
+                return new PosNeg(exceptHighLowToken);
+            } else if (exceptHighLowToken.contains("Norm")) {    // Norm
+                return new Normal(exceptHighLowToken);
+            } else if (exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_FOUND)
+                    || exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_NOT_FOUND)) { // Found, Non found
+                return new Found_NotFound(exceptHighLowToken);
+            } else if (exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_BLOOD_A) ||
+                    exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_BLOOD_B) ||
+                    exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_BLOOD_AB) ||
+                    exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_BLOOD_O)) {     // Blood type
+                return new BloodType(exceptHighLowToken);
+            } else if (exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_REACTIVE) ||
+                    exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_NONREATIVE)) {
+                return new Reactive_NonReative(exceptHighLowToken);
+            } else if (exceptHighLowToken.contains("-")) {       // Range
+                return new Range(exceptHighLowToken);
+            } else {        // etc : 추후 타입이 추가될 수 있음.
+                return new Etc(exceptHighLowToken);
+            }
+        } else if (!highLowToken.isEmpty()) {
+            return new HighLow(highLowToken);
+        }
+
+        return null;
     }
 
     /**

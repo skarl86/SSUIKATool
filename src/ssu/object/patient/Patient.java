@@ -2,9 +2,13 @@ package ssu.object.patient;
 
 import ssu.object.Savable;
 import ssu.object.Tags;
-import ssu.object.test.TestResult;
+import ssu.object.test.TestComponent;
+import ssu.object.test.TestResultCategory;
+import ssu.object.test.TestResultComponent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by beggar3004 on 15. 11. 8..
@@ -16,7 +20,7 @@ public class Patient implements Savable {
     private String gender;
     private Long regId;
     private String regDate;
-    private ArrayList<TestResult> allTestResults;
+    private HashMap<String, TestResultComponent> allTestResults;
     private ArrayList<Opinion> allOpinions;
 
     public Patient(String name, int age, String gender, Long regID, String regDate) {
@@ -25,26 +29,12 @@ public class Patient implements Savable {
         this.gender = gender;
         this.regId = regID;
         this.regDate = regDate;
-        this.allTestResults = new ArrayList<TestResult>();
+        this.allTestResults = new HashMap<String, TestResultComponent>();
         this.allOpinions = new ArrayList<Opinion>();
     }
 
-    /**
-     * 파라미터로 받은 테스트 결과를 추가.
-     * @param testResult
-     * @return
-     */
-    public boolean addTestResult(TestResult testResult) {
-        return this.allTestResults.add(testResult);
-    }
-
-    /**
-     * 파라미터로 받은 테스트 결과를 제거.
-     * @param testResult
-     * @return
-     */
-    public boolean removeTestResult(TestResult testResult) {
-        return  this.allTestResults.remove(testResult);
+    public void addTestResult(String key, TestResultComponent testResultComponent) {
+        this.allTestResults.put(key, testResultComponent);
     }
 
     /**
@@ -72,15 +62,24 @@ public class Patient implements Savable {
         line += getName() + Tags.PATIENT_SPLITER;
         line += getGender() + Tags.PATIENT_SPLITER;
         line += getAge() + Tags.PATIENT_SPLITER;
-        // Testresult
-        for (int i=0; i<allTestResults.size(); i++) {
-            TestResult testResult = allTestResults.get(i);
-            line += testResult.printSavingFormat();
+        // TestResult component
+        ArrayList<TestResultComponent> testResultComponents = new ArrayList<TestResultComponent>(this.allTestResults.values());
+        for (int i=0; i<testResultComponents.size(); i++) {
+            line += testResultComponents.get(i).printSavingFormat();
 
-            if (i < allTestResults.size() - 1) {
+            if (i <testResultComponents.size() - 1) {
                 line += Tags.PATIENT_TEST_RESULT_SPLITER;
             }
         }
+
+//        for (int i=0; i<allTestResults.size(); i++) {
+//            TestResult testResult = allTestResults.get(i);
+//            line += testResult.printSavingFormat();
+//
+//            if (i < allTestResults.size() - 1) {
+//                line += Tags.PATIENT_TEST_RESULT_SPLITER;
+//            }
+//        }
 
         line += Tags.PATIENT_SPLITER;
 
@@ -140,12 +139,8 @@ public class Patient implements Savable {
         this.regDate = regDate;
     }
 
-    public ArrayList<TestResult> getAllTestResults() {
+    public HashMap<String, TestResultComponent> getAllTestResults() {
         return allTestResults;
-    }
-
-    public void setAllTestResults(ArrayList<TestResult> allTestResults) {
-        this.allTestResults = allTestResults;
     }
 
     public ArrayList<Opinion> getAllOpinions() {

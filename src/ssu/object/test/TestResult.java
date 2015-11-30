@@ -9,15 +9,15 @@ import java.util.ArrayList;
 /**
  * Created by beggar3004 on 15. 11. 8..
  */
-public class TestResult implements Savable {
+public class TestResult extends TestResultComponent implements Savable {
 
     private boolean abnormal;
-    private TestItem testItem;
     private ArrayList<TestValue> testValues;
+    private String code;
 
-    public TestResult(TestItem testItem) {
+    public TestResult(String code) {
         this.abnormal = false;
-        this.testItem = testItem;
+        this.code = code;
         this.testValues = new ArrayList<TestValue>();
     }
 
@@ -32,7 +32,7 @@ public class TestResult implements Savable {
     @Override
     public String printSavingFormat() {
         String line = "";
-        line += getTestItem().getName() + Tags.PATIENT_TEST_VALUE_SPLITER;
+        line += getCode() + Tags.PATIENT_TEST_VALUE_SPLITER;
         for (int i=0; i<this.testValues.size(); i++) {
             TestValue testValue = this.testValues.get(i);
             line += testValue.printSavingFormat();
@@ -48,12 +48,13 @@ public class TestResult implements Savable {
     /*
      * Getter & Setter
      */
-    public TestItem getTestItem() {
-        return testItem;
+
+    public String getCode() {
+        return code;
     }
 
-    public void setTestItem(TestItem testItem) {
-        this.testItem = testItem;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public ArrayList<TestValue> getTestValues() {

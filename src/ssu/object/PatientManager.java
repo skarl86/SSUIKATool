@@ -7,7 +7,6 @@ import ssu.object.test.value.*;
 import ssu.object.test.value.string.*;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,7 +42,7 @@ public class PatientManager {
      *
      * @param allTestItems
      */
-    public void loadPatients(HashMap<String, TestItem> allTestItems) {
+    public void loadPatients() {
         try {
             InputStream is = this.getClass().getResourceAsStream(Tags.PATIENT_FILE_PATH);
             BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
@@ -68,10 +67,10 @@ public class PatientManager {
                     String[] tests = tokens[5].split(Tags.PATIENT_TEST_RESULT_SPLITER);
 
                     for (int i=0; i<tests.length; i++) {
-                        newPatient.addTestResult(createTestResult(tests[i], allTestItems));
+                        addTestResultComponentToPatient(tests[i], newPatient);
                     }
                 } else {
-                    newPatient.addTestResult(createTestResult(tokens[5], allTestItems));
+                    addTestResultComponentToPatient(tokens[5], newPatient);
                 }
 
                 // opinion parsing.
@@ -103,20 +102,43 @@ public class PatientManager {
      * @param parseString
      * @return
      */
-    private TestResult createTestResult(String parseString, HashMap<String, TestItem> allTestItems) {
+    private void addTestResultComponentToPatient(String parseString, Patient newPatient) {
         String[] testItemValues = parseString.split(Tags.PATIENT_TEST_VALUE_SPLITER);
-        String testItemName = testItemValues[0];
+        String testItemCode = testItemValues[0];
+        String testItemSubcode = testItemValues[1];
 
-        TestResult newTestResult = new TestResult(allTestItems.get(testItemName));
-
-        if (testItemValues.length > 2) { // Numerical & String value가 같이 존재.
-            newTestResult.addTestValue(createTestValue(testItemValues[1]));
+        if (newPatient.getAllTestResults().containsKey(testItemCode)) { // 이미 카테고리가 있는 경우.
+            TestResultCategory testResultCategory = (TestResultCategory) newPatient.getAllTestResults().get(testItemCode);
+            TestResult newTestResult = new TestResult(testItemSubcode);
             newTestResult.addTestValue(createTestValue(testItemValues[2]));
+            if (testItemValues.length > 3) {
+                newTestResult.addTestValue(createTestValue(testItemValues[3]));
+            }
+            testResultCategory.add(newTestResult);
         } else {
-            newTestResult.addTestValue(createTestValue(testItemValues[1]));
+            TestResultCategory testResultCategory = new TestResultCategory(testItemCode);
+            TestResult newTestResult = new TestResult(testItemSubcode);
+            newTestResult.addTestValue(createTestValue(testItemValues[2]));
+            if (testItemValues.length > 3) {
+                newTestResult.addTestValue(createTestValue(testItemValues[3]));
+            }
+
+            testResultCategory.add(newTestResult);
+
+            newPatient.getAllTestResults().put(testResultCategory.getCode(), testResultCategory);
         }
 
-        return newTestResult;
+//        if (this.all)
+//        TestResult newTestResult = new TestResult(allTestItems.get(testItemCode));
+//
+//        if (testItemValues.length > 2) { // Numerical & String value가 같이 존재.
+//            newTestResult.addTestValue(createTestValue(testItemValues[1]));
+//            newTestResult.addTestValue(createTestValue(testItemValues[2]));
+//        } else {
+//            newTestResult.addTestValue(createTestValue(testItemValues[1]));
+//        }
+
+//        return newTestResult;
     }
 
     /**
