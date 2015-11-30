@@ -37,7 +37,8 @@ import java.util.*;
 /**
  * Created by NCri on 2015. 11. 14..
  */
-public class IKARulePopUpViewController implements Initializable{
+public class IKARulePopUpViewController extends IKAController implements Initializable{
+
     private Rule _selectedRule;
     private final static int COMBO_TYPE_ANT = 0;
     private final static int COMBO_TYPE_COSEQ = 1;
@@ -51,7 +52,6 @@ public class IKARulePopUpViewController implements Initializable{
     private final static int EXCEPTION_DUPLICATE_ATOM = 3;
 
     public final static String VALUE_COMBOBOX_ID = "valueList";
-
 
     @FXML TableView<AtomRow> antecedentTableView;
     @FXML TableView<AtomRow> consequentTableView;

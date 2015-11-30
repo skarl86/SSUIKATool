@@ -101,6 +101,7 @@ public class IKAPaneController implements IKAPaneInterface {
         public void setModifiedDate(String modifiedDate) { this.modifiedDate.set(modifiedDate); }
     }
 
+    private ListView<String> _opinionListView;
     private TreeView _patientTreeView;
 
     private TableView<PatientRow> _patientTableView;
@@ -140,6 +141,18 @@ public class IKAPaneController implements IKAPaneInterface {
         return uniqueInstance;
     }
 
+    @Override
+    public void createOpinionList(IKADataController dataController, ListView<String> listView, Long patientId)
+    {
+        if(_opinionListView == null) _opinionListView = listView;
+    }
+
+    @Override
+    public void refreshPatientOpinionList(IKADataController dataController, Long patientId){
+        ArrayList<String> opinionList = (ArrayList) dataController.getPatientOpinion(patientId);
+        ObservableList<String> data = FXCollections.observableArrayList(opinionList);
+        _opinionListView.setItems(data);
+    }
     @Override
     public void createPatientTree(TreeView patientTreeView, Map<String, List<IKADataController.PatientListElement>> patientMap) {
         if(_patientTreeView == null)
@@ -233,17 +246,17 @@ public class IKAPaneController implements IKAPaneInterface {
             _opinionTextArea = opinionTextArea;
     }
 
-    @Override
-    public void refreshPatientOpinionList(IKADataController dataController, Long patientId){
-        ArrayList<String> opinionList = (ArrayList) dataController.getPatientOpinion(patientId);
-        System.out.println("환자 소견 갯수 : " + opinionList.size());
-        if(opinionList.size() != 0){
-            _opinionIndex = 0;
-            _opinionTextArea.setText(opinionList.get(_opinionIndex));
-        }else{
-            _opinionTextArea.setText("");
-        }
-    }
+//    @Override
+//    public void refreshPatientOpinionList(IKADataController dataController, Long patientId){
+//        ArrayList<String> opinionList = (ArrayList) dataController.getPatientOpinion(patientId);
+//        System.out.println("환자 소견 갯수 : " + opinionList.size());
+//        if(opinionList.size() != 0){
+//            _opinionIndex = 0;
+//            _opinionTextArea.setText(opinionList.get(_opinionIndex));
+//        }else{
+//            _opinionTextArea.setText("");
+//        }
+//    }
     @Override
     public void refreshOpinionPageLabel(IKADataController dataController, Label pageLabel, Long patientID){
         ArrayList<String> opinionList = (ArrayList) dataController.getPatientOpinion(patientID);

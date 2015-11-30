@@ -57,8 +57,10 @@ public class IKATool extends Application implements Initializable {
     private IKADataController dataController = IKADataController.getInstance();
     private IKAPaneController paneController = IKAPaneController.getInstance();
 
+    @FXML private ListView<String> opinionListView;
+
     @FXML private SplitPane leftSplitPane;
-    @FXML private SplitPane rightSplitPane;
+//    @FXML private SplitPane rightSplitPane;
 
     @FXML private TreeView patientTreeView;
 
@@ -66,16 +68,16 @@ public class IKATool extends Application implements Initializable {
     @FXML private TableColumn<IKAPaneController.PatientRow, String> subjectColumn;
     @FXML private TableColumn<IKAPaneController.PatientRow, String> textValueColumn;
 
-    @FXML private TableView<IKAPaneController.PatientDetailRow> patientDetailTable;
-    @FXML private TableColumn<IKAPaneController.PatientDetailRow, String> testNameColumn;
-    @FXML private TableColumn<IKAPaneController.PatientDetailRow, String> testNumValueColumn;
-    @FXML private TableColumn<IKAPaneController.PatientDetailRow, String> testTextValueColumn;
+//    @FXML private TableView<IKAPaneController.PatientDetailRow> patientDetailTable;
+//    @FXML private TableColumn<IKAPaneController.PatientDetailRow, String> testNameColumn;
+//    @FXML private TableColumn<IKAPaneController.PatientDetailRow, String> testNumValueColumn;
+//    @FXML private TableColumn<IKAPaneController.PatientDetailRow, String> testTextValueColumn;
 
-    @FXML private Label opinionPageLabel;
+//    @FXML private Label opinionPageLabel;
 
-    @FXML private TextArea opinionTextArea;
-    @FXML private Button leftOpinionButton;
-    @FXML private Button rightOpinionButton;
+//    @FXML private TextArea opinionTextArea;
+//    @FXML private Button leftOpinionButton;
+//    @FXML private Button rightOpinionButton;
 
     @FXML private Button addButton;
     @FXML private Button editButton;
@@ -157,26 +159,27 @@ public class IKATool extends Application implements Initializable {
         }
     }
 
-    @FXML protected void handleLeftClickButtonAction(ActionEvent event){
-        System.out.println(event);
-        this.paneController.previousOpinion(this.dataController, currentPatientId);
-        paneController.refreshOpinionPageLabel(dataController, opinionPageLabel, currentPatientId);
-    }
-
-    @FXML protected void handleRightClickButtonAction(ActionEvent event){
-        System.out.println(event);
-        this.paneController.nextOpinion(this.dataController, currentPatientId);
-        paneController.refreshOpinionPageLabel(dataController, opinionPageLabel, currentPatientId);
-    }
+//    @FXML protected void handleLeftClickButtonAction(ActionEvent event){
+//        System.out.println(event);
+//        this.paneController.previousOpinion(this.dataController, currentPatientId);
+//        paneController.refreshOpinionPageLabel(dataController, opinionPageLabel, currentPatientId);
+//    }
+//
+//    @FXML protected void handleRightClickButtonAction(ActionEvent event){
+//        System.out.println(event);
+//        this.paneController.nextOpinion(this.dataController, currentPatientId);
+//        paneController.refreshOpinionPageLabel(dataController, opinionPageLabel, currentPatientId);
+//    }
 
     public void initView(){
         this.paneController.createPatientTree(patientTreeView, this.dataController.getPatientsList());
         this.paneController.createPatientDefaultList(patientTableView,subjectColumn,textValueColumn);
-        this.paneController.createPatientDetailList(patientDetailTable, testNameColumn, testNumValueColumn, testTextValueColumn );
-        this.paneController.createPatientOpinionList(opinionTextArea);
+//        this.paneController.createPatientDetailList(patientDetailTable, testNameColumn, testNumValueColumn, testTextValueColumn );
+//        this.paneController.createPatientOpinionList(opinionTextArea);
+        this.paneController.createOpinionList(dataController, opinionListView, currentPatientId);
         this.paneController.createPatientOpinionReferenceList(ruleReferenceTableView, ruleIdColumn,
                 ruleColumn, authorColumn, madeDateColumn, modifiedDateColumn);
-        paneController.refreshOpinionPageLabel(dataController, opinionPageLabel, currentPatientId);
+//        paneController.refreshOpinionPageLabel(dataController, opinionPageLabel, currentPatientId);
 
         // Action 등록.
         patientTreeView.getSelectionModel().selectedItemProperty().addListener( new ChangeListener() {
@@ -189,10 +192,10 @@ public class IKATool extends Application implements Initializable {
                 if(selectedItem.getValue().split(" ").length > 1){
                     currentPatientId = Long.valueOf(selectedItem.getValue().split(" ")[0]);
                     paneController.refreshPatientDefaultList(dataController, currentPatientId);
-                    paneController.refreshPatientDetailList(dataController, currentPatientId);
+//                    paneController.refreshPatientDetailList(dataController, currentPatientId);
                     paneController.refreshPatientOpinionList(dataController,currentPatientId);
                     paneController.refreshPatientOpinionReferenceList(dataController, currentPatientId, 0);
-                    paneController.refreshOpinionPageLabel(dataController, opinionPageLabel, currentPatientId);
+//                    paneController.refreshOpinionPageLabel(dataController, opinionPageLabel, currentPatientId);
                 }
                 // do what ever you want
             }
@@ -200,12 +203,13 @@ public class IKATool extends Application implements Initializable {
         });
     }
 
-    public int getOpinionIndex(){
-        return Integer.valueOf(opinionPageLabel.getText().split("/")[0].trim()) - 1;
-    }
+//    public int getOpinionIndex(){
+//        return Integer.valueOf(opinionPageLabel.getText().split("/")[0].trim()) - 1;
+//    }
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("IKAMainTool.fxml"));
+//        Parent root = FXMLLoader.load(getClass().getResource("IKAMainTool.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("IKAMainToolNewScene.fxml"));
         primaryStage.setTitle("Interactive Knowledge Acquisition");
 
 //        initView();
@@ -327,11 +331,11 @@ public class IKATool extends Application implements Initializable {
             System.out.println("Your name: " + result.get());
             authorName = result.get();
             leftSplitPane.setDisable(false);
-            rightSplitPane.setDisable(false);
+//            rightSplitPane.setDisable(false);
         }
         //System.out.println("Your name: " + result.get());
         leftSplitPane.setDisable(false);
-        rightSplitPane.setDisable(false);
+//        rightSplitPane.setDisable(false);
     }
 
     private void modalRuleEditView(ActionEvent event, IKAPaneController.PatientReferenceRow selectedItem) throws IOException {
@@ -346,7 +350,7 @@ public class IKATool extends Application implements Initializable {
             controller.setRule(dataController, selectedItem.getRuleId());
         else
             controller.setRule(dataController, null);
-        controller.setOpinionIndex(getOpinionIndex());
+//        controller.setOpinionIndex(getOpinionIndex());
         controller.setPatientID(currentPatientId);
         controller.setAuthor(authorName);
 
