@@ -17,6 +17,7 @@ public class PatientManager {
 
 //    private ArrayList<Patient> allPatients;
     private HashMap<Long, Patient> allPatients;
+    private final int PATIENT_TOKENS_LENGTH = 7;
 
     // 혹시 추후 멀티스레딩을 위한.
     private volatile static PatientManager uniqueInstance;
@@ -46,7 +47,7 @@ public class PatientManager {
             String line = br.readLine();
 
             while (line != null) {
-                String[] tokens = line.split(Tags.PATIENT_SPLITER);
+                String[] tokens = line.split(Tags.PATIENT_SPLITER, PATIENT_TOKENS_LENGTH);
                 /*
                  * Patient 형식
                  * 20150603_40373_김춘자_F_56_AST,N:25-ALT,N:29-ALP,N:75_AST, AST가 높습니다. 간 및 담도계 기능이상이 의심됩니다.:0-AST, ALT가 높습니다. 간 및 담도계 기능이상이 의심됩니다.:1,2
