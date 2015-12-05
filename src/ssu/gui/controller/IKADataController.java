@@ -754,23 +754,45 @@ public class IKADataController extends IKAController implements IKADataRequestIn
                 if (testResultCategory.getTestResultComponents().size() > 1) { // 서브 항목이 포함된 검사항목일 경우.
                     ArrayList<TestResultComponent> testResults = testResultCategory.getTestResultComponents();
                     TestResult parent = (TestResult) testResults.get(0);
-                    String result = "";
-                    for (TestValue testValue : parent.getTestValues()) {
-                        result += testValue.getTestValue() + " ";
-                    }
-                    TestCategory parentTestCategory = (TestCategory) testComponents.get(testResultCategory.getCode());
+//                    String result = "";
+//                    for (TestValue testValue : parent.getTestValues()) {
+//                        result += testValue.getTestValue() + " ";
+//                    }
 
-                    TreeItem<PatientDetailRow> parentNode = new TreeItem<PatientDetailRow>(new PatientDetailRow("", ((TestItem) parentTestCategory.getTestComponents().get(0)).getName() + " " + result, ""));
+                    TestCategory parentTestCategory = (TestCategory) testComponents.get(testResultCategory.getCode());
+                    TreeItem<PatientDetailRow> parentNode = null;
+                    if (parent.getTestValues().size() > 1) { // 문자값이 있을 경우.
+                        parentNode = new TreeItem<PatientDetailRow>(new PatientDetailRow(((TestItem) parentTestCategory.getTestComponents().get(0)).getName(),
+                                parent.getTestValues().get(0).getTestValue(),
+                                parent.getTestValues().get(1).getTestValue()));
+                    } else {                                 // 문자값이 없을 경우.
+                        parentNode = new TreeItem<PatientDetailRow>(new PatientDetailRow(((TestItem) parentTestCategory.getTestComponents().get(0)).getName(),
+                                parent.getTestValues().get(0).getTestValue(),
+                                "-"));
+                    }
+
+
+
                     for (int i=1; i<testResultCategory.getTestResultComponents().size(); i++) {
                         TestResult testResult = (TestResult) testResultCategory.getTestResultComponents().get(i);
                         TestItem testItem = (TestItem) parentTestCategory.getTestComponents().get(i);
 
-                        String value = "";
-                        for (TestValue testValue : testResult.getTestValues()) {
-                            value += testValue.getTestValue() + " ";
+//                        String value = "";
+//                        for (TestValue testValue : testResult.getTestValues()) {
+//                            value += testValue.getTestValue() + " ";
+//                        }
+                        TreeItem<PatientDetailRow> childNode = null;
+                        if (testResult.getTestValues().size() > 1) { // 문자값이 있을 경우.
+                            childNode = new TreeItem<PatientDetailRow>(new PatientDetailRow(testItem.getName(),
+                                    testResult.getTestValues().get(0).getTestValue(),
+                                    testResult.getTestValues().get(1).getTestValue()));
+                        } else {                                 // 문자값이 없을 경우.
+                            childNode = new TreeItem<PatientDetailRow>(new PatientDetailRow(testItem.getName(),
+                                    testResult.getTestValues().get(0).getTestValue(),
+                                    "-"));
                         }
 
-                        parentNode.getChildren().add(new TreeItem<PatientDetailRow>(new PatientDetailRow("", "", testItem.getName() + " " + value)));
+                        parentNode.getChildren().add(childNode);
 
                     }
 
