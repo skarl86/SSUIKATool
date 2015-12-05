@@ -249,8 +249,8 @@ public class IKAPaneController implements IKAPaneInterface {
 //        }
 //
 //        _patientDetailTable.setItems(data);
+        treeItems.setExpanded(true);
         _patientDetailTable.setRoot(treeItems);
-
         _patientDetailTable.setRowFactory(param -> new TreeTableRow<PatientDetailRow>() {
             protected void updateItem(PatientDetailRow item, boolean empty){
                 super.updateItem(item, empty);
