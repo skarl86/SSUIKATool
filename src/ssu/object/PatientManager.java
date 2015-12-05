@@ -38,10 +38,7 @@ public class PatientManager {
         return uniqueInstance;
     }
 
-    /**
-     *
-     * @param allTestItems
-     */
+
     public void loadPatients() {
         try {
             InputStream is = this.getClass().getResourceAsStream(Tags.PATIENT_FILE_PATH);
@@ -109,15 +106,24 @@ public class PatientManager {
 
         if (newPatient.getAllTestResults().containsKey(testItemCode)) { // 이미 카테고리가 있는 경우.
             TestResultCategory testResultCategory = (TestResultCategory) newPatient.getAllTestResults().get(testItemCode);
-            TestResult newTestResult = new TestResult(testItemSubcode);
-            newTestResult.addTestValue(createTestValue(testItemValues[2]));
+            TestResult newTestResult = null;
+            if (testItemSubcode.isEmpty()) {
+                newTestResult = new TestResult(testItemCode);
+            } else {
+                newTestResult = new TestResult(testItemSubcode);
+            }            newTestResult.addTestValue(createTestValue(testItemValues[2]));
             if (testItemValues.length > 3) {
                 newTestResult.addTestValue(createTestValue(testItemValues[3]));
             }
             testResultCategory.add(newTestResult);
         } else {
             TestResultCategory testResultCategory = new TestResultCategory(testItemCode);
-            TestResult newTestResult = new TestResult(testItemSubcode);
+            TestResult newTestResult = null;
+            if (testItemSubcode.isEmpty()) {
+                newTestResult = new TestResult(testItemCode);
+            } else {
+                newTestResult = new TestResult(testItemSubcode);
+            }
             newTestResult.addTestValue(createTestValue(testItemValues[2]));
             if (testItemValues.length > 3) {
                 newTestResult.addTestValue(createTestValue(testItemValues[3]));

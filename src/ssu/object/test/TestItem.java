@@ -1,6 +1,6 @@
 package ssu.object.test;
 
-import ssu.object.Savable;
+import ssu.object.HasStringType;
 import ssu.object.Tags;
 
 import java.util.ArrayList;
@@ -8,19 +8,18 @@ import java.util.ArrayList;
 /**
  * Created by beggar3004 on 15. 11. 8..
  */
-public class TestItem extends TestComponent {
+public class TestItem extends TestComponent{
 
     private String code;
     private String name;
     private String description;
-    private ArrayList<String> types;
+    private ArrayList<String> types = new ArrayList<String>();
 
 
     public TestItem(String code, String name, String description) {
         this.code = code;
         this.name = name;
         this.description = description;
-        this.types = new ArrayList<String>();
     }
 
     @Override
@@ -87,4 +86,5 @@ public class TestItem extends TestComponent {
     public void setCode(String code) {
         this.code = code;
     }
+
 }

@@ -798,12 +798,24 @@ public class IKADataController extends IKAController implements IKADataRequestIn
 
                     rootNode.getChildren().add(parentNode);
                 } else {
-                    String label = "";
+//                    String label = "";
                     TestResult testResult = (TestResult) testResultCategory.getTestResultComponents().get(0);
-                    for (TestValue testValue : testResult.getTestValues()) {
-                        label += testValue.getTestValue() + " ";
+                    TestCategory testCategory = (TestCategory) testComponents.get(testResult.getCode());
+                    TestItem testItem = (TestItem) testCategory.getTestComponents().get(0);
+//                    for (TestValue testValue : testResult.getTestValues()) {
+//                        label += testValue.getTestValue() + " ";
+//                    }
+                    TreeItem<PatientDetailRow> childNode = null;
+                    if (testResult.getTestValues().size() > 1) { // 문자값이 있을 경우.
+                        childNode = new TreeItem<PatientDetailRow>(new PatientDetailRow(testItem.getName(),
+                                testResult.getTestValues().get(0).getTestValue(),
+                                testResult.getTestValues().get(1).getTestValue()));
+                    } else {                                 // 문자값이 없을 경우.
+                        childNode = new TreeItem<PatientDetailRow>(new PatientDetailRow(testItem.getName(),
+                                testResult.getTestValues().get(0).getTestValue(),
+                                "-"));
                     }
-                    rootNode.getChildren().add(new TreeItem<PatientDetailRow>(new PatientDetailRow("", label, "")));
+                    rootNode.getChildren().add(childNode);
                 }
             }
 
