@@ -144,7 +144,7 @@ public class IKATool extends Application implements Initializable {
         if(selectedItem != null){
             modalRuleEditView(event, selectedItem);
         }else{
-            showWarningSelectedOpinionAlert();
+            showWarningSelectedRuleAlert();
         }
     }
 
@@ -164,7 +164,10 @@ public class IKATool extends Application implements Initializable {
                 } else {
                     // 취소.
                 }
+            }else{
+                showWarningSelectedRuleAlert();
             }
+
         }
     }
 
@@ -180,6 +183,14 @@ public class IKATool extends Application implements Initializable {
 //        paneController.refreshOpinionPageLabel(dataController, opinionPageLabel, currentPatientId);
 //    }
 
+    public void showWarningSelectedRuleAlert(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("확인창");
+        alert.setHeaderText("확인 부탁드립니다.");
+        alert.setContentText("선택된 룰이 존재하지 않습니다.");
+
+        alert.showAndWait();
+    }
     public void showWarningSelectedOpinionAlert(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("확인창");
@@ -233,19 +244,14 @@ public class IKATool extends Application implements Initializable {
 
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+        primaryStage.setOnCloseRequest(event -> Platform.runLater(new Runnable() {
             @Override
-            public void handle(WindowEvent event) {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        quit();
-                        System.out.println("Application sucessfully closed.");
-                        System.exit(0);
-                    }
-                });
+            public void run() {
+                quit();
+                System.out.println("Application sucessfully closed.");
+                System.exit(0);
             }
-        });
+        }));
     }
 
     /*
@@ -280,27 +286,20 @@ public class IKATool extends Application implements Initializable {
 
         final ComboBox consequentComboBox = new ComboBox();
         consequentComboBox.setEditable(true);
-        consequentComboBox.getEditor().textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if(!(consequentComboBox.getEditor().getText().length() == 0)) {
-                    consequentComboBox.show();
-                    ObservableList data = FXCollections.observableArrayList(IKADataController.getInstance().getAtomCompletionListInGraphView(newValue));
-                    consequentComboBox.setItems(data);
-                }
+        consequentComboBox.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            if(!(consequentComboBox.getEditor().getText().length() == 0)) {
+                consequentComboBox.show();
+                ObservableList data = FXCollections.observableArrayList(IKADataController.getInstance().getAtomCompletionListInGraphView(newValue));
+                consequentComboBox.setItems(data);
             }
         });
 
-        consequentComboBox.addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
-            // ComboBox에 텍스트를 입력한 후 "Enter"를 선택했을때,
-            @Override
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ENTER) {
-                    AppTestLog.printLog("Enter");
-                    graphView.drawRules(RuleManager.getInstance().getAllRulesByConseqent(consequentComboBox.getEditor().getText()));
-                    consequentComboBox.getEditor().clear();
-                    consequentComboBox.getSelectionModel().clearSelection();
-                }
+        consequentComboBox.addEventFilter(KeyEvent.KEY_RELEASED, event1 -> {
+            if (event1.getCode() == KeyCode.ENTER) {
+                AppTestLog.printLog("Enter");
+                graphView.drawRules(RuleManager.getInstance().getAllRulesByConseqent(consequentComboBox.getEditor().getText()));
+                consequentComboBox.getEditor().clear();
+                consequentComboBox.getSelectionModel().clearSelection();
             }
         });
 
@@ -397,20 +396,14 @@ public class IKATool extends Application implements Initializable {
     Java Swing 삽입 부분
      */
     private void createAndSetSwingContent(final SwingNode swingNode) {
-        SwingUtilities.invokeLater(new Runnable() {
-            /*
-            Java Swing Code 삽입 부분
-             */
-            @Override
-            public void run() {
-                GraphView panel = new GraphView();
-                panel.setPreferredSize(new Dimension(700,600));
-                swingNode.setContent(panel.getGraphComponent());
-                panel.repaint();
-                graphView = panel;
+        SwingUtilities.invokeLater(() -> {
+            GraphView panel = new GraphView();
+            panel.setPreferredSize(new Dimension(700,600));
+            swingNode.setContent(panel.getGraphComponent());
+            panel.repaint();
+            graphView = panel;
 
-                System.out.println("initJPanel");
-            }
+            System.out.println("initJPanel");
         });
     }
 
