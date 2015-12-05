@@ -530,7 +530,7 @@ public class IKARulePopUpViewController extends IKAController implements Initial
 
         for(HashMap<String, String> atomAndValue : antcAtomAndValue){
             for(Map.Entry<String, String> atom : atomAndValue.entrySet()){
-                antecendentData.add(new AtomRow(atom.getKey(), atom.getKey()));
+                antecendentData.add(new AtomRow(atom.getKey(), atom.getValue()));
                 ComboBox<String> box = antecedentValueMap.get(index);
                 if(box ==null){
                     box = new ComboBox<String>();
@@ -547,7 +547,7 @@ public class IKARulePopUpViewController extends IKAController implements Initial
         index = 0;
         for(HashMap<String, String> atomAndValue : consAtomAndValue){
             for(Map.Entry<String, String> atom : atomAndValue.entrySet()){
-                consequentData.add(new AtomRow(atom.getKey(),atom.getKey()));
+                consequentData.add(new AtomRow(atom.getKey(),atom.getValue()));
                 ComboBox<String> box = consequentValueMap.get(index);
                 if(box ==null){
                     box = new ComboBox<String>();
