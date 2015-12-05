@@ -136,7 +136,7 @@
                            <content>
                               <VBox>
                                  <children>
-                                    <ListView prefHeight="348.0" prefWidth="698.0" />
+                                    <ListView fx:id="opinionListView" prefHeight="348.0" prefWidth="698.0" />
                                  </children>
                               </VBox>
                            </content>

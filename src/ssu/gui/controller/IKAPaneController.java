@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import ssu.gui.controller.entity.PatientDetailRow;
 import ssu.object.AtomManager;
 import ssu.object.patient.Patient;
 
@@ -45,26 +46,26 @@ public class IKAPaneController implements IKAPaneInterface {
 //            return this.textValue;
 //        }
     }
-    public class PatientDetailRow{
-        private final StringProperty testName;
-        private final StringProperty numValue;
-        private final StringProperty textValue;
-
-        private PatientDetailRow(String testName, String numValue, String textValue){
-            this.testName= new SimpleStringProperty(testName);
-            this.numValue = new SimpleStringProperty(numValue);
-            this.textValue = new SimpleStringProperty(textValue);
-        }
-
-        public void setTestName(String tName){ testName.set(tName); }
-        public String getTestName(){ return testName.get(); }
-
-        public void setNumValue(String nValue){ numValue.set(nValue); }
-        public String getNumValue(){ return numValue.get(); }
-
-        public void setTextValue(String tValue){ textValue.set(tValue); }
-        public String getTextValue(){ return textValue.get(); }
-    }
+//    public class PatientDetailRow{
+//        private final StringProperty testName;
+//        private final StringProperty numValue;
+//        private final StringProperty textValue;
+//
+//        private PatientDetailRow(String testName, String numValue, String textValue){
+//            this.testName= new SimpleStringProperty(testName);
+//            this.numValue = new SimpleStringProperty(numValue);
+//            this.textValue = new SimpleStringProperty(textValue);
+//        }
+//
+//        public void setTestName(String tName){ testName.set(tName); }
+//        public String getTestName(){ return testName.get(); }
+//
+//        public void setNumValue(String nValue){ numValue.set(nValue); }
+//        public String getNumValue(){ return numValue.get(); }
+//
+//        public void setTextValue(String tValue){ textValue.set(tValue); }
+//        public String getTextValue(){ return textValue.get(); }
+//    }
 
     public class PatientReferenceRow{
         private final StringProperty ruleId;
@@ -108,10 +109,17 @@ public class IKAPaneController implements IKAPaneInterface {
     private TableColumn<PatientRow, String> _subjectColumn;
     private TableColumn<PatientRow, String> _textValueColumn;
 
+    private TreeTableView<String> _patientDetailTable;
+    private TreeTableColumn<PatientDetailRow, String> _testNameColumn;
+    private TreeTableColumn<PatientDetailRow, String> _numValueColumn;
+    private TreeTableColumn<PatientDetailRow, String> _testTextValueColumn;
+
+    /*
     private TableView<PatientDetailRow> _patientDetailTable;
     private TableColumn<PatientDetailRow, String> _testNameColumn;
     private TableColumn<PatientDetailRow, String> _numValueColumn;
     private TableColumn<PatientDetailRow, String> _testTextValueColumn;
+    */
 
     private TextArea _opinionTextArea;
 
@@ -208,28 +216,42 @@ public class IKAPaneController implements IKAPaneInterface {
     }
     @Override
     public void refreshPatientDetailList(IKADataController dataController, Long patientId){
-        ArrayList<IKADataController.PatientDetailListElement> elmList = (ArrayList)dataController.getPatientsDetailList(patientId);
+//        ArrayList<IKADataController.PatientDetailListElement> elmList = (ArrayList) dataController.getPatientsDetailList(patientId);
 
-        _testNameColumn.setCellValueFactory(
-                new PropertyValueFactory<PatientDetailRow, String>("testName")
+        TreeItem<String> treeItems = dataController.getTestResultTreeByPatientId(patientId);
+
+        _testNameColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<PatientDetailRow, String> p) -> new ReadOnlyStringWrapper(
+                p.getValue().getValue().getTestName())
         );
-        _numValueColumn.setCellValueFactory(
-                new PropertyValueFactory<PatientDetailRow, String>("numValue")
+        _numValueColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<PatientDetailRow, String> p) -> new ReadOnlyStringWrapper(
+                p.getValue().getValue().getTestValue())
         );
-        _testTextValueColumn.setCellValueFactory(
-                new PropertyValueFactory<PatientDetailRow, String>("textValue")
+        _testTextValueColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<PatientDetailRow, String> p) -> new ReadOnlyStringWrapper(
+                p.getValue().getValue().getTextValue())
         );
+//        _testNameColumn.setCellValueFactory(
+//                new PropertyValueFactory<PatientDetailRow, String>("testName")
+//        );
+//        _numValueColumn.setCellValueFactory(
+//                new PropertyValueFactory<PatientDetailRow, String>("numValue")
+//        );
+//        _testTextValueColumn.setCellValueFactory(
+//                new PropertyValueFactory<PatientDetailRow, String>("textValue")
+//        );
 
-        final ObservableList<PatientDetailRow> data = FXCollections.observableArrayList();
-
-        for(IKADataController.PatientDetailListElement elm : elmList){
-            data.add(new PatientDetailRow(elm.testName, elm.testValue, elm.testTextValue));
-        }
-
-        _patientDetailTable.setItems(data);
+//        final ObservableList<PatientDetailRow> data = FXCollections.observableArrayList();
+//
+//        for(IKADataController.PatientDetailListElement elm : elmList){
+//            data.add(new PatientDetailRow(elm.testName, elm.testValue, elm.testTextValue));
+//        }
+//
+//        _patientDetailTable.setItems(data);
+        _patientDetailTable.setRoot(treeItems);
     }
     @Override
-    public void createPatientDetailList(TableView patientDetailTable, TableColumn testNameColumn, TableColumn numValueColumn, TableColumn textValueColumn) {
+    public void createPatientDetailList(
+            TreeTableView<String> patientDetailTable, TreeTableColumn<PatientDetailRow, String> testNameColumn,
+            TreeTableColumn<PatientDetailRow, String> numValueColumn, TreeTableColumn<PatientDetailRow, String> textValueColumn) {
         if(_patientDetailTable == null)
             _patientDetailTable = patientDetailTable;
         if(_testNameColumn == null)
@@ -238,6 +260,14 @@ public class IKAPaneController implements IKAPaneInterface {
             _numValueColumn = numValueColumn;
         if(_testTextValueColumn== null)
             _testTextValueColumn = textValueColumn;
+//        if(_patientDetailTable == null)
+//            _patientDetailTable = patientDetailTable;
+//        if(_testNameColumn == null)
+//            _testNameColumn = testNameColumn;
+//        if(_numValueColumn== null)
+//            _numValueColumn = numValueColumn;
+//        if(_testTextValueColumn== null)
+//            _testTextValueColumn = textValueColumn;
     }
 
     @Override

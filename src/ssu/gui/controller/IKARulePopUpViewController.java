@@ -400,6 +400,7 @@ public class IKARulePopUpViewController extends IKAController implements Initial
             }
         });
 
+        /* 수정 필요...
         patientTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
             if( newSelection != null) {
                 if (patientTable.getSelectionModel().getSelectedItem() != null) {
@@ -410,7 +411,7 @@ public class IKARulePopUpViewController extends IKAController implements Initial
                 }
             }
         });
-
+        */
 
     }
 
@@ -482,6 +483,7 @@ public class IKARulePopUpViewController extends IKAController implements Initial
      * @param testResults
      */
     private void refreshPatientDetailTableView(ArrayList<TestResult> testResults){
+        /* 수정 필요...
         ObservableList<PatientDetailRow> tempPatientDetailData = FXCollections.observableArrayList();
 
         for(TestResult rst : testResults){
@@ -497,6 +499,7 @@ public class IKARulePopUpViewController extends IKAController implements Initial
         }
 
         patientDetailTable.setItems(tempPatientDetailData);
+        */
     }
 
     /**

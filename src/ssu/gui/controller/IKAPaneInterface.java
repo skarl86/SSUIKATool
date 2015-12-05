@@ -1,6 +1,7 @@
 package ssu.gui.controller;
 
 import javafx.scene.control.*;
+import ssu.gui.controller.entity.PatientDetailRow;
 
 import java.util.List;
 import java.util.Map;
@@ -9,11 +10,14 @@ import java.util.Map;
  * Created by NCri on 2015. 11. 13..
  */
 public interface IKAPaneInterface {
+
     public void createPatientTree(TreeView patientTreeView, Map<String, List<IKADataController.PatientListElement>> patientMap);
     public void createPatientDefaultList(TableView patientTableView, TableColumn<IKAPaneController.PatientRow, String> subjectColumn, TableColumn<IKAPaneController.PatientRow, String> textValueColumn);
     public void refreshPatientDefaultList(IKADataController dataController, Long patientId);
     public void refreshPatientDetailList(IKADataController dataController, Long patientId);
-    public void createPatientDetailList(TableView patientDetailTable, TableColumn testNameColumn, TableColumn numValueColumn, TableColumn textValueColumn);
+    public void createPatientDetailList(
+            TreeTableView<String> patientDetailTable, TreeTableColumn<PatientDetailRow, String> testNameColumn,
+            TreeTableColumn<PatientDetailRow, String> numValueColumn, TreeTableColumn<PatientDetailRow, String> textValueColumn);
     public void createPatientOpinionList(TextArea opinionTextArea);
     public void createOpinionList(IKADataController dataController, ListView<String> listView, Long patientId);
     //public void refreshPatientOpinionList(IKADataController dataController, Long patientId);

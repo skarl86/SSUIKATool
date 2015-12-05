@@ -194,7 +194,8 @@ public class IKADataController extends IKAController implements IKADataRequestIn
      */
     public List<PatientDetailListElement> getPatientsDetailList(Long patientRegId){
         List<PatientDetailListElement> pList = new ArrayList<PatientDetailListElement>();
-
+        // 수정 필요..
+        /*
         for (Map.Entry<Long, Patient> entry : this.patientManager.getAllPatients().entrySet()) {
             Patient pat = entry.getValue();
             if(patientRegId.equals(pat.getRegId())){
@@ -230,6 +231,7 @@ public class IKADataController extends IKAController implements IKADataRequestIn
 //                }
 //            }
 //        }
+        */
         return pList;
     }
 
@@ -315,7 +317,7 @@ public class IKADataController extends IKAController implements IKADataRequestIn
     public void loadAtomList(){ this.atomManager.loadAtomList(); }
     public void loadRuleList(){ this.ruleManager.loadRuleList(atomManager.getAllAtoms()); }
     public void loadTestItemList(){ this.testItemManager.loadTestItemList(); }
-    public void loadPatients() { this.patientManager.loadPatients(this.testItemManager.getAllTestItems()); }
+    public void loadPatients() { this.patientManager.loadPatients( /*this.testItemManager.getAllTestItems()*/); } //수정필요.
 
     /**
      * 환자 소견과 관련 Rule을 지우는 메소드로써, 참조하는 Rule ID를 삭제하고 실질적인 Rule은 삭제하지 않는다.
@@ -550,8 +552,9 @@ public class IKADataController extends IKAController implements IKADataRequestIn
      * @return
      */
     public ArrayList<String> getAtomValueList(String atom) {
-        HashMap<String, TestItem> allTestItems = this.testItemManager.getAllTestItems();
         ArrayList<String> list = new ArrayList<String>();
+        /* 수정필요 ...
+        HashMap<String, TestItem> allTestItems = this.testItemManager.getAllTestItems();
 
         if (allTestItems.containsKey(atom)) {
             ArrayList<String> types = allTestItems.get(atom).getTypes();
@@ -561,7 +564,7 @@ public class IKADataController extends IKAController implements IKADataRequestIn
         } else {
             list.addAll(Tags.getTypeList(""));
         }
-
+        */
         return list;
     }
 
@@ -680,9 +683,11 @@ public class IKADataController extends IKAController implements IKADataRequestIn
      * @return
      */
     public ArrayList<Patient> getTempPatientList(String formalString){
+        ArrayList<Patient> tempPatientList = new ArrayList<Patient>();
+        /* 수정 필요...
         Rule rule = getRuleByFormalFormat(formalString);
         HashMap<Long, Patient> patientMap = patientManager.getAllPatients();
-        ArrayList<Patient> tempPatientList = new ArrayList<Patient>();
+
 
         if(rule != null){
             // key -> patient id, values -> opinion index
@@ -700,7 +705,7 @@ public class IKADataController extends IKAController implements IKADataRequestIn
                 tempPatientList.add(tempPat);
             }
         }
-
+        */
         return tempPatientList;
     }
 
