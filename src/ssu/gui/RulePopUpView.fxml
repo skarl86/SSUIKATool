@@ -135,16 +135,13 @@
                      <content>
                         <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="ALWAYS" prefHeight="571.0" prefViewportHeight="628.0" prefViewportWidth="350.0" prefWidth="86.0">
                            <content>
-                              <TableView fx:id="patientDetailTable">
-                                 <columnResizePolicy>
-                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                 </columnResizePolicy>
-                                 <columns>
-                                    <TableColumn fx:id="testNameColumn" prefWidth="44.0" text="검사명" />
-                                    <TableColumn fx:id="testValueColumn" minWidth="0.0" prefWidth="117.0" text="수치값" />
-                                    <TableColumn fx:id="textValueColumn" prefWidth="75.0" text="문자값" />
-                                 </columns>
-                              </TableView>
+                              <TreeTableView prefHeight="200.0" prefWidth="200.0">
+                                <columns>
+                                  <TreeTableColumn prefWidth="67.0" text="검사명" />
+                                  <TreeTableColumn prefWidth="68.0" text="수치값" />
+                                    <TreeTableColumn prefWidth="70.0" text="문자값" />
+                                </columns>
+                              </TreeTableView>
                            </content>
                         </ScrollPane>
                      </content>
