@@ -152,6 +152,12 @@ public class IKADataController extends IKAController implements IKADataRequestIn
         return pList;
     }
 
+    /**
+     *
+     * @param patientRegId
+     * @param indexOfOpinion
+     * @return
+     */
     public List<OpinionReferenceList> getRuleReferenceListInOpinion(Long patientRegId, int indexOfOpinion){
         List<OpinionReferenceList> ruleListInOpinion = new ArrayList<OpinionReferenceList>();
         for (Map.Entry<Long, Patient> entry : this.patientManager.getAllPatients().entrySet()) {

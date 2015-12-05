@@ -15,6 +15,7 @@ public class RuleManager {
 
     private Long ruleNumber;
     private HashMap<Long, Rule> allRules;
+    private final int RULE_TOKENS_LENGTH = 6;
 
     // 혹시 추후 멀티스레딩을 위한.
     private volatile static RuleManager uniqueInstance;
@@ -88,7 +89,7 @@ public class RuleManager {
             String line = br.readLine();
 
             while (line != null) {
-                String[] tokens = line.split(Tags.RULE_SPLITER, 5);
+                String[] tokens = line.split(Tags.RULE_SPLITER, RULE_TOKENS_LENGTH);
                 /*
                  * Rule 형식
                  * id,author,madeDate,modifiedDate,AST+ALT-LiverDisease
