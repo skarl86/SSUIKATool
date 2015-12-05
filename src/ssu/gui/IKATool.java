@@ -129,7 +129,7 @@ public class IKATool extends Application implements Initializable {
     }
 
     @FXML protected void clickAddButton(ActionEvent event) throws IOException {
-        if(currentPatientId > 0) {
+        if(currentPatientId > 0 && opinionListView.getSelectionModel().getSelectedItems().size() > 0) {
             if(dataController.getPatientOpinion(currentPatientId).size() > 0){
                 IKAPaneController.PatientReferenceRow selectedItem = ruleReferenceTableView.getSelectionModel().getSelectedItem();
                 modalRuleEditView(event, null);
