@@ -1,5 +1,6 @@
 package ssu.gui.controller;
 
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -22,6 +23,7 @@ import ssu.gui.controller.entity.PreviousRuleRow;
 import ssu.gui.controller.factory.AtomCallFactor;
 import ssu.gui.controller.factory.PreviousRuleCallFactor;
 import ssu.gui.controller.factory.ValueCallFactor;
+import ssu.object.patient.Opinion;
 import ssu.object.patient.Patient;
 import ssu.object.rule.Atom;
 import ssu.object.rule.Rule;
@@ -31,6 +33,7 @@ import ssu.util.AppTestLog;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by NCri on 2015. 11. 14..
@@ -55,7 +58,8 @@ public class IKARulePopUpViewController extends IKAController implements Initial
     @FXML TableView<AtomRow> consequentTableView;
     @FXML TableView<PreviousRuleRow> completeRuleTable;
     @FXML TableView<PatientRow> patientTable;
-    @FXML TableView<PatientDetailRow> patientDetailTable;
+
+    @FXML TreeTableView<PatientDetailRow> patientDetailTable;
 
     @FXML TableColumn<AtomRow, String> antecedentColumn;
     @FXML TableColumn<AtomRow, String> antecedentValueColumn;
@@ -67,9 +71,9 @@ public class IKARulePopUpViewController extends IKAController implements Initial
     @FXML TableColumn<PatientRow, String> genderColumn;
     @FXML TableColumn<PatientRow, String> ageColumn;
 
-    @FXML TableColumn<PatientDetailRow, String> testNameColumn;
-    @FXML TableColumn<PatientDetailRow, String> testValueColumn;
-    @FXML TableColumn<PatientDetailRow, String> textValueColumn;
+    @FXML TreeTableColumn<PatientDetailRow, String> testNameColumn;
+    @FXML TreeTableColumn<PatientDetailRow, String> testValueColumn;
+    @FXML TreeTableColumn<PatientDetailRow, String> textValueColumn;
 
     @FXML TableColumn<PreviousRuleRow, String> completeRuleColumn;
 
@@ -341,17 +345,13 @@ public class IKARulePopUpViewController extends IKAController implements Initial
         );
 
         completeRuleColumn.setCellValueFactory(
-                new PropertyValueFactory<PreviousRuleRow, String>("completeRule")
+                new PropertyValueFactory<PreviousRuleRow, String>("previousRule")
         );
 
         idColumn.setCellValueFactory(new PropertyValueFactory<PatientRow, String>("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<PatientRow, String>("name"));
         genderColumn.setCellValueFactory(new PropertyValueFactory<PatientRow, String>("gender"));
         ageColumn.setCellValueFactory(new PropertyValueFactory<PatientRow, String>("age"));
-
-        testNameColumn.setCellValueFactory(new PropertyValueFactory<PatientDetailRow, String>("testName"));
-        testValueColumn.setCellValueFactory(new PropertyValueFactory<PatientDetailRow, String>("testValue"));
-        textValueColumn.setCellValueFactory(new PropertyValueFactory<PatientDetailRow, String>("textValue"));
 
         ObservableList<AtomRow> antecendentData = FXCollections.observableArrayList();
         ObservableList<AtomRow> consequentData = FXCollections.observableArrayList();
@@ -393,24 +393,21 @@ public class IKARulePopUpViewController extends IKAController implements Initial
                             refreshPatientTableView(patients);
                         }
                     }
-
                 }
             }
         });
 
-        /* 수정 필요...
+        // 수정 필요...
         patientTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
             if( newSelection != null) {
                 if (patientTable.getSelectionModel().getSelectedItem() != null) {
                     Patient selectedPat = patientsList.get(patientTable.getItems().indexOf(newSelection));
                     ArrayList<Opinion> tempOpin = selectedPat.getAllOpinions();
                     opinionTextArea.setText(tempOpin.get(0).getOpinion());
-                    refreshPatientDetailTableView(selectedPat.getAllTestResults());
+                    refreshPatientDetailTableView(selectedPat.getRegId());
                 }
             }
         });
-        */
-
     }
 
     /**
@@ -478,26 +475,23 @@ public class IKARulePopUpViewController extends IKAController implements Initial
     /**
      * UI상 환자 상세 정보가 Previous Rule을 선택 할 때 마다 갱신되어야 하기 때문에
      * 갱신을 위한 메소드.
-     * @param testResults
+     * @param patientID
      */
-    private void refreshPatientDetailTableView(ArrayList<TestResult> testResults){
-        /* 수정 필요...
-        ObservableList<PatientDetailRow> tempPatientDetailData = FXCollections.observableArrayList();
+    private void refreshPatientDetailTableView(Long patientID){
 
-        for(TestResult rst : testResults){
-            TestItem item = rst.getTestItem();
-            if(1 < rst.getTestValues().size()){
-                tempPatientDetailData.add(
-                        new PatientDetailRow(
-                                item.getName(), rst.getTestValues().get(0).getTestValue(), rst.getTestValues().get(1).getTestValue()));
-            }else{
-                tempPatientDetailData.add(
-                        new PatientDetailRow(item.getName(), rst.getTestValues().get(0).getTestValue(), "-"));
-            }
-        }
+        testNameColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<PatientDetailRow, String> p) -> new ReadOnlyStringWrapper(
+                        p.getValue().getValue().getTestName())
+        );
+        testValueColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<PatientDetailRow, String> p) -> new ReadOnlyStringWrapper(
+                        p.getValue().getValue().getTestValue())
+        );
+        textValueColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<PatientDetailRow, String> p) -> new ReadOnlyStringWrapper(
+                        p.getValue().getValue().getTextValue())
+        );
 
-        patientDetailTable.setItems(tempPatientDetailData);
-        */
+        // 수정 필요...
+        TreeItem<PatientDetailRow> root = IKADataController.getInstance().getTestResultTreeByPatientId(patientID);
+
     }
 
     /**
@@ -535,7 +529,7 @@ public class IKARulePopUpViewController extends IKAController implements Initial
 
         for(HashMap<String, String> atomAndValue : antcAtomAndValue){
             for(Map.Entry<String, String> atom : atomAndValue.entrySet()){
-                antecendentData.add(new AtomRow(atom.getKey(),atom.getKey()));
+                antecendentData.add(new AtomRow(atom.getKey(), atom.getKey()));
                 ComboBox<String> box = antecedentValueMap.get(index);
                 if(box ==null){
                     box = new ComboBox<String>();
@@ -604,21 +598,18 @@ public class IKARulePopUpViewController extends IKAController implements Initial
         ArrayList<String> antecedentList = new ArrayList<String>();
         ArrayList<String> consequentList = new ArrayList<String>();
 
-        for(Object row : antecedentTableView.getItems()){
-            antecedentList.add(((AtomRow)row).getAtom());
-        }
-        for(Object row : consequentTableView.getItems()){
-            consequentList.add(((AtomRow)row).getAtom());
-        }
+        antecedentList.addAll(antecedentTableView.getItems().stream()
+                .map(row -> ((AtomRow) row).getAtom()).collect(Collectors.toList()));
+        consequentList.addAll(consequentTableView.getItems().stream()
+                .map(row -> ((AtomRow) row).getAtom()).collect(Collectors.toList()));
 
         ArrayList<String> newCompleteRuleList = IKADataController.getInstance()
                 .getRuleCompletionList(antecedentList, consequentList);
 
         ObservableList<PreviousRuleRow> data = FXCollections.observableArrayList();
 
-        for(String rule : newCompleteRuleList){
-            data.add(new PreviousRuleRow(rule));
-        }
+        data.addAll(newCompleteRuleList.stream()
+                .map(PreviousRuleRow::new).collect(Collectors.toList()));
 
         completeRuleTable.setItems(data);
         clearPatientInformation();
@@ -630,7 +621,7 @@ public class IKARulePopUpViewController extends IKAController implements Initial
      */
     private void clearPatientInformation(){
         patientTable.getItems().clear();
-        patientDetailTable.getItems().clear();
+        patientDetailTable.setRoot(new TreeItem<>());
         opinionTextArea.clear();
     }
     /**

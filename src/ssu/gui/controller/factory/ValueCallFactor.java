@@ -27,12 +27,14 @@ public class ValueCallFactor extends RulePopUpViewCallFactor implements Callback
             @Override
             public void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
-                if (item != null) {
+                AtomRow atomRow = (AtomRow) getTableRow().getItem();
+
+                if (item != null && atomRow != null) {
                     AppTestLog.printLog("Initialize Value Column");
                     AppTestLog.printLog(getTableView().getId());
                     AppTestLog.printLog(String.valueOf(getIndex()));
                     AppTestLog.printLog(String.format("Value : [%s]", item));
-                    AtomRow atomRow = (AtomRow) getTableRow().getItem();
+                    AppTestLog.printLog(String.format("Atom : [%s]", atomRow.getAtom()));
 
                     HBox box = new HBox();
                     ComboBox<String> valueList = context.getAtomComboBox(getTableView(), getIndex());

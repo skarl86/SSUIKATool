@@ -135,11 +135,11 @@
                      <content>
                         <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="ALWAYS" prefHeight="571.0" prefViewportHeight="628.0" prefViewportWidth="350.0" prefWidth="86.0">
                            <content>
-                              <TreeTableView prefHeight="200.0" prefWidth="200.0">
+                              <TreeTableView fx:id="patientDetailTable" prefHeight="200.0" prefWidth="200.0">
                                 <columns>
-                                  <TreeTableColumn prefWidth="68.0" text="검사명" />
-                                  <TreeTableColumn prefWidth="68.0" text="수치값" />
-                                    <TreeTableColumn prefWidth="70.0" text="문자값" />
+                                  <TreeTableColumn fx:id="testNameColumn" prefWidth="68.0" text="검사명" />
+                                  <TreeTableColumn fx:id="testValueColumn" prefWidth="68.0" text="수치값" />
+                                    <TreeTableColumn fx:id="textValueColumn" prefWidth="70.0" text="문자값" />
                                 </columns>
                               </TreeTableView>
                            </content>
