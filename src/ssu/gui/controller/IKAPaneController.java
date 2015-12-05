@@ -259,7 +259,7 @@ public class IKAPaneController implements IKAPaneInterface {
                 if(highlightElm.contains(item.getTestName())){
                     highlightStlye = "-fx-background-color: linear-gradient(#95caff 0%, #77acff 90%, #e0e0e0 90%);";
                 }else{
-                    highlightStlye = getStyle();
+                    highlightStlye = "";
                 }
                 setStyle(highlightStlye);
             }
