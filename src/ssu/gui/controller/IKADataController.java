@@ -745,17 +745,19 @@ public class IKADataController extends IKAController implements IKADataRequestIn
         if (this.patientManager.getAllPatients().containsKey(patientId)) {
             Patient patient = this.patientManager.getAllPatients().get(patientId);
 
+            // patient의 상세 항목 정보를 가져옴.
             ArrayList<TestResultComponent> testResultComponents = new ArrayList<>(patient.getAllTestResults().values());
             for (TestResultComponent testResultComponent : testResultComponents) {
                 TestResultCategory testResultCategory = (TestResultCategory) testResultComponent;
-                if (testResultCategory.getTestResultComponents().size() > 1) {
+
+                if (testResultCategory.getTestResultComponents().size() > 1) { // 서브 항목이 포함된 검사항목일 경우.
                     ArrayList<TestResultComponent> testResults = testResultCategory.getTestResultComponents();
                     TestResult parent = (TestResult) testResults.get(0);
                     String result = "";
                     for (TestValue testValue : parent.getTestValues()) {
                         result += testValue.getTestValue() + " ";
                     }
-                    TestCategory parentTestCategory = (TestCategory) testComponents.get(parent.getCode());
+                    TestCategory parentTestCategory = (TestCategory) testComponents.get(testResultCategory.getCode());
 
                     TreeItem<String> parentNode = new TreeItem<>(((TestItem) parentTestCategory.getTestComponents().get(0)).getName() + " " + result);
                     for (int i=1; i<testResultCategory.getTestResultComponents().size(); i++) {
