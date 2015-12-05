@@ -72,9 +72,9 @@ public class IKATool extends Application implements Initializable {
     @FXML private TableColumn<IKAPaneController.PatientRow, String> textValueColumn;
 
     @FXML private TreeTableView<String> patientDetailTable;
-    @FXML private TreeTableColumn<PatientDetailRow, String> testNameColumn;
-    @FXML private TreeTableColumn<PatientDetailRow, String> testNumValueColumn;
-    @FXML private TreeTableColumn<PatientDetailRow, String> testTextValueColumn;
+    @FXML private TreeTableColumn<String, String> testNameColumn;
+    @FXML private TreeTableColumn<String, String> testNumValueColumn;
+    @FXML private TreeTableColumn<String, String> testTextValueColumn;
 
 //    @FXML private TableView<IKAPaneController.PatientDetailRow> patientDetailTable;
 //    @FXML private TableColumn<IKAPaneController.PatientDetailRow, String> testNameColumn;

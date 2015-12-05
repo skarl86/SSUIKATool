@@ -110,9 +110,9 @@ public class IKAPaneController implements IKAPaneInterface {
     private TableColumn<PatientRow, String> _textValueColumn;
 
     private TreeTableView<String> _patientDetailTable;
-    private TreeTableColumn<PatientDetailRow, String> _testNameColumn;
-    private TreeTableColumn<PatientDetailRow, String> _numValueColumn;
-    private TreeTableColumn<PatientDetailRow, String> _testTextValueColumn;
+    private TreeTableColumn<String, String> _testNameColumn;
+    private TreeTableColumn<String, String> _numValueColumn;
+    private TreeTableColumn<String, String> _testTextValueColumn;
 
     /*
     private TableView<PatientDetailRow> _patientDetailTable;
@@ -220,14 +220,14 @@ public class IKAPaneController implements IKAPaneInterface {
 
         TreeItem<String> treeItems = dataController.getTestResultTreeByPatientId(patientId);
 
-        _testNameColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<PatientDetailRow, String> p) -> new ReadOnlyStringWrapper(
-                p.getValue().getValue().getTestName())
+        _testNameColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<String, String> p) -> new ReadOnlyStringWrapper(
+                p.getValue().getValue())
         );
-        _numValueColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<PatientDetailRow, String> p) -> new ReadOnlyStringWrapper(
-                p.getValue().getValue().getTestValue())
+        _numValueColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<String, String> p) -> new ReadOnlyStringWrapper(
+                p.getValue().getValue())
         );
-        _testTextValueColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<PatientDetailRow, String> p) -> new ReadOnlyStringWrapper(
-                p.getValue().getValue().getTextValue())
+        _testTextValueColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<String, String> p) -> new ReadOnlyStringWrapper(
+                p.getValue().getValue())
         );
 //        _testNameColumn.setCellValueFactory(
 //                new PropertyValueFactory<PatientDetailRow, String>("testName")
@@ -250,8 +250,8 @@ public class IKAPaneController implements IKAPaneInterface {
     }
     @Override
     public void createPatientDetailList(
-            TreeTableView<String> patientDetailTable, TreeTableColumn<PatientDetailRow, String> testNameColumn,
-            TreeTableColumn<PatientDetailRow, String> numValueColumn, TreeTableColumn<PatientDetailRow, String> textValueColumn) {
+            TreeTableView<String> patientDetailTable, TreeTableColumn<String, String> testNameColumn,
+            TreeTableColumn<String, String> numValueColumn, TreeTableColumn<String, String> textValueColumn) {
         if(_patientDetailTable == null)
             _patientDetailTable = patientDetailTable;
         if(_testNameColumn == null)
