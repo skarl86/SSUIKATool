@@ -27,6 +27,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -40,6 +41,7 @@ import ssu.util.AppTestLog;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -308,6 +310,20 @@ public class IKATool extends Application implements Initializable {
         graphStage.show();
 
     }
+
+    /*
+    메뉴 바에서 FileExport 클릭 시 이벤트
+    윈도우 파일 브라우져 창 뜸
+     */
+    @FXML protected void menuBarFileExportClickEvent(ActionEvent event){
+        FileChooser fileChooser = new FileChooser();
+        Stage fileWindowStage = new Stage();
+        File file = fileChooser.showSaveDialog(fileWindowStage);
+        if (file != null) {
+            System.out.println("Save Path : "+file.getPath().toString());
+        }
+    }
+
 
     /**
      * Exp : App 종료시 설정되어 있는 Atom, Rule, TestItem, Patient의 정보를 모두 Save.
