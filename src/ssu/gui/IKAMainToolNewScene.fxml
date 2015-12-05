@@ -110,8 +110,8 @@
                                     <TreeTableView fx:id="patientDetailTable" prefHeight="200.0" prefWidth="200.0">
                                       <columns>
                                         <TreeTableColumn fx:id="testNameColumn" prefWidth="125.0" text="항목" />
-                                        <TreeTableColumn fx:id="testNumValueColumn" prefWidth="107.0" text="상세 항목" />
-                                          <TreeTableColumn fx:id="testTextValueColumn" prefWidth="117.0" text="수치" />
+                                        <TreeTableColumn fx:id="testNumValueColumn" prefWidth="107.0" text="수치 값" />
+                                          <TreeTableColumn fx:id="testTextValueColumn" prefWidth="117.0" text="문자 값" />
                                       </columns>
                                     </TreeTableView>
                                  </content>
