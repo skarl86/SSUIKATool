@@ -4,10 +4,13 @@ import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.css.PseudoClass;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 import ssu.gui.controller.entity.PatientDetailRow;
 import ssu.object.AtomManager;
 import ssu.object.patient.Patient;
@@ -215,9 +218,8 @@ public class IKAPaneController implements IKAPaneInterface {
         _patientTableView.setItems(data);
     }
     @Override
-    public void refreshPatientDetailList(IKADataController dataController, Long patientId){
+    public void refreshPatientDetailList(IKADataController dataController, Long patientId, final ArrayList<String> highlightElm){
 //        ArrayList<IKADataController.PatientDetailListElement> elmList = (ArrayList) dataController.getPatientsDetailList(patientId);
-
         TreeItem<PatientDetailRow> treeItems = dataController.getTestResultTreeByPatientId(patientId);
 
         _testNameColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<PatientDetailRow, String> p) -> new ReadOnlyStringWrapper(
@@ -229,6 +231,7 @@ public class IKAPaneController implements IKAPaneInterface {
         _testTextValueColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<PatientDetailRow, String> p) -> new ReadOnlyStringWrapper(
                 p.getValue().getValue().getTextValue())
         );
+
 //        _testNameColumn.setCellValueFactory(
 //                new PropertyValueFactory<PatientDetailRow, String>("testName")
 //        );
@@ -247,6 +250,22 @@ public class IKAPaneController implements IKAPaneInterface {
 //
 //        _patientDetailTable.setItems(data);
         _patientDetailTable.setRoot(treeItems);
+
+        _patientDetailTable.setRowFactory(param -> new TreeTableRow<PatientDetailRow>() {
+            protected void updateItem(PatientDetailRow item, boolean empty){
+                super.updateItem(item, empty);
+                if(item == null || highlightElm == null) return;
+                String highlightStlye;
+                if(highlightElm.contains(item.getTestName())){
+                    highlightStlye = "-fx-background-color: linear-gradient(#95caff 0%, #77acff 90%, #e0e0e0 90%);";
+                }else{
+                    highlightStlye = getStyle();
+                }
+                setStyle(highlightStlye);
+            }
+        });
+
+
     }
     @Override
     public void createPatientDetailList(

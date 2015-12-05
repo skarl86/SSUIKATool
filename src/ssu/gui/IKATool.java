@@ -196,7 +196,7 @@ public class IKATool extends Application implements Initializable {
             if(selectedItem.getValue().split(" ").length > 1){
                 currentPatientId = Long.valueOf(selectedItem.getValue().split(" ")[0]);
                 paneController.refreshPatientDefaultList(dataController, currentPatientId);
-                paneController.refreshPatientDetailList(dataController, currentPatientId);
+                paneController.refreshPatientDetailList(dataController, currentPatientId, null);
                 paneController.refreshPatientOpinionList(dataController,currentPatientId);
                 paneController.refreshPatientOpinionReferenceList(dataController, currentPatientId, 0);
 //                    paneController.refreshOpinionPageLabel(dataController, opinionPageLabel, currentPatientId);
@@ -206,6 +206,7 @@ public class IKATool extends Application implements Initializable {
 
         opinionListView.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
             AppTestLog.printLog(newValue);
+            paneController.refreshPatientDetailList(dataController, currentPatientId, dataController.getHighlightElementByOpinion(newValue));
         }));
     }
 

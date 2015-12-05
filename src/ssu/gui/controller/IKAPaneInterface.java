@@ -3,6 +3,7 @@ package ssu.gui.controller;
 import javafx.scene.control.*;
 import ssu.gui.controller.entity.PatientDetailRow;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +15,7 @@ public interface IKAPaneInterface {
     public void createPatientTree(TreeView patientTreeView, Map<String, List<IKADataController.PatientListElement>> patientMap);
     public void createPatientDefaultList(TableView patientTableView, TableColumn<IKAPaneController.PatientRow, String> subjectColumn, TableColumn<IKAPaneController.PatientRow, String> textValueColumn);
     public void refreshPatientDefaultList(IKADataController dataController, Long patientId);
-    public void refreshPatientDetailList(IKADataController dataController, Long patientId);
+    public void refreshPatientDetailList(IKADataController dataController, Long patientId, ArrayList<String> highlightElm);
     public void createPatientDetailList(
             TreeTableView<PatientDetailRow> patientDetailTable, TreeTableColumn<PatientDetailRow, String> testNameColumn,
             TreeTableColumn<PatientDetailRow, String> numValueColumn, TreeTableColumn<PatientDetailRow, String> textValueColumn);
