@@ -34,6 +34,7 @@ import javafx.stage.WindowEvent;
 import ssu.gui.controller.IKADataController;
 import ssu.gui.controller.IKAPaneController;
 import ssu.gui.controller.IKARulePopUpViewController;
+import ssu.gui.controller.entity.PatientDetailRow;
 import ssu.gui.view.GraphView;
 import ssu.object.RuleManager;
 import ssu.object.rule.Rule;
@@ -62,13 +63,18 @@ public class IKATool extends Application implements Initializable {
     @FXML private ListView<String> opinionListView;
 
     @FXML private SplitPane leftSplitPane;
-//    @FXML private SplitPane rightSplitPane;
+    @FXML private SplitPane rightSplitPane;
 
     @FXML private TreeView patientTreeView;
 
     @FXML private TableView<IKAPaneController.PatientRow> patientTableView;
     @FXML private TableColumn<IKAPaneController.PatientRow, String> subjectColumn;
     @FXML private TableColumn<IKAPaneController.PatientRow, String> textValueColumn;
+
+    @FXML private TreeTableView<String> patientDetailTable;
+    @FXML private TreeTableColumn<PatientDetailRow, String> testNameColumn;
+    @FXML private TreeTableColumn<PatientDetailRow, String> testNumValueColumn;
+    @FXML private TreeTableColumn<PatientDetailRow, String> testTextValueColumn;
 
 //    @FXML private TableView<IKAPaneController.PatientDetailRow> patientDetailTable;
 //    @FXML private TableColumn<IKAPaneController.PatientDetailRow, String> testNameColumn;
@@ -176,7 +182,7 @@ public class IKATool extends Application implements Initializable {
     public void initView(){
         this.paneController.createPatientTree(patientTreeView, this.dataController.getPatientsList());
         this.paneController.createPatientDefaultList(patientTableView,subjectColumn,textValueColumn);
-//        this.paneController.createPatientDetailList(patientDetailTable, testNameColumn, testNumValueColumn, testTextValueColumn );
+        this.paneController.createPatientDetailList(patientDetailTable, testNameColumn, testNumValueColumn, testTextValueColumn );
 //        this.paneController.createPatientOpinionList(opinionTextArea);
         this.paneController.createOpinionList(dataController, opinionListView, currentPatientId);
         this.paneController.createPatientOpinionReferenceList(ruleReferenceTableView, ruleIdColumn,
@@ -184,25 +190,23 @@ public class IKATool extends Application implements Initializable {
 //        paneController.refreshOpinionPageLabel(dataController, opinionPageLabel, currentPatientId);
 
         // Action 등록.
-        patientTreeView.getSelectionModel().selectedItemProperty().addListener( new ChangeListener() {
+        patientTreeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 
-            @Override
-            public void changed(ObservableValue observable, Object oldValue,
-                                Object newValue) {
-
-                TreeItem<String> selectedItem = (TreeItem<String>) newValue;
-                if(selectedItem.getValue().split(" ").length > 1){
-                    currentPatientId = Long.valueOf(selectedItem.getValue().split(" ")[0]);
-                    paneController.refreshPatientDefaultList(dataController, currentPatientId);
-                    paneController.refreshPatientDetailList(dataController, currentPatientId);
-                    paneController.refreshPatientOpinionList(dataController,currentPatientId);
-                    paneController.refreshPatientOpinionReferenceList(dataController, currentPatientId, 0);
+            TreeItem<String> selectedItem = (TreeItem<String>) newValue;
+            if(selectedItem.getValue().split(" ").length > 1){
+                currentPatientId = Long.valueOf(selectedItem.getValue().split(" ")[0]);
+                paneController.refreshPatientDefaultList(dataController, currentPatientId);
+                paneController.refreshPatientDetailList(dataController, currentPatientId);
+                paneController.refreshPatientOpinionList(dataController,currentPatientId);
+                paneController.refreshPatientOpinionReferenceList(dataController, currentPatientId, 0);
 //                    paneController.refreshOpinionPageLabel(dataController, opinionPageLabel, currentPatientId);
-                }
-                // do what ever you want
             }
-
+            // do what ever you want
         });
+
+        opinionListView.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
+            AppTestLog.printLog(oldValue);
+        }));
     }
 
 //    public int getOpinionIndex(){
@@ -347,11 +351,11 @@ public class IKATool extends Application implements Initializable {
             System.out.println("Your name: " + result.get());
             authorName = result.get();
             leftSplitPane.setDisable(false);
-//            rightSplitPane.setDisable(false);
+            rightSplitPane.setDisable(false);
         }
         //System.out.println("Your name: " + result.get());
         leftSplitPane.setDisable(false);
-//        rightSplitPane.setDisable(false);
+        rightSplitPane.setDisable(false);
     }
 
     private void modalRuleEditView(ActionEvent event, IKAPaneController.PatientReferenceRow selectedItem) throws IOException {
