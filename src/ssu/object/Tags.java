@@ -32,6 +32,7 @@ public final class Tags {
      */
     public static final String ATOM_SPLITER = ",";
     public static final String ATOM_VALUE_SPLITER = "_";
+    public static final String ATOM_STRING_VALUE_SPLITER = "!";
 
     public static final String RULE_SPLITER = ",";
     public static final String RULE_THEN_SPLITER = ":";
@@ -88,6 +89,10 @@ public final class Tags {
     public static final String TEST_VALUE_TYPE_RH = "RH";
     public static final String TEST_VALUE_TYPE_RANGE = "RA";
     public static final String TEST_VALUE_TYPE_ETC = "ETC";
+    public static final String TEST_VALUE_TYPE_CELL = "CEL";
+    public static final String TEST_VALUE_TYPE_CELL_DEAD = "Dead";
+    public static final String TEST_VALUE_TYPE_CELL_OBSTRUCTION = "Obstruction";
+    public static final String TEST_VALUE_TYPE_CELL_DISORDER = "Disorder";
 
     /**
      * 입력받은 type에 따라 관련 List를 리턴.
@@ -97,27 +102,31 @@ public final class Tags {
     public static final ArrayList<String> getTypeList(String type) {
         ArrayList<String> list = new ArrayList<String>();
 
-        if (type.equals("HL")) {                    // High, Low, Normal
+        if (type.equals(Tags.TEST_VALUE_TYPE_HIGHLOW)) {                    // High, Low, Normal
             list.add(Tags.TEST_VALUE_TYPE_HIGH);
             list.add(Tags.TEST_VALUE_TYPE_LOW);
             list.add(Tags.TEST_VALUE_TYPE_NORMAL_VALUE);
-        } else if (type.equals("PN")) {             // Positive, Negative
+        } else if (type.equals(Tags.TEST_VALUE_TYPE_POSNEG)) {             // Positive, Negative
             list.add(Tags.TEST_VALUE_TYPE_POS);
             list.add(Tags.TEST_VALUE_TYPE_NEG);
-        } else if (type.equals("RN")) {             // Active, Non Reactive
+        } else if (type.equals(Tags.TEST_VALUE_TYPE_REACTIVE_NONREACTIVE)) {             // Active, Non Reactive
             list.add(Tags.TEST_VALUE_TYPE_REACTIVE);
             list.add(Tags.TEST_VALUE_TYPE_NONREATIVE);
-        } else if (type.equals("FN")) {             // Found, Not found
+        } else if (type.equals(Tags.TEST_VALUE_TYPE_FOUNDNOTFOUND)) {             // Found, Not found
             list.add(Tags.TEST_VALUE_TYPE_FOUND);
             list.add(Tags.TEST_VALUE_TYPE_NOT_FOUND);
-        } else if (type.equals("ABO")) {            // Blood Type
+        } else if (type.equals(Tags.TEST_VALUE_TYPE_BLOOD)) {            // Blood Type
             list.add(Tags.TEST_VALUE_TYPE_BLOOD_A);
             list.add(Tags.TEST_VALUE_TYPE_BLOOD_B);
             list.add(Tags.TEST_VALUE_TYPE_BLOOD_O);
             list.add(Tags.TEST_VALUE_TYPE_BLOOD_AB);
-        } else if (type.equals("RH")) {             // Rh Positive, Negative
+        } else if (type.equals(Tags.TEST_VALUE_TYPE_RH)) {             // Rh Positive, Negative
             list.add(Tags.TEST_VALUE_TYPE_POS);
             list.add(Tags.TEST_VALUE_TYPE_NEG);
+        } else if (type.equals(Tags.TEST_VALUE_TYPE_CELL)) {    // Cell type -> Dead, Disorder, Obstruction
+            list.add(Tags.TEST_VALUE_TYPE_CELL_DEAD);
+            list.add(Tags.TEST_VALUE_TYPE_CELL_DISORDER);
+            list.add(Tags.TEST_VALUE_TYPE_CELL_OBSTRUCTION);
         } else {                                    // 없으면
             list.add(Tags.TEST_VALUE_TYPE_HIGH);
             list.add(Tags.TEST_VALUE_TYPE_LOW);
@@ -154,6 +163,10 @@ public final class Tags {
             } else if (exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_REACTIVE) ||
                     exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_NONREATIVE)) {
                 types = Tags.TEST_VALUE_TYPE_REACTIVE_NONREACTIVE;
+            } else if (exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_CELL_DEAD) ||
+                    exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_CELL_DISORDER) ||
+                    exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_CELL_OBSTRUCTION)) {   // Cell type
+                types = Tags.TEST_VALUE_TYPE_CELL;
             } else {        // etc : 추후 타입이 추가될 수 있음.
                 types = Tags.TEST_VALUE_TYPE_ETC;
             }
@@ -181,10 +194,14 @@ public final class Tags {
                     exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_BLOOD_O)) {     // Blood type
                 return new BloodType(exceptHighLowToken);
             } else if (exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_REACTIVE) ||
-                    exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_NONREATIVE)) {
+                    exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_NONREATIVE)) { // Reactive, Non-reactive
                 return new Reactive_NonReative(exceptHighLowToken);
             } else if (exceptHighLowToken.contains("-")) {       // Range
                 return new Range(exceptHighLowToken);
+            } else if (exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_CELL_DEAD) ||
+                    exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_CELL_DISORDER) ||
+                    exceptHighLowToken.contains(Tags.TEST_VALUE_TYPE_CELL_OBSTRUCTION)) {   // Cell type
+                return new CellType(exceptHighLowToken);
             } else {        // etc : 추후 타입이 추가될 수 있음.
                 return new Etc(exceptHighLowToken);
             }

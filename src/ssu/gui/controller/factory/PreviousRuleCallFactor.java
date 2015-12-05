@@ -1,7 +1,6 @@
 package ssu.gui.controller.factory;
 
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;

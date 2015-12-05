@@ -15,6 +15,7 @@ import java.util.Map;
 public class AtomManager {
 
     private HashMap<String, Atom> allAtoms;
+    private final int ATOM_TOKENS_LENGTH = 3;
 
     // 혹시 추후 멀티스레딩을 위한.
     private volatile static AtomManager uniqueInstance;
@@ -47,23 +48,40 @@ public class AtomManager {
             String line = br.readLine();
 
             while (line != null) {
-                String[] tokens = line.split(Tags.ATOM_SPLITER);
+                String[] tokens = line.split(Tags.ATOM_SPLITER, ATOM_TOKENS_LENGTH);
                 /*
                  * Atom 형식
-                 * name,type
+                 * name,type,StringValue1!StringValue2
                  */
                 String name = tokens[0];
                 // token의 마지막이 atom의 타입.
-                int atomType = Integer.parseInt(tokens[tokens.length-1]);
+                int atomType = Integer.parseInt(tokens[1]);
+                String stringtValues = tokens[2];
 
+                // Atom에 대한 type을 정의(Class/Predicate)
+                Atom newAtom = null;
                 switch (atomType) {
                     case Tags.ATOM_TYPE_CLASS:
-                        this.allAtoms.put(tokens[0], new AtomClass(name));
+                        newAtom = new AtomClass(name);
                         break;
                     case Tags.ATOM_TYPE_PREDICATE:
-                        // WARN : 구현하지 않음.
+                        // WARN : 현재 Predicate는 존재하지 않음.
+                        newAtom = new AtomPredicate(name);
                         break;
                 }
+
+                //Atom이 가질 수 있는 StringValue
+                if (!stringtValues.isEmpty() && stringtValues.contains(Tags.ATOM_STRING_VALUE_SPLITER)) { // 여러개의 StringValue를 가질 경우.
+                    String[] values = stringtValues.split(Tags.ATOM_STRING_VALUE_SPLITER);
+
+                    for (String value : values) {
+                        newAtom.addStringValue(value);
+                    }
+                } else {                                                      // 하나의 StringValue를 가질 경우.
+                    newAtom.addStringValue(stringtValues);
+                }
+
+                this.allAtoms.put(newAtom.getName(), newAtom);
 
                 line = br.readLine();
             }
@@ -120,14 +138,18 @@ public class AtomManager {
     public Atom getAtomOrCreate(String value, int type) {
         Atom atom = null;
 
-        if (this.allAtoms.containsKey(value)) {
+        if (this.allAtoms.containsKey(value)) { // 이미 존재하는 Atom일 경우.
             atom = this.allAtoms.get(value);
         } else {
             // 새로운 Atom을 생성.
             // 1. Value가 있는 경우.
             if (value.contains(Tags.ATOM_VALUE_SPLITER)) {
-                atom = new AtomClass(value.substring(0, value.indexOf(Tags.ATOM_VALUE_SPLITER)));
-                addAtom(atom);
+                String orginAtomStr = value.substring(0, value.indexOf(Tags.ATOM_VALUE_SPLITER));
+                if (!this.allAtoms.containsKey(orginAtomStr)) { // Value를 제거한 Atom도 존재하지 않을 때에만 추가.
+                    atom = new AtomClass(value.substring(0, value.indexOf(Tags.ATOM_VALUE_SPLITER)));
+                    atom.addAllStringValues(Tags.getTypeList(""));
+                    addAtom(atom);
+                }
             }
 
             switch (type) {
@@ -138,6 +160,8 @@ public class AtomManager {
                     atom = new AtomPredicate(value);
                     break;
             }
+
+            atom.addAllStringValues(Tags.getTypeList(""));
 
             // 새로 생성한 Atom을 추가.
             addAtom(atom);
