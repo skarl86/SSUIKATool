@@ -105,6 +105,7 @@ public final class Tags {
         if (type.equals(Tags.TEST_VALUE_TYPE_HIGHLOW)) {                    // High, Low, Normal
             list.add(Tags.TEST_VALUE_TYPE_HIGH);
             list.add(Tags.TEST_VALUE_TYPE_LOW);
+        } else if (type.equals(Tags.TEST_VALUE_TYPE_NORMAL)) {              // Normal
             list.add(Tags.TEST_VALUE_TYPE_NORMAL_VALUE);
         } else if (type.equals(Tags.TEST_VALUE_TYPE_POSNEG)) {             // Positive, Negative
             list.add(Tags.TEST_VALUE_TYPE_POS);

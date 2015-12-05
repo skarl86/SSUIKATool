@@ -147,7 +147,9 @@ public class AtomManager {
                 String orginAtomStr = value.substring(0, value.indexOf(Tags.ATOM_VALUE_SPLITER));
                 if (!this.allAtoms.containsKey(orginAtomStr)) { // Value를 제거한 Atom도 존재하지 않을 때에만 추가.
                     atom = new AtomClass(value.substring(0, value.indexOf(Tags.ATOM_VALUE_SPLITER)));
-                    atom.addAllStringValues(Tags.getTypeList(""));
+                    atom.addStringValue(Tags.TEST_VALUE_TYPE_HIGHLOW);
+                    atom.addStringValue(Tags.TEST_VALUE_TYPE_POSNEG);
+                    atom.addStringValue(Tags.TEST_VALUE_TYPE_NORMAL);
                     addAtom(atom);
                 }
             }
@@ -161,7 +163,9 @@ public class AtomManager {
                     break;
             }
 
-            atom.addAllStringValues(Tags.getTypeList(""));
+            atom.addStringValue(Tags.TEST_VALUE_TYPE_HIGHLOW);
+            atom.addStringValue(Tags.TEST_VALUE_TYPE_POSNEG);
+            atom.addStringValue(Tags.TEST_VALUE_TYPE_NORMAL);
 
             // 새로 생성한 Atom을 추가.
             addAtom(atom);
