@@ -492,6 +492,7 @@ public class IKARulePopUpViewController extends IKAController implements Initial
         // 수정 필요...
         TreeItem<PatientDetailRow> root = IKADataController.getInstance().getTestResultTreeByPatientId(patientID);
 
+        patientDetailTable.setRoot(root);
     }
 
     /**
