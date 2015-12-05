@@ -150,4 +150,8 @@ public class Patient implements Savable {
     public void setAllOpinions(ArrayList<Opinion> allOpinions) {
         this.allOpinions = allOpinions;
     }
+
+    public void setAllTestResults(HashMap<String, TestResultComponent> allTestResults) {
+        this.allTestResults = allTestResults;
+    }
 }

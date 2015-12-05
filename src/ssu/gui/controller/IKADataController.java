@@ -687,16 +687,15 @@ public class IKADataController extends IKAController implements IKADataRequestIn
     }
 
     /**
-     *
-     * @param formalString
+     *  파라미터로 받은 Rule을 참조하는 환자 목록을 리턴.
+     * @param formalString Rule의 Formal 형태
      * @return
      */
     public ArrayList<Patient> getTempPatientList(String formalString){
         ArrayList<Patient> tempPatientList = new ArrayList<Patient>();
-        /* 수정 필요...
+
         Rule rule = getRuleByFormalFormat(formalString);
         HashMap<Long, Patient> patientMap = patientManager.getAllPatients();
-
 
         if(rule != null){
             // key -> patient id, values -> opinion index
@@ -714,7 +713,7 @@ public class IKADataController extends IKAController implements IKADataRequestIn
                 tempPatientList.add(tempPat);
             }
         }
-        */
+
         return tempPatientList;
     }
 
