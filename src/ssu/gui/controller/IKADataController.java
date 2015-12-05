@@ -1,6 +1,7 @@
 package ssu.gui.controller;
 
 import javafx.scene.control.TreeItem;
+import ssu.gui.controller.entity.PatientDetailRow;
 import ssu.object.*;
 import ssu.object.patient.Opinion;
 import ssu.object.patient.Patient;
@@ -737,11 +738,11 @@ public class IKADataController extends IKAController implements IKADataRequestIn
      * @param patientId
      * @return
      */
-    public TreeItem<String> getTestResultTreeByPatientId(Long patientId) {
+    public TreeItem<PatientDetailRow> getTestResultTreeByPatientId(Long patientId) {
 
         HashMap<String, TestComponent> testComponents = this.testItemManager.getAllTestItems();
 
-        TreeItem<String> rootNode = new TreeItem<>(patientId + "");
+        TreeItem<PatientDetailRow> rootNode = new TreeItem<>(new PatientDetailRow(patientId + "","",""));
         if (this.patientManager.getAllPatients().containsKey(patientId)) {
             Patient patient = this.patientManager.getAllPatients().get(patientId);
 
@@ -759,7 +760,7 @@ public class IKADataController extends IKAController implements IKADataRequestIn
                     }
                     TestCategory parentTestCategory = (TestCategory) testComponents.get(testResultCategory.getCode());
 
-                    TreeItem<String> parentNode = new TreeItem<>(((TestItem) parentTestCategory.getTestComponents().get(0)).getName() + " " + result);
+                    TreeItem<PatientDetailRow> parentNode = new TreeItem<PatientDetailRow>(new PatientDetailRow("", ((TestItem) parentTestCategory.getTestComponents().get(0)).getName() + " " + result, ""));
                     for (int i=1; i<testResultCategory.getTestResultComponents().size(); i++) {
                         TestResult testResult = (TestResult) testResultCategory.getTestResultComponents().get(i);
                         TestItem testItem = (TestItem) parentTestCategory.getTestComponents().get(i);
@@ -769,7 +770,7 @@ public class IKADataController extends IKAController implements IKADataRequestIn
                             value += testValue.getTestValue() + " ";
                         }
 
-                        parentNode.getChildren().add(new TreeItem<>(testItem.getName() + " " + value));
+                        parentNode.getChildren().add(new TreeItem<PatientDetailRow>(new PatientDetailRow("", "", testItem.getName() + " " + value)));
 
                     }
 
@@ -780,7 +781,7 @@ public class IKADataController extends IKAController implements IKADataRequestIn
                     for (TestValue testValue : testResult.getTestValues()) {
                         label += testValue.getTestValue() + " ";
                     }
-                    rootNode.getChildren().add(new TreeItem<>(label));
+                    rootNode.getChildren().add(new TreeItem<PatientDetailRow>(new PatientDetailRow("", label, "")));
                 }
             }
 

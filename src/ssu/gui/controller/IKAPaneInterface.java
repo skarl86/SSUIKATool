@@ -16,8 +16,8 @@ public interface IKAPaneInterface {
     public void refreshPatientDefaultList(IKADataController dataController, Long patientId);
     public void refreshPatientDetailList(IKADataController dataController, Long patientId);
     public void createPatientDetailList(
-            TreeTableView<String> patientDetailTable, TreeTableColumn<String, String> testNameColumn,
-            TreeTableColumn<String, String> numValueColumn, TreeTableColumn<String, String> textValueColumn);
+            TreeTableView<PatientDetailRow> patientDetailTable, TreeTableColumn<PatientDetailRow, String> testNameColumn,
+            TreeTableColumn<PatientDetailRow, String> numValueColumn, TreeTableColumn<PatientDetailRow, String> textValueColumn);
     public void createPatientOpinionList(TextArea opinionTextArea);
     public void createOpinionList(IKADataController dataController, ListView<String> listView, Long patientId);
     //public void refreshPatientOpinionList(IKADataController dataController, Long patientId);
