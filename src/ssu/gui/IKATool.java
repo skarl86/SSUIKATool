@@ -134,6 +134,8 @@ public class IKATool extends Application implements Initializable {
                 IKAPaneController.PatientReferenceRow selectedItem = ruleReferenceTableView.getSelectionModel().getSelectedItem();
                 modalRuleEditView(event, null);
             }
+        }else{
+            showWarningSelectedOpinionAlert();
         }
     }
 
@@ -141,6 +143,8 @@ public class IKATool extends Application implements Initializable {
         IKAPaneController.PatientReferenceRow selectedItem = ruleReferenceTableView.getSelectionModel().getSelectedItem();
         if(selectedItem != null){
             modalRuleEditView(event, selectedItem);
+        }else{
+            showWarningSelectedOpinionAlert();
         }
     }
 
@@ -176,6 +180,14 @@ public class IKATool extends Application implements Initializable {
 //        paneController.refreshOpinionPageLabel(dataController, opinionPageLabel, currentPatientId);
 //    }
 
+    public void showWarningSelectedOpinionAlert(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("확인창");
+        alert.setHeaderText("확인 부탁드립니다.");
+        alert.setContentText("소견을 먼저 선택해주세요.");
+
+        alert.showAndWait();
+    }
     public void initView(){
         this.paneController.createPatientTree(patientTreeView, this.dataController.getPatientsList());
         this.paneController.createPatientDefaultList(patientTableView,subjectColumn,textValueColumn);
