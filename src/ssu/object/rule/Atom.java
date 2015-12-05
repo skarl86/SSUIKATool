@@ -23,6 +23,10 @@ public abstract class Atom implements Savable {
         return this.stringValues.add(value);
     }
 
+    public boolean addAllStringValues(ArrayList<String> values) {
+        return this.stringValues.addAll(values);
+    }
+
     /**
      * 입력받은 StringValue 타입을 제거.
      * @param value
