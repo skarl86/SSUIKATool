@@ -555,18 +555,21 @@ public class IKADataController extends IKAController implements IKADataRequestIn
      */
     public ArrayList<String> getAtomValueList(String atom) {
         ArrayList<String> list = new ArrayList<String>();
-        /* 수정필요 ...
-        HashMap<String, TestItem> allTestItems = this.testItemManager.getAllTestItems();
 
-        if (allTestItems.containsKey(atom)) {
-            ArrayList<String> types = allTestItems.get(atom).getTypes();
-            for (String type : types) {
+        // 1. Atom 리스트를 검색해서 이미 존재하는 Atom이면 해당 Atom의 StringValue들을 가져옴
+        // 2. Atom 리스트에 없을 경우 동일한 이름의 검사항목이 있는지 검색 후 해당 검사항목의 StringValue들을 가져옴
+        // 3. 없을 경우 기본 StringValue들을 가져옴
+        HashMap<String, Atom> allAtoms = this.atomManager.getAllAtoms();
+        if (allAtoms.containsKey(atom)) {
+            for (String type : allAtoms.get(atom).getStringValues()) {
                 list.addAll(Tags.getTypeList(type));
             }
+        } else if (this.testItemManager.containsTestItem(atom)) {
+            list.addAll(this.testItemManager.getStringValueByName(atom));
         } else {
             list.addAll(Tags.getTypeList(""));
         }
-        */
+
         return list;
     }
 

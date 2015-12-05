@@ -1,6 +1,5 @@
 package ssu.object.test;
 
-import ssu.object.HasStringType;
 import ssu.object.Tags;
 
 import java.util.ArrayList;

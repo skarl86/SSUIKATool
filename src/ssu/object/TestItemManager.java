@@ -5,6 +5,7 @@ import ssu.object.test.TestComponent;
 import ssu.object.test.TestItem;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -144,6 +145,54 @@ public class TestItemManager {
 
     public void addTestItem(TestItem testItem) {
         this.allTestItems.put(testItem.getName(), testItem);
+    }
+
+    /**
+     * 파라미터로 받은 문자열에 해당하는 검사항목이 존재하는지 검사.
+     * @param name
+     * @return
+     */
+    public boolean containsTestItem(String name) {
+        ArrayList<TestComponent> testComponents = new ArrayList<TestComponent>(getAllTestItems().values());
+
+        for (TestComponent testComponent : testComponents) {
+            TestCategory testCategory = (TestCategory) testComponent;
+
+            for (TestComponent testComponent1 : testCategory.getTestComponents()) {
+                TestItem testItem = (TestItem) testComponent1;
+
+                if (testItem.getName().equals(name)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * 파라미터로 받은 문자열에 해당하는 검사항목의 StringValue들의 목록을 리턴.
+     * @param name
+     * @return
+     */
+    public ArrayList<String> getStringValueByName(String name) {
+        ArrayList<String> list = new ArrayList<>();
+
+        ArrayList<TestComponent> testComponents = new ArrayList<TestComponent>(getAllTestItems().values());
+
+        for (TestComponent testComponent : testComponents) {
+            TestCategory testCategory = (TestCategory) testComponent;
+
+            for (TestComponent testComponent1 : testCategory.getTestComponents()) {
+                TestItem testItem = (TestItem) testComponent1;
+
+                if (testItem.getName().equals(name)) {
+                    list.addAll(testItem.getTypes());
+                }
+            }
+        }
+
+        return list;
     }
 
     /*
