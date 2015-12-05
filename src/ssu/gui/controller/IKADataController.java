@@ -10,6 +10,7 @@ import ssu.object.rule.Rule;
 import ssu.object.test.*;
 import ssu.object.test.value.TestValue;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -827,8 +828,26 @@ public class IKADataController extends IKAController implements IKADataRequestIn
 
     }
 
+    /**
+     * 파라미터로 받은 소견의 문자열에서 포함된 검사항목의 이름을 리스트로 리턴
+     * @param opinionFormalString
+     * @return
+     */
     public ArrayList<String> getHighlightElementByOpinion(String opinionFormalString){
         ArrayList<String> list = new ArrayList<>();
+        ArrayList<TestComponent> testComponents = new ArrayList<TestComponent>(this.testItemManager.getAllTestItems().values());
+
+        for (TestComponent testComponent : testComponents) {
+            TestCategory testCategory = (TestCategory) testComponent;
+
+            for (TestComponent testComponent1 : testCategory.getTestComponents()) {
+                TestItem testItem = (TestItem) testComponent1;
+
+                if (opinionFormalString.contains(testItem.getName())) {
+                    list.add(testItem.getName());
+                }
+            }
+        }
 
         return list;
     }
