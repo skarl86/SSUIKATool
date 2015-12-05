@@ -227,7 +227,7 @@ public class IKAPaneController implements IKAPaneInterface {
                 p.getValue().getValue().getTestValue())
         );
         _testTextValueColumn.setCellValueFactory((TreeTableColumn.CellDataFeatures<PatientDetailRow, String> p) -> new ReadOnlyStringWrapper(
-                p.getValue().getValue().getTestValue())
+                p.getValue().getValue().getTextValue())
         );
 //        _testNameColumn.setCellValueFactory(
 //                new PropertyValueFactory<PatientDetailRow, String>("testName")

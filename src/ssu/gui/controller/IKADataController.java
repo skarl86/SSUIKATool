@@ -827,4 +827,11 @@ public class IKADataController extends IKAController implements IKADataRequestIn
 
     }
 
+    public ArrayList<String> getHighlightElementByOpinion(String opinionFormalString){
+        ArrayList<String> list = new ArrayList<>();
+
+        return list;
+    }
+
+
 }

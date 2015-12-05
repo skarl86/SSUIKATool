@@ -205,7 +205,7 @@ public class IKATool extends Application implements Initializable {
         });
 
         opinionListView.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
-            AppTestLog.printLog(oldValue);
+            AppTestLog.printLog(newValue);
         }));
     }
 
