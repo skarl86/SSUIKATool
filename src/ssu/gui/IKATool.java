@@ -21,8 +21,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
@@ -37,7 +35,6 @@ import ssu.gui.controller.IKARulePopUpViewController;
 import ssu.gui.controller.entity.PatientDetailRow;
 import ssu.gui.view.GraphView;
 import ssu.object.RuleManager;
-import ssu.object.rule.Rule;
 import ssu.util.AppTestLog;
 
 import javax.swing.*;

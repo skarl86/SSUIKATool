@@ -22,11 +22,9 @@ import ssu.gui.controller.entity.PreviousRuleRow;
 import ssu.gui.controller.factory.AtomCallFactor;
 import ssu.gui.controller.factory.PreviousRuleCallFactor;
 import ssu.gui.controller.factory.ValueCallFactor;
-import ssu.object.patient.Opinion;
 import ssu.object.patient.Patient;
 import ssu.object.rule.Atom;
 import ssu.object.rule.Rule;
-import ssu.object.test.TestItem;
 import ssu.object.test.TestResult;
 import ssu.util.AppTestLog;
 
@@ -537,7 +535,7 @@ public class IKARulePopUpViewController extends IKAController implements Initial
 
         for(HashMap<String, String> atomAndValue : antcAtomAndValue){
             for(Map.Entry<String, String> atom : atomAndValue.entrySet()){
-                antecendentData.add(new AtomRow(atom.getKey(),""));
+                antecendentData.add(new AtomRow(atom.getKey(),atom.getKey()));
                 ComboBox<String> box = antecedentValueMap.get(index);
                 if(box ==null){
                     box = new ComboBox<String>();
@@ -554,7 +552,7 @@ public class IKARulePopUpViewController extends IKAController implements Initial
         index = 0;
         for(HashMap<String, String> atomAndValue : consAtomAndValue){
             for(Map.Entry<String, String> atom : atomAndValue.entrySet()){
-                consequentData.add(new AtomRow(atom.getKey(),""));
+                consequentData.add(new AtomRow(atom.getKey(),atom.getKey()));
                 ComboBox<String> box = consequentValueMap.get(index);
                 if(box ==null){
                     box = new ComboBox<String>();

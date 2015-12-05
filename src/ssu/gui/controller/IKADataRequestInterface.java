@@ -1,6 +1,5 @@
 package ssu.gui.controller;
 
-import ssu.object.patient.Opinion;
 import ssu.object.patient.Patient;
 import ssu.object.rule.Atom;
 import ssu.object.rule.Rule;

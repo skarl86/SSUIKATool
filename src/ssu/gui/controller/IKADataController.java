@@ -8,9 +8,7 @@ import ssu.object.patient.Patient;
 import ssu.object.rule.Atom;
 import ssu.object.rule.Rule;
 import ssu.object.test.*;
-import ssu.object.test.value.TestValue;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -87,7 +85,7 @@ public class IKADataController extends IKAController implements IKADataRequestIn
      * @param patientRegId
      * @return 소견 정보 리스트 전달.
      */
-    public List<IKADataController.OpinionReferenceList> getOpinionReferenceList(Long patientRegId, Long ruleId){
+    public List<OpinionReferenceList> getOpinionReferenceList(Long patientRegId, Long ruleId){
         List<OpinionReferenceList> pList = new ArrayList<OpinionReferenceList>();
 
         for (Map.Entry<Long, Patient> entry : this.patientManager.getAllPatients().entrySet()) {

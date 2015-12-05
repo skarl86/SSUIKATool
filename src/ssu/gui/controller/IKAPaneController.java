@@ -1,23 +1,15 @@
 package ssu.gui.controller;
 
 import javafx.beans.property.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.css.PseudoClass;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 import ssu.gui.controller.entity.PatientDetailRow;
 import ssu.object.AtomManager;
-import ssu.object.patient.Patient;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -252,13 +244,13 @@ public class IKAPaneController implements IKAPaneInterface {
         treeItems.setExpanded(true);
         _patientDetailTable.setRoot(treeItems);
         _patientDetailTable.setRowFactory(param -> new TreeTableRow<PatientDetailRow>() {
-            protected void updateItem(PatientDetailRow item, boolean empty){
+            protected void updateItem(PatientDetailRow item, boolean empty) {
                 super.updateItem(item, empty);
-                if(item == null || highlightElm == null) return;
+                if (item == null || highlightElm == null) return;
                 String highlightStlye;
-                if(highlightElm.contains(item.getTestName())){
+                if (highlightElm.contains(item.getTestName())) {
                     highlightStlye = "-fx-background-color: linear-gradient(#95caff 0%, #77acff 90%, #e0e0e0 90%);";
-                }else{
+                } else {
                     highlightStlye = "";
                 }
                 setStyle(highlightStlye);

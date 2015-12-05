@@ -8,10 +8,10 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
-import jdk.internal.org.objectweb.asm.tree.analysis.Value;
 import ssu.gui.controller.IKADataController;
 import ssu.gui.controller.IKARulePopUpViewController;
 import ssu.gui.controller.entity.AtomRow;
+import ssu.object.rule.Atom;
 import ssu.util.AppTestLog;
 
 /**
@@ -32,13 +32,14 @@ public class ValueCallFactor extends RulePopUpViewCallFactor implements Callback
                     AppTestLog.printLog(getTableView().getId());
                     AppTestLog.printLog(String.valueOf(getIndex()));
                     AppTestLog.printLog(String.format("Value : [%s]", item));
+                    AtomRow atomRow = (AtomRow) getTableRow().getItem();
 
                     HBox box = new HBox();
                     ComboBox<String> valueList = context.getAtomComboBox(getTableView(), getIndex());
 
                     valueList.setId(IKARulePopUpViewController.VALUE_COMBOBOX_ID);
                     ObservableList<String> data =
-                            FXCollections.observableArrayList(IKADataController.getInstance().getAtomValueList(item));
+                            FXCollections.observableArrayList(IKADataController.getInstance().getAtomValueList(atomRow.getAtom()));
                     data.add("");
                     valueList.setItems(data);
 
