@@ -864,7 +864,32 @@ public class IKADataController extends IKAController implements IKADataRequestIn
      * @param curPatientId          현재 선택된 환자 ID.
      */
     public void saveRuleByPatientOpinion(int selectedOpinionIndex, Long curPatientId){
-        // 1.
+//        // 1. 환자 id와 소견 id를 통해 각각의 Rule list를 가져옴
+//        // 2-1. 각 rule의 antecedent가 여러개인 경우
+//        // 2-2. 각 rule의 antecedent가 하나인 경우
+//        String line = "";
+//        Patient patient = this.patientManager.getAllPatients().get(curPatientId);
+//        if (patient != null) {
+//            Opinion opinion = patient.getAllOpinions().get(selectedOpinionIndex);
+//            if (opinion != null) {
+//                for (Long index : opinion.getRules()) {
+//                    Rule rule = this.ruleManager.getAllRules().get(index);
+//                    if (rule != null) {
+//                        if (rule.getAntecedents().size() > 1) {
+//                            for (int i=0; i<rule.getAntecedents().size(); i++) {
+//                                line += rule.getAntecedents().get(i).getName() + ":" + "J" + rule.getId();
+//                                if (i < rule.getAntecedents().size() - 1) {
+//                                    line += "\n";
+//                                }
+//                            }
+//                        } else {
+//                            line += rule.getAntecedents().get(0).getName() + ":" + "J" + rule.getId() + "\n";
+//                        }
+//                        line += "J" + rule.getId() + ":" + rule.getConsequents().get(0).getName() + "\n";
+//                    }
+//                }
+//            }
+//        }
     }
 
 

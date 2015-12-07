@@ -40,11 +40,16 @@ import ssu.object.AtomManager;
 import ssu.object.PatientManager;
 import ssu.object.RuleManager;
 import ssu.object.TestItemManager;
+import ssu.object.patient.Opinion;
+import ssu.object.patient.Patient;
+import ssu.object.rule.Rule;
 import ssu.util.AppTestLog;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -184,24 +189,55 @@ public class IKATool extends Application implements Initializable {
      */
     @FXML protected void clickSaveButton(ActionEvent event){
 
+        // 현재 선택된 소견 ID
+        final int selectedOpinionIndex = patientOpinionTableView.getSelectionModel().getSelectedIndex();
+        // 현재 환자 ID
+        final Long curPatientID = currentPatientId;
         FileChooser fileChooser = new FileChooser();
         Stage fileWindowStage = new Stage();
         File file = fileChooser.showSaveDialog(fileWindowStage);
         if (file != null) {
             System.out.println("Save Path : "+file.getPath().toString());
-            //
+
+            String line = "";
+            Patient patient = PatientManager.getInstance().getAllPatients().get(curPatientID);
+            if (patient != null) {
+                Opinion opinion = patient.getAllOpinions().get(selectedOpinionIndex);
+                if (opinion != null) {
+                    for (Long index : opinion.getRules()) {
+                        Rule rule = RuleManager.getInstance().getAllRules().get(index);
+                        if (rule != null) {
+                            if (rule.getAntecedents().size() > 1) {
+                                for (int i=0; i<rule.getAntecedents().size(); i++) {
+                                    line += rule.getAntecedents().get(i).getName() + ":" + "J" + rule.getId();
+                                    if (i < rule.getAntecedents().size() - 1) {
+                                        line += "\n";
+                                    }
+                                }
+                            } else {
+                                line += rule.getAntecedents().get(0).getName() + ":" + "J" + rule.getId() + "\n";
+                            }
+                            line += "J" + rule.getId() + ":" + rule.getConsequents().get(0).getName() + "\n";
+                        }
+                    }
+                }
+            }
+
+            if (!line.isEmpty()) {
+                try {
+                    File saveFile = new File(file.getPath() + "_graph.txt");
+                    if (!saveFile.exists()) {
+                        saveFile.createNewFile();
+                    }
+                    FileWriter fw = new FileWriter(file);
+                    BufferedWriter bw = new BufferedWriter(fw);
+                    bw.write(line);
+                    bw.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-
-        // 현재 선택된 소견 ID
-        int selectedOpinionIndex = patientOpinionTableView.getSelectionModel().getSelectedIndex();
-        // 현재 환자 ID
-        Long curPatientID = currentPatientId;
-
-        // 실제 데이터를 저장하는 메소드.
-        dataController.saveRuleByPatientOpinion(selectedOpinionIndex, curPatientID);
-
-
-
 
     }
 
