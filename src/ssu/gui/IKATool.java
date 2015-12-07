@@ -209,10 +209,10 @@ public class IKATool extends Application implements Initializable {
                         if (rule != null) {
                             if (rule.getAntecedents().size() > 1) {
                                 for (int i=0; i<rule.getAntecedents().size(); i++) {
-                                    line += rule.getAntecedents().get(i).getName() + ":" + "J" + rule.getId() + "\n";
+                                    line += rule.getAntecedents().get(i).getName() + "\t" + "J" + rule.getId() + "\n";
                                 }
                             } else {
-                                line += rule.getAntecedents().get(0).getName() + ":" + "J" + rule.getId() + "\n";
+                                line += rule.getAntecedents().get(0).getName() + "\t" + "J" + rule.getId() + "\n";
                             }
                             line += "J" + rule.getId() + ":" + rule.getConsequents().get(0).getName() + "\n";
                         }
@@ -222,13 +222,13 @@ public class IKATool extends Application implements Initializable {
 
             if (!line.isEmpty()) {
                 try {
-                    File saveFile = new File(file.getPath() + "_" + patient.getRegId() + "_graph.txt");
+                    File saveFile = new File(file.getPath() + "_" + curPatientID + "_" + selectedOpinionIndex + "_graph.txt");
                     if (!saveFile.exists()) {
                         saveFile.createNewFile();
                     }
                     FileWriter fw = new FileWriter(saveFile);
                     BufferedWriter bw = new BufferedWriter(fw);
-                    bw.write(line);
+                    bw.write("Antecedent\tConsequent\n" + line);
                     bw.close();
                 } catch (IOException e) {
                     e.printStackTrace();
