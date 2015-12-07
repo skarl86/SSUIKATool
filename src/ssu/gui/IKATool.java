@@ -214,7 +214,7 @@ public class IKATool extends Application implements Initializable {
                             } else {
                                 line += rule.getAntecedents().get(0).getName() + "\t" + "J" + rule.getId() + "\n";
                             }
-                            line += "J" + rule.getId() + ":" + rule.getConsequents().get(0).getName() + "\n";
+                            line += "J" + rule.getId() + "\t" + rule.getConsequents().get(0).getName() + "\n";
                         }
                     }
                 }
