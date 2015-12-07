@@ -195,44 +195,97 @@ public class IKATool extends Application implements Initializable {
         File file = fileChooser.showSaveDialog(fileWindowStage);
         if (file != null) {
             System.out.println("Save Path : "+file.getPath().toString());
+            saveRuleListAndIdForGraph(curPatientID, selectedOpinionIndex, file.getPath());
+            saveRuleListForGraph(curPatientID, selectedOpinionIndex, file.getPath());
+        }
 
-            String line = "";
-            Patient patient = PatientManager.getInstance().getAllPatients().get(curPatientID);
-            if (patient != null) {
-                Opinion opinion = patient.getAllOpinions().get(selectedOpinionIndex);
-                if (opinion != null) {
-                    for (Long index : opinion.getRules()) {
-                        Rule rule = RuleManager.getInstance().getAllRules().get(index);
-                        if (rule != null) {
-                            if (rule.getAntecedents().size() > 1) {
-                                for (int i=0; i<rule.getAntecedents().size(); i++) {
-                                    line += rule.getAntecedents().get(i).getName() + "\t" + "Rule" + rule.getId() + "\n";
-                                }
-                            } else {
-                                line += rule.getAntecedents().get(0).getName() + "\t" + "Rule" + rule.getId() + "\n";
+    }
+
+    /**
+     *
+     * @param patientId
+     * @param opinionId
+     * @param path
+     */
+    public void saveRuleListForGraph(Long patientId, int opinionId, String path) {
+        String line = "";
+        Patient patient = PatientManager.getInstance().getAllPatients().get(patientId);
+        if (patient != null) {
+            Opinion opinion = patient.getAllOpinions().get(opinionId);
+            if (opinion != null) {
+                for (Long index : opinion.getRules()) {
+                    Rule rule = RuleManager.getInstance().getAllRules().get(index);
+                    if (rule != null) {
+                        if (rule.getAntecedents().size() > 1) {
+                            for (int i=0; i<rule.getAntecedents().size(); i++) {
+                                line += rule.getAntecedents().get(i).getName() + "\t" + rule.getConsequents().get(0).getName() + "\n";
                             }
-                            line += "Rule" + rule.getId() + "\t" + rule.getConsequents().get(0).getName() + "\n";
+                        } else {
+                            line += rule.getAntecedents().get(0).getName() + "\t" + rule.getConsequents().get(0).getName() + "\n";
                         }
                     }
                 }
             }
+        }
 
-            if (!line.isEmpty()) {
-                try {
-                    File saveFile = new File(file.getPath() + "_" + curPatientID + "_" + selectedOpinionIndex + "_graph.txt");
-                    if (!saveFile.exists()) {
-                        saveFile.createNewFile();
+        if (!line.isEmpty()) {
+            try {
+                File saveFile = new File(path + "_" + patientId + "_" + opinionId + "_graph.txt");
+                if (!saveFile.exists()) {
+                    saveFile.createNewFile();
+                }
+                FileWriter fw = new FileWriter(saveFile);
+                BufferedWriter bw = new BufferedWriter(fw);
+                bw.write("Antecedent\tConsequent\n" + line);
+                bw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     *
+     * @param patientId
+     * @param opinionId
+     * @param path
+     */
+    public void saveRuleListAndIdForGraph(Long patientId, int opinionId, String path) {
+        String line = "";
+        Patient patient = PatientManager.getInstance().getAllPatients().get(patientId);
+        if (patient != null) {
+            Opinion opinion = patient.getAllOpinions().get(opinionId);
+            if (opinion != null) {
+                for (Long index : opinion.getRules()) {
+                    Rule rule = RuleManager.getInstance().getAllRules().get(index);
+                    if (rule != null) {
+                        if (rule.getAntecedents().size() > 1) {
+                            for (int i=0; i<rule.getAntecedents().size(); i++) {
+                                line += rule.getAntecedents().get(i).getName() + "\t" + "Rule" + rule.getId() + "\n";
+                            }
+                        } else {
+                            line += rule.getAntecedents().get(0).getName() + "\t" + "Rule" + rule.getId() + "\n";
+                        }
+                        line += "Rule" + rule.getId() + "\t" + rule.getConsequents().get(0).getName() + "\n";
                     }
-                    FileWriter fw = new FileWriter(saveFile);
-                    BufferedWriter bw = new BufferedWriter(fw);
-                    bw.write("Antecedent\tConsequent\n" + line);
-                    bw.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
         }
 
+        if (!line.isEmpty()) {
+            try {
+                File saveFile = new File(path + "_" + patientId + "_" + opinionId + "_withID_graph.txt");
+                if (!saveFile.exists()) {
+                    saveFile.createNewFile();
+                }
+                FileWriter fw = new FileWriter(saveFile);
+                BufferedWriter bw = new BufferedWriter(fw);
+                bw.write("Antecedent\tConsequent\n" + line);
+                bw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 //    @FXML protected void handleLeftClickButtonAction(ActionEvent event){
