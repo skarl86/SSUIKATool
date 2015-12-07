@@ -134,10 +134,10 @@
                            <content>
                               <VBox>
                                  <children>
-                                    <TableView>
+                                    <TableView fx:id="patientOpinionTableView">
                                       <columns>
-                                        <TableColumn prefWidth="37.0" text="ID" />
-                                        <TableColumn prefWidth="660.0" text="소견" />
+                                        <TableColumn fx:id="patientOpinionIDColumn" prefWidth="37.0" text="ID" />
+                                        <TableColumn fx:id="patientOpinionColumn" prefWidth="660.0" text="소견" />
                                       </columns>
                                     </TableView>
                                  </children>

@@ -32,7 +32,9 @@ import javafx.stage.WindowEvent;
 import ssu.gui.controller.IKADataController;
 import ssu.gui.controller.IKAPaneController;
 import ssu.gui.controller.IKARulePopUpViewController;
+import ssu.gui.controller.entity.PatientDefaultInfoRow;
 import ssu.gui.controller.entity.PatientDetailRow;
+import ssu.gui.controller.entity.PatientOpinionRow;
 import ssu.gui.view.GraphView;
 import ssu.object.AtomManager;
 import ssu.object.PatientManager;
@@ -60,16 +62,20 @@ public class IKATool extends Application implements Initializable {
     private IKADataController dataController = IKADataController.getInstance();
     private IKAPaneController paneController = IKAPaneController.getInstance();
 
-    @FXML private ListView<String> opinionListView;
+
+    @FXML private TableView<PatientOpinionRow> patientOpinionTableView;
+    @FXML private TableColumn<PatientOpinionRow, String> patientOpinionIDColumn;
+    @FXML private TableColumn<PatientOpinionRow, String> patientOpinionColumn;
+
 
     @FXML private SplitPane leftSplitPane;
     @FXML private SplitPane rightSplitPane;
 
     @FXML private TreeView patientTreeView;
 
-    @FXML private TableView<IKAPaneController.PatientRow> patientTableView;
-    @FXML private TableColumn<IKAPaneController.PatientRow, String> subjectColumn;
-    @FXML private TableColumn<IKAPaneController.PatientRow, String> textValueColumn;
+    @FXML private TableView<PatientDefaultInfoRow> patientTableView;
+    @FXML private TableColumn<PatientDefaultInfoRow, String> subjectColumn;
+    @FXML private TableColumn<PatientDefaultInfoRow, String> textValueColumn;
 
     @FXML private TreeTableView<PatientDetailRow> patientDetailTable;
     @FXML private TreeTableColumn<PatientDetailRow, String> testNameColumn;
@@ -132,7 +138,7 @@ public class IKATool extends Application implements Initializable {
     }
 
     @FXML protected void clickAddButton(ActionEvent event) throws IOException {
-        if(currentPatientId > 0 && opinionListView.getSelectionModel().getSelectedItems().size() > 0) {
+        if(currentPatientId > 0 && patientOpinionTableView.getSelectionModel().getSelectedItems().size() > 0) {
             if(dataController.getPatientOpinion(currentPatientId).size() > 0){
                 IKAPaneController.PatientReferenceRow selectedItem = ruleReferenceTableView.getSelectionModel().getSelectedItem();
                 modalRuleEditView(event, null);
@@ -207,14 +213,13 @@ public class IKATool extends Application implements Initializable {
         this.paneController.createPatientDefaultList(patientTableView,subjectColumn,textValueColumn);
         this.paneController.createPatientDetailList(patientDetailTable, testNameColumn, testNumValueColumn, testTextValueColumn );
 //        this.paneController.createPatientOpinionList(opinionTextArea);
-        this.paneController.createOpinionList(dataController, opinionListView, currentPatientId);
+        this.paneController.createOpinionList(dataController, patientOpinionTableView, patientOpinionIDColumn, patientOpinionColumn, currentPatientId);
         this.paneController.createPatientOpinionReferenceList(ruleReferenceTableView, ruleIdColumn,
                 ruleColumn, authorColumn, madeDateColumn, modifiedDateColumn);
 //        paneController.refreshOpinionPageLabel(dataController, opinionPageLabel, currentPatientId);
 
         // Action 등록.
         patientTreeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-
             TreeItem<String> selectedItem = (TreeItem<String>) newValue;
             if(selectedItem.getValue().split(" ").length > 1){
                 currentPatientId = Long.valueOf(selectedItem.getValue().split(" ")[0]);
@@ -224,13 +229,12 @@ public class IKATool extends Application implements Initializable {
                 paneController.refreshPatientOpinionReferenceList(dataController, currentPatientId, 0);
 //                    paneController.refreshOpinionPageLabel(dataController, opinionPageLabel, currentPatientId);
             }
-            // do what ever you want
         });
 
-        opinionListView.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
-            AppTestLog.printLog(newValue);
-            paneController.refreshPatientDetailList(dataController, currentPatientId, dataController.getHighlightElementByOpinion(newValue));
-            paneController.refreshPatientOpinionReferenceList(dataController,currentPatientId,opinionListView.getSelectionModel().getSelectedIndex());
+        patientOpinionTableView.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
+            AppTestLog.printLog(newValue.getOpinion());
+            paneController.refreshPatientDetailList(dataController, currentPatientId, dataController.getHighlightElementByOpinion(newValue.getOpinion()));
+            paneController.refreshPatientOpinionReferenceList(dataController,currentPatientId,patientOpinionTableView.getSelectionModel().getSelectedIndex());
         }));
     }
 

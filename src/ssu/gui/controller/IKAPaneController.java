@@ -5,7 +5,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import ssu.gui.controller.entity.PatientDefaultInfoRow;
 import ssu.gui.controller.entity.PatientDetailRow;
+import ssu.gui.controller.entity.PatientOpinionRow;
 import ssu.object.AtomManager;
 
 import java.text.Format;
@@ -16,51 +18,6 @@ import java.util.*;
  * Created by NCri on 2015. 11. 13..
  */
 public class IKAPaneController implements IKAPaneInterface {
-
-    public class PatientRow{
-        private final StringProperty subject;
-        private final StringProperty textValue;
-
-        private PatientRow(String subject, String textValue){
-            this.subject = new SimpleStringProperty(subject);
-            this.textValue = new SimpleStringProperty(textValue);
-        }
-
-        public void setSubject(String sub){ subject.set(sub); }
-
-        public String getSubject(){ return subject.get(); }
-
-        public void setTextValue(String textVal){ textValue.set(textVal); }
-
-        public String getTextValue(){ return textValue.get(); }
-
-//        public StringProperty subjectProperty() {
-//            return this.subject;
-//        }
-//        public StringProperty textValueProperty() {
-//            return this.textValue;
-//        }
-    }
-//    public class PatientDetailRow{
-//        private final StringProperty testName;
-//        private final StringProperty numValue;
-//        private final StringProperty textValue;
-//
-//        private PatientDetailRow(String testName, String numValue, String textValue){
-//            this.testName= new SimpleStringProperty(testName);
-//            this.numValue = new SimpleStringProperty(numValue);
-//            this.textValue = new SimpleStringProperty(textValue);
-//        }
-//
-//        public void setTestName(String tName){ testName.set(tName); }
-//        public String getTestName(){ return testName.get(); }
-//
-//        public void setNumValue(String nValue){ numValue.set(nValue); }
-//        public String getNumValue(){ return numValue.get(); }
-//
-//        public void setTextValue(String tValue){ textValue.set(tValue); }
-//        public String getTextValue(){ return textValue.get(); }
-//    }
 
     public class PatientReferenceRow{
         private final StringProperty ruleId;
@@ -97,12 +54,17 @@ public class IKAPaneController implements IKAPaneInterface {
         public void setModifiedDate(String modifiedDate) { this.modifiedDate.set(modifiedDate); }
     }
 
-    private ListView<String> _opinionListView;
+//    private ListView<String> _opinionListView;
+    private TableView<PatientOpinionRow> _opinionListTableView;
+    private TableColumn<PatientOpinionRow, String> _opinionIDColumn;
+    private TableColumn<PatientOpinionRow, String> _opinionColumn;
+
+
     private TreeView _patientTreeView;
 
-    private TableView<PatientRow> _patientTableView;
-    private TableColumn<PatientRow, String> _subjectColumn;
-    private TableColumn<PatientRow, String> _textValueColumn;
+    private TableView<PatientDefaultInfoRow> _patientTableView;
+    private TableColumn<PatientDefaultInfoRow, String> _subjectColumn;
+    private TableColumn<PatientDefaultInfoRow, String> _textValueColumn;
 
     private TreeTableView<PatientDetailRow> _patientDetailTable;
     private TreeTableColumn<PatientDetailRow, String> _testNameColumn;
@@ -145,19 +107,38 @@ public class IKAPaneController implements IKAPaneInterface {
     }
 
     @Override
-    public void createOpinionList(IKADataController dataController, ListView<String> listView, Long patientId)
+    public void createOpinionList
+            (IKADataController dataController,
+             TableView<PatientOpinionRow> tableView,
+             TableColumn<PatientOpinionRow, String> idColumn,
+             TableColumn<PatientOpinionRow, String> opinionColumn,
+             Long patientId)
     {
-        if(_opinionListView == null) _opinionListView = listView;
+        if(_opinionListTableView == null) _opinionListTableView = tableView;
+        if(_opinionIDColumn == null) _opinionIDColumn = idColumn;
+        if(_opinionColumn == null) _opinionColumn = opinionColumn;
     }
 
     @Override
     public void refreshPatientOpinionList(IKADataController dataController, Long patientId){
-        ArrayList<String> opinionList = (ArrayList) dataController.getPatientOpinion(patientId);
-        ObservableList<String> data = FXCollections.observableArrayList(opinionList);
-        _opinionListView.setItems(data);
+        ArrayList<String> opinionList = (ArrayList<String>) dataController.getPatientOpinion(patientId);
+        ObservableList<PatientOpinionRow> data = FXCollections.observableArrayList();
+
+        for(int i = 0; i < opinionList.size(); i++){
+            data.add(new PatientOpinionRow(String.valueOf(i), opinionList.get(i)));
+        }
+
+        _opinionIDColumn.setCellValueFactory(
+                new PropertyValueFactory<PatientOpinionRow, String>("opinionID")
+        );
+        _opinionColumn.setCellValueFactory(
+                new PropertyValueFactory<PatientOpinionRow, String>("opinion")
+        );
+
+        _opinionListTableView.setItems(data);
     }
     @Override
-    public void createPatientTree(TreeView patientTreeView, Map<String, List<IKADataController.PatientListElement>> patientMap) {
+    public void createPatientTree(TreeView<String> patientTreeView, Map<String, List<IKADataController.PatientListElement>> patientMap) {
         if(_patientTreeView == null)
             _patientTreeView = patientTreeView;
 
@@ -165,12 +146,12 @@ public class IKAPaneController implements IKAPaneInterface {
         Iterator<String> iterator = tm.keySet().iterator();
 
         TreeItem<String> root2 = new TreeItem<String>("Patient");
-        String key = "";
+        String key;
         while(iterator.hasNext()){
             key = iterator.next();
-            TreeItem<String> root = new TreeItem(key);
+            TreeItem<String> root = new TreeItem<String>(key);
             for(IKADataController.PatientListElement pat : patientMap.get(key)){
-                TreeItem<String> itemChild = new TreeItem(pat.regId + " (" + pat.name + ")");
+                TreeItem<String> itemChild = new TreeItem<String>(pat.regId + " (" + pat.name + ")");
                 itemChild.setExpanded(true);
                 root.getChildren().add(itemChild);
             }
@@ -180,7 +161,7 @@ public class IKAPaneController implements IKAPaneInterface {
     }
 
     @Override
-    public void createPatientDefaultList(TableView patientTableView, TableColumn<IKAPaneController.PatientRow, String> subjectColumn, TableColumn<IKAPaneController.PatientRow, String> textValueColumn) {
+    public void createPatientDefaultList(TableView patientTableView, TableColumn<PatientDefaultInfoRow, String> subjectColumn, TableColumn<PatientDefaultInfoRow, String> textValueColumn) {
         if(_patientTableView == null)
             _patientTableView = patientTableView;
         if(_subjectColumn == null)
@@ -195,16 +176,16 @@ public class IKAPaneController implements IKAPaneInterface {
         IKADataController.PatientDefaultListElement elm = dataController.getPatientsDefaultList(patientId);
 
         _subjectColumn.setCellValueFactory(
-                new PropertyValueFactory<PatientRow, String>("subject")
+                new PropertyValueFactory<PatientDefaultInfoRow, String>("subject")
         );
         _textValueColumn.setCellValueFactory(
-                new PropertyValueFactory<PatientRow, String>("textValue")
+                new PropertyValueFactory<PatientDefaultInfoRow, String>("textValue")
         );
 
-        final ObservableList<PatientRow> data = FXCollections.observableArrayList(
-                new PatientRow("환자명", elm.name),
-                new PatientRow("나이", String.valueOf(elm.age)),
-                new PatientRow("성별", elm.gender)
+        final ObservableList<PatientDefaultInfoRow> data = FXCollections.observableArrayList(
+                new PatientDefaultInfoRow("환자명", elm.name),
+                new PatientDefaultInfoRow("나이", String.valueOf(elm.age)),
+                new PatientDefaultInfoRow("성별", elm.gender)
         );
 
         _patientTableView.setItems(data);
@@ -281,11 +262,11 @@ public class IKAPaneController implements IKAPaneInterface {
 //            _testTextValueColumn = textValueColumn;
     }
 
-    @Override
-    public void createPatientOpinionList(TextArea opinionTextArea) {
-        if(_opinionTextArea == null)
-            _opinionTextArea = opinionTextArea;
-    }
+//    @Override
+//    public void createPatientOpinionList(TextArea opinionTextArea) {
+//        if(_opinionTextArea == null)
+//            _opinionTextArea = opinionTextArea;
+//    }
 
 //    @Override
 //    public void refreshPatientOpinionList(IKADataController dataController, Long patientId){
@@ -300,7 +281,7 @@ public class IKAPaneController implements IKAPaneInterface {
 //    }
     @Override
     public void refreshOpinionPageLabel(IKADataController dataController, Label pageLabel, Long patientID){
-        ArrayList<String> opinionList = (ArrayList) dataController.getPatientOpinion(patientID);
+        ArrayList<String> opinionList = (ArrayList<String>) dataController.getPatientOpinion(patientID);
         if(opinionList.size() > 0)
             pageLabel.setText(String.format("%s / %s", _opinionIndex+1, opinionList.size()));
         else
@@ -373,40 +354,40 @@ public class IKAPaneController implements IKAPaneInterface {
         _ruleReferenceTableView.setItems(data);
     }
 
-    public void nextOpinion(IKADataController dataController, Long patientId){
-        System.out.println("[TEST LOG] Patient ID : " + patientId);
-        ArrayList<String> opinionList = (ArrayList) dataController.getPatientOpinion(patientId);
-
-        if(opinionList.size() > 0){
-            _opinionIndex += 1;
-
-            if(_opinionIndex > opinionList.size() - 1) {
-                _opinionIndex = 0;
-                _opinionTextArea.setText(opinionList.get(_opinionIndex));
-            }else{
-                _opinionTextArea.setText(opinionList.get(_opinionIndex));
-            }
-
-            refreshPatientOpinionReferenceList(dataController, patientId, _opinionIndex);
-        }
-    }
-
-    public void previousOpinion(IKADataController dataController, Long patientId){
-        ArrayList<String> opinionList = (ArrayList) dataController.getPatientOpinion(patientId);
-
-        if(opinionList.size() > 0){
-            _opinionIndex -= 1;
-
-            if(_opinionIndex < 0) {
-                _opinionIndex = opinionList.size() - 1;
-                _opinionTextArea.setText(opinionList.get(_opinionIndex));
-            }else{
-                _opinionTextArea.setText(opinionList.get(_opinionIndex));
-            }
-
-            refreshPatientOpinionReferenceList(dataController, patientId, _opinionIndex);
-        }
-    }
+//    public void nextOpinion(IKADataController dataController, Long patientId){
+//        System.out.println("[TEST LOG] Patient ID : " + patientId);
+//        ArrayList<String> opinionList = (ArrayList<String>) dataController.getPatientOpinion(patientId);
+//
+//        if(opinionList.size() > 0){
+//            _opinionIndex += 1;
+//
+//            if(_opinionIndex > opinionList.size() - 1) {
+//                _opinionIndex = 0;
+//                _opinionTextArea.setText(opinionList.get(_opinionIndex));
+//            }else{
+//                _opinionTextArea.setText(opinionList.get(_opinionIndex));
+//            }
+//
+//            refreshPatientOpinionReferenceList(dataController, patientId, _opinionIndex);
+//        }
+//    }
+//
+//    public void previousOpinion(IKADataController dataController, Long patientId){
+//        ArrayList<String> opinionList = (ArrayList) dataController.getPatientOpinion(patientId);
+//
+//        if(opinionList.size() > 0){
+//            _opinionIndex -= 1;
+//
+//            if(_opinionIndex < 0) {
+//                _opinionIndex = opinionList.size() - 1;
+//                _opinionTextArea.setText(opinionList.get(_opinionIndex));
+//            }else{
+//                _opinionTextArea.setText(opinionList.get(_opinionIndex));
+//            }
+//
+//            refreshPatientOpinionReferenceList(dataController, patientId, _opinionIndex);
+//        }
+//    }
 
     public void deleteRuleReferenceList(IKADataController dataController, TableView tableView, Long patientId){
         PatientReferenceRow item = ((PatientReferenceRow)tableView.getSelectionModel().getSelectedItem());
