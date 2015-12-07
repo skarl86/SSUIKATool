@@ -209,12 +209,12 @@ public class IKATool extends Application implements Initializable {
                         if (rule != null) {
                             if (rule.getAntecedents().size() > 1) {
                                 for (int i=0; i<rule.getAntecedents().size(); i++) {
-                                    line += rule.getAntecedents().get(i).getName() + "\t" + "J" + rule.getId() + "\n";
+                                    line += rule.getAntecedents().get(i).getName() + "\t" + "Rule" + rule.getId() + "\n";
                                 }
                             } else {
-                                line += rule.getAntecedents().get(0).getName() + "\t" + "J" + rule.getId() + "\n";
+                                line += rule.getAntecedents().get(0).getName() + "\t" + "Rule" + rule.getId() + "\n";
                             }
-                            line += "J" + rule.getId() + "\t" + rule.getConsequents().get(0).getName() + "\n";
+                            line += "Rule" + rule.getId() + "\t" + rule.getConsequents().get(0).getName() + "\n";
                         }
                     }
                 }
