@@ -179,7 +179,19 @@ public class IKATool extends Application implements Initializable {
 
         }
     }
+    /*
+    Save button 클릭 시 rule 저장
+     */
     @FXML protected void clickSaveButton(ActionEvent event){
+
+        FileChooser fileChooser = new FileChooser();
+        Stage fileWindowStage = new Stage();
+        File file = fileChooser.showSaveDialog(fileWindowStage);
+        if (file != null) {
+            System.out.println("Save Path : "+file.getPath().toString());
+            //
+        }
+
         // 현재 선택된 소견 ID
         int selectedOpinionIndex = patientOpinionTableView.getSelectionModel().getSelectedIndex();
         // 현재 환자 ID
@@ -187,6 +199,8 @@ public class IKATool extends Application implements Initializable {
 
         // 실제 데이터를 저장하는 메소드.
         dataController.saveRuleByPatientOpinion(selectedOpinionIndex, curPatientID);
+
+
 
 
     }
