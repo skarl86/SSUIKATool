@@ -171,15 +171,15 @@
                                                 </TableView>
                                                 <HBox>
                                                    <children>
-                                                      <Region prefHeight="25.0" prefWidth="60.0" snapToPixel="false" />
+                                                      <Region prefHeight="25.0" prefWidth="100.0" snapToPixel="false" />
                                                       <Button fx:id="addButton" mnemonicParsing="false" onAction="#clickAddButton" prefWidth="100.0" styleClass="addButton" text="Add" GridPane.halignment="RIGHT" />
-                                                      <Region prefHeight="25.0" prefWidth="60.0" snapToPixel="false" />
+                                                      <Region prefHeight="25.0" prefWidth="100.0" snapToPixel="false" />
                                                       <Button fx:id="editButton" mnemonicParsing="false" onAction="#clickEditButton" prefHeight="25.0" prefWidth="100.0" styleClass="editButton" text="Edit" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                                                      <Region prefHeight="25.0" prefWidth="60.0" snapToPixel="false" />
+                                                      <Region prefHeight="25.0" prefWidth="100.0" snapToPixel="false" />
                                                       <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#clickDeleteButton" prefHeight="25.0" prefWidth="100.0" styleClass="deleteButton" text="Delete" GridPane.columnIndex="2" />
-                                                      <Region prefHeight="25.0" prefWidth="60.0" snapToPixel="false" />
+                                                      <Region prefHeight="25.0" prefWidth="100.0" snapToPixel="false" />
                                                       <Button fx:id="saveButton" mnemonicParsing="false" onAction="#clickSaveButton" prefHeight="25.0" prefWidth="100.0" styleClass="saveRuleButton" text="Save" />
-                                                      <Region prefHeight="25.0" prefWidth="60.0" snapToPixel="false" />
+                                                      <Region prefHeight="25.0" prefWidth="100.0" snapToPixel="false" />
                                                    </children>
                                                 </HBox>
                                              </children>
