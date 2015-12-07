@@ -245,6 +245,13 @@ public class IKARulePopUpViewController extends IKAController implements Initial
                 antecedentTextField,
                 IKADataController.getInstance().getAllAtomsExceptValueList()
         );
+//        TextFields.bindAutoCompletion(
+//                antecedentTextField,
+////                IKADataController.getInstance().getAllAtomsExceptValueList()
+//                sr ->{
+//                    return ""
+//                }
+//        );
         TextFields.bindAutoCompletion(
                 consequentTextField,
                 IKADataController.getInstance().getAllAtomsExceptValueList()

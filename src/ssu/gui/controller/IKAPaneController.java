@@ -1,10 +1,15 @@
 package ssu.gui.controller;
 
+import javafx.beans.InvalidationListener;
 import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
+import javafx.util.Callback;
 import ssu.gui.controller.entity.PatientDefaultInfoRow;
 import ssu.gui.controller.entity.PatientDetailRow;
 import ssu.gui.controller.entity.PatientOpinionRow;
@@ -117,6 +122,27 @@ public class IKAPaneController implements IKAPaneInterface {
         if(_opinionListTableView == null) _opinionListTableView = tableView;
         if(_opinionIDColumn == null) _opinionIDColumn = idColumn;
         if(_opinionColumn == null) _opinionColumn = opinionColumn;
+
+        _opinionIDColumn.setCellFactory(param -> {
+            TableCell<PatientOpinionRow, String> cell = new TableCell<>();
+            Text text = new Text();
+            cell.setGraphic(text);
+//            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+            text.wrappingWidthProperty().bind(_opinionIDColumn.widthProperty());
+            text.textProperty().bind(cell.itemProperty());
+            return cell ;
+        });
+
+        _opinionColumn.setCellFactory(param -> {
+            TableCell<PatientOpinionRow, String> cell = new TableCell<>();
+            Text text = new Text();
+            cell.setGraphic(text);
+            text.wrappingWidthProperty().bind(_opinionColumn.widthProperty());
+            text.textProperty().bind(cell.itemProperty());
+            return cell ;
+        });
+
+//        _opinionListTableView.refresh();
     }
 
     @Override
