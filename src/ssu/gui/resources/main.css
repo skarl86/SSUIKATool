@@ -38,6 +38,11 @@
     -fx-graphic: url("cancelImg.png");
 }
 
+.saveRuleButton{
+-fx-padding: 5 5 5 5;
+    -fx-graphic: url("saveRuleImg.png");
+}
+
 .nextButton{
 -fx-background-image: url("next24.png");
 -fx-background-position: right;
