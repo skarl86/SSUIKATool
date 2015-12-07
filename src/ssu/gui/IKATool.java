@@ -180,6 +180,14 @@ public class IKATool extends Application implements Initializable {
         }
     }
     @FXML protected void clickSaveButton(ActionEvent event){
+        // 현재 선택된 소견 ID
+        int selectedOpinionIndex = patientOpinionTableView.getSelectionModel().getSelectedIndex();
+        // 현재 환자 ID
+        Long curPatientID = currentPatientId;
+
+        // 실제 데이터를 저장하는 메소드.
+        dataController.saveRuleByPatientOpinion(selectedOpinionIndex, curPatientID);
+
 
     }
 

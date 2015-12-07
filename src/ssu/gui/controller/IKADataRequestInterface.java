@@ -150,4 +150,11 @@ public interface IKADataRequestInterface {
      * @return 소견 내용 리스트 전달.
      */
     public List<String> getPatientOpinion(Long patientRegId);
+
+    /**
+     *
+     * @param selectedOpinionIndex  현재 선택된 소견 인덱스.
+     * @param curPatientId          현재 선택된 환자 ID.
+     */
+    public void saveRuleByPatientOpinion(int selectedOpinionIndex, Long curPatientId);
 }
