@@ -163,17 +163,17 @@
 11003!09!Promyelocyte!Promyelocyte에 관한 검사항목입니다.!PN_HL
 11003!10!Myelocyte!Myelocyte에 관한 검사항목입니다.!PN_HL
 11003!11!Metamyelocyte!Metamyelocyte에 관한 검사항목입니다.!PN_HL
-11003!01!  Segment!  Segment에 관한 검사항목입니다.!PN_HL
-11003!02!  Band!  Band에 관한 검사항목입니다.!PN_HL
-11003!03!  Lymphocyte!  Lymphocyte에 관한 검사항목입니다.!PN_HL
-11003!04!  Monocyte!  Monocyte에 관한 검사항목입니다.!PN_HL
-11003!05!  Eosinophil!  Eosinophil에 관한 검사항목입니다.!PN_HL
-11003!06!  Basophil!  Basophil에 관한 검사항목입니다.!PN_HL
-11003!07!  Immature cell!  Immature cell에 관한 검사항목입니다.!PN_HL
-11003!08!  Blast!  Blast에 관한 검사항목입니다.!PN_HL
-11003!09!  Promyelocyte!  Promyelocyte에 관한 검사항목입니다.!PN_HL
-11003!10!  Myelocyte!  Myelocyte에 관한 검사항목입니다.!PN_HL
-11003!11!  Metamyelocyte!  Metamyelocyte에 관한 검사항목입니다.!PN_HL
+11003!01!Segment!  Segment에 관한 검사항목입니다.!PN_HL
+11003!02!Band!  Band에 관한 검사항목입니다.!PN_HL
+11003!03!Lymphocyte!  Lymphocyte에 관한 검사항목입니다.!PN_HL
+11003!04!Monocyte!  Monocyte에 관한 검사항목입니다.!PN_HL
+11003!05!Eosinophil!  Eosinophil에 관한 검사항목입니다.!PN_HL
+11003!06!Basophil!  Basophil에 관한 검사항목입니다.!PN_HL
+11003!07!Immature cell!  Immature cell에 관한 검사항목입니다.!PN_HL
+11003!08!Blast!  Blast에 관한 검사항목입니다.!PN_HL
+11003!09!Promyelocyte!  Promyelocyte에 관한 검사항목입니다.!PN_HL
+11003!10!Myelocyte!  Myelocyte에 관한 검사항목입니다.!PN_HL
+11003!11!Metamyelocyte!  Metamyelocyte에 관한 검사항목입니다.!PN_HL
 11002!00!Diff.count!Diff.count에 관한 검사항목입니다.!HL_PN
 11002!01!Segment!Segment에 관한 검사항목입니다.!HL_PN
 11002!02!Band!Band에 관한 검사항목입니다.!HL_PN

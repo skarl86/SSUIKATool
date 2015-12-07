@@ -780,7 +780,7 @@ public class IKADataController extends IKAController implements IKADataRequestIn
 
 
 
-                    for (int i=1; i<testResultCategory.getTestResultComponents().size(); i++) {
+                    for (int i=1; i<parentTestCategory.getTestComponents().size(); i++) {
                         TestResult testResult = (TestResult) testResultCategory.getTestResultComponents().get(i);
                         TestItem testItem = (TestItem) parentTestCategory.getTestComponents().get(i);
 
