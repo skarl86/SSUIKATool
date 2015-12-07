@@ -74,7 +74,7 @@
                       </TitledPane>
                       <TableView fx:id="completeRuleTable" prefHeight="200.0" prefWidth="200.0">
                           <columns>
-                              <TableColumn fx:id="completeRuleColumn" maxWidth="529.0" prefWidth="529.0" text="Previous Rule" />
+                              <TableColumn fx:id="completeRuleColumn" maxWidth="529.0" prefWidth="529.0" text="Related Rules" />
                           </columns>
                       </TableView>
                       <HBox prefHeight="48.0" prefWidth="530.0">
