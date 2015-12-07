@@ -63,10 +63,11 @@ public class PatientParser {
                 listFilesForFolder(fileEntry);
             } else {
                 try {
-                    BufferedReader br = new BufferedReader(new FileReader(fileEntry));
+                    FileInputStream fis = new FileInputStream(fileEntry);
+                    BufferedReader br = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
                     String line = br.readLine();
                     // 1. 환자 기본정보
-                    String[] defValues = line.split(",", PATIENT_INFO_COUNT);
+                    String[] defValues = line.split("!", PATIENT_INFO_COUNT);
                     String name = defValues[PATIENT_INFO_NAME_INDEX];
                     int age = Integer.parseInt(defValues[PATIENT_INFO_AGE_INDEX]);
                     String gender = defValues[PATIENT_INFO_GENDER_INDEX];
@@ -83,7 +84,7 @@ public class PatientParser {
                     // 2. 환자 검사결과 부분.
                     HashMap<String, TestComponent> allTestItems = testItemManager.getAllTestItems();
                     while (!line.equals("*")) {
-                        String[] values = line.split(",", PATIENT_TESTVALUE_COUNT);
+                        String[] values = line.split("!", PATIENT_TESTVALUE_COUNT);
 
                         // 2-1. 환자 데이터에서 기존의 testitem 중에 없는 것을 추가.
                         TestComponent testComponent = allTestItems.get(values[PATIENT_TESTVALUE_CODE_INDEX]);

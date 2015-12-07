@@ -47,7 +47,7 @@ public final class Tags {
     public static final String PATIENT_OPINION_RULELIST_SPLITER = ":";
     public static final String PATIENT_OPINION_RULE_SPLITER = ",";
 
-    public static final String TEST_ITEM_SPLITER = ",";
+    public static final String TEST_ITEM_SPLITER = "!";
     public static final String TEST_ITEM_TYPE_SPLITER = "_";
 
     public static final String TEST_VALUE_SPLITER = ":";

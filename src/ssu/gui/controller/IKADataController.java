@@ -864,7 +864,7 @@ public class IKADataController extends IKAController implements IKADataRequestIn
      * @param curPatientId          현재 선택된 환자 ID.
      */
     public void saveRuleByPatientOpinion(int selectedOpinionIndex, Long curPatientId){
-
+        // 1.
     }
 
 
