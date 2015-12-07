@@ -179,6 +179,9 @@ public class IKATool extends Application implements Initializable {
 
         }
     }
+    @FXML protected void clickSaveButton(ActionEvent event){
+
+    }
 
 //    @FXML protected void handleLeftClickButtonAction(ActionEvent event){
 //        System.out.println(event);
