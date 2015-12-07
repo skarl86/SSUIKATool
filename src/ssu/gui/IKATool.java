@@ -354,7 +354,7 @@ public class IKATool extends Application implements Initializable {
     @Override
     public void start(Stage primaryStage) throws IOException {
 //        Parent root = FXMLLoader.load(getClass().getResource("IKAMainTool.fxml"));
-        Parent root = FXMLLoader.load(getClass().getResource("IKAMainToolNewScene.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("IKAMainToolNewSceneTest.fxml"));
         primaryStage.setTitle("Interactive Knowledge Acquisition");
 
 //        initView();
