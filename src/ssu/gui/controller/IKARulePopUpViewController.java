@@ -238,20 +238,13 @@ public class IKARulePopUpViewController extends IKAController implements Initial
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         AppTestLog.printLog("[UI] Initialize PopViewController");
-//        initAutoCompleteComboBox(antecedentComboBox, antecedentTableView);
-//        initAutoCompleteComboBox(consequentComboBox, consequentTableView);
 
         TextFields.bindAutoCompletion(
                 antecedentTextField,
                 IKADataController.getInstance().getAllAtomsExceptValueList()
         );
-//        TextFields.bindAutoCompletion(
-//                antecedentTextField,
-////                IKADataController.getInstance().getAllAtomsExceptValueList()
-//                sr ->{
-//                    return ""
-//                }
-//        );
+
+
         TextFields.bindAutoCompletion(
                 consequentTextField,
                 IKADataController.getInstance().getAllAtomsExceptValueList()
@@ -260,8 +253,8 @@ public class IKARulePopUpViewController extends IKAController implements Initial
         antecedentTextField.addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                AppTestLog.printLog("Enter");
                 if(event.getCode() == KeyCode.ENTER) {
+                    AppTestLog.printLog("Enter");
                     AppTestLog.printLog(antecedentTextField.getText());
                     antecedentTableView.getItems().add(new AtomRow(antecedentTextField.getText(), ""));
                     refreshCompletionRule();
@@ -272,8 +265,8 @@ public class IKARulePopUpViewController extends IKAController implements Initial
         consequentTextField.addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                AppTestLog.printLog("Enter");
                 if(event.getCode() == KeyCode.ENTER) {
+                    AppTestLog.printLog("Enter");
                     AppTestLog.printLog(consequentTextField.getText());
                     consequentTableView.getItems().add(new AtomRow(consequentTextField.getText(), ""));
                     refreshCompletionRule();

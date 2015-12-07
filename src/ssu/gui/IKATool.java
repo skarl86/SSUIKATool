@@ -36,10 +36,7 @@ import ssu.gui.controller.entity.PatientDefaultInfoRow;
 import ssu.gui.controller.entity.PatientDetailRow;
 import ssu.gui.controller.entity.PatientOpinionRow;
 import ssu.gui.view.GraphView;
-import ssu.object.AtomManager;
-import ssu.object.PatientManager;
-import ssu.object.RuleManager;
-import ssu.object.TestItemManager;
+import ssu.object.*;
 import ssu.object.patient.Opinion;
 import ssu.object.patient.Patient;
 import ssu.object.rule.Rule;
@@ -422,7 +419,10 @@ public class IKATool extends Application implements Initializable {
         initView();
     }
     @FXML protected void alertInputAuthor(){
-        TextInputDialog dialog = new TextInputDialog("Anonymous");
+        UserManager manager = UserManager.getInstance();
+        String currentUser = manager.loadCurrentUser();
+
+        TextInputDialog dialog = new TextInputDialog(currentUser);
         dialog.setTitle("Input Author");
         dialog.setHeaderText("작성자 정보 입력창");
         dialog.setContentText("작성자 명을 입력해주세요 : ");
@@ -433,10 +433,9 @@ public class IKATool extends Application implements Initializable {
             authorName = result.get();
             leftSplitPane.setDisable(false);
             rightSplitPane.setDisable(false);
+            manager.saveCurrentUser(result.get());
         }
         //System.out.println("Your name: " + result.get());
-        leftSplitPane.setDisable(false);
-        rightSplitPane.setDisable(false);
     }
 
     private void modalRuleEditView(ActionEvent event, IKAPaneController.PatientReferenceRow selectedItem) throws IOException {
