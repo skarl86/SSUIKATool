@@ -224,12 +224,32 @@ public class PatientManager {
 
             for (Map.Entry<Long, Patient> entry : this.allPatients.entrySet()) {
                 Patient patient = entry.getValue();
-
                 bw.write(patient.printSavingFormat() + "\n");
             }
-//            for (Patient patient : this.allPatients) {
-//                bw.write(patient.printSavingFormat() + "\n");
-//            }
+
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 파라미터로 받은 경로로 환자목록을 저장.
+     * @param path
+     */
+    public void savePatientsToPath(String path) {
+        try {
+            File file = new File(path);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            for (Map.Entry<Long, Patient> entry : this.allPatients.entrySet()) {
+                Patient patient = entry.getValue();
+                bw.write(patient.printSavingFormat() + "\n");
+            }
 
             bw.close();
         } catch (IOException e) {

@@ -76,6 +76,26 @@ public class RuleManager {
     }
 
     /**
+     *
+     * @param path
+     */
+    private void saveRuleConfigureToPath(String path) {
+        try {
+            File file = new File(path);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(this.ruleNumber.toString());
+
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Exp: 지정한 파일을 읽어와 rule list를 만듬.
      */
     public void loadRuleList(HashMap<String, Atom> allAtoms) {
@@ -172,6 +192,35 @@ public class RuleManager {
             e.printStackTrace();
         }
 
+    }
+
+    private void saveRuleListToPath(String path) {
+        try {
+            File file = new File(path);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+            for (Map.Entry<Long, Rule> entry : this.allRules.entrySet()) {
+                Rule rule = entry.getValue();
+                bw.write(rule.printSavingFormat() + "\n");
+            }
+
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     *
+     * @param rulePath
+     * @param confPath
+     */
+    public void saveRuleListAndConfigureToPath(String rulePath, String confPath) {
+        saveRuleConfigureToPath(confPath);
+        saveRuleListToPath(rulePath);
     }
 
     public HashMap<Long, Rule> getAllRules() {

@@ -112,6 +112,25 @@ public class AtomManager {
         }
     }
 
+    public void saveAtomListToPath(String path) {
+        try {
+            File file = new File(path);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+            for (Map.Entry<String, Atom> entry : this.allAtoms.entrySet()) {
+                Atom atom = entry.getValue();
+                bw.write(atom.printSavingFormat() + "\n");
+            }
+
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Exp : Atom을 추가.
      * @param atom

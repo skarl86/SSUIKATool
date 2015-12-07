@@ -34,7 +34,10 @@ import ssu.gui.controller.IKAPaneController;
 import ssu.gui.controller.IKARulePopUpViewController;
 import ssu.gui.controller.entity.PatientDetailRow;
 import ssu.gui.view.GraphView;
+import ssu.object.AtomManager;
+import ssu.object.PatientManager;
 import ssu.object.RuleManager;
+import ssu.object.TestItemManager;
 import ssu.util.AppTestLog;
 
 import javax.swing.*;
@@ -335,6 +338,10 @@ public class IKATool extends Application implements Initializable {
         File file = fileChooser.showSaveDialog(fileWindowStage);
         if (file != null) {
             System.out.println("Save Path : "+file.getPath().toString());
+            AtomManager.getInstance().saveAtomListToPath(file.getPath() + "_atoms.txt");
+            PatientManager.getInstance().savePatientsToPath(file.getPath() + "_patients.txt");
+            RuleManager.getInstance().saveRuleListAndConfigureToPath(file.getPath() + "_rules.txt", file.getPath() + "_rules_configure.txt");
+            TestItemManager.getInstance().saveTestItemListToPath(file.getPath() + "_test_items.txt");
         }
     }
 

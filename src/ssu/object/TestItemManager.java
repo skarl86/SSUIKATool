@@ -121,6 +121,29 @@ public class TestItemManager {
         }
     }
 
+    /**
+     *
+     * @param path
+     */
+    public void saveTestItemListToPath(String path) {
+        try {
+            File file = new File(path);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+            for (Map.Entry<String, TestComponent> entry : this.allTestItems.entrySet()) {
+                TestComponent testComponent = entry.getValue();
+                bw.write(testComponent.printSavingFormat() + "\n");
+            }
+
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String printAllTestItems() {
         String line = "";
 
