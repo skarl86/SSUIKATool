@@ -134,7 +134,12 @@
                            <content>
                               <VBox>
                                  <children>
-                                    <ListView fx:id="opinionListView" prefHeight="348.0" prefWidth="698.0" />
+                                    <TableView>
+                                      <columns>
+                                        <TableColumn prefWidth="37.0" text="ID" />
+                                        <TableColumn prefWidth="660.0" text="소견" />
+                                      </columns>
+                                    </TableView>
                                  </children>
                               </VBox>
                            </content>
@@ -161,13 +166,15 @@
                                     </TableView>
                                     <HBox>
                                        <children>
-                                          <Region HBox.hgrow="ALWAYS" />
+                                          <Region prefHeight="25.0" prefWidth="60.0" />
                                           <Button fx:id="addButton" mnemonicParsing="false" onAction="#clickAddButton" prefWidth="100.0" styleClass="addButton" text="Add" GridPane.halignment="RIGHT" />
-                                          <Region HBox.hgrow="ALWAYS" />
+                                          <Region prefHeight="25.0" prefWidth="60.0" />
                                           <Button fx:id="editButton" mnemonicParsing="false" onAction="#clickEditButton" prefHeight="25.0" prefWidth="100.0" styleClass="editButton" text="Edit" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                                          <Region HBox.hgrow="ALWAYS" />
+                                          <Region prefHeight="25.0" prefWidth="60.0" />
                                           <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#clickDeleteButton" prefHeight="25.0" prefWidth="100.0" styleClass="deleteButton" text="Delete" GridPane.columnIndex="2" />
-                                          <Region HBox.hgrow="ALWAYS" />
+                                          <Region prefHeight="25.0" prefWidth="60.0" />
+                                          <Button fx:id="saveButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" styleClass="saveRuleButton" text="Save" />
+                                          <Region prefHeight="25.0" prefWidth="60.0" />
                                        </children>
                                     </HBox>
                                  </children>
