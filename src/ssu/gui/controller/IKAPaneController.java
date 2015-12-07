@@ -78,7 +78,7 @@ public class IKAPaneController implements IKAPaneInterface {
     private TableColumn<PatientDetailRow, String> _testTextValueColumn;
     */
 
-    private TextArea _opinionTextArea;
+//    private TextArea _opinionTextArea;
 
     private TableView<PatientReferenceRow> _ruleReferenceTableView;
     private TableColumn<PatientReferenceRow, String> _ruleIdColumn;
