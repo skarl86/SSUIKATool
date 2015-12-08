@@ -334,6 +334,7 @@ public class IKATool extends Application implements Initializable {
                 currentPatientId = Long.valueOf(selectedItem.getValue().split(" ")[0]);
                 paneController.refreshPatientDefaultList(dataController, currentPatientId);
                 paneController.refreshPatientDetailList(dataController, currentPatientId, null);
+                paneController.clearPatientOpinionReferenceList(ruleReferenceTableView);
                 paneController.refreshPatientOpinionList(dataController,currentPatientId);
 //                    paneController.refreshOpinionPageLabel(dataController, opinionPageLabel, currentPatientId);
             }

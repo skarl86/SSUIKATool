@@ -144,7 +144,10 @@ public class IKAPaneController implements IKAPaneInterface {
 
 //        _opinionListTableView.refresh();
     }
-
+    public void clearPatientOpinionList(IKADataController dataController, TableView tableView,  Long patientId){
+        tableView.getItems().clear();
+        tableView.refresh();
+    }
     @Override
     public void refreshPatientOpinionList(IKADataController dataController, Long patientId){
         ArrayList<String> opinionList = (ArrayList<String>) dataController.getPatientOpinion(patientId);
@@ -348,6 +351,9 @@ public class IKAPaneController implements IKAPaneInterface {
         }
     }
 
+    public void clearPatientOpinionReferenceList(TableView tableView){
+        tableView.getItems().clear();
+    }
     @Override
     public void refreshPatientOpinionReferenceList(IKADataController dataController, Long patientId, int indexOfOpinion){
         ArrayList<IKADataController.OpinionReferenceList> elmList =
