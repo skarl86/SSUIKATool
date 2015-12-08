@@ -33,17 +33,8 @@ public class UserManager {
     }
     public void saveCurrentUser(String user){
         try {
-            File file = new File(this.getClass().getResource(USER_FILE_PATH).getPath());
-            boolean isExists = file.exists();
-            if (!isExists) {
-                file.createNewFile();
-            }
-            // 유저 정보가 존재하지 않을때만 저장.
-            FileWriter fw = new FileWriter(file);
-            BufferedWriter bw = new BufferedWriter(fw);
-
+            BufferedWriter bw = new BufferedWriter(new FileWriter(this.getClass().getResource(USER_FILE_PATH).getPath()));
             bw.write(user);
-
             bw.close();
 
         } catch (IOException e) {

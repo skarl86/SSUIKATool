@@ -342,8 +342,10 @@ public class IKATool extends Application implements Initializable {
         patientOpinionTableView.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
             if(newValue != null){
                 AppTestLog.printLog(newValue.getOpinion());
+                PatientOpinionRow opinion = patientOpinionTableView.getSelectionModel().getSelectedItem();
+                int indexOfOpinion = Integer.valueOf(opinion.getOpinionID());
                 paneController.refreshPatientDetailList(dataController, currentPatientId, dataController.getHighlightElementByOpinion(newValue.getOpinion()));
-                paneController.refreshPatientOpinionReferenceList(dataController,currentPatientId,patientOpinionTableView.getSelectionModel().getSelectedIndex());
+                paneController.refreshPatientOpinionReferenceList(dataController,currentPatientId,indexOfOpinion);
             }
         }));
     }
