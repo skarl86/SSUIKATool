@@ -292,10 +292,10 @@ public class IKADataController extends IKAController implements IKADataRequestIn
             if(patientMap.containsKey(elm.date)){
                 tempList = (ArrayList)patientMap.get(elm.date);
                 tempList.add(elm);
-                patientMap.put(elm.date, tempList);
+            }else{
+                tempList = new ArrayList<PatientListElement>();
+                tempList.add(elm);
             }
-            tempList = new ArrayList<PatientListElement>();
-            tempList.add(elm);
             patientMap.put(elm.date, tempList);
         }
 //        for(Patient pat : this.patientManager.getAllPatients()){
