@@ -471,9 +471,9 @@ public class IKATool extends Application implements Initializable {
         initView();
     }
     @FXML protected void alertInputAuthor(){
-        UserManager manager = UserManager.getInstance();
-        String currentUser = manager.loadCurrentUser();
-
+//        UserManager manager = UserManager.getInstance();
+//        String currentUser = manager.loadCurrentUser();
+        String currentUser = "Anonymous";
         TextInputDialog dialog = new TextInputDialog(currentUser);
         dialog.setTitle("Input Author");
         dialog.setHeaderText("작성자 정보 입력창");
@@ -485,7 +485,7 @@ public class IKATool extends Application implements Initializable {
             authorName = result.get();
             leftSplitPane.setDisable(false);
             rightSplitPane.setDisable(false);
-            manager.saveCurrentUser(result.get());
+//            manager.saveCurrentUser(result.get());
         }
         //System.out.println("Your name: " + result.get());
     }
