@@ -778,9 +778,13 @@ public class IKADataController extends IKAController implements IKADataRequestIn
                                 "-"));
                     }
 
+                    int count = 0;
+                    if (parentTestCategory.getTestComponents().size() < testResultCategory.getTestResultComponents().size())
+                        count = parentTestCategory.getTestComponents().size();
+                    else
+                        count = testResultCategory.getTestResultComponents().size();
 
-
-                    for (int i=1; i<parentTestCategory.getTestComponents().size(); i++) {
+                    for (int i=1; i<count; i++) {
                         TestResult testResult = (TestResult) testResultCategory.getTestResultComponents().get(i);
                         TestItem testItem = (TestItem) parentTestCategory.getTestComponents().get(i);
 
