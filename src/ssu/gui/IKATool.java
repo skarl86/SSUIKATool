@@ -39,6 +39,7 @@ import ssu.gui.view.GraphView;
 import ssu.object.*;
 import ssu.object.patient.Opinion;
 import ssu.object.patient.Patient;
+import ssu.object.rule.Atom;
 import ssu.object.rule.Rule;
 import ssu.util.AppTestLog;
 
@@ -216,12 +217,10 @@ public class IKATool extends Application implements Initializable {
                 for (Long index : opinion.getRules()) {
                     Rule rule = RuleManager.getInstance().getAllRules().get(index);
                     if (rule != null) {
-                        if (rule.getAntecedents().size() > 1) {
-                            for (int i=0; i<rule.getAntecedents().size(); i++) {
-                                line += rule.getAntecedents().get(i).getName() + "\t" + rule.getConsequents().get(0).getName() + "\n";
+                        for (Atom ant : rule.getAntecedents()) {
+                            for (Atom con : rule.getConsequents()) {
+                                line += ant.getName() + "\t" + con.getName() + "\n";
                             }
-                        } else {
-                            line += rule.getAntecedents().get(0).getName() + "\t" + rule.getConsequents().get(0).getName() + "\n";
                         }
                     }
                 }
@@ -266,7 +265,9 @@ public class IKATool extends Application implements Initializable {
                         } else {
                             line += rule.getAntecedents().get(0).getName() + "\t" + "Rule" + rule.getId() + "\n";
                         }
-                        line += "Rule" + rule.getId() + "\t" + rule.getConsequents().get(0).getName() + "\n";
+                        for (Atom con : rule.getConsequents()) {
+                            line += "Rule" + rule.getId() + "\t" + con.getName() + "\n";
+                        }
                     }
                 }
             }

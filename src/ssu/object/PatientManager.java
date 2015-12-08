@@ -243,7 +243,7 @@ public class PatientManager {
             if (!file.exists()) {
                 file.createNewFile();
             }
-            FileWriter fw = new FileWriter(file);
+            FileWriter fw = new FileWriter(this.getClass().getResource(file.getPath()).getPath());
             BufferedWriter bw = new BufferedWriter(fw);
 
             for (Map.Entry<Long, Patient> entry : this.allPatients.entrySet()) {

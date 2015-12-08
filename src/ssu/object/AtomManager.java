@@ -118,7 +118,7 @@ public class AtomManager {
             if (!file.exists()) {
                 file.createNewFile();
             }
-            FileWriter fw = new FileWriter(file);
+            FileWriter fw = new FileWriter(this.getClass().getResource(file.getPath()).getPath());
             BufferedWriter bw = new BufferedWriter(fw);
             for (Map.Entry<String, Atom> entry : this.allAtoms.entrySet()) {
                 Atom atom = entry.getValue();

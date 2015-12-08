@@ -87,7 +87,7 @@ public class RuleManager {
             if (!file.exists()) {
                 file.createNewFile();
             }
-            FileWriter fw = new FileWriter(file);
+            FileWriter fw = new FileWriter(this.getClass().getResource(file.getParent()).getPath());
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(this.ruleNumber.toString());
 
@@ -202,7 +202,7 @@ public class RuleManager {
             if (!file.exists()) {
                 file.createNewFile();
             }
-            FileWriter fw = new FileWriter(file);
+            FileWriter fw = new FileWriter(this.getClass().getResource(file.getPath()).getPath());
             BufferedWriter bw = new BufferedWriter(fw);
             for (Map.Entry<Long, Rule> entry : this.allRules.entrySet()) {
                 Rule rule = entry.getValue();
