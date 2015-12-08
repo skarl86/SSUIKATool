@@ -505,7 +505,7 @@ public class IKATool extends Application implements Initializable {
             controller.setRule(dataController, selectedItem.getRuleId());
         else
             controller.setRule(dataController, null);
-//        controller.setOpinionIndex(getOpinionIndex());
+        controller.setOpinionIndex(patientOpinionTableView.getSelectionModel().getSelectedIndex());
         controller.setPatientID(currentPatientId);
         controller.setAuthor(authorName);
 
