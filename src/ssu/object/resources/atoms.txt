@@ -1,24 +1,35 @@
 Mitochondria_Dead,0,HL!PN!NO
+ALT _H,0,HL!PN!NO
 BileCanaliculi,0,CEL
 간세포질환,0,HL
 ALP,0,HL!PN
 Outflow-Bile-sinusoid,0,HL
 Release-LDH-BloodStream,0,HL
 ALT,0,HL!PN
+T.Bil_H,0,HL!PN!NO
 Synthesis-ALP-BileDuct,0,HL
+Release-ALP-BloodStream_H,0,HL!PN!NO
 Transport-Urobilinogen-BileCanaliculi,0,HL
 Urobilinogen,0,HL!PN
 AST_H,0,HL!PN!NO
 Mitochondria,0,CEL
 Synthesis-Albumin-BloodStream,0,HL
 Hepatocellular_Dead,0,HL!PN!NO
+Outflow-Bile-sinusoid_H,0,HL!PN!NO
+Release-GGTP-BloodStream_H,0,HL!PN!NO
 담도계질환,0,HL
 Release-ALT-BloodStream_H,0,HL!PN!NO
+GGTP_H,0,HL!PN!NO
+AST ,0,HL!PN!NO
 AST,0,HL!PN
+AST _H,0,HL!PN!NO
 ALT_H,0,HL!PN!NO
+ALP ,0,HL!PN!NO
 Release-ALT-BloodStream,0,HL
 Release-ALP-BloodStream,0,HL
 Albumin,0,HL!PN
+ALT ,0,HL!PN!NO
+Release-GGTP-BloodStream,0,HL!PN!NO
 Release-AST-BloodStream,0,HL
 D.Bil,0,HL!PN
 Hepatocellular,0,CEL
@@ -27,6 +38,9 @@ Release-AST-BloodStream_H,0,HL!PN!NO
 Secrete-ALP-BileDuct,0,HL
 Oxidation-Urobilinogen-D.Bil,0,HL
 LiverDisease,0,HL!PN
+BileCanaliculi_Disorder,0,HL!PN!NO
 BileDuct,0,CEL
+ALP _H,0,HL!PN!NO
 GGTP,0,HL
 T.Bil,0,HL!PN
+D.Bil_H,0,HL!PN!NO
