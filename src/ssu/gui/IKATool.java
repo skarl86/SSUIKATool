@@ -35,7 +35,6 @@ import ssu.gui.controller.IKARulePopUpViewController;
 import ssu.gui.controller.entity.PatientDefaultInfoRow;
 import ssu.gui.controller.entity.PatientDetailRow;
 import ssu.gui.controller.entity.PatientOpinionRow;
-import ssu.gui.view.GraphView;
 import ssu.object.*;
 import ssu.object.patient.Opinion;
 import ssu.object.patient.Patient;
@@ -114,7 +113,6 @@ public class IKATool extends Application implements Initializable {
     /**
      * View
      */
-    private GraphView graphView;
 
     @Override
     public void init() {
@@ -417,7 +415,7 @@ public class IKATool extends Application implements Initializable {
         consequentComboBox.addEventFilter(KeyEvent.KEY_RELEASED, event1 -> {
             if (event1.getCode() == KeyCode.ENTER) {
                 AppTestLog.printLog("Enter");
-                graphView.drawRules(RuleManager.getInstance().getAllRulesByConseqent(consequentComboBox.getEditor().getText()));
+//                graphView.drawRules(RuleManager.getInstance().getAllRulesByConseqent(consequentComboBox.getEditor().getText()));
                 consequentComboBox.getEditor().clear();
                 consequentComboBox.getSelectionModel().clearSelection();
             }
@@ -522,6 +520,7 @@ public class IKATool extends Application implements Initializable {
     Java Swing 삽입 부분
      */
     private void createAndSetSwingContent(final SwingNode swingNode) {
+        /*
         SwingUtilities.invokeLater(() -> {
             GraphView panel = new GraphView();
             panel.setPreferredSize(new Dimension(700,600));
@@ -531,6 +530,7 @@ public class IKATool extends Application implements Initializable {
 
             System.out.println("initJPanel");
         });
+        */
     }
 
 }

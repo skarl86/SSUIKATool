@@ -1,7 +1,5 @@
 package ssu.object;
 
-import com.mxgraph.util.mxConstants;
-import com.mxgraph.util.mxUtils;
 import ssu.object.test.value.string.*;
 
 import java.awt.*;
@@ -222,10 +220,6 @@ public final class Tags {
     public static final int GRAPH_NODE_HEIGHT = 30;
     public static final int GRAPH_JUSTIFICATION_WIDTH = 20;
     public static final int GRAPH_JUSTIFICATION_HEIGHT = 20;
-
-    public static final String GRAPH_NODE_ANTECEDENT_STYLE = mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_ELLIPSE + ";" + mxConstants.STYLE_FILLCOLOR + "=" + mxUtils.getHexColorString(new Color(207,252,252));
-    public static final String GRAPH_NODE_CONSEQUENT_STYLE = mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_ELLIPSE + ";" + mxConstants.STYLE_FILLCOLOR + "=" + mxUtils.getHexColorString(new Color(242,177,188));
-    public static final String GRAPH_JUSTIFICATION_STYLE = mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_TRIANGLE + ";" + mxConstants.STYLE_FILLCOLOR + "=" + mxUtils.getHexColorString(new Color(242,250,17));
 
 
     private Tags() {}

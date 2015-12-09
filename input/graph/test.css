@@ -1,0 +1,10 @@
+node {
+    shape: box;
+    size: 70px, 30px;
+    fill-mode: image-scaled;
+    fill-image: url('input/graph/node.png');
+}
+
+edge {
+    fill-color: grey;
+}
