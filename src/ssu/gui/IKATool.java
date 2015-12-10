@@ -29,6 +29,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import org.graphstream.ui.view.Viewer;
 import ssu.gui.controller.IKADataController;
 import ssu.gui.controller.IKAPaneController;
 import ssu.gui.controller.IKARulePopUpViewController;
@@ -50,6 +51,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+
+import org.graphstream.graph.*;
+import org.graphstream.graph.implementations.*;
 
 public class IKATool extends Application implements Initializable {
 
@@ -189,15 +193,77 @@ public class IKATool extends Application implements Initializable {
         final int selectedOpinionIndex = patientOpinionTableView.getSelectionModel().getSelectedIndex();
         // 현재 환자 ID
         final Long curPatientID = currentPatientId;
-        FileChooser fileChooser = new FileChooser();
-        Stage fileWindowStage = new Stage();
-        File file = fileChooser.showSaveDialog(fileWindowStage);
-        if (file != null) {
-            System.out.println("Save Path : "+file.getPath().toString());
-            saveRuleListAndIdForGraph(curPatientID, selectedOpinionIndex, file.getPath());
-            saveRuleListForGraph(curPatientID, selectedOpinionIndex, file.getPath());
+
+        showGraph(curPatientID, selectedOpinionIndex);
+
+//        FileChooser fileChooser = new FileChooser();
+//        Stage fileWindowStage = new Stage();
+//        File file = fileChooser.showSaveDialog(fileWindowStage);
+//        if (file != null) {
+//            System.out.println("Save Path : "+file.getPath().toString());
+//            saveRuleListAndIdForGraph(curPatientID, selectedOpinionIndex, file.getPath());
+//            saveRuleListForGraph(curPatientID, selectedOpinionIndex, file.getPath());
+//        }
+
+    }
+
+    public void showGraph(Long patientId, int opinionId) {
+        Patient patient = PatientManager.getInstance().getAllPatients().get(patientId);
+
+        if (patient != null) {
+            ArrayList<Long> rules = patient.getAllOpinions().get(opinionId).getRules();
+
+            if (rules.size() > 0) {
+                System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
+                Graph graph = new SingleGraph(patientId + "'s " + opinionId);
+
+                for (Long ruleId : rules) {
+                    Rule rule = RuleManager.getInstance().getAllRules().get(ruleId);
+
+                    for (Atom ante : rule.getAntecedents()) {
+                        if (!hasNodeInGraph(graph, ante.getName())) {
+                            org.graphstream.graph.Node anteNode = graph.addNode(ante.getName());
+                            anteNode.setAttribute("ui.label", ante.getName());
+                        }
+
+                        for (Atom con : rule.getConsequents()) {
+                            if (!hasNodeInGraph(graph, con.getName())) {
+                                org.graphstream.graph.Node conNode = graph.addNode(con.getName());
+                                conNode.setAttribute("ui.label", con.getName());
+                            }
+
+                            if (!hasEdgeInGraph(graph, ante.getName(), con.getName())) {
+                                graph.addEdge(ante.getName() + "->" + con.getName(), ante.getName(), con.getName(), true);
+                            }
+                        }
+                    }
+                }
+
+                graph.setAttribute("ui.quality");
+                graph.setAttribute("ui.antialias");
+                Viewer view = graph.display();
+                view.setCloseFramePolicy(Viewer.CloseFramePolicy.CLOSE_VIEWER);
+            }
+        }
+    }
+
+    public boolean hasNodeInGraph(Graph graph, String name) {
+        for (org.graphstream.graph.Node node : graph.getEachNode()) {
+            if (node.getId().equals(name))
+                return true;
         }
 
+        return false;
+    }
+
+    public boolean hasEdgeInGraph(Graph graph, String src, String dest) {
+        for (Edge edge : graph.getEachEdge()) {
+            if (edge.getId().equals(src + "->" + dest)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -392,7 +458,6 @@ public class IKATool extends Application implements Initializable {
         tp.setMinSize(600, 500);
         tp.minWidth(600);
         tp.minHeight(500);
-
 
         VBox vbox = new VBox();
         vbox.setPadding(new Insets(1));
