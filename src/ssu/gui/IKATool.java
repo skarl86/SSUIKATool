@@ -130,6 +130,7 @@ public class IKATool extends Application implements Initializable {
 //        this.dataController.atomManager = AtomManager.getInstance();
         this.dataController.loadAtomList();
 
+
         // RuleManager 설정.
 //        this.dataController.ruleManager = RuleManager.getInstance();
         this.dataController.loadRuleList();

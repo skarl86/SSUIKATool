@@ -23,6 +23,7 @@ import ssu.gui.controller.entity.PreviousRuleRow;
 import ssu.gui.controller.factory.AtomCallFactor;
 import ssu.gui.controller.factory.PreviousRuleCallFactor;
 import ssu.gui.controller.factory.ValueCallFactor;
+import ssu.object.AtomManager;
 import ssu.object.patient.Opinion;
 import ssu.object.patient.Patient;
 import ssu.object.rule.Atom;
@@ -99,10 +100,26 @@ public class IKARulePopUpViewController extends IKAController implements Initial
     private HashMap<Integer, ComboBox<String>> antecedentValueMap = new HashMap<Integer, ComboBox<String>>();
     private HashMap<Integer, ComboBox<String>> consequentValueMap = new HashMap<Integer, ComboBox<String>>();
 
-    /**
-     *
-     */
 
+    /**
+     * 싱글톤 및 멀티 쓰레드 대비.
+     */
+    private volatile static IKARulePopUpViewController uniqueInstance;
+
+    // 인스턴스가 있는지 확인하고 없으면 동기화된 블럭으로 진입.
+    public static IKARulePopUpViewController getInstance() {
+        if (uniqueInstance == null) {                  // 처음에만 동기화.
+            synchronized (AtomManager.class) {
+                if (uniqueInstance == null) {
+                    uniqueInstance = new IKARulePopUpViewController();  // 다시 한번 변수가 null인지 체크 후 인스턴스 생성.
+                }
+            }
+        }
+
+        return uniqueInstance;
+    }
+
+    //private  IKARulePopUpViewController(){};
 
     /**
      * UI상 Cancel 버튼을 눌렀을 때 Event를 처리하는 메소드.
@@ -160,7 +177,7 @@ public class IKARulePopUpViewController extends IKAController implements Initial
     /**
      * UI 흐름상 Conditions(Antecedent, Consequent) Cell을 생성(또는 갱신)할 때
      * Value Combobox의 객체를 가져올 때 사용.
-     * @param tableView
+     * @param tableViewValueCallFactor
      * @param index
      * @return
      */
@@ -662,5 +679,26 @@ public class IKARulePopUpViewController extends IKAController implements Initial
             _selectedRule = dataController.getRule(Long.valueOf(ruleId));
         initTable();
         refreshCompletionRule();
+    }
+
+    public void refreshValueComboBox(String tableName,int index, ArrayList<String> arrayList, String atomName){
+        AppTestLog.printLog("refreshValueComboBox");
+
+
+        String value = "";
+        ComboBox<String> valueComboBox = null;
+
+        if(tableName.equals(CONSEQUENT_TABLE)){
+            valueComboBox = consequentValueMap.get(index);
+        }else if(tableName.equals(ANTECEDENT_TABLE)){
+            valueComboBox = antecedentValueMap.get(index);
+        }
+
+
+        //valueComboBox.setItems(FXCollections.observableArrayList(arrayList));
+        valueComboBox.setItems(FXCollections.observableArrayList(IKADataController.getInstance().getAtomValueList(atomName)));
+
+
+
     }
 }

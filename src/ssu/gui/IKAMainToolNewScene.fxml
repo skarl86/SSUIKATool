@@ -50,11 +50,11 @@
                <items>
                   <AnchorPane SplitPane.resizableWithParent="false">
                      <children>
-                        <SplitPane dividerPositions="0.5" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <SplitPane dividerPositions="0.5" maxWidth="176.0" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <items>
                               <AnchorPane SplitPane.resizableWithParent="false">
                                  <children>
-                                    <TitledPane alignment="CENTER" animated="false" collapsible="false" styleClass="common" stylesheets="@resources/main.css" text="환자 목록" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <TitledPane alignment="CENTER" animated="false" collapsible="false" maxWidth="176.0" styleClass="common" stylesheets="@resources/main.css" text="환자 목록" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <content>
                                           <TreeView fx:id="patientTreeView" prefHeight="361.0" prefWidth="176.0" />
                                        </content>
@@ -127,7 +127,7 @@
             </SplitPane>
             <SplitPane fx:id="rightSplitPane" disable="true" dividerPositions="0.5194300518134715" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" HBox.hgrow="ALWAYS">
                <items>
-                  <AnchorPane prefHeight="317.0" prefWidth="720.0">
+                  <AnchorPane prefHeight="317.0">
                      <children>
                         <VBox prefHeight="200.0" prefWidth="100.0" />
                         <TitledPane alignment="CENTER" animated="false" collapsible="false" styleClass="common" text="간 관련 소견 List" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

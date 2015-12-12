@@ -133,7 +133,7 @@
                                        <content>
                                           <VBox>
                                              <children>
-                                                <TableView fx:id="patientOpinionTableView">
+                                                <TableView fx:id="patientOpinionTableView" VBox.vgrow="ALWAYS">
                                                   <columns>
                                                     <TableColumn fx:id="patientOpinionIDColumn" editable="false" maxWidth="100.0" prefWidth="37.0" text="ID" />
                                                     <TableColumn fx:id="patientOpinionColumn" prefWidth="660.0" text="소견" />

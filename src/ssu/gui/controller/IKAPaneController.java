@@ -146,7 +146,7 @@ public class IKAPaneController implements IKAPaneInterface {
     }
     public void clearPatientOpinionList(IKADataController dataController, TableView tableView,  Long patientId){
         tableView.getItems().clear();
-        tableView.refresh();
+        //tableView.refresh();
     }
     @Override
     public void refreshPatientOpinionList(IKADataController dataController, Long patientId){
