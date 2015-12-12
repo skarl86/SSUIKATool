@@ -1,0 +1,54 @@
+20150811!57141!나현정!Unknown!0
+00006!!Creatinine!0.87!!
+00011!!Glu(FBS)!87!!
+00021!!AST!26!!
+00022!!ALT!36!!
+00023!!γ-GT!270!!H
+00041!!Chol!216!!
+00043!!TG!120!!
+00044!!HDL-C!64!!H
+00802!00!Urine(10)!0!**!
+00802!01!PH!7!!
+00802!02!Nitrite!0!Positive!
+00802!03!S.G!1.02!!
+00802!04!Protein!0!Negative!
+00802!05!Glucose!0!Negative!
+00802!06!Ketone!0!Negative!
+00802!07!Bilirubin!0!Negative!
+00802!08!Occult Blood!0!Negative!
+00802!09!Urobilinogen!0!Norm!
+00802!10!Leukocyte!0!1 Positive!
+00822!00!Microscopic!0!**!
+00822!01!R.B.C!0!0-2!
+00822!02!W.B.C!0!3-5!
+00822!03!E.P cells!0!3-5!
+00822!04!Casts!0!Not found!
+00822!05!Bacteria!0!Many!
+00822!06!Crystals!0!Not found!
+00822!07!Others!0!Not found!
+11001!!WBC!4.15!!
+11003!00!Diff.count 2!0!**!
+11003!01!Segment!51.6!!
+11003!02!Band!0!!
+11003!03!Lymphocyte!39!!
+11003!04!Monocyte!6.5!!
+11003!05!Eosinophil!2.2!!
+11003!06!Basophil!0.7!!
+11003!07!Immature cell!0!!
+11003!08!Blast!0!!
+11003!09!Promyelocyte!0!!
+11003!10!Myelocyte!0!!
+11003!11!Metamyelocyte!0!!
+11004!!RBC!4.81!!
+11005!!Hb!15.1!!
+11006!!HCT!43.9!!
+11007!!MCV!91.3!!
+11008!!MCH!31.4!!
+11009!!MCHC!34.4!!
+11011!!RDW!12!!
+11012!!Platelet!284!!
+11013!!PCT!0.28!!
+11014!!MPV!9.9!!
+11015!!PDW!11.7!!
+*
+r-GTP가 높습니다. 간 및 담도계 기능이상이 의심됩니다.

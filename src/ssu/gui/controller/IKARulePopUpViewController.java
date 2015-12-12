@@ -27,6 +27,7 @@ import ssu.object.patient.Opinion;
 import ssu.object.patient.Patient;
 import ssu.object.rule.Atom;
 import ssu.object.rule.Rule;
+import ssu.object.rule.ValuedAtom;
 import ssu.object.test.TestResult;
 import ssu.util.AppTestLog;
 
@@ -359,13 +360,15 @@ public class IKARulePopUpViewController extends IKAController implements Initial
         String[] atomValue = null;
 
         if(_selectedRule != null){
-            for(Atom atm : _selectedRule.getAntecedents()){
-                atomValue = IKADataController.getInstance().getAtomAndValue(atm);
-                antecendentData.add(new AtomRow(atomValue[0], atomValue[1]));
+            for(ValuedAtom atm : _selectedRule.getAntecedents()){
+//                atomValue = IKADataController.getInstance().getAtomAndValue(atm);
+//                antecendentData.add(new AtomRow(atomValue[0], atomValue[1]));
+                antecendentData.add(new AtomRow(atm.getAtom().getName(), atm.getValue()));
             }
-            for(Atom atm : _selectedRule.getConsequents()){
-                atomValue = IKADataController.getInstance().getAtomAndValue(atm);
-                consequentData.add(new AtomRow(atomValue[0], atomValue[1]));
+            for(ValuedAtom atm : _selectedRule.getConsequents()){
+//                atomValue = IKADataController.getInstance().getAtomAndValue(atm);
+//                consequentData.add(new AtomRow(atomValue[0], atomValue[1]));
+                consequentData.add(new AtomRow(atm.getAtom().getName(), atm.getValue()));
             }
         }
 

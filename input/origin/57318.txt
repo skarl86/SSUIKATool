@@ -1,0 +1,55 @@
+20150817!57318!정성욱!Unknown!0
+00006!!Creatinine!0.9!!
+00011!!Glu(FBS)!103!!
+00021!!AST!56!!H
+00022!!ALT!106!!H
+00023!!γ-GT!147!!H
+00041!!Chol!219!!
+00043!!TG!554!!H
+00044!!HDL-C!28!!L
+00045!!LDL-C!120!!
+00802!00!Urine(10)!0!**!
+00802!01!PH!5!!
+00802!02!Nitrite!0!Negative!
+00802!03!S.G!1.016!!
+00802!04!Protein!0!Negative!
+00802!05!Glucose!0!Negative!
+00802!06!Ketone!0!Negative!
+00802!07!Bilirubin!0!Negative!
+00802!08!Occult Blood!0!Negative!
+00802!09!Urobilinogen!0!Norm!
+00802!10!Leukocyte!0!Negative!
+00822!00!Microscopic!0!**!
+00822!01!R.B.C!0!0-2!
+00822!02!W.B.C!0!0-2!
+00822!03!E.P cells!0!0-2!
+00822!04!Casts!0!Not found!
+00822!05!Bacteria!0!Not found!
+00822!06!Crystals!0!Amp.Urate!
+00822!07!Others!0!Not found!
+11001!!WBC!6.39!!
+11003!00!Diff.count 2!0!**!
+11003!01!Segment!36.4!!L
+11003!02!Band!0!!
+11003!03!Lymphocyte!52.1!!H
+11003!04!Monocyte!7.4!!
+11003!05!Eosinophil!3.3!!
+11003!06!Basophil!0.8!!
+11003!07!Immature cell!0!!
+11003!08!Blast!0!!
+11003!09!Promyelocyte!0!!
+11003!10!Myelocyte!0!!
+11003!11!Metamyelocyte!0!!
+11004!!RBC!5.65!!
+11005!!Hb!16.7!!
+11006!!HCT!51.2!!
+11007!!MCV!90.6!!
+11008!!MCH!29.6!!
+11009!!MCHC!32.6!!
+11011!!RDW!12.1!!
+11012!!Platelet!201!!
+11013!!PCT!0.22!!
+11014!!MPV!10.7!!
+11015!!PDW!11.9!!
+*
+AST, ALT와 r-GTP가 높습니다. 간 및 담도계 기능이상이 의심됩니다.

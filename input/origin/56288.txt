@@ -1,0 +1,71 @@
+20150810!56288!김정숙!Unknown!0
+00005!!BUN!15!!
+00006!!Creatinine!0.73!!
+00010!!U.A!3.5!!
+00011!!Glu(FBS)!103!!
+00021!!AST!16!!
+00022!!ALT!12!!
+00023!!γ-GT!23!!
+00025!!ALP!118!!H
+00030!!CK!61!!
+00038!!Amylase!49!!
+00041!!Chol!177!!
+00043!!TG!157!!
+00044!!HDL-C!61!!H
+00053!!Apolipo B!81!!
+00061!!Ca!9.3!!
+00063!!Na!143!!
+00064!!K!3.9!!
+00095!00!HbA1c!0!**!
+00095!01!Hb A1c!6.5!!H
+00095!02!MPG!140!!
+00095!03!IFCC환산결과!48!!
+00802!00!Urine(10)!0!**!
+00802!01!PH!5!!
+00802!02!Nitrite!0!Negative!
+00802!03!S.G!1.016!!
+00802!04!Protein!0!Negative!
+00802!05!Glucose!0!Negative!
+00802!06!Ketone!0!1 Positive!
+00802!07!Bilirubin!0!Negative!
+00802!08!Occult Blood!0!Negative!
+00802!09!Urobilinogen!0!Norm!
+00802!10!Leukocyte!0!1 Positive!
+00822!00!Microscopic!0!**!
+00822!01!R.B.C!0!0-2!
+00822!02!W.B.C!0!3-5!
+00822!03!E.P cells!0!0-2!
+00822!04!Casts!0!Not found!
+00822!05!Bacteria!0!Not found!
+00822!06!Crystals!0!Not found!
+00822!07!Others!0!Not found!
+11001!!WBC!6.09!!
+11002!00!Diff.count!0!**!
+11002!01!Segment!44.3!!
+11002!02!Band!0!!
+11002!03!Lymphocyte!45.6!!H
+11002!04!Monocyte!6.1!!
+11002!05!Eosinophil!3.3!!
+11002!06!Basophil!0.7!!
+11004!!RBC!4.26!!
+11005!!Hb!12.6!!
+11006!!HCT!40.9!!
+11007!!MCV!96!!
+11008!!MCH!29.6!!
+11009!!MCHC!30.8!!L
+11011!!RDW!13.5!!
+11012!!Platelet!268!!
+11014!!MPV!10!!
+11015!!PDW!11.2!!
+11201!!ABO(Cell) type!0!A!
+11216!!Rh!0!Positive!
+11225!!ABO(Back) type!0!A!
+21001!!HBs Ag정성!0!Negative!
+21002!!HBs Ab정성!0!Positive!
+21031!!RF (QL)!0!Negative!
+21111!!HCV-Ab!0!Negative 0.04!
+41002!!T3!84.3!!
+41004!!TSH!2.4!!
+41010!!Free T4!1.59!!
+*
+ALP가 증가하였습니다. ALP는 골의 생성이나 간질환과 관련이 있으므로 동종효소검사를 권합니다.

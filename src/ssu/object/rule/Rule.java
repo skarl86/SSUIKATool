@@ -16,8 +16,8 @@ public class Rule implements Savable {
     private String author;
     private Long madeDate;
     private Long modifiedDate;
-    private ArrayList<Atom> antecedents;
-    private ArrayList<Atom> consequents;
+    private ArrayList<ValuedAtom> antecedents;
+    private ArrayList<ValuedAtom> consequents;
     // 해당 Rule과 관련된 환자와 소견 id를 저장.
     private HashMap<Long, ArrayList<Integer>> byPatientsOpinions;
 
@@ -26,8 +26,8 @@ public class Rule implements Savable {
         this.author = author;
         this.madeDate = madeDate;
         this.modifiedDate = modifiedDate;
-        this.antecedents = new ArrayList<Atom>();
-        this.consequents = new ArrayList<Atom>();
+        this.antecedents = new ArrayList<ValuedAtom>();
+        this.consequents = new ArrayList<ValuedAtom>();
         this.byPatientsOpinions = new HashMap<Long, ArrayList<Integer>>();
     }
 
@@ -36,8 +36,8 @@ public class Rule implements Savable {
         this.author = author;
         this.madeDate = 0L;
         this.modifiedDate = 0L;
-        this.antecedents = new ArrayList<Atom>();
-        this.consequents = new ArrayList<Atom>();
+        this.antecedents = new ArrayList<ValuedAtom>();
+        this.consequents = new ArrayList<ValuedAtom>();
         this.byPatientsOpinions = new HashMap<Long, ArrayList<Integer>>();
     }
 
@@ -57,19 +57,19 @@ public class Rule implements Savable {
             ArrayList<String> antecedentStringList = new ArrayList<String>();
             ArrayList<String> consequentStringList = new ArrayList<String>();
 
-            for (Atom antecedent : getAntecedents()) {
-                if (antecedent.getName().contains(Tags.ATOM_VALUE_SPLITER)) {
-                    antecedentStringList.add(antecedent.getName().substring(0, antecedent.getName().indexOf(Tags.ATOM_VALUE_SPLITER)));
-                }
+            for (ValuedAtom antecedent : getAntecedents()) {
+//                if (antecedent.getName().contains(Tags.ATOM_VALUE_SPLITER)) {
+//                    antecedentStringList.add(antecedent.getName().substring(0, antecedent.getName().indexOf(Tags.ATOM_VALUE_SPLITER)));
+//                }
 
-                antecedentStringList.add(antecedent.getName());
+                antecedentStringList.add(antecedent.getAtom().getName());
             }
-            for (Atom consequent : getConsequents()) {
-                if (consequent.getName().contains(Tags.ATOM_VALUE_SPLITER)) {
-                    consequentStringList.add(consequent.getName().substring(0, consequent.getName().indexOf(Tags.ATOM_VALUE_SPLITER)));
-                }
+            for (ValuedAtom consequent : getConsequents()) {
+//                if (consequent.getName().contains(Tags.ATOM_VALUE_SPLITER)) {
+//                    consequentStringList.add(consequent.getName().substring(0, consequent.getName().indexOf(Tags.ATOM_VALUE_SPLITER)));
+//                }
 
-                consequentStringList.add(consequent.getName());
+                consequentStringList.add(consequent.getAtom().getName());
             }
 
             return (antecedentStringList.containsAll(checkAntecedents) && consequentStringList.containsAll(checkConsequents));
@@ -84,16 +84,18 @@ public class Rule implements Savable {
         String ruleString = "";
 
         for (int i=0; i<this.antecedents.size(); i++) {
-            Atom atom = this.antecedents.get(i);
-            ruleString += atom.getName();
+            ValuedAtom va = this.antecedents.get(i);
+            String atomStr = va.printSavingFormat();
+            ruleString += atomStr;
             if (i < this.antecedents.size() - 1) ruleString += ",";
         }
 
         ruleString += "->";
 
         for (int i=0; i<this.consequents.size(); i++) {
-            Atom atom = this.consequents.get(i);
-            ruleString += atom.getName();
+            ValuedAtom va = this.consequents.get(i);
+            String atomStr = va.printSavingFormat();
+            ruleString += atomStr;
             if (i < this.consequents.size() - 1) ruleString += ",";
         }
 
@@ -111,16 +113,16 @@ public class Rule implements Savable {
         // Rule 형식.
         String semiRuleString = "";
         for (int i=0; i<getAntecedents().size(); i++) {
-            Atom atom = getAntecedents().get(i);
-            semiRuleString += atom.getName();
+            ValuedAtom atom = getAntecedents().get(i);
+            semiRuleString += atom.printSavingFormat();
             if (i < getAntecedents().size() - 1) {
                 semiRuleString += Tags.RULE_ATOM_SPLITER;
             }
         }
         semiRuleString += Tags.RULE_THEN_SPLITER;
         for (int i=0; i<getConsequents().size(); i++) {
-            Atom atom = getConsequents().get(i);
-            semiRuleString += atom.getName();
+            ValuedAtom atom = getConsequents().get(i);
+            semiRuleString += atom.printSavingFormat();
             if (i < getConsequents().size() - 1) {
                 semiRuleString += Tags.RULE_ATOM_SPLITER;
             }
@@ -161,7 +163,7 @@ public class Rule implements Savable {
      * @param atom
      * @return
      */
-    public boolean addAntecedent(Atom atom) {
+    public boolean addAntecedent(ValuedAtom atom) {
         return this.antecedents.add(atom);
     }
 
@@ -170,7 +172,7 @@ public class Rule implements Savable {
      * @param atom
      * @return
      */
-    public boolean removeAntecedent(Atom atom) {
+    public boolean removeAntecedent(ValuedAtom atom) {
         return this.antecedents.remove(atom);
     }
 
@@ -179,7 +181,7 @@ public class Rule implements Savable {
      * @param atom
      * @return
      */
-    public boolean addConsequent(Atom atom) {
+    public boolean addConsequent(ValuedAtom atom) {
         return this.consequents.add(atom);
     }
 
@@ -188,7 +190,7 @@ public class Rule implements Savable {
      * @param atom
      * @return
      */
-    public boolean removeConsequent(Atom atom) {
+    public boolean removeConsequent(ValuedAtom atom) {
         return this.consequents.remove(atom);
     }
 
@@ -282,19 +284,19 @@ public class Rule implements Savable {
         this.modifiedDate = modifiedDate;
     }
 
-    public ArrayList<Atom> getAntecedents() {
+    public ArrayList<ValuedAtom> getAntecedents() {
         return antecedents;
     }
 
-    public void setAntecedents(ArrayList<Atom> antecedents) {
+    public void setAntecedents(ArrayList<ValuedAtom> antecedents) {
         this.antecedents = antecedents;
     }
 
-    public ArrayList<Atom> getConsequents() {
+    public ArrayList<ValuedAtom> getConsequents() {
         return consequents;
     }
 
-    public void setConsequents(ArrayList<Atom> consequents) {
+    public void setConsequents(ArrayList<ValuedAtom> consequents) {
         this.consequents = consequents;
     }
 

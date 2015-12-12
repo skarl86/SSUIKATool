@@ -1,0 +1,120 @@
+20150423!46028!홍두표!Unknown!0
+00001!!T.Protein!6.9!!
+00002!!ALB!4.6!!
+00005!!BUN!8!!
+00006!!Creatinine!0.84!!
+00010!!U.A!4.5!!
+00011!!Glu(FBS)!91!!
+00018!!T.Bili.!0.8!!
+00019!!D.Bili!0.3!!
+00021!!AST!17!!
+00022!!ALT!9!!
+00023!!γ-GT!42!!
+00025!!ALP!59!!
+00029!!LDH!172!!
+00030!!CK!99!!
+00031!!CK-MB!1.09!!
+00038!!Amylase!53!!
+00040!!Lipase!18!!
+00041!!Chol!171!!
+00043!!TG!100!!
+00044!!HDL-C!60!!H
+00045!!LDL-C!107!!
+00061!!Ca!9.4!!
+00062!!Phosphorus!3!!
+00063!!Na!141!!
+00064!!K!4.8!!
+00065!!Cl!100!!
+00095!00!HbA1c!0!**!
+00095!01!Hb A1c!5.3!!
+00095!02!MPG!105!!
+00095!03!IFCC환산결과!34!!
+00802!00!Urine(10)!0!**!
+00802!01!PH!7!!
+00802!02!Nitrite!0!Negative!
+00802!03!S.G!1.016!!
+00802!04!Protein!0!Negative!
+00802!05!Glucose!0!Negative!
+00802!06!Ketone!0!Negative!
+00802!07!Bilirubin!0!Negative!
+00802!08!Occult Blood!0!Negative!
+00802!09!Urobilinogen!0!Norm!
+00802!10!Leukocyte!0!Negative!
+00803!00!Microscopy!0!**!
+00803!01!R.B.C!0!0-2!
+00803!02!W.B.C!0!0-2!
+00803!03!E.P.CELLS!0!0-2!
+00803!04!Casts!0!Not found!
+00803!05!Bacteria!0!Not found!
+00803!06!Crystals!0!Not found!
+00803!07!Others!0!Not found!
+11001!!WBC!5.59!!
+11002!00!Diff.count!0!**!
+11002!01!Segment!61.9!!
+11002!02!Band!0!!
+11002!03!Lymphocyte!25.9!!
+11002!04!Monocyte!7.5!!
+11002!05!Eosinophil!3.4!!
+11002!06!Basophil!1.3!!
+11004!!RBC!4.97!!
+11005!!Hb!16.1!!
+11006!!HCT!48.4!!
+11007!!MCV!97.4!!H
+11008!!MCH!32.4!!
+11009!!MCHC!33.3!!
+11011!!RDW!11.9!!
+11012!!Platelet!281!!
+11013!!PCT!0.29!!
+11014!!MPV!10.3!!
+11015!!PDW!12!!
+11052!00!P.B.S!0!**!
+11052!01!RBC!0!**!
+11052!02!Size!0!Normocyte!
+11052!03!Chromicity!0!Normochromic!
+11052!04!Anisocytosis!0!Negative!
+11052!05!Poikilocytosis!0!Negative!
+11052!06!elliptocyte!0!Negative!
+11052!07!burr cell!0!Negative!
+11052!08!target cell!0!Negative!
+11052!09!spherocyte!0!Negative!
+11052!10!schistocyte!0!Negative!
+11052!11!Dimorphism!0!Negative!
+11052!12!Rouleaux!0!Negative!
+11052!13!Polychromasia!0!Negative!
+11052!14!Baso.stippling!0!Negative!
+11052!15!H-Jolly body!0!Negative!
+11052!16!Tear drop cell!0!Negative!
+11052!17!Nucleated RBC!0!0!
+11052!20!WBC!0!**!
+11052!21!Number!0!Normal!
+11052!22!Maturation!0!Normal!
+11052!23!Toxic changes!0!Negative!
+11052!24!Dohle body!0!Negative!
+11052!25!Segmentation!0!Normal!
+11052!28!Platelet!0!**!
+11052!29!Number!0!Normal!
+11052!30!Size!0!Normal!
+11052!31!Clumping!0!Negative!
+11138!!ESR!8!!
+11201!!ABO(Cell) type!0!B!
+11216!!Rh!0!Positive!
+11310!!Reticulocyte(Flo!1.98!!
+21001!!HBs Ag정성!0!Negative!
+21002!!HBs Ab정성!0!Positive!
+21026!!CRP(QL)!0!Negative!
+21031!!RF (QL)!0!Negative!
+21111!!HCV-Ab!0!Negative 0.04!
+21112!!HIV-Ab!0!Negative < 0.10!
+21295!!RPR정밀!0!Non-Reactive < 0.2!
+21429!!AFP!22.29!!H
+21430!!CEA!0.8!!
+21434!!CA19-9!6.5!!
+21438!!PSA!1.42!!
+41002!!T3!118.8!!
+41004!!TSH!1.18!!
+41010!!Free T4!0.98!!
+41110!!Testosterone!6.53!!
+41131!!Anti-HAV, T!0!Positive > 60.0!
+41195!!Ferritin!140.2!!
+*
+AFP(알파태아성단백)이 증가하였습니다. 주로 간암과 일부 위암 등 악성종양에서 증가하고, 급만성 간염, 간경화증과 관련이 있습니다.

@@ -1,0 +1,88 @@
+20150418!56422!김미숙!Unknown!0
+00001!!T.Protein!7.2!!
+00002!!ALB!4.4!!
+00005!!BUN!11!!
+00006!!Creatinine!0.6!!
+00010!!U.A!3.8!!
+00011!!Glu(FBS)!86!!
+00018!!T.Bili.!3.3!!H
+00019!!D.Bili!3.3!!H
+00021!!AST!286!!H
+00022!!ALT!839!!H
+00023!!γ-GT!532!!H
+00025!!ALP!240!!H
+00029!!LDH!311!!H
+00030!!CK!89!!
+00038!!Amylase!48!!
+00041!!Chol!236!!
+00043!!TG!190!!
+00044!!HDL-C!56!!
+00045!!LDL-C!116!!
+00061!!Ca!9.1!!
+00062!!Phosphorus!3.3!!
+00063!!Na!139!!
+00064!!K!4.7!!
+00065!!Cl!100!!
+00069!!Iron!149!!
+00070!!UIBC!245!!
+00071!!TIBC!395!!
+00802!00!Urine(10)!0!**!
+00802!01!PH!5!!
+00802!02!Nitrite!0!Positive!
+00802!03!S.G!1.018!!
+00802!04!Protein!0!Negative!
+00802!05!Glucose!0!Negative!
+00802!06!Ketone!0!Negative!
+00802!07!Bilirubin!0!2 Positive!
+00802!08!Occult Blood!0!Negative!
+00802!09!Urobilinogen!0!Trace!
+00802!10!Leukocyte!0!Negative!
+00821!!Stool Hb(QN)!31!!
+00822!00!Microscopic!0!**!
+00822!01!R.B.C!0!0-2!
+00822!02!W.B.C!0!0-2!
+00822!03!E.P cells!0!3-5!
+00822!04!Casts!0!Not found!
+00822!05!Bacteria!0!A few!
+00822!06!Crystals!0!Ca.Oxalate!
+00822!07!Others!0!Not found!
+11001!!WBC!5.11!!
+11002!00!Diff.count!0!**!
+11002!01!Segment!60!!
+11002!02!Band!0!!
+11002!03!Lymphocyte!23.5!!
+11002!04!Monocyte!10.2!!H
+11002!05!Eosinophil!4.7!!
+11002!06!Basophil!1.6!!
+11004!!RBC!4.47!!
+11005!!Hb!13.5!!
+11006!!HCT!41.4!!
+11007!!MCV!92.6!!
+11008!!MCH!30.2!!
+11009!!MCHC!32.6!!
+11011!!RDW!13.3!!
+11012!!Platelet!335!!
+11014!!MPV!11.2!!
+11015!!PDW!13.1!!
+11201!!ABO(Cell) type!0!O!
+11216!!Rh!0!Positive!
+11225!!ABO(Back) type!0!O!
+21001!!HBs Ag정성!0!Negative!
+21002!!HBs Ab정성!0!Positive!
+21026!!CRP(QL)!0!Negative!
+21031!!RF (QL)!0!Negative!
+21111!!HCV-Ab!0!Negative 0.74!
+21112!!HIV-Ab!0!Negative 0.21!
+21149!!H.pylori IgG!8!Positive >!
+21295!!RPR정밀!0!Non-Reactive < 0.2!
+21429!!AFP!2.94!!
+21430!!CEA!0.7!!
+21434!!CA19-9!5.2!!
+21435!!CA125!6.1!!
+41002!!T3!106.5!!
+41004!!TSH!0.96!!
+41010!!Free T4!1.48!!
+41144!!CA15-3!8.4!!
+*
+AST, ALT, r-GTP, ALP와 LDH가 높고 빌리루빈(황달)이 증가하였습니다. 간 및 담도계 기능이상이 의심됩니다.
+소변 빌리루빈과 우로빌리노겐이 검출되었습니다. 간질환과 관련이 있습니다.

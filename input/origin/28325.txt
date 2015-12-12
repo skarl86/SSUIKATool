@@ -1,0 +1,81 @@
+20150812!28325!오점례!Unknown!0
+00001!!T.Protein!7.8!!
+00002!!ALB!5.2!!
+00003!!Globulin!2.6!!
+00004!!A/G Ratio!2!!
+00005!!BUN!21!!H
+00006!!Creatinine!0.46!!L
+00010!!U.A!3.3!!
+00011!!Glu(FBS)!76!!
+00018!!T.Bili.!0.9!!
+00019!!D.Bili!0.3!!
+00021!!AST!43!!H
+00022!!ALT!71!!H
+00023!!γ-GT!131!!H
+00025!!ALP!94!!
+00029!!LDH!201!!
+00038!!Amylase!54!!
+00041!!Chol!194!!
+00043!!TG!202!!H
+00044!!HDL-C!42!!
+00061!!Ca!10.1!!
+00062!!Phosphorus!4.2!!
+00063!!Na!137!!
+00064!!K!6.7!!H
+00065!!Cl!98!!
+00069!!Iron!118!!
+00802!00!Urine(10)!0!**!
+00802!01!PH!5!!
+00802!02!Nitrite!0!Negative!
+00802!03!S.G!1.018!!
+00802!04!Protein!0!Negative!
+00802!05!Glucose!0!Negative!
+00802!06!Ketone!0!Negative!
+00802!07!Bilirubin!0!Negative!
+00802!08!Occult Blood!0!Negative!
+00802!09!Urobilinogen!0!Norm!
+00802!10!Leukocyte!0!Negative!
+00822!00!Microscopic!0!**!
+00822!01!R.B.C!0!0-2!
+00822!02!W.B.C!0!0-2!
+00822!03!E.P cells!0!0-2!
+00822!04!Casts!0!Not found!
+00822!05!Bacteria!0!Not found!
+00822!06!Crystals!0!Not found!
+00822!07!Others!0!Not found!
+11001!!WBC!5.48!!
+11002!00!Diff.count!0!**!
+11002!01!Segment!41.3!!
+11002!02!Band!0!!
+11002!03!Lymphocyte!50.4!!H
+11002!04!Monocyte!6!!
+11002!05!Eosinophil!1.6!!
+11002!06!Basophil!0.7!!
+11004!!RBC!4.6!!
+11005!!Hb!13.1!!
+11006!!HCT!38.6!!
+11007!!MCV!83.9!!
+11008!!MCH!28.5!!
+11009!!MCHC!33.9!!
+11011!!RDW!12.1!!
+11012!!Platelet!198!!
+11013!!PCT!0.23!!
+11014!!MPV!11.7!!
+11015!!PDW!14.8!!
+11201!!ABO(Cell) type!0!A!
+11216!!Rh!0!Positive!
+21027!!CRP(QN)!0.1!!
+21032!!RF (QN)!8.6!!
+21101!!HBs Ag(정밀)!0!Negative 0.16!
+21102!!HBs Ab(정밀)!0!Positive 37.43!
+21111!!HCV-Ab!0!Negative 0.05!
+21112!!HIV-Ab!0!Negative 0.38!
+21295!!RPR정밀!0!Non-Reactive < 0.2!
+21429!!AFP!1.78!!
+21430!!CEA!1!!
+21434!!CA19-9!7.1!!
+21435!!CA125!5.7!!
+41004!!TSH!0.68!!
+41010!!Free T4!1.23!!
+*
+AST, ALT와 r-GTP가 높습니다. 간 및 담도계 기능이상이 의심됩니다.

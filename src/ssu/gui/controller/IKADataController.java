@@ -7,6 +7,7 @@ import ssu.object.patient.Opinion;
 import ssu.object.patient.Patient;
 import ssu.object.rule.Atom;
 import ssu.object.rule.Rule;
+import ssu.object.rule.ValuedAtom;
 import ssu.object.test.*;
 
 import java.util.*;
@@ -565,9 +566,10 @@ public class IKADataController extends IKAController implements IKADataRequestIn
         // 3. 없을 경우 기본 StringValue들을 가져옴
         HashMap<String, Atom> allAtoms = this.atomManager.getAllAtoms();
         if (allAtoms.containsKey(atom)) {
-            for (String type : allAtoms.get(atom).getStringValues()) {
-                list.addAll(Tags.getTypeList(type));
-            }
+//            for (String type : allAtoms.get(atom).getStringValues()) {
+//                list.addAll(Tags.getTypeList(type));
+//            }
+            list.addAll(allAtoms.get(atom).getStringValues());
         } else if (this.testItemManager.containsTestItem(atom)) {
             list.addAll(this.testItemManager.getStringValueByName(atom));
         } else {
@@ -590,8 +592,8 @@ public class IKADataController extends IKAController implements IKADataRequestIn
 
             // 1. Consequent의 이름으로 이루어진 List를 생성.
             ArrayList<String> consList = new ArrayList<String>();
-            for (Atom cons : rule.getConsequents()) {
-                consList.add(cons.getName());
+            for (ValuedAtom cons : rule.getConsequents()) {
+                consList.add(cons.getAtom().getName());
             }
 
             // 2. CheckList를 생성해서 파라미터로 받은 consequent 리스트와 비교한 결과를 CheckList에 저장.
@@ -659,8 +661,10 @@ public class IKADataController extends IKAController implements IKADataRequestIn
 
         Rule rule = getRuleByFormalFormat(atomFormalString);
 
-        for(Atom atom : rule.getAntecedents()){
-            HashMap<String, String> atomAndValue = makeAtomAndValue(atom);
+        for(ValuedAtom atom : rule.getAntecedents()){
+//            HashMap<String, String> atomAndValue = makeAtomAndValue(atom);
+            HashMap<String, String> atomAndValue = new HashMap<>();
+            atomAndValue.put(atom.getAtom().getName(), atom.getValue());
 
             if(anteAndConsEachValue.containsKey(ANTECEDENT)){
                 anteAndConsEachValue.get(ANTECEDENT).add(atomAndValue);
@@ -671,8 +675,10 @@ public class IKADataController extends IKAController implements IKADataRequestIn
             }
         }
 
-        for(Atom atom : rule.getConsequents()){
-            HashMap<String, String> atomAndValue = makeAtomAndValue(atom);
+        for(ValuedAtom atom : rule.getConsequents()){
+//            HashMap<String, String> atomAndValue = makeAtomAndValue(atom);
+            HashMap<String, String> atomAndValue = new HashMap<>();
+            atomAndValue.put(atom.getAtom().getName(), atom.getValue());
 
             if(anteAndConsEachValue.containsKey(CONSEQUENT)){
                 anteAndConsEachValue.get(CONSEQUENT).add(atomAndValue);

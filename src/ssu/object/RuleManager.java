@@ -4,6 +4,7 @@ import ssu.object.patient.Opinion;
 import ssu.object.patient.Patient;
 import ssu.object.rule.Atom;
 import ssu.object.rule.Rule;
+import ssu.object.rule.ValuedAtom;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -114,7 +115,7 @@ public class RuleManager {
                 String[] tokens = line.split(Tags.RULE_SPLITER, RULE_TOKENS_LENGTH);
                 /*
                  * Rule 형식
-                 * id,author,madeDate,modifiedDate,AST+ALT-LiverDisease
+                 * id,author,madeDate,modifiedDate,AST_H!ALT_H:LiverDisease
                  */
                 Long id = Long.parseLong(tokens[0]);
                 String author = tokens[1];
@@ -129,10 +130,10 @@ public class RuleManager {
 
                     for (int i=0; i<antecedents.length; i++) {
                         String atomName = antecedents[i];
-                        newRule.addAntecedent(allAtoms.get(atomName));
+                        newRule.addAntecedent(createValuedAtom(allAtoms, atomName));
                     }
                 } else {
-                    newRule.addAntecedent(allAtoms.get(semiRuleTokens[0]));
+                    newRule.addAntecedent(createValuedAtom(allAtoms, semiRuleTokens[0]));
                 }
 
                 if (semiRuleTokens[1].contains(Tags.RULE_ATOM_SPLITER)) {
@@ -140,10 +141,10 @@ public class RuleManager {
 
                     for (int i=0; i<consequents.length; i++) {
                         String atomName = consequents[i];
-                        newRule.addConsequent(allAtoms.get(atomName));
+                        newRule.addConsequent(createValuedAtom(allAtoms, atomName));
                     }
                 } else {
-                    newRule.addConsequent(allAtoms.get(semiRuleTokens[1]));
+                    newRule.addConsequent(createValuedAtom(allAtoms, semiRuleTokens[1]));
                 }
 
                 if (tokens.length > 5 && tokens[5].contains(Tags.RULE_PATIENT_SPLITER)) {
@@ -170,6 +171,21 @@ public class RuleManager {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     *
+     * @param allAtoms
+     * @param line
+     * @return
+     */
+    public ValuedAtom createValuedAtom(HashMap<String, Atom> allAtoms, String line) {
+        if (line.contains(Tags.ATOM_VALUE_SPLITER)) {
+            String[] atomValue = line.split(Tags.ATOM_VALUE_SPLITER);
+            return new ValuedAtom(allAtoms.get(atomValue[0]), atomValue[1]);
+        } else {
+            return new ValuedAtom(allAtoms.get(line));
         }
     }
 
@@ -271,8 +287,8 @@ public class RuleManager {
         for (Map.Entry<Long, Rule> entry : this.allRules.entrySet()) {
             Rule rule = entry.getValue();
 
-            for (Atom con : rule.getConsequents()) {
-                if (con.getName().equals(atom)) {
+            for (ValuedAtom con : rule.getConsequents()) {
+                if (con.getAtom().getName().equals(atom)) {
                     rules.add(rule);
                     break;
                 }

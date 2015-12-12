@@ -10,7 +10,7 @@ import static org.graphstream.algorithm.Toolkit.*;
 /**
  * Created by JasonHong on 2015. 12. 9..
  */
-public class GsMain {
+public class GraphView {
     public static void main(String[] args) {
         System.setProperty("gs.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 

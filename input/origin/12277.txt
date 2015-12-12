@@ -1,0 +1,87 @@
+20150428!12277!전현정!Unknown!0
+00001!!T.Protein!7.1!!
+00002!!ALB!4.2!!
+00003!!Globulin!2.9!!
+00004!!A/G Ratio!1.5!!
+00005!!BUN!11!!
+00006!!Creatinine!0.66!!
+00010!!U.A!6.1!!H
+00011!!Glu(FBS)!85!!
+00018!!T.Bili.!0.8!!
+00019!!D.Bili!0.3!!
+00021!!AST!25!!
+00022!!ALT!27!!
+00023!!γ-GT!34!!
+00025!!ALP!54!!
+00041!!Chol!174!!
+00043!!TG!116!!
+00044!!HDL-C!81!!H
+00045!!LDL-C!91!!
+00046!!C.R.F!2.2!!L
+00061!!Ca!9.2!!
+00062!!Phosphorus!3.4!!
+00063!!Na!141!!
+00064!!K!3.9!!
+00065!!Cl!101!!
+00094!00!eGFR!0!**!
+00094!01!Creatinine!0.66!!
+00094!02!eGFR!100!!
+00095!00!HbA1c!0!**!
+00095!01!Hb A1c!5.3!!
+00095!02!MPG!105!!
+00095!03!IFCC환산결과!34!!
+00802!00!Urine(10)!0!**!
+00802!01!PH!5!!
+00802!02!Nitrite!0!Negative!
+00802!03!S.G!1.022!!
+00802!04!Protein!0!Negative!
+00802!05!Glucose!0!Negative!
+00802!06!Ketone!0!Negative!
+00802!07!Bilirubin!0!Negative!
+00802!08!Occult Blood!0!Negative!
+00802!09!Urobilinogen!0!Norm!
+00802!10!Leukocyte!0!Negative!
+00822!00!Microscopic!0!**!
+00822!01!R.B.C!0!0-2!
+00822!02!W.B.C!0!0-2!
+00822!03!E.P cells!0!0-2!
+00822!04!Casts!0!Not found!
+00822!05!Bacteria!0!Not found!
+00822!06!Crystals!0!Not found!
+00822!07!Others!0!Not found!
+11001!!WBC!7.99!!
+11002!00!Diff.count!0!**!
+11002!01!Segment!64.1!!
+11002!02!Band!0!!
+11002!03!Lymphocyte!25!!
+11002!04!Monocyte!8!!
+11002!05!Eosinophil!2!!
+11002!06!Basophil!0.9!!
+11004!!RBC!4.62!!
+11005!!Hb!14.3!!
+11006!!HCT!43.6!!
+11007!!MCV!94.4!!
+11008!!MCH!31!!
+11009!!MCHC!32.8!!
+11012!!Platelet!214!!
+11138!!ESR!4!!
+11201!!ABO(Cell) type!0!B!
+11216!!Rh!0!Positive!
+21026!!CRP(QL)!0!Negative!
+21031!!RF (QL)!0!Positive!
+21101!!HBs Ag(정밀)!0!Positive 3171.61!
+21102!!HBs Ab(정밀)!0!Negative 1.12!
+21112!!HIV-Ab!0!Negative 0.16!
+21149!!H.pylori IgG!2.6!Positive!
+21295!!RPR정밀!0!Non-Reactive < 0.2!
+21429!!AFP!5.58!!
+21430!!CEA!1.1!!
+21434!!CA19-9!8.3!!
+21435!!CA125!13.4!!
+41004!!TSH!2.72!!
+41010!!Free T4!1.18!!
+41024!!25-OH-VitD!12.44!!
+41131!!Anti-HAV, T!0!Positive > 60.0!
+*
+B형간염항원 양성으로 B형간염 보균상태입니다.
+A형간염에 대한 항체가 존재합니다. 과거에 A형간염 바이러스 감염된 적이 있거나 예방접종한 적이 있거나 최근에 감염이 된 것을 의미합니다.

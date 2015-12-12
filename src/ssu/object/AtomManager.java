@@ -3,9 +3,11 @@ package ssu.object;
 import ssu.object.rule.Atom;
 import ssu.object.rule.AtomClass;
 import ssu.object.rule.AtomPredicate;
+import ssu.object.rule.ValuedAtom;
 
 import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -77,7 +79,7 @@ public class AtomManager {
                     for (String value : values) {
                         newAtom.addStringValue(value);
                     }
-                } else {                                                      // 하나의 StringValue를 가질 경우.
+                } else if (!stringtValues.isEmpty()) {                                                      // 하나의 StringValue를 가질 경우.
                     newAtom.addStringValue(stringtValues);
                 }
 
@@ -154,43 +156,70 @@ public class AtomManager {
      * @param type
      * @return
      */
-    public Atom getAtomOrCreate(String value, int type) {
-        Atom atom = null;
+    public ValuedAtom getAtomOrCreate(String value, int type) {
 
-        if (this.allAtoms.containsKey(value)) { // 이미 존재하는 Atom일 경우.
-            atom = this.allAtoms.get(value);
+        String[] values = null;
+        if (value.contains(Tags.ATOM_VALUE_SPLITER)) {
+            values = value.split(Tags.ATOM_VALUE_SPLITER);
         } else {
-            // 새로운 Atom을 생성.
-            // 1. Value가 있는 경우.
-            if (value.contains(Tags.ATOM_VALUE_SPLITER)) {
-                String orginAtomStr = value.substring(0, value.indexOf(Tags.ATOM_VALUE_SPLITER));
-                if (!this.allAtoms.containsKey(orginAtomStr)) { // Value를 제거한 Atom도 존재하지 않을 때에만 추가.
-                    atom = new AtomClass(value.substring(0, value.indexOf(Tags.ATOM_VALUE_SPLITER)));
-                    atom.addStringValue(Tags.TEST_VALUE_TYPE_HIGHLOW);
-                    atom.addStringValue(Tags.TEST_VALUE_TYPE_POSNEG);
-                    atom.addStringValue(Tags.TEST_VALUE_TYPE_NORMAL);
-                    addAtom(atom);
-                }
-            }
-
-            switch (type) {
-                case Tags.ATOM_TYPE_CLASS:
-                    atom = new AtomClass(value);
-                    break;
-                case Tags.ATOM_TYPE_PREDICATE:
-                    atom = new AtomPredicate(value);
-                    break;
-            }
-
-            atom.addStringValue(Tags.TEST_VALUE_TYPE_HIGHLOW);
-            atom.addStringValue(Tags.TEST_VALUE_TYPE_POSNEG);
-            atom.addStringValue(Tags.TEST_VALUE_TYPE_NORMAL);
-
-            // 새로 생성한 Atom을 추가.
-            addAtom(atom);
+            values = new String[] { value };
         }
 
-        return atom;
+        if (this.allAtoms.containsKey(values[0])) { // 이미 존재하는 Atom일 경우.
+            if (values.length > 1) {
+                return new ValuedAtom(this.allAtoms.get(values[0]), values[1]);
+            } else {
+                return new ValuedAtom(this.allAtoms.get(values[0]));
+            }
+        } else {                                    // 존재하지 않을 경우
+            Atom newAtom = new AtomClass(values[0]);
+            if (values.length > 1) {
+                newAtom.addStringValue(values[1]);
+                addAtom(newAtom);
+
+                return new ValuedAtom(newAtom, values[1]);
+            } else {
+                newAtom.addStringValue(Tags.TEST_VALUE_TYPE_HIGH);
+                newAtom.addStringValue(Tags.TEST_VALUE_TYPE_LOW);
+                newAtom.addStringValue(Tags.TEST_VALUE_TYPE_POS);
+                newAtom.addStringValue(Tags.TEST_VALUE_TYPE_NEG);
+                newAtom.addStringValue(Tags.TEST_VALUE_TYPE_NORMAL);
+                addAtom(newAtom);
+
+                return new ValuedAtom(newAtom);
+            }
+        }
+
+//        if (this.allAtoms.containsKey(value)) { // 이미 존재하는 Atom일 경우.
+//            atom = this.allAtoms.get(value);
+//        } else {
+//            // 새로운 Atom을 생성.
+//            // 1. Value가 있는 경우.
+//            if (value.contains(Tags.ATOM_VALUE_SPLITER)) {
+////                String orginAtomStr = value.substring(0, value.indexOf(Tags.ATOM_VALUE_SPLITER));
+//                String[] orginAtomStr = value.split(Tags.ATOM_VALUE_SPLITER);
+//                if (!this.allAtoms.containsKey(orginAtomStr[0])) { // Value를 제거한 Atom도 존재하지 않을 때에만 추가.
+////                    atom = new AtomClass(value.substring(0, value.indexOf(Tags.ATOM_VALUE_SPLITER)));
+////                    atom.addStringValue(Tags.TEST_VALUE_TYPE_HIGHLOW);
+////                    atom.addStringValue(Tags.TEST_VALUE_TYPE_POSNEG);
+////                    atom.addStringValue(Tags.TEST_VALUE_TYPE_NORMAL);
+//                    atom = new AtomClass(orginAtomStr[0]);
+//                    atom.addStringValue(orginAtomStr[1]);
+//                }
+//            } else {
+//                atom = new AtomClass(value);
+//                atom.addStringValue(Tags.TEST_VALUE_TYPE_HIGH);
+//                atom.addStringValue(Tags.TEST_VALUE_TYPE_LOW);
+//                atom.addStringValue(Tags.TEST_VALUE_TYPE_POS);
+//                atom.addStringValue(Tags.TEST_VALUE_TYPE_NEG);
+//                atom.addStringValue(Tags.TEST_VALUE_TYPE_NORMAL);
+//            }
+//
+//            // 새로 생성한 Atom을 추가.
+//            addAtom(atom);
+//        }
+//
+//        return atom;
     }
 
     /*

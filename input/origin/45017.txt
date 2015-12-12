@@ -1,0 +1,118 @@
+20150223!45017!박영희!Unknown!0
+00001!!T.Protein!6.3!!L
+00002!!ALB!2.9!!L
+00005!!BUN!8!!
+00006!!Creatinine!0.68!!
+00010!!U.A!4!!
+00011!!Glu(FBS)!86!!
+00018!!T.Bili.!0.2!!
+00019!!D.Bili!0.1!!
+00021!!AST!29!!
+00022!!ALT!18!!
+00023!!γ-GT!33!!
+00025!!ALP!121!!H
+00029!!LDH!207!!
+00030!!CK!27!!
+00038!!Amylase!26!!L
+00041!!Chol!167!!
+00043!!TG!176!!
+00044!!HDL-C!44!!
+00045!!LDL-C!106!!
+00061!!Ca!8.1!!L
+00062!!Phosphorus!3.1!!
+00063!!Na!144!!
+00064!!K!4!!
+00065!!Cl!93!!L
+00069!!Iron!41!!
+00070!!UIBC!108!!L
+00071!!TIBC!149!!L
+00802!00!Urine(10)!0!**!
+00802!01!PH!7!!
+00802!02!Nitrite!0!Positive!
+00802!03!S.G!1.014!!
+00802!04!Protein!0!Negative!
+00802!05!Glucose!0!Negative!
+00802!06!Ketone!0!Negative!
+00802!07!Bilirubin!0!Negative!
+00802!08!Occult Blood!0!Trace!
+00802!09!Urobilinogen!0!Norm!
+00802!10!Leukocyte!0!1 Positive!
+00822!00!Microscopic!0!**!
+00822!01!R.B.C!0!3-5!
+00822!02!W.B.C!0!5-10!
+00822!03!E.P cells!0!0-2!
+00822!04!Casts!0!Not found!
+00822!05!Bacteria!0!Many!
+00822!06!Crystals!0!Not found!
+00822!07!Others!0!Not found!
+11001!!WBC!8.65!!
+11002!00!Diff.count!0!**!
+11002!01!Segment!35.3!!L
+11002!02!Band!0!!
+11002!03!Lymphocyte!47.2!!H
+11002!04!Monocyte!8.7!!
+11002!05!Eosinophil!7.6!!H
+11002!06!Basophil!1.2!!
+11004!!RBC!3.84!!
+11005!!Hb!10.8!!L
+11006!!HCT!32.8!!L
+11007!!MCV!85.4!!
+11008!!MCH!28.1!!
+11009!!MCHC!32.9!!
+11011!!RDW!17.8!!H
+11012!!Platelet!445!!
+11013!!PCT!0.47!!
+11014!!MPV!10.6!!
+11015!!PDW!11!!
+11052!00!P.B.S!0!**!
+11052!01!RBC!0!**!
+11052!02!Size!0!Normocyte!
+11052!03!Chromicity!0!Normochromic!
+11052!04!Anisocytosis!0!1+!
+11052!05!Poikilocytosis!0!Negative!
+11052!06!elliptocyte!0!Negative!
+11052!07!burr cell!0!Negative!
+11052!08!target cell!0!Negative!
+11052!09!spherocyte!0!Negative!
+11052!10!schistocyte!0!Negative!
+11052!11!Dimorphism!0!Negative!
+11052!12!Rouleaux!0!Negative!
+11052!13!Polychromasia!0!Negative!
+11052!14!Baso.stippling!0!Negative!
+11052!15!H-Jolly body!0!Negative!
+11052!16!Tear drop cell!0!Negative!
+11052!17!Nucleated RBC!0!0!
+11052!20!WBC!0!**!
+11052!21!Number!0!Normal!
+11052!22!Maturation!0!Normal!
+11052!23!Toxic changes!0!Negative!
+11052!24!Dohle body!0!Negative!
+11052!25!Segmentation!0!Normal!
+11052!28!Platelet!0!**!
+11052!29!Number!0!Normal!
+11052!30!Size!0!Normal!
+11052!31!Clumping!0!Negative!
+11201!!ABO(Cell) type!0!B!
+11216!!Rh!0!Positive!
+21026!!CRP(QL)!0!Negative!
+21031!!RF (QL)!0!Negative!
+21101!!HBs Ag(정밀)!0!Negative 0.19!
+21102!!HBs Ab(정밀)!0!Positive 119.13!
+21111!!HCV-Ab!0!Negative 0.42!
+21112!!HIV-Ab!0!Negative 0.17!
+21295!!RPR정밀!0!Non-Reactive 0.2!
+21429!!AFP!1.37!!
+21430!!CEA!2.9!!
+21434!!CA19-9!7.3!!
+21435!!CA125!15!!
+21580!!Folate!5.9!!
+41004!!TSH!18.21!!H
+41010!!Free T4!1.11!!
+41024!!25-OH-VitD!4.57!!
+41131!!Anti-HAV, T!0!Positive > 60.0!
+41193!!Vit.B12(RIA)!605.7!!
+41195!!Ferritin!54.4!!
+*
+ALP가 증가하였습니다. ALP는 골의 생성이나 간질환과 관련이 있으므로 동종효소검사를 권합니다.
+알부민이 감소하였습니다. 중증의 간질환, 영양실조, 신증후군, 염증성 질환, 임신, 침상안정, 수액과공급, 복수 등에 의해서 감소할 수 있습니다.
+A형간염에 대한 항체가 존재합니다. 과거에 A형간염 바이러스 감염된 적이 있거나 예방접종한 적이 있거나 최근에 감염이 된 것을 의미합니다.

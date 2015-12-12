@@ -29,6 +29,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import org.graphstream.ui.layout.Eades84Layout;
+import org.graphstream.ui.layout.HierarchicalLayout;
 import org.graphstream.ui.view.Viewer;
 import ssu.gui.controller.IKADataController;
 import ssu.gui.controller.IKAPaneController;
@@ -41,6 +43,7 @@ import ssu.object.patient.Opinion;
 import ssu.object.patient.Patient;
 import ssu.object.rule.Atom;
 import ssu.object.rule.Rule;
+import ssu.object.rule.ValuedAtom;
 import ssu.util.AppTestLog;
 
 import javax.swing.*;
@@ -210,41 +213,42 @@ public class IKATool extends Application implements Initializable {
     public void showGraph(Long patientId, int opinionId) {
         Patient patient = PatientManager.getInstance().getAllPatients().get(patientId);
 
-        if (patient != null) {
-            ArrayList<Long> rules = patient.getAllOpinions().get(opinionId).getRules();
-
-            if (rules.size() > 0) {
-                System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
-                Graph graph = new SingleGraph(patientId + "'s " + opinionId);
-
-                for (Long ruleId : rules) {
-                    Rule rule = RuleManager.getInstance().getAllRules().get(ruleId);
-
-                    for (Atom ante : rule.getAntecedents()) {
-                        if (!hasNodeInGraph(graph, ante.getName())) {
-                            org.graphstream.graph.Node anteNode = graph.addNode(ante.getName());
-                            anteNode.setAttribute("ui.label", ante.getName());
-                        }
-
-                        for (Atom con : rule.getConsequents()) {
-                            if (!hasNodeInGraph(graph, con.getName())) {
-                                org.graphstream.graph.Node conNode = graph.addNode(con.getName());
-                                conNode.setAttribute("ui.label", con.getName());
-                            }
-
-                            if (!hasEdgeInGraph(graph, ante.getName(), con.getName())) {
-                                graph.addEdge(ante.getName() + "->" + con.getName(), ante.getName(), con.getName(), true);
-                            }
-                        }
-                    }
-                }
-
-                graph.setAttribute("ui.quality");
-                graph.setAttribute("ui.antialias");
-                Viewer view = graph.display();
-                view.setCloseFramePolicy(Viewer.CloseFramePolicy.CLOSE_VIEWER);
-            }
-        }
+//        if (patient != null) {
+//            ArrayList<Long> rules = patient.getAllOpinions().get(opinionId).getRules();
+//
+//            if (rules.size() > 0) {
+//                System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
+//                Graph graph = new SingleGraph(patientId + "'s " + opinionId);
+//
+//                for (Long ruleId : rules) {
+//                    Rule rule = RuleManager.getInstance().getAllRules().get(ruleId);
+//
+//                    for (ValuedAtom ante : rule.getAntecedents()) {
+//                        if (!hasNodeInGraph(graph, ante.getName())) {
+//                            org.graphstream.graph.Node anteNode = graph.addNode(ante.getName());
+//                            anteNode.setAttribute("ui.label", ante.getName());
+//                        }
+//
+//                        for (Atom con : rule.getConsequents()) {
+//                            if (!hasNodeInGraph(graph, con.getName())) {
+//                                org.graphstream.graph.Node conNode = graph.addNode(con.getName());
+//                                conNode.setAttribute("ui.label", con.getName());
+//                            }
+//
+//                            if (!hasEdgeInGraph(graph, ante.getName(), con.getName())) {
+//                                graph.addEdge(ante.getName() + "->" + con.getName(), ante.getName(), con.getName(), true);
+//                            }
+//                        }
+//
+//                    }
+//                }
+//
+//                graph.setAttribute("ui.quality");
+//                graph.setAttribute("ui.antialias");
+//                Viewer view = graph.display();
+//                view.setCloseFramePolicy(Viewer.CloseFramePolicy.CLOSE_VIEWER);
+//            }
+//        }
     }
 
     public boolean hasNodeInGraph(Graph graph, String name) {
@@ -273,38 +277,38 @@ public class IKATool extends Application implements Initializable {
      * @param path
      */
     public void saveRuleListForGraph(Long patientId, int opinionId, String path) {
-        String line = "";
-        Patient patient = PatientManager.getInstance().getAllPatients().get(patientId);
-        if (patient != null) {
-            Opinion opinion = patient.getAllOpinions().get(opinionId);
-            if (opinion != null) {
-                for (Long index : opinion.getRules()) {
-                    Rule rule = RuleManager.getInstance().getAllRules().get(index);
-                    if (rule != null) {
-                        for (Atom ant : rule.getAntecedents()) {
-                            for (Atom con : rule.getConsequents()) {
-                                line += ant.getName() + "\t" + con.getName() + "\n";
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        if (!line.isEmpty()) {
-            try {
-                File saveFile = new File(path + "_" + patientId + "_" + opinionId + "_graph.txt");
-                if (!saveFile.exists()) {
-                    saveFile.createNewFile();
-                }
-                FileWriter fw = new FileWriter(saveFile);
-                BufferedWriter bw = new BufferedWriter(fw);
-                bw.write("Antecedent\tConsequent\n" + line);
-                bw.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        String line = "";
+//        Patient patient = PatientManager.getInstance().getAllPatients().get(patientId);
+//        if (patient != null) {
+//            Opinion opinion = patient.getAllOpinions().get(opinionId);
+//            if (opinion != null) {
+//                for (Long index : opinion.getRules()) {
+//                    Rule rule = RuleManager.getInstance().getAllRules().get(index);
+//                    if (rule != null) {
+//                        for (Atom ant : rule.getAntecedents()) {
+//                            for (Atom con : rule.getConsequents()) {
+//                                line += ant.getName() + "\t" + con.getName() + "\n";
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        if (!line.isEmpty()) {
+//            try {
+//                File saveFile = new File(path + "_" + patientId + "_" + opinionId + "_graph.txt");
+//                if (!saveFile.exists()) {
+//                    saveFile.createNewFile();
+//                }
+//                FileWriter fw = new FileWriter(saveFile);
+//                BufferedWriter bw = new BufferedWriter(fw);
+//                bw.write("Antecedent\tConsequent\n" + line);
+//                bw.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     /**
@@ -314,43 +318,43 @@ public class IKATool extends Application implements Initializable {
      * @param path
      */
     public void saveRuleListAndIdForGraph(Long patientId, int opinionId, String path) {
-        String line = "";
-        Patient patient = PatientManager.getInstance().getAllPatients().get(patientId);
-        if (patient != null) {
-            Opinion opinion = patient.getAllOpinions().get(opinionId);
-            if (opinion != null) {
-                for (Long index : opinion.getRules()) {
-                    Rule rule = RuleManager.getInstance().getAllRules().get(index);
-                    if (rule != null) {
-                        if (rule.getAntecedents().size() > 1) {
-                            for (int i=0; i<rule.getAntecedents().size(); i++) {
-                                line += rule.getAntecedents().get(i).getName() + "\t" + "Rule" + rule.getId() + "\n";
-                            }
-                        } else {
-                            line += rule.getAntecedents().get(0).getName() + "\t" + "Rule" + rule.getId() + "\n";
-                        }
-                        for (Atom con : rule.getConsequents()) {
-                            line += "Rule" + rule.getId() + "\t" + con.getName() + "\n";
-                        }
-                    }
-                }
-            }
-        }
-
-        if (!line.isEmpty()) {
-            try {
-                File saveFile = new File(path + "_" + patientId + "_" + opinionId + "_withID_graph.txt");
-                if (!saveFile.exists()) {
-                    saveFile.createNewFile();
-                }
-                FileWriter fw = new FileWriter(saveFile);
-                BufferedWriter bw = new BufferedWriter(fw);
-                bw.write("Antecedent\tConsequent\n" + line);
-                bw.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        String line = "";
+//        Patient patient = PatientManager.getInstance().getAllPatients().get(patientId);
+//        if (patient != null) {
+//            Opinion opinion = patient.getAllOpinions().get(opinionId);
+//            if (opinion != null) {
+//                for (Long index : opinion.getRules()) {
+//                    Rule rule = RuleManager.getInstance().getAllRules().get(index);
+//                    if (rule != null) {
+//                        if (rule.getAntecedents().size() > 1) {
+//                            for (int i=0; i<rule.getAntecedents().size(); i++) {
+//                                line += rule.getAntecedents().get(i).getName() + "\t" + "Rule" + rule.getId() + "\n";
+//                            }
+//                        } else {
+//                            line += rule.getAntecedents().get(0).getName() + "\t" + "Rule" + rule.getId() + "\n";
+//                        }
+//                        for (Atom con : rule.getConsequents()) {
+//                            line += "Rule" + rule.getId() + "\t" + con.getName() + "\n";
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        if (!line.isEmpty()) {
+//            try {
+//                File saveFile = new File(path + "_" + patientId + "_" + opinionId + "_withID_graph.txt");
+//                if (!saveFile.exists()) {
+//                    saveFile.createNewFile();
+//                }
+//                FileWriter fw = new FileWriter(saveFile);
+//                BufferedWriter bw = new BufferedWriter(fw);
+//                bw.write("Antecedent\tConsequent\n" + line);
+//                bw.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
 //    @FXML protected void handleLeftClickButtonAction(ActionEvent event){
