@@ -68,4 +68,8 @@ public abstract class Atom implements Savable {
     public ArrayList<String> getStringValues() {
         return stringValues;
     }
+
+    public void setStringValues(ArrayList<String> stringValues) {
+        this.stringValues = stringValues;
+    }
 }

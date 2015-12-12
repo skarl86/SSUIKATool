@@ -902,5 +902,18 @@ public class IKADataController extends IKAController implements IKADataRequestIn
 //        }
     }
 
+    /**
+     * 파라미터로 받은 Atom의 Value List로 해당 Atom의 Value 목록을 업데이트함.
+     * @param atomName
+     * @param valueList
+     */
+    public void updateAtomValueList(String atomName, ArrayList<String> valueList) {
+        Atom atom = AtomManager.getInstance().getAllAtoms().get(atomName);
+
+        if (atom != null) {
+            atom.setStringValues(valueList);
+        }
+    }
+
 
 }

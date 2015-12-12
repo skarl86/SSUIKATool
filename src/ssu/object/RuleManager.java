@@ -298,8 +298,6 @@ public class RuleManager {
         return rules;
     }
 
-
-
     /**
      * Exp : Rule을 추가.
      * @param rule
