@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.text.*?>
 
-<ScrollPane prefViewportHeight="597.0" prefViewportWidth="1320.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"  fx:controller="ssu.gui.controller.IKARulePopUpViewController">
+<ScrollPane prefViewportHeight="597.0" prefViewportWidth="1320.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ssu.gui.controller.IKARulePopUpViewController">
    <content>
       <SplitPane dividerPositions="0.5" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <items>
@@ -75,7 +75,7 @@
                         </TableView>
                         <HBox prefHeight="48.0" prefWidth="530.0">
                            <children>
-                              <Text layoutX="40.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author :" wrappingWidth="49.39634323120117">
+                              <Text layoutX="40.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author :" wrappingWidth="65.39634323120117">
                                  <HBox.margin>
                                     <Insets left="25.0" top="10.0" />
                                  </HBox.margin>
