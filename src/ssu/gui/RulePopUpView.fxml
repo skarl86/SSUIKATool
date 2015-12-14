@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.text.*?>
 
-<ScrollPane prefViewportHeight="597.0" prefViewportWidth="1320.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ssu.gui.controller.IKARulePopUpViewController">
+<ScrollPane fx:id="mainView" prefViewportHeight="597.0" prefViewportWidth="1320.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ssu.gui.controller.IKARulePopUpViewController">
    <content>
       <SplitPane dividerPositions="0.5" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <items>
@@ -70,8 +70,11 @@
                         </TitledPane>
                         <TableView fx:id="completeRuleTable" prefHeight="200.0" prefWidth="200.0">
                            <columns>
-                              <TableColumn fx:id="completeRuleColumn" maxWidth="529.0" prefWidth="529.0" text="Related Rules" />
+                              <TableColumn fx:id="completeRuleColumn" maxWidth="1.7976931348623157E308" prefWidth="-1.0" text="Related Rules" />
                            </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
                         </TableView>
                         <HBox prefHeight="48.0" prefWidth="530.0">
                            <children>

@@ -82,7 +82,7 @@ public class IKARulePopUpViewController extends IKAController implements Initial
     @FXML TextField antecedentTextField;
     @FXML TextField consequentTextField;
 
-    @FXML GridPane mainView;
+    @FXML ScrollPane mainView;
 
     @FXML Label authorLabel;
 
