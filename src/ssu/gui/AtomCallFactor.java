@@ -5,10 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -52,6 +49,10 @@ public class AtomCallFactor extends RulePopUpViewCallFactor implements Callback<
                     hbox.setAlignment(Pos.CENTER);
                     box.getChildren().addAll(hbox, deleteButton,addAtomValueButton);
                     box.setSpacing(12);
+
+
+                    Tooltip tip = new Tooltip(item);
+                    Tooltip.install(this, tip);
 
 
 
