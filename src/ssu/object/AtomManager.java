@@ -156,7 +156,7 @@ public class AtomManager {
      * @param type
      * @return
      */
-    public ValuedAtom getAtomOrCreate(String value, int type) {
+    public ValuedAtom getValuedAtomOrCreate(String value, int type) {
 
         String[] values = null;
         if (value.contains(Tags.ATOM_VALUE_SPLITER)) {
@@ -220,6 +220,36 @@ public class AtomManager {
 //        }
 //
 //        return atom;
+    }
+
+    public String getNameOfAtomOrCreate(String value) {
+        String[] values = null;
+        if (value.contains(Tags.ATOM_VALUE_SPLITER)) {
+            values = value.split(Tags.ATOM_VALUE_SPLITER);
+        } else {
+            values = new String[] { value };
+        }
+
+        if (this.allAtoms.containsKey(values[0])) { // 이미 존재하는 Atom일 경우.
+            return this.allAtoms.get(values[0]).getName();
+        } else {                                    // 존재하지 않을 경우
+            Atom newAtom = new AtomClass(values[0]);
+            if (values.length > 1) {
+                newAtom.addStringValue(values[1]);
+                addAtom(newAtom);
+
+                return newAtom.getName();
+            } else {
+                newAtom.addStringValue(Tags.TEST_VALUE_TYPE_HIGH);
+                newAtom.addStringValue(Tags.TEST_VALUE_TYPE_LOW);
+                newAtom.addStringValue(Tags.TEST_VALUE_TYPE_POS);
+                newAtom.addStringValue(Tags.TEST_VALUE_TYPE_NEG);
+                newAtom.addStringValue(Tags.TEST_VALUE_TYPE_NORMAL);
+                addAtom(newAtom);
+
+                return newAtom.getName();
+            }
+        }
     }
 
     /*
