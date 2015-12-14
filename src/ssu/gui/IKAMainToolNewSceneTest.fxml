@@ -158,16 +158,13 @@
                                                    <columns>
                                                       <TableColumn fx:id="ruleIdColumn" editable="false" maxWidth="100.0" prefWidth="37.0" resizable="false" text="ID" />
                                                       <TableColumn fx:id="ruleColumn" editable="false" maxWidth="1000.0" prefWidth="500.0" text="Rule" />
-                                                      <TableColumn fx:id="authorColumn" editable="false" maxWidth="80.0" resizable="false" text="작성자" />
-                                                      <TableColumn fx:id="madeDateColumn" editable="false" maxWidth="140.0" prefWidth="140.0" resizable="false" text="생성일" />
-                                                      <TableColumn fx:id="modifiedDateColumn" editable="false" maxWidth="140.0" prefWidth="140.0" resizable="false" text="수정일" />
+                                                      <TableColumn fx:id="authorColumn" editable="false" maxWidth="80.0" text="작성자" />
+                                                      <TableColumn fx:id="madeDateColumn" editable="false" maxWidth="140.0" prefWidth="140.0" text="생성일" />
+                                                      <TableColumn fx:id="modifiedDateColumn" editable="false" maxWidth="140.0" prefWidth="140.0" text="수정일" />
                                                    </columns>
                                                    <VBox.margin>
                                                       <Insets bottom="2.0" />
                                                    </VBox.margin>
-                                                   <columnResizePolicy>
-                                                      <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                                   </columnResizePolicy>
                                                 </TableView>
                                                 <HBox>
                                                    <children>
