@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href="style.css" rel="stylesheet" />
+<meta charset=utf-8 />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
+<title>Compound nodes</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="http://cytoscape.github.io/cytoscape.js/api/cytoscape.js-latest/cytoscape.min.js"></script>
+<script src="code.js"></script>
+<style type="text/css">
+body { 
+  font: 10px helvetica neue, helvetica, arial, sans-serif;
+}
+
+#cy {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background : white;
+}
+  </style>
+</head>
+<body>
+<div id="cy"></div>
+</body>
+</html>
+<script>
+$(function(){ // on dom ready
+cytoscape({
+  container: document.getElementById('cy'),
+  
+  boxSelectionEnabled: false,
+  autounselectify: true,
+  
+  style: [
+    {
+      selector: 'node',
+      css: {
+		'text-wrap': 'wrap',
+		'text-max-width': 180,
+        'content': 'data(key)',
+        'text-valign': 'center',
+        'text-halign': 'center',
+		'background-color' : '#e6e6e6',
+		'border-width': '2px',
+		'border-style':'solid',
+		'border-color':'black',
+		'border-opacity': 0.5,
+		'width' : 50,
+		'shape': "roundrectangle",
+		'font-family': '"Times New Roman", Times, serif',
+		'font': '5px'
+      }
+    },{
+		selector: '.head', 
+		css: {
+			'background-image' : 'none',
+			'background-color' : '#e5fff2',
+			'shape': 'rectangle',
+			'width' : '180px',
+			'content': 'data(key)',
+			
+		'border-width': '1px',
+		'border-style':'solid',
+		'border-color':'black',
+		'border-opacity': 0.3
+		}
+	},{
+		selector: '.tail', 
+		css: {
+		'text-valign': 'center',
+		'text-halign': 'center',
+		'background-color' : '#ffc2b3',
+			'shape': 'rectangle',
+			'width' : '90px',
+			'content': 'data(key)',
+			'color' : 'black',
+			"text": '1px',
+			"text-outline-color":"#ffe5e5",
+			"text-outline-width":"0.1px",
+			'font': '5px',
+			'border-opacity': 0
+		}
+	},{
+      selector: 'edge',
+      css: {
+	  'width': '4px',
+
+	  'line-style':'solid',
+        'target-arrow-shape': 'triangle',
+		 /*'line-color': '#ffaaaa',
+        'target-arrow-color': '#ffaaaa'*/
+      }
+    },{
+      selector: ':selected',
+      css: {
+        'background-color': 'black',
+        'line-color': 'black',
+        'target-arrow-color': 'black',
+        'source-arrow-color': 'black'
+      }
+    }
+  ],  
+  elements: {
+    nodes: [
+	  { data: { id: 'b0'} },
+      { data: { id: 'b01', key: 'Hepatic parenchymal cell', parent: 'b0' },classes: 'head',  position: { x: 464, y: 10 } },
+      { data: { id: 'b02',  key: 'Destruction', parent: 'b0' }, classes: 'tail',position: { x: 600, y: 10 } },
+	  
+	  { data: { id: 'b1' } },
+      { data: { id: 'b11', key : 'Mitochondrion', parent: 'b1' }, classes: 'head', position: { x: 114, y: 110 } },
+      { data: { id: 'b12', key : 'Destruction',  parent: 'b1' }, classes: 'tail', position: { x: 250, y: 110 } },
+	  
+	  { data: { id: 'b2' } },
+      { data: { id: 'b21', key : 'Aspartate aminotransferase',  parent: 'b2' }, classes: 'head', position: { x: 114, y: 210 } },
+      { data: { id: 'b22', key : 'Release', parent: 'b2' }, classes: 'tail', position: { x: 250, y: 210 } },
+	  
+	  { data: { id: 'b3' } },
+      { data: { id: 'b31', key : 'Red blood cell enzymes abnormal',  parent: 'b3' }, classes: 'head', position: { x: 464, y: 310 } },
+      { data: { id: 'b32',  key : 'High',  parent: 'b3' }, classes: 'tail',position: { x: 600, y: 310 } },
+	  
+	  
+	  { data: { id: 'b4' } },
+      { data: { id: 'b41', key : 'Aspartate aminotransferase serum measurement', parent: 'b4' },classes: 'head',  position: { x: 114, y: 410 } },
+      { data: { id: 'b42', key : 'High', parent: 'b4' },classes: 'tail', position: { x: 250, y: 410 } },
+	       
+	  
+	  { data: { id: 'c2' } },
+      { data: { id: 'c21', key : 'Alanine aminotransferase', parent: 'c2' },classes: 'head',  position: { x: 464, y: 210 } },
+      { data: { id: 'c22', key : 'Release',  parent: 'c2' }, classes: 'tail',position: { x: 600, y: 210 } },
+	  
+	  { data: { id: 'c4' } },
+      { data: { id: 'c41', key : 'Alanine aminotransferase  blood measurement',  parent: 'c4' }, classes: 'head', position: { x:464, y: 410 } },
+      { data: { id: 'c42', key : 'High', parent: 'c4' },classes: 'tail', position: { x: 600, y: 410 } },
+	  
+	  { data: { id: 'e1'}},
+	  { data: { id: 'e11', key : 'Disorder of liver',  parent: 'e1' }, classes: 'head', position: { x: 514, y: 610 } },
+ 
+	  
+	  { data: { id: 'a1'}},
+	  { data: { id: 'a11', key: 'Lactic dehydrogenase', parent: 'a1' }, classes: 'head', position: { x: 864, y: 110 } },
+	  { data: { id: 'a12',  key: 'Release', parent: 'a1' }, classes: 'tail',position: { x: 1000, y: 110 } },
+	  
+	  { data: { id: 'a3'}},
+	  { data: { id: 'a31', key: 'Lactic dehydrogenase blood measurement', parent: 'a3' }, classes: 'head', position: { x: 864, y: 310 } },
+	  { data: { id: 'a32',  key: 'High', parent: 'a3' }, classes: 'tail',position: { x: 1000, y: 310 } },
+	  
+	  { data: { id: 'a4'}},
+	  { data: { id: 'a41', key: 'Lactate dehydrogenase isoenzymes measurement', parent: 'a4' }, classes: 'head', position: { x: 864, y: 480 } },
+	  { data: { id: 'a42',  key: 'High', parent: 'a4' }, classes: 'tail',position: { x: 1000, y: 480 } },
+ 
+ 
+	  { data: { id: 'd0'}},
+	  { data: { id: 'd01', key: 'Entire bile duct', parent: 'd0' }, classes: 'head', position: { x: 1564, y: 10 } },
+	  { data: { id: 'd02',  key: 'Obstruction', parent: 'd0' }, classes: 'tail',position: { x: 1700, y: 10 } },
+	  
+	  { data: { id: 'd1'}},
+	  { data: { id: 'd11', key: 'Bile', parent: 'd1' }, classes: 'head', position: { x: 1564, y: 110 } },
+	  { data: { id: 'd12',  key: 'Retention', parent: 'd1' }, classes: 'tail',position: { x: 1700, y: 110 } },
+	  
+	  { data: { id: 'd2'}},
+	  { data: { id: 'd21', key: 'Finding of serum alkaline phosphatase level', parent: 'd2' }, classes: 'head', position: { x: 1364, y: 310 } },
+	  { data: { id: 'd22',  key: 'High', parent: 'd2' }, classes: 'tail',position: { x: 1500, y: 310 } },
+	  
+	  { data: { id: 'd3'}},
+	  { data: { id: 'd31', key: 'Gamma glutamyl transferase measurement', parent: 'd3' }, classes: 'head', position: { x: 1764, y: 310 } },
+	  { data: { id: 'd32',  key: 'High', parent: 'd3' }, classes: 'tail',position: { x: 1900, y: 310 } },
+	  
+	  { data: { id: 'e2'}},
+	  { data: { id: 'e21', key : 'Disorder of bile duct',  parent: 'e2' }, classes: 'head', position: { x:1610, y: 510 } }
+	    
+	  
+    ],
+	
+    edges: [
+      { data: {source: 'b0', target: 'b1' } },
+	  { data: {source: 'b1', target: 'b2' } },
+	  { data: {source: 'b2', target: 'b3' } },
+	  { data: {source: 'b3', target: 'b4' } },
+	  { data: {source: 'b4', target: 'e1' } },
+	  { data: {source: 'b0', target: 'c2' } },	  
+	  { data: {source: 'c2', target: 'b3' } },
+	  { data: {source: 'b3', target: 'c4' } },
+	  { data: {source: 'c4', target: 'e1' } },
+	 
+	  { data: {source: 'b0', target: 'a1' } },
+	  { data: {source: 'a1', target: 'b3' } },
+	  { data: {source: 'b3', target: 'a3' } },
+	  { data: {source: 'a3', target: 'e1' } },
+	  { data: {source: 'a3', target: 'a4' } },
+	  { data: {source: 'a4', target: 'e1' } },
+	  
+	  { data: {source: 'd0', target: 'd1' } },
+	  { data: {source: 'd1', target: 'd2' } },
+	  { data: {source: 'd1', target: 'd3' } },
+	  { data: {source: 'd2', target: 'e2' } },
+	  { data: {source: 'd3', target: 'e2' } }
+    ]
+  },
+  
+  layout: {
+    name: 'preset',
+    padding: 5
+  }
+});
+
+}); // on dom ready
+</script>
