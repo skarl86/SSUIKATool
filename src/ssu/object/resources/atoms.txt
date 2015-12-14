@@ -1,4 +1,20 @@
-ALT,0,H!L
 AST,0,H!L
-ALP,0,H!L
 LiverDisease,0,
+ALP,0,H!L
+ALT,0,H!L
+Hepatic parenchymal cell,0,Desturction
+Mitochondrion,0,Destruction
+Aspartate aminotransferase,0,Release
+Red blood cell enzyme abnormal,0,H!L
+Aspartate aminotransferase serum measurement,0,H!L
+Alanine aminotransferase,0,Release
+Alanine aminotransferase blood measurement,0,H!L
+Disorder of liver,0,
+Entire bile duct,0,Obstruction
+Bile,0,Retention
+Finding of serum alkaline phosphatase level,0,H!L
+Gamma glutamyl transferase maesurement,0,H!L
+Disorder of bile duct,0,
+Lactic dehydrogenase,0,Release
+Lactic dehydrogenase blood measurement,0,H!L
+Lactate dehydrogenase isoenzymes measurement,0,H!L
