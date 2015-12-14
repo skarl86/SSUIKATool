@@ -25,6 +25,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -46,10 +47,7 @@ import ssu.util.AppTestLog;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.*;
 
@@ -194,7 +192,24 @@ public class IKATool extends Application implements Initializable {
         // 현재 환자 ID
         final Long curPatientID = currentPatientId;
 
-        showGraph(curPatientID, selectedOpinionIndex);
+        try {
+            Stage stage = new Stage();
+            WebView web = new WebView();
+//            String path = System.getProperty("user.dir");
+//            path.replace("\\\\", "/");
+//            path +=  "/html/index.html";
+            //InputStream path = this.getClass().getResource("resources/home.html");
+            URL path = this.getClass().getResource("resources/home.html");
+            web.getEngine().setJavaScriptEnabled(true);
+            web.getEngine().load(path.toString());
+
+            Scene scene = new Scene(web, 1000,1000);
+            stage.setScene(scene);
+            stage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+            //showGraph(curPatientID, selectedOpinionIndex);
 
 //        FileChooser fileChooser = new FileChooser();
 //        Stage fileWindowStage = new Stage();
