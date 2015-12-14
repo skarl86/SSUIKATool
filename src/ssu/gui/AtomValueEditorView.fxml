@@ -15,7 +15,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<ScrollPane fx:id="mainPane" prefHeight="435.0" prefWidth="277.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ssu.gui.controller.IKAAtomValueEditorViewController">
+<ScrollPane fx:id="mainPane" prefHeight="435.0" prefWidth="277.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ssu.gui.IKAAtomValueEditorViewController">
    <content>
       <VBox snapToPixel="false" stylesheets="@resources/main.css">
          <children>

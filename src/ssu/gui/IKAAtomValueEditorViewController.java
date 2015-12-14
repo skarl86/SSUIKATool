@@ -1,4 +1,4 @@
-package ssu.gui.controller;
+package ssu.gui;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -11,6 +11,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import ssu.gui.controller.IKAController;
+import ssu.gui.controller.IKADataController;
+import ssu.gui.controller.IKARulePopUpViewController;
 import ssu.gui.controller.entity.AtomRow;
 import ssu.util.AppTestLog;
 

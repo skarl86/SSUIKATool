@@ -20,16 +20,14 @@ import ssu.gui.controller.entity.AtomRow;
 import ssu.gui.controller.entity.PatientDetailRow;
 import ssu.gui.controller.entity.PatientRow;
 import ssu.gui.controller.entity.PreviousRuleRow;
-import ssu.gui.controller.factory.AtomCallFactor;
+import ssu.gui.AtomCallFactor;
 import ssu.gui.controller.factory.PreviousRuleCallFactor;
 import ssu.gui.controller.factory.ValueCallFactor;
 import ssu.object.AtomManager;
 import ssu.object.patient.Opinion;
 import ssu.object.patient.Patient;
-import ssu.object.rule.Atom;
 import ssu.object.rule.Rule;
 import ssu.object.rule.ValuedAtom;
-import ssu.object.test.TestResult;
 import ssu.util.AppTestLog;
 
 import java.io.IOException;
@@ -694,7 +692,7 @@ public class IKARulePopUpViewController extends IKAController implements Initial
             valueComboBox = antecedentValueMap.get(index);
         }
 
-
+        //ArrayList<String> test =IKADataController.getInstance().getAtomValueList(atomName);
         //valueComboBox.setItems(FXCollections.observableArrayList(arrayList));
         valueComboBox.setItems(FXCollections.observableArrayList(IKADataController.getInstance().getAtomValueList(atomName)));
 

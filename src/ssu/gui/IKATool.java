@@ -29,9 +29,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import org.graphstream.ui.layout.Eades84Layout;
-import org.graphstream.ui.layout.HierarchicalLayout;
-import org.graphstream.ui.view.Viewer;
+
 import ssu.gui.controller.IKADataController;
 import ssu.gui.controller.IKAPaneController;
 import ssu.gui.controller.IKARulePopUpViewController;
@@ -55,8 +53,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-import org.graphstream.graph.*;
-import org.graphstream.graph.implementations.*;
 
 public class IKATool extends Application implements Initializable {
 
@@ -251,25 +247,25 @@ public class IKATool extends Application implements Initializable {
 //            }
 //        }
     }
-
-    public boolean hasNodeInGraph(Graph graph, String name) {
-        for (org.graphstream.graph.Node node : graph.getEachNode()) {
-            if (node.getId().equals(name))
-                return true;
-        }
-
-        return false;
-    }
-
-    public boolean hasEdgeInGraph(Graph graph, String src, String dest) {
-        for (Edge edge : graph.getEachEdge()) {
-            if (edge.getId().equals(src + "->" + dest)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
+//
+//    public boolean hasNodeInGraph(Graph graph, String name) {
+//        for (org.graphstream.graph.Node node : graph.getEachNode()) {
+//            if (node.getId().equals(name))
+//                return true;
+//        }
+//
+//        return false;
+//    }
+//
+//    public boolean hasEdgeInGraph(Graph graph, String src, String dest) {
+//        for (Edge edge : graph.getEachEdge()) {
+//            if (edge.getId().equals(src + "->" + dest)) {
+//                return true;
+//            }
+//        }
+//
+//        return false;
+//    }
 
     /**
      *

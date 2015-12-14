@@ -1,4 +1,4 @@
-package ssu.gui.controller.factory;
+package ssu.gui;
 
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -13,10 +13,11 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import ssu.gui.controller.IKAAtomValueEditorViewController;
+import ssu.gui.IKAAtomValueEditorViewController;
 import ssu.gui.controller.IKADataController;
 import ssu.gui.controller.IKARulePopUpViewController;
 import ssu.gui.controller.entity.AtomRow;
+import ssu.gui.controller.factory.RulePopUpViewCallFactor;
 import ssu.util.AppTestLog;
 
 import java.io.IOException;
@@ -70,7 +71,7 @@ public class AtomCallFactor extends RulePopUpViewCallFactor implements Callback<
 
                         Stage dialogStage = new Stage();
 
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("../../AtomValueEditorView.fxml"));
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("AtomValueEditorView.fxml"));
                         Parent root = null;
 
                         try {
