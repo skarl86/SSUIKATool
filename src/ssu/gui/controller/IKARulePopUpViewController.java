@@ -272,7 +272,8 @@ public class IKARulePopUpViewController extends IKAController implements Initial
                 if(event.getCode() == KeyCode.ENTER) {
                     AppTestLog.printLog("Enter");
                     AppTestLog.printLog(antecedentTextField.getText());
-                    antecedentTableView.getItems().add(new AtomRow(antecedentTextField.getText(), ""));
+                    String input = getAtomOrCreate(antecedentTextField.getText());
+                    antecedentTableView.getItems().add(new AtomRow(input, ""));
                     refreshCompletionRule();
                 }
             }
@@ -284,11 +285,16 @@ public class IKARulePopUpViewController extends IKAController implements Initial
                 if(event.getCode() == KeyCode.ENTER) {
                     AppTestLog.printLog("Enter");
                     AppTestLog.printLog(consequentTextField.getText());
-                    consequentTableView.getItems().add(new AtomRow(consequentTextField.getText(), ""));
+                    String input = getAtomOrCreate(consequentTextField.getText());
+                    consequentTableView.getItems().add(new AtomRow(input, ""));
                     refreshCompletionRule();
                 }
             }
         });
+    }
+
+    public String getAtomOrCreate(String name) {
+        return AtomManager.getInstance().getNameOfAtomOrCreate(name);
     }
 
 //    private void initAutoCompleteComboBox(final ComboBox<String> comboBox, final TableView<AtomRow> tableView){

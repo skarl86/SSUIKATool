@@ -395,11 +395,11 @@ public class IKADataController extends IKAController implements IKADataRequestIn
 
             for (String antecedent : antecedents) {
                 // WARN : 현재 Atom은 무조건 Class만 생성되도록 함.
-                newRule.addAntecedent(this.atomManager.getAtomOrCreate(antecedent, Tags.ATOM_TYPE_CLASS));
+                newRule.addAntecedent(this.atomManager.getValuedAtomOrCreate(antecedent, Tags.ATOM_TYPE_CLASS));
             }
             for (String consequent : consequents) {
                 // WARN : 현재 Atom은 무조건 Class만 생성되도록 함.
-                newRule.addConsequent(this.atomManager.getAtomOrCreate(consequent, Tags.ATOM_TYPE_CLASS));
+                newRule.addConsequent(this.atomManager.getValuedAtomOrCreate(consequent, Tags.ATOM_TYPE_CLASS));
             }
 
             // 해당 Rule을 참조하는 환자 ID와 opinion id를 기록.
