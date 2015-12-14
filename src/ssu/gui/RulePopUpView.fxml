@@ -11,150 +11,146 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.text.*?>
 
-<GridPane fx:id="mainView" alignment="CENTER" hgap="10.0" prefHeight="605.0" prefWidth="1007.0" styleClass="okButton" stylesheets="@resources/main.css" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ssu.gui.controller.IKARulePopUpViewController">
-    <children>
-      <HBox>
-         <children>
-              <VBox prefHeight="594.0" prefWidth="530.0">
-                  <children>
-                      <TitledPane collapsible="false" prefHeight="360.0" prefWidth="530.0" text="Table Rule Editor">
-                          <content>
-                              <SplitPane dividerPositions="0.1897590361445783" focusTraversable="true" orientation="VERTICAL" prefHeight="317.0" prefWidth="528.0">
-                                  <items>
-                                      <HBox fx:id="splitTopBox" prefHeight="81.0" prefWidth="530.0">
-                                          <children>
-                                              <Label prefHeight="26.0" prefWidth="43.0" text="조건 :">
-                                                  <HBox.margin>
-                                                      <Insets left="15.0" right="5.0" top="20.0" />
-                                                  </HBox.margin>
-                                                  <font>
-                                                      <Font size="10.0" />
-                                                  </font>
-                                              </Label>
-                                              <TextField fx:id="antecedentTextField">
-                                                  <HBox.margin>
-                                                      <Insets right="15.0" top="20.0" />
-                                                  </HBox.margin>
-                                              </TextField>
-                                              <Region prefHeight="51.0" prefWidth="21.0" />
-                                              <Label prefHeight="26.0" prefWidth="48.0" text="결과 :">
-                                                  <HBox.margin>
-                                                      <Insets right="5.0" top="20.0" />
-                                                  </HBox.margin>
-                                                  <font>
-                                                      <Font size="9.0" />
-                                                  </font>
-                                              </Label>
-                                              <TextField fx:id="consequentTextField">
-                                                  <HBox.margin>
-                                                      <Insets right="15.0" top="20.0" />
-                                                  </HBox.margin>
-                                              </TextField>
-                                          </children>
-                                      </HBox>
-                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="272.0" prefWidth="839.0">
-                                          <children>
-                                              <TableView fx:id="antecedentTableView" layoutX="6.0" layoutY="6.0" prefHeight="265.0" prefWidth="263.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="265.0" AnchorPane.topAnchor="0.0">
-                                                  <columns>
-                                                      <TableColumn fx:id="antecedentColumn" prefWidth="137.0" resizable="false" text="조건" />
-                                                      <TableColumn fx:id="antecedentValueColumn" prefWidth="122.0" resizable="false" text="Value" />
-                                                  </columns>
-                                              </TableView>
-                                              <TableView fx:id="consequentTableView" layoutX="259.0" layoutY="6.0" prefHeight="265.0" prefWidth="269.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="259.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                  <columns>
-                                                      <TableColumn fx:id="consequentColumn" prefWidth="153.0" resizable="false" text="결과" />
-                                                      <TableColumn fx:id="consequentValueColumn" prefWidth="113.0" text="Value" />
-                                                  </columns>
-                                              </TableView>
-                                          </children>
-                                      </AnchorPane>
-                                  </items>
+<ScrollPane prefViewportHeight="597.0" prefViewportWidth="1320.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <content>
+      <SplitPane dividerPositions="0.5" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <items>
+            <AnchorPane snapToPixel="false">
+               <children>
+                  <VBox prefHeight="594.0">
+                     <children>
+                        <TitledPane collapsible="false" text="Table Rule Editor">
+                           <content>
+                              <SplitPane dividerPositions="0.1897590361445783" focusTraversable="true" orientation="VERTICAL" prefHeight="317.0">
+                                 <items>
+                                    <HBox fx:id="splitTopBox" prefHeight="81.0">
+                                       <children>
+                                          <Label prefHeight="26.0" prefWidth="43.0" text="조건 :">
+                                             <HBox.margin>
+                                                <Insets left="15.0" right="5.0" top="20.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <TextField fx:id="antecedentTextField" prefHeight="23.0" prefWidth="241.0">
+                                             <HBox.margin>
+                                                <Insets right="15.0" top="20.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <Region prefHeight="57.0" prefWidth="100.0" />
+                                          <Label prefHeight="26.0" prefWidth="48.0" text="결과 :">
+                                             <HBox.margin>
+                                                <Insets right="5.0" top="20.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <TextField fx:id="consequentTextField" prefWidth="241.0">
+                                             <HBox.margin>
+                                                <Insets right="15.0" top="20.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="272.0" prefWidth="839.0">
+                                       <children>
+                                          <TableView fx:id="antecedentTableView" layoutX="6.0" layoutY="1.0" prefHeight="253.0" prefWidth="417.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="422.0" AnchorPane.topAnchor="1.0">
+                                             <columns>
+                                                <TableColumn fx:id="antecedentColumn" prefWidth="289.0" resizable="false" text="조건" />
+                                                <TableColumn fx:id="antecedentValueColumn" prefWidth="125.0" resizable="false" text="Value" />
+                                             </columns>
+                                          </TableView>
+                                          <TableView fx:id="consequentTableView" layoutX="418.0" layoutY="-1.0" prefHeight="255.0" prefWidth="421.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="418.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-1.0">
+                                             <columns>
+                                                <TableColumn fx:id="consequentColumn" prefWidth="303.0" resizable="false" text="결과" />
+                                                <TableColumn fx:id="consequentValueColumn" minWidth="0.0" prefWidth="116.0" text="Value" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </AnchorPane>
+                                 </items>
                               </SplitPane>
-                          </content>
-                      </TitledPane>
-                      <TableView fx:id="completeRuleTable" prefHeight="200.0" prefWidth="200.0">
-                          <columns>
+                           </content>
+                        </TitledPane>
+                        <TableView fx:id="completeRuleTable" prefHeight="200.0" prefWidth="200.0">
+                           <columns>
                               <TableColumn fx:id="completeRuleColumn" maxWidth="529.0" prefWidth="529.0" text="Related Rules" />
-                          </columns>
-                      </TableView>
-                      <HBox prefHeight="48.0" prefWidth="530.0">
-                          <children>
+                           </columns>
+                        </TableView>
+                        <HBox prefHeight="48.0" prefWidth="530.0">
+                           <children>
                               <Text layoutX="40.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author :" wrappingWidth="49.39634323120117">
-                                  <HBox.margin>
-                                      <Insets left="25.0" top="10.0" />
-                                  </HBox.margin>
+                                 <HBox.margin>
+                                    <Insets left="25.0" top="10.0" />
+                                 </HBox.margin>
                               </Text>
                               <Label fx:id="authorLabel" layoutX="136.0" layoutY="24.0" prefHeight="17.0" prefWidth="115.0" text="Label">
-                                  <HBox.margin>
-                                      <Insets left="15.0" top="10.0" />
-                                  </HBox.margin>
+                                 <HBox.margin>
+                                    <Insets left="15.0" top="10.0" />
+                                 </HBox.margin>
                               </Label>
                               <Region prefHeight="39.0" prefWidth="170.0" />
                               <Button layoutX="343.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleClickOK" prefWidth="74.0" styleClass="okButton" text="OK">
-                                  <HBox.margin>
-                                      <Insets top="7.0" />
-                                  </HBox.margin>
+                                 <HBox.margin>
+                                    <Insets top="7.0" />
+                                 </HBox.margin>
                               </Button>
                               <Button cancelButton="true" layoutX="425.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleclickCancel" prefWidth="74.0" styleClass="cancelButton" text="Cancel">
-                                  <HBox.margin>
-                                      <Insets left="5.0" top="7.0" />
-                                  </HBox.margin>
+                                 <HBox.margin>
+                                    <Insets left="5.0" top="7.0" />
+                                 </HBox.margin>
                               </Button>
-                          </children>
-                      </HBox>
-                  </children>
-              </VBox>
-            <HBox prefHeight="595.0" prefWidth="471.0">
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="595.0" prefWidth="464.0">
                <children>
-                  <VBox prefHeight="595.0" prefWidth="266.0">
+                  <HBox prefHeight="595.0" prefWidth="471.0">
                      <children>
-                        <TitledPane prefHeight="419.0" prefWidth="244.0" text="환자 목록">
-                           <content>
-                              <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                        <VBox prefHeight="595.0" prefWidth="266.0">
+                           <children>
+                              <TitledPane prefHeight="419.0" prefWidth="244.0" text="환자 목록">
                                  <content>
-                                    <TableView fx:id="patientTable" prefHeight="400.0" prefWidth="246.0">
+                                    <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                                       <content>
+                                          <TableView fx:id="patientTable" prefHeight="400.0" prefWidth="246.0">
+                                             <columns>
+                                                <TableColumn fx:id="idColumn" prefWidth="71.0" text="ID" />
+                                                <TableColumn fx:id="nameColumn" prefWidth="77.0" text="이름" />
+                                                <TableColumn fx:id="genderColumn" minWidth="8.0" prefWidth="50.0" text="성별" />
+                                                <TableColumn fx:id="ageColumn" prefWidth="50.0" text="나이" />
+                                             </columns>
+                                          </TableView>
+                                       </content>
+                                    </ScrollPane>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane prefHeight="332.0" prefWidth="262.0" text="소견">
+                                 <content>
+                                    <TextArea fx:id="opinionTextArea" prefHeight="174.0" prefWidth="152.0" wrapText="true" />
+                                 </content>
+                              </TitledPane>
+                           </children>
+                        </VBox>
+                        <TitledPane prefHeight="595.0" prefWidth="214.0" text="환자 상세 정보">
+                           <content>
+                              <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="ALWAYS" prefHeight="571.0" prefViewportHeight="628.0" prefViewportWidth="350.0" prefWidth="86.0">
+                                 <content>
+                                    <TreeTableView fx:id="patientDetailTable" prefHeight="200.0" prefWidth="200.0">
                                        <columns>
-                                          <TableColumn fx:id="idColumn" prefWidth="71.0" text="ID" />
-                                          <TableColumn fx:id="nameColumn" prefWidth="77.0" text="이름" />
-                                          <TableColumn fx:id="genderColumn" minWidth="8.0" prefWidth="50.0" text="성별" />
-                                          <TableColumn fx:id="ageColumn" prefWidth="50.0" text="나이" />
+                                          <TreeTableColumn fx:id="testNameColumn" prefWidth="68.0" text="검사명" />
+                                          <TreeTableColumn fx:id="testValueColumn" prefWidth="68.0" text="수치값" />
+                                          <TreeTableColumn fx:id="textValueColumn" prefWidth="70.0" text="문자값" />
                                        </columns>
-                                    </TableView>
+                                    </TreeTableView>
                                  </content>
                               </ScrollPane>
                            </content>
                         </TitledPane>
-                        <TitledPane prefHeight="304.0" prefWidth="260.0" text="소견">
-                           <content>
-                              <TextArea fx:id="opinionTextArea" prefHeight="174.0" prefWidth="152.0" wrapText="true" />
-                           </content>
-                        </TitledPane>
                      </children>
-                  </VBox>
-                  <TitledPane prefHeight="595.0" prefWidth="214.0" text="환자 상세 정보">
-                     <content>
-                        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="ALWAYS" prefHeight="571.0" prefViewportHeight="628.0" prefViewportWidth="350.0" prefWidth="86.0">
-                           <content>
-                              <TreeTableView fx:id="patientDetailTable" prefHeight="200.0" prefWidth="200.0">
-                                <columns>
-                                  <TreeTableColumn fx:id="testNameColumn" prefWidth="68.0" text="검사명" />
-                                  <TreeTableColumn fx:id="testValueColumn" prefWidth="68.0" text="수치값" />
-                                    <TreeTableColumn fx:id="textValueColumn" prefWidth="70.0" text="문자값" />
-                                </columns>
-                              </TreeTableView>
-                           </content>
-                        </ScrollPane>
-                     </content>
-                  </TitledPane>
+                  </HBox>
                </children>
-            </HBox>
-         </children>
-      </HBox>
-    </children>
-    <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-    </columnConstraints>
-    <rowConstraints>
-        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-    </rowConstraints>
-</GridPane>
+            </AnchorPane>
+         </items>
+      </SplitPane>
+   </content>
+</ScrollPane>
